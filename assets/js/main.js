@@ -68,7 +68,7 @@ const works = [
     thumb: 'assets/images/works/sase.jpg',
     url: 'https://www.sase.co.kr/html/index/',
     tags: ['퍼블리싱', '유지보수'],
-    desc: '사세 공식 웹사이트 퍼블리싱 및 지속적인 유지보수 작업을 진행했습니다.',
+    desc: '기업 공식 사이트를 100% 직접 퍼블리싱했습니다. 반응형 구현과 함께 장기간 유지보수를 담당했습니다.',
   },
   {
     id: 'raymats',
@@ -76,7 +76,7 @@ const works = [
     thumb: 'assets/images/works/raymats.jpg',
     url: 'https://raymats.com/html/index/',
     tags: ['퍼블리싱', '유지보수'],
-    desc: '레이머티리얼즈 공식 웹사이트 퍼블리싱 및 지속적인 유지보수 작업을 진행했습니다.',
+    desc: '소재 전문 기업 사이트를 100% 직접 퍼블리싱했습니다. 반응형 레이아웃 구현 및 지속적인 유지보수를 진행했습니다.',
   },
   {
     id: 'marusys',
@@ -84,7 +84,7 @@ const works = [
     thumb: 'assets/images/works/marusys.jpg',
     url: 'https://www.marusys.com/html/index/index.php',
     tags: ['퍼블리싱', '유지보수'],
-    desc: '마르시스 공식 웹사이트 퍼블리싱 및 지속적인 유지보수 작업을 진행했습니다.',
+    desc: '기업 공식 사이트를 100% 직접 퍼블리싱했습니다. 크로스브라우징 대응과 꼼꼼한 테스트를 거쳐 오픈했으며 유지보수를 담당했습니다.',
   },
   {
     id: 'bexel',
@@ -92,7 +92,7 @@ const works = [
     thumb: 'assets/images/works/bexel.jpg',
     url: 'https://www.bexel.co.kr/html/index/index.php',
     tags: ['퍼블리싱', '유지보수'],
-    desc: '벡셀 공식 웹사이트 퍼블리싱 및 지속적인 유지보수 작업을 진행했습니다.',
+    desc: '기업 공식 사이트를 100% 직접 퍼블리싱했습니다. 반응형 구현과 다양한 환경에서의 테스트를 거쳐 오픈했으며 유지보수를 담당했습니다.',
   },
   {
     id: 'cpdc',
@@ -100,7 +100,7 @@ const works = [
     thumb: 'assets/images/works/cpdc.jpg',
     url: 'https://www.cpdc.re.kr/html/index/',
     tags: ['퍼블리싱', '유지보수'],
-    desc: '충남공공디자인센터 공식 웹사이트 퍼블리싱 및 지속적인 유지보수 작업을 진행했습니다.',
+    desc: '공공기관 사이트를 100% 직접 퍼블리싱했습니다. 접근성과 반응형을 고려한 마크업 작업 및 유지보수를 진행했습니다.',
   },
   {
     id: 'optimedi',
@@ -108,7 +108,7 @@ const works = [
     thumb: 'assets/images/works/optimedi.jpg',
     url: 'https://www.optimedi.kr/',
     tags: ['퍼블리싱'],
-    desc: '옵티메디 공식 웹사이트 퍼블리싱 작업을 진행했습니다.',
+    desc: '의료기기 기업 사이트를 100% 직접 퍼블리싱했습니다. 반응형 구현과 크로스브라우징 테스트를 거쳐 오픈했습니다.',
   },
   {
     id: 'ghi',
@@ -116,7 +116,7 @@ const works = [
     thumb: 'assets/images/works/ghi.jpg',
     url: 'http://ghi.co.kr/html/index/',
     tags: ['퍼블리싱', '유지보수'],
-    desc: '기획인애드 공식 웹사이트 퍼블리싱 및 지속적인 유지보수 작업을 진행했습니다.',
+    desc: '광고 에이전시 공식 사이트를 100% 직접 퍼블리싱했습니다. 반응형 구현 및 지속적인 유지보수를 담당했습니다.',
   },
 ];
 
