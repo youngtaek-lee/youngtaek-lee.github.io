@@ -1,0 +1,72 @@
+/* 애니메이션 초기 상태 */
+.anim-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.anim-fade-in {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.anim-slide-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.anim-slide-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* 활성화 상태 (IntersectionObserver가 클래스 추가) */
+.anim-fade-up.is-visible,
+.anim-fade-in.is-visible,
+.anim-slide-left.is-visible,
+.anim-slide-right.is-visible {
+  opacity: 1;
+  transform: translate(0);
+}
+
+/* stagger (순차 등장) — nth-child로 딜레이 조절 */
+.stagger > *:nth-child(1) { transition-delay: 0s; }
+.stagger > *:nth-child(2) { transition-delay: 0.1s; }
+.stagger > *:nth-child(3) { transition-delay: 0.2s; }
+.stagger > *:nth-child(4) { transition-delay: 0.3s; }
+.stagger > *:nth-child(5) { transition-delay: 0.4s; }
+.stagger > *:nth-child(6) { transition-delay: 0.5s; }
+.stagger > *:nth-child(7) { transition-delay: 0.6s; }
+
+/* 페이지 진입 애니메이션 (HERO용) */
+.hero-enter {
+  animation: heroEnter 0.8s ease forwards;
+}
+
+.hero-enter-delay-1 {
+  opacity: 0;
+  animation: heroEnter 0.8s ease 0.2s forwards;
+}
+
+.hero-enter-delay-2 {
+  opacity: 0;
+  animation: heroEnter 0.8s ease 0.4s forwards;
+}
+
+.hero-enter-delay-3 {
+  opacity: 0;
+  animation: heroEnter 0.8s ease 0.6s forwards;
+}
+
+@keyframes heroEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="웹 퍼블리셔 포트폴리오 — HTML, CSS, JavaScript 기반 웹 퍼블리싱 작업물 모음" />
+  <title>Portfolio — Web Publisher</title>
+
+  <!-- OG -->
+  <meta property="og:title" content="Portfolio — Web Publisher" />
+  <meta property="og:description" content="웹 퍼블리셔 포트폴리오" />
+  <meta property="og:image" content="assets/images/og-image.jpg" />
+
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  <link rel="stylesheet" href="assets/css/animation.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ========================
+    Header
+  ========================= -->
+  <header class="header">
+    <a href="#hero" class="header__logo">PORTFOLIO</a>
+    <nav class="header__nav">
+      <a href="#about">About</a>
+      <a href="#works">Works</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="다크모드 전환">
+        <!-- 아이콘은 JS에서 주입 -->
+      </button>
+    </nav>
+  </header>
+
+  <!-- ========================
+    HERO
+  ========================= -->
+  <section class="hero" id="hero">
+    <div class="container hero__inner">
+      <p class="hero__label hero-enter">Web Publisher</p>
+      <h1 class="hero__title hero-enter-delay-1">
+        Lee Youngtaek
+      </h1>
+      <p class="hero__desc hero-enter-delay-2">
+        HTML, CSS, JavaScript를 기반으로<br />
+        퍼블리싱 및 유지보수 작업을 진행해왔습니다.<br />
+        현재 <em>React</em>를 공부하며 프론트엔드 개발자로 전환 중입니다.
+      </p>
+      <div class="hero__actions hero-enter-delay-3">
+        <a href="#works" class="btn-primary">Works 보기</a>
+        <a href="pdf/portfolio.pdf" class="btn-secondary" target="_blank" rel="noopener">
+          PDF로 확인하기
+        </a>
+      </div>
+    </div>
+    <div class="hero__scroll-hint">
+      <span>scroll</span>
+      <svg width="12" height="16" viewBox="0 0 12 16" fill="none">
+        <path d="M6 0v14M1 9l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ========================
+    ABOUT
+  ========================= -->
+  <section class="about section" id="about">
+    <div class="container">
+      <p class="section__label anim-fade-up">About</p>
+      <div class="divider anim-fade-up"></div>
+      <div class="about__inner">
+        <div class="about__text anim-slide-left">
+          <p>
+            웹 퍼블리셔로서 다수의 기업 사이트 퍼블리싱 및 유지보수 작업을 진행해왔습니다.
+            픽셀 단위의 정밀한 마크업과 크로스 브라우징, 접근성을 중시합니다.
+          </p>
+          <p>
+            현재는 프론트엔드 개발자로 전환을 목표로 React를 공부하고 있습니다.
+          </p>
+        </div>
+        <div class="about__skills anim-slide-right">
+          <div class="skill-group">
+            <p class="skill-group__title">Markup & Style</p>
+            <div class="skill-tags">
+              <span class="skill-tag">HTML5</span>
+              <span class="skill-tag">CSS3</span>
+              <span class="skill-tag">SCSS</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-group__title">Script</p>
+            <div class="skill-tags">
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">jQuery</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <p class="skill-group__title">Learning</p>
+            <div class="skill-tags">
+              <span class="skill-tag">React</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+    WORKS
+  ========================= -->
+  <section class="works" id="works">
+    <div class="works__pin">
+      <div class="works__head">
+        <p class="section__label anim-fade-up">Works</p>
+        <div class="divider anim-fade-up"></div>
+      </div>
+      <div class="works__track">
+        <div class="works__grid">
+          <!-- JS로 렌더링 -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+    CONTACT
+  ========================= -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <p class="section__label anim-fade-up">Contact</p>
+      <h2 class="section__title anim-fade-up">함께 일하고 싶으시다면<br />편하게 연락주세요.</h2>
+      <div class="contact__links anim-fade-up">
+        <a href="mailto:brant7100@gmail.com" class="contact__link">
+          brant7100@gmail.com
+        </a>
+        <a href="https://github.com/koriiscat" class="contact__link" target="_blank" rel="noopener">
+          GitHub
+        </a>
+        <a href="pdf/portfolio.pdf" class="contact__link" target="_blank" rel="noopener">
+          PDF 다운로드
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+    Footer
+  ========================= -->
+  <footer class="footer">
+    <p>© 2026 — Designed & Published by <strong>Lee Youngtaek</strong></p>
+  </footer>
+
+  <!-- ========================
+    Modal
+  ========================= -->
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-label="프로젝트 상세">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title"></h2>
+        <button class="modal__close" aria-label="닫기">✕</button>
+      </div>
+      <div class="modal__body">
+        <img class="modal__img" src="" alt="" />
+        <div class="modal__meta"></div>
+        <p class="modal__desc"></p>
+        <a class="modal__link" href="" target="_blank" rel="noopener">사이트 바로가기 →</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
