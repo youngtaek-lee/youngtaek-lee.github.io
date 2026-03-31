@@ -35,16 +35,15 @@
   <!-- ========================
     HERO
   ========================= -->
+  <main>
   <section class="hero" id="hero">
-    <div class="container hero__inner">
+<div class="container hero__inner">
       <p class="hero__label hero-enter">Web Publisher</p>
       <h1 class="hero__title hero-enter-delay-1">
         Lee Youngtaek
       </h1>
       <p class="hero__desc hero-enter-delay-2">
-        HTML, CSS, JavaScript를 기반으로<br />
-        퍼블리싱 및 유지보수 작업을 진행해왔습니다.<br />
-        현재 <em>React</em>를 공부하며 프론트엔드 개발자로 전환 중입니다.
+        HTML, CSS로 퍼블리싱했습니다.
       </p>
       <div class="hero__actions hero-enter-delay-3">
         <a href="#works" class="btn-primary">Works 보기</a>
@@ -70,14 +69,22 @@
       <div class="divider anim-fade-up"></div>
       <div class="about__inner">
         <div class="about__text anim-slide-left">
-          <p>
-            에이전시 두 곳(쓰리웨이, 다람미디어)에서 약 4년간 웹 디자이너·퍼블리셔로 일하며
-            기업 사이트를 처음부터 끝까지 직접 퍼블리싱했습니다.
-            반응형은 기본, 러시아어·중국어 다국어 지원까지 다양한 프로젝트를 경험했습니다.
-          </p>
-          <p>
-            빠르진 않지만 꼼꼼히 테스트하고 오픈하는 스타일입니다.
-            현재는 <em>React</em>를 공부하며 프론트엔드 개발자로 전환을 준비 중입니다.
+          <ul class="about__stats">
+            <li class="about__stat">
+              <span class="about__stat-num">4년</span>
+              <span class="about__stat-label">웹 퍼블리싱 실무</span>
+            </li>
+            <li class="about__stat">
+              <span class="about__stat-num">2곳</span>
+              <span class="about__stat-label">에이전시 경력 (쓰리웨이, 다람미디어)</span>
+            </li>
+            <li class="about__stat">
+              <span class="about__stat-num">7개</span>
+              <span class="about__stat-label">직접 퍼블리싱한 프로젝트</span>
+            </li>
+          </ul>
+          <p class="about__summary">
+            마크업부터 스타일까지 직접 구현했습니다.
           </p>
         </div>
         <div class="about__skills anim-slide-right">
@@ -96,12 +103,6 @@
               <span class="skill-tag">jQuery</span>
             </div>
           </div>
-          <div class="skill-group">
-            <p class="skill-group__title">Learning</p>
-            <div class="skill-tags">
-              <span class="skill-tag">React</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -110,16 +111,12 @@
   <!-- ========================
     WORKS
   ========================= -->
-  <section class="works" id="works">
-    <div class="works__pin">
-      <div class="works__head">
-        <p class="section__label anim-fade-up">Works</p>
-        <div class="divider anim-fade-up"></div>
-      </div>
-      <div class="works__track">
-        <div class="works__grid">
-          <!-- JS로 렌더링 -->
-        </div>
+  <section class="works section" id="works">
+    <div class="container">
+      <p class="section__label anim-fade-up">Works</p>
+      <div class="divider anim-fade-up"></div>
+      <div class="works__grid">
+        <!-- JS로 렌더링 -->
       </div>
     </div>
   </section>
@@ -135,7 +132,7 @@
         <a href="mailto:brant7100@gmail.com" class="contact__link">
           brant7100@gmail.com
         </a>
-        <a href="https://github.com/koriiscat" class="contact__link" target="_blank" rel="noopener">
+        <a href="https://github.com/youngtaek-lee" class="contact__link" target="_blank" rel="noopener">
           GitHub
         </a>
         <a href="pdf/portfolio.pdf" class="contact__link" target="_blank" rel="noopener">
@@ -144,6 +141,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ========================
     Footer
@@ -170,6 +169,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

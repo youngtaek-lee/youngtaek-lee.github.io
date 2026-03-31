@@ -281,6 +281,39 @@ body {
   margin-bottom: 16px;
 }
 
+.about__stats {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.about__stat {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.about__stat-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.about__stat-label {
+  font-size: 0.9rem;
+  color: var(--color-sub);
+}
+
+.about__summary {
+  color: var(--color-sub);
+  line-height: 1.9;
+  font-size: 0.95rem;
+}
+
 .about__skills {
   display: flex;
   flex-direction: column;
@@ -315,38 +348,10 @@ body {
 /* =============================
    WORKS
 ============================= */
-
-/* 섹션 자체는 스크롤 거리만큼 높이 확보 — JS에서 동적으로 세팅 */
-.works {
-  position: relative;
-}
-
-/* 화면에 고정되는 영역 */
-.works__pin {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 60px;
-}
-
-.works__head {
-  margin-bottom: 40px;
-}
-
-/* 카드가 흘러가는 트랙 — overflow 숨김 */
-.works__track {
-  overflow: hidden;
-}
-
-/* 카드 flex 컨테이너 — translateX로 이동 */
 .works__grid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  will-change: transform;
 }
 
 .work-card {
