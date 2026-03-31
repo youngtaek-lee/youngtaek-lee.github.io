@@ -1,23 +1,81 @@
 // =============================
-// 스크롤 애니메이션 (IntersectionObserver)
+// 텍스트 글자 분해 (split-text)
+// =============================
+function splitText(el) {
+  const text = el.textContent.trim();
+  el.textContent = '';
+  el.setAttribute('aria-label', text);
+
+  [...text].forEach((char) => {
+    const span = document.createElement('span');
+    span.className = char === ' ' ? 'char char--space' : 'char';
+    span.textContent = char;
+    span.setAttribute('aria-hidden', 'true');
+    el.appendChild(span);
+  });
+
+  return el.querySelectorAll('.char:not(.char--space)');
+}
+
+// =============================
+// 애니메이션 (GSAP + ScrollTrigger)
 // =============================
 function initAnimations() {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
+  gsap.registerPlugin(ScrollTrigger);
 
-  const targets = document.querySelectorAll(
-    '.anim-fade-up, .anim-fade-in, .anim-slide-left, .anim-slide-right'
-  );
-  targets.forEach((el) => observer.observe(el));
+  const EASE = 'power2.out';
+  const TRIGGER_START = 'top 88%';
+
+  // 글자 분해 + 스태거 애니메이션
+  document.querySelectorAll(
+    '.hero__label, .hero__title, .section__label, .section__title, .about__summary'
+  ).forEach((el) => {
+    const chars = splitText(el);
+    gsap.from(chars, {
+      opacity: 0,
+      y: '0.6em',
+      duration: 0.6,
+      ease: EASE,
+      stagger: 0.025,
+      scrollTrigger: { trigger: el, start: TRIGGER_START },
+    });
+  });
+
+  // 블록 단위 fade-up
+  document.querySelectorAll('.anim-fade-up').forEach((el) => {
+    gsap.from(el, {
+      opacity: 0,
+      y: 24,
+      duration: 0.6,
+      ease: EASE,
+      scrollTrigger: { trigger: el, start: TRIGGER_START },
+    });
+  });
+
+  // 블록 단위 slide
+  document.querySelectorAll('.anim-slide-left').forEach((el) => {
+    gsap.from(el, {
+      opacity: 0,
+      x: -24,
+      duration: 0.6,
+      ease: EASE,
+      scrollTrigger: { trigger: el, start: TRIGGER_START },
+    });
+  });
+
+  document.querySelectorAll('.anim-slide-right').forEach((el) => {
+    gsap.from(el, {
+      opacity: 0,
+      x: 24,
+      duration: 0.6,
+      ease: EASE,
+      scrollTrigger: { trigger: el, start: TRIGGER_START },
+    });
+  });
+
+  // hero desc / actions (로드 후 딜레이 등장)
+  gsap.from('.hero__desc', { opacity: 0, y: 20, duration: 0.6, ease: EASE, delay: 0.4 });
+  gsap.from('.hero__actions', { opacity: 0, y: 20, duration: 0.6, ease: EASE, delay: 0.6 });
 }
 
 
@@ -180,29 +238,31 @@ function initTheme() {
 
   function apply(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    btn.innerHTML = theme === 'dark' ? ICON_SUN : ICON_MOON;
+    if (btn) btn.innerHTML = theme === 'dark' ? ICON_SUN : ICON_MOON;
     localStorage.setItem('theme', theme);
   }
 
   apply(saved);
 
-  btn.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    apply(current === 'dark' ? 'light' : 'dark');
-  });
+  if (btn) {
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      apply(current === 'dark' ? 'light' : 'dark');
+    });
+  }
 }
 
 // =============================
-// Header 스크롤 효과
+// Header
 // =============================
 function initHeader() {
   const header = document.querySelector('.header');
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 40);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      header.classList.add('is-visible');
+    });
   });
 }
-
-
 
 // =============================
 // Lenis 스무스 스크롤

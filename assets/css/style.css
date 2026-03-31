@@ -81,32 +81,62 @@
   --color-line: #2e2e2e;
 }
 
-/* 다크모드 헤더 배경 */
-[data-theme="dark"] .header.scrolled {
-  background: rgba(20, 20, 20, 0.92);
-}
-
-/* 다크모드 토글 버튼 */
-.theme-toggle {
-  width: 36px;
-  height: 36px;
+/* =============================
+   Header / Nav
+============================= */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 32px 48px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  border-radius: 50%;
+  max-width: 1920px;
+  margin: 0 auto;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: color 0.33s cubic-bezier(0.39, 0.575, 0.565, 1) 0.33s,
+              opacity 0.6s ease,
+              visibility 0.6s ease;
+}
+
+.header > * {
+  pointer-events: auto;
+}
+
+.header.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header__logo {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+}
+
+.header__nav {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.header__nav a {
+  font-size: clamp(14px, 0.833vw, 16px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
   color: var(--color-sub);
-  transition: color 0.2s, background 0.2s;
-  margin-left: 8px;
+  transition: color 0.2s;
 }
 
-.theme-toggle:hover {
+.header__nav a:hover {
   color: var(--color-accent);
-  background: var(--color-surface);
-}
-
-.theme-toggle svg {
-  width: 18px;
-  height: 18px;
 }
 
 /* =============================
@@ -125,49 +155,11 @@ body {
   padding: 0 24px;
 }
 
-/* =============================
-   Header / Nav
-============================= */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.header.scrolled {
-  background: rgba(247, 247, 245, 0.92);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 1px 0 var(--color-line);
-}
-
-.header__logo {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--color-text);
-}
-
-.header__nav {
-  display: flex;
-  gap: 32px;
-}
-
-.header__nav a {
-  font-size: 0.875rem;
-  color: var(--color-sub);
-  letter-spacing: 0.03em;
-  transition: color 0.2s;
-}
-
-.header__nav a:hover {
-  color: var(--color-accent);
+/* 12컬럼 그리드 공통 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0 16px;
 }
 
 /* =============================
@@ -183,6 +175,25 @@ body {
 
 .hero__inner {
   width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0 16px;
+}
+
+.hero__label {
+  grid-column: 1 / 8;
+}
+
+.hero__title {
+  grid-column: 1 / 10;
+}
+
+.hero__desc {
+  grid-column: 1 / 7;
+}
+
+.hero__actions {
+  grid-column: 1 / 7;
 }
 
 .hero__label {
@@ -210,7 +221,6 @@ body {
 .hero__desc {
   font-size: 1rem;
   color: var(--color-sub);
-  max-width: 480px;
   margin-bottom: 40px;
   line-height: 1.8;
 }
@@ -323,9 +333,17 @@ body {
 
 .about__inner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0 16px;
   align-items: start;
+}
+
+.about__text {
+  grid-column: 1 / 7;
+}
+
+.about__skills {
+  grid-column: 8 / 13;
 }
 
 .about__text p {
@@ -408,8 +426,6 @@ body {
 }
 
 .work-card {
-  flex-shrink: 0;
-  width: 340px;
   background: var(--color-surface);
   border-radius: 12px;
   overflow: hidden;
@@ -585,6 +601,28 @@ body {
   text-align: center;
 }
 
+.contact .container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0 16px;
+}
+
+.contact .section__label,
+.contact .section__title {
+  grid-column: 3 / 11;
+}
+
+.contact .contact__links {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .contact .section__label,
+  .contact .section__title {
+    grid-column: 1 / -1;
+  }
+}
+
 .contact__links {
   display: flex;
   justify-content: center;
@@ -623,38 +661,34 @@ body {
 /* =============================
    Responsive
 ============================= */
-@media (max-width: 1024px) {
-  .work-card {
-    width: 280px;
-  }
-  .works__pin {
-    padding: 0 32px;
-  }
-}
-
 @media (max-width: 768px) {
   :root {
     --section-padding: 80px 20px;
   }
 
   .header {
-    padding: 16px 20px;
+    padding: 16px;
   }
 
-  .header__nav {
-    gap: 20px;
+  /* 모바일: 모든 그리드 요소 전체 너비 */
+  .hero__label,
+  .hero__title,
+  .hero__desc,
+  .hero__actions {
+    grid-column: 1 / -1;
+  }
+
+  .about__text,
+  .about__skills {
+    grid-column: 1 / -1;
   }
 
   .about__inner {
-    grid-template-columns: 1fr;
-    gap: 48px;
+    row-gap: 48px;
   }
 
-  .work-card {
-    width: 240px;
-  }
-  .works__pin {
-    padding: 0 20px;
+  .works__grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .hero__title {
