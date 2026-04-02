@@ -28,7 +28,7 @@ function initAnimations() {
 
   // 글자 분해 + 스태거 애니메이션
   document.querySelectorAll(
-    '.hero__label, .hero__title, .section__label, .section__title, .about__summary'
+    '.section__label, .section__title, .about__summary'
   ).forEach((el) => {
     const chars = splitText(el);
     gsap.from(chars, {
