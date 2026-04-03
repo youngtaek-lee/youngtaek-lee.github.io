@@ -265,6 +265,38 @@ function initHeader() {
 }
 
 // =============================
+// Menu (ripple + circle)
+// =============================
+function initDrawer() {
+  const btn = document.getElementById('menuBtn');
+  const ripple = document.getElementById('menuRipple');
+  const circle = document.getElementById('menuCircle');
+
+  function open() {
+    ripple.classList.add('is-open');
+    circle.classList.add('is-open');
+    circle.setAttribute('aria-hidden', 'false');
+  }
+
+  function close() {
+    ripple.classList.remove('is-open');
+    circle.classList.remove('is-open');
+    circle.setAttribute('aria-hidden', 'true');
+  }
+
+  const closeBtn = document.getElementById('drawerClose');
+
+  btn.addEventListener('click', () => {
+    circle.classList.contains('is-open') ? close() : open();
+  });
+
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  ripple.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  circle.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
+}
+
+// =============================
 // Lenis 스무스 스크롤
 // =============================
 function initLenis() {
@@ -294,6 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderWorks();
   initModal();
   initHeader();
+  initDrawer();
   initTheme();
   initAnimations();
   initLenis();

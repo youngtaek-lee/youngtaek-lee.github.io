@@ -30,13 +30,23 @@
       <span>Taek.</span>
     </a>
     <nav class="header__nav">
-      <a href="#contact" class="header__nav-cta">
-        <span class="header__nav-cta-default">Contact</span>
-        <span class="header__nav-cta-hover">연락하기</span>
-      </a>
-      <button class="theme-toggle" id="themeToggle" style="display:none" aria-label="다크모드 전환"></button>
+      <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기">MENU</button>
     </nav>
   </header>
+
+  <!-- ========================
+    Menu
+  ========================= -->
+  <div class="menu-ripple" id="menuRipple"></div>
+  <div class="menu-panel" id="menuCircle" aria-hidden="true">
+    <button class="menu-panel__close" id="drawerClose">CLOSE</button>
+    <nav class="menu-panel__nav">
+      <a href="#about" class="menu-panel__link" data-close>About</a>
+      <a href="#about" class="menu-panel__link" data-close>Skill</a>
+      <a href="#works" class="menu-panel__link" data-close>Work</a>
+      <a href="#contact" class="menu-panel__link" data-close>Contact</a>
+    </nav>
+  </div>
 
   <!-- ========================
     HERO
@@ -69,7 +79,6 @@
         </span>
       </div>
     </div>
-    <div class="hero__sun"></div>
   </section>
 
   <!-- ========================
