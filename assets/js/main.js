@@ -76,6 +76,17 @@ function initAnimations() {
   // hero desc / actions (로드 후 딜레이 등장)
   gsap.from('.hero__desc', { opacity: 0, y: 20, duration: 0.6, ease: EASE, delay: 0.4 });
   gsap.from('.hero__actions', { opacity: 0, y: 20, duration: 0.6, ease: EASE, delay: 0.6 });
+
+  // hero 패럴렉스
+  const heroTrigger = {
+    trigger: '.hero',
+    start: 'top top',
+    end: '60% top',
+    scrub: 0.4,
+  };
+
+  gsap.to('.hero__name', { y: -400, ease: 'power2.in', scrollTrigger: heroTrigger });
+  gsap.to('.hero__roles-wrap', { y: -200, ease: 'power2.in', scrollTrigger: heroTrigger });
 }
 
 
@@ -310,13 +321,59 @@ function initLenis() {
     overscroll: false,
   });
 
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
+  lenis.on('scroll', ScrollTrigger.update);
+
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
 
   return lenis;
+}
+
+// =============================
+// Hero 입장 애니메이션
+// =============================
+function initHeroEntrance() {
+  const nameEl = document.querySelector('.hero__name');
+  const chars = splitText(nameEl);
+
+  const tl = gsap.timeline({ delay: 0.2 });
+
+  // 1. 이름 — 중간 글자부터 촤르륵 내려오기
+  tl.from(chars, {
+    opacity: 0,
+    y: '-0.6em',
+    duration: 0.6,
+    ease: 'power3.out',
+    stagger: {
+      from: 'center',
+      amount: 0.25,
+    },
+  });
+
+  // 2. 보더 왼쪽에서 오른쪽으로 펼쳐짐
+  tl.fromTo('.hero__roles',
+    { clipPath: 'inset(0 100% 0 0)' },
+    { clipPath: 'inset(0 0% 0 0)', duration: 0.8, ease: 'power2.inOut' },
+    '-=0.15'
+  );
+
+  // 3. web 태그 pop
+  tl.from('.hero__tag--web', {
+    scale: 0,
+    duration: 0.4,
+    ease: 'back.out(2)',
+  }, '-=0.75');
+
+  // 4. role 텍스트 스태거 등장
+  tl.from('.hero__role', {
+    opacity: 0,
+    y: 8,
+    duration: 0.4,
+    stagger: 0.1,
+    ease: 'power2.out',
+  }, '-=0.3');
 }
 
 // =============================
@@ -328,6 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initDrawer();
   initTheme();
+  initHeroEntrance();
   initAnimations();
   initLenis();
 });

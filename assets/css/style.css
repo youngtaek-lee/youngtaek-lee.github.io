@@ -258,16 +258,21 @@ body::-webkit-scrollbar {
   margin-bottom: clamp(24px, 3vw, 48px);
 }
 
-.hero__roles {
+.hero__roles-wrap {
   grid-column: 1 / -1;
   position: relative;
   display: inline-flex;
+}
+
+.hero__roles {
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: clamp(24px, 3vw, 48px);
+  gap: clamp(40px, 5vw, 72px);
   flex-wrap: nowrap;
   border: 2px solid var(--color-text);
-  padding: clamp(12px, 1.5vw, 20px) clamp(32px, 4vw, 56px);
-  padding-left: clamp(40px, 5vw, 64px);
+  padding: clamp(12px, 1.5vw, 20px) clamp(20px, 2.5vw, 36px);
+  padding-left: clamp(28px, 3.5vw, 48px);
 }
 
 .hero__role {
@@ -285,7 +290,7 @@ body::-webkit-scrollbar {
 .hero__role:not(:last-child)::after {
   content: '';
   position: absolute;
-  right: calc(clamp(24px, 3vw, 48px) / -2);
+  right: calc(clamp(40px, 5vw, 72px) / -2);
   top: calc(-1 * clamp(12px, 1.5vw, 20px) + 4px);
   bottom: calc(-1 * clamp(12px, 1.5vw, 20px) + 4px);
   width: 2px;
@@ -334,6 +339,7 @@ body::-webkit-scrollbar {
   background: var(--color-bg);
   font-size: 0.8em;
   padding: 3px 10px;
+  z-index: 1;
 }
 
 .hero__tag--filled {
@@ -503,6 +509,25 @@ body::-webkit-scrollbar {
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--color-text);
+}
+
+.about__statement {
+  margin-top: clamp(60px, 8vw, 120px);
+  text-align: center;
+}
+
+.about__statement-text {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 7vw, 7rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.about__statement-text em {
+  font-style: italic;
+  color: var(--color-accent);
 }
 
 /* =============================
