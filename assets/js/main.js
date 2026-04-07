@@ -310,48 +310,35 @@ function initTheme() {
 }
 
 // =============================
-// Header
+// Header + Bottom Nav
 // =============================
 function initHeader() {
   const header = document.querySelector('.header');
+  const bottomNav = document.getElementById('bottomNav');
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+  const THRESHOLD = 120;
+
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       header.classList.add('is-visible');
     });
   });
-}
 
-// =============================
-// Menu (ripple + circle)
-// =============================
-function initDrawer() {
-  const btn = document.getElementById('menuBtn');
-  const ripple = document.getElementById('menuRipple');
-  const circle = document.getElementById('menuCircle');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > THRESHOLD) {
+      header.classList.add('is-hidden');
+      bottomNav.classList.add('is-visible');
+    } else {
+      header.classList.remove('is-hidden');
+      bottomNav.classList.remove('is-visible');
+    }
+  }, { passive: true });
 
-  function open() {
-    ripple.classList.add('is-open');
-    circle.classList.add('is-open');
-    circle.setAttribute('aria-hidden', 'false');
-  }
-
-  function close() {
-    ripple.classList.remove('is-open');
-    circle.classList.remove('is-open');
-    circle.setAttribute('aria-hidden', 'true');
-  }
-
-  const closeBtn = document.getElementById('drawerClose');
-
-  btn.addEventListener('click', () => {
-    circle.classList.contains('is-open') ? close() : open();
+  scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-
-  if (closeBtn) closeBtn.addEventListener('click', close);
-  ripple.addEventListener('click', close);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-  circle.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', close));
 }
+
 
 // =============================
 // Lenis 스무스 스크롤
@@ -381,13 +368,13 @@ function initLenis() {
 // Hero 입장 애니메이션
 // =============================
 function initHeroEntrance() {
-  const nameEl = document.querySelector('.hero__name');
-  const chars = splitText(nameEl);
+  const nameLines = document.querySelectorAll('.hero__name-line');
+  const allChars = [...nameLines].flatMap((line) => [...splitText(line)]);
 
   const tl = gsap.timeline({ delay: 0.2 });
 
   // 1. 이름 — 중간 글자부터 촤르륵 내려오기
-  tl.from(chars, {
+  tl.from(allChars, {
     opacity: 0,
     y: '-0.6em',
     duration: 0.6,
@@ -398,28 +385,6 @@ function initHeroEntrance() {
     },
   });
 
-  // 2. 보더 왼쪽에서 오른쪽으로 펼쳐짐
-  tl.fromTo('.hero__roles',
-    { clipPath: 'inset(0 100% 0 0)' },
-    { clipPath: 'inset(0 0% 0 0)', duration: 0.8, ease: 'power2.inOut' },
-    '-=0.15'
-  );
-
-  // 3. web 태그 pop
-  tl.from('.hero__tag--web', {
-    scale: 0,
-    duration: 0.4,
-    ease: 'back.out(2)',
-  }, '-=0.75');
-
-  // 4. role 텍스트 스태거 등장
-  tl.from('.hero__role', {
-    opacity: 0,
-    y: 8,
-    duration: 0.4,
-    stagger: 0.1,
-    ease: 'power2.out',
-  }, '-=0.3');
 }
 
 // =============================
@@ -430,7 +395,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderWorks();
   initModal();
   initHeader();
-  initDrawer();
   initTheme();
   initHeroEntrance();
   initAnimations();
