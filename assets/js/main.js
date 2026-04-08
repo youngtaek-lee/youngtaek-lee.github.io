@@ -73,10 +73,6 @@ function initAnimations() {
     });
   });
 
-  // hero desc / actions (로드 후 딜레이 등장)
-  gsap.from('.hero__desc', { opacity: 0, y: 20, duration: 0.6, ease: EASE, delay: 0.4 });
-  gsap.from('.hero__actions', { opacity: 0, y: 20, duration: 0.6, ease: EASE, delay: 0.6 });
-
   // hero 패럴렉스
   const heroTrigger = {
     trigger: '.hero',
@@ -86,7 +82,7 @@ function initAnimations() {
   };
 
   gsap.to('.hero__name', { y: -400, ease: 'power2.in', scrollTrigger: heroTrigger });
-  gsap.to('.hero__roles-wrap', { y: -200, ease: 'power2.in', scrollTrigger: heroTrigger });
+  gsap.to('.hero__cta', { y: -200, ease: 'power2.in', scrollTrigger: heroTrigger });
 }
 
 
@@ -283,40 +279,17 @@ function initModal() {
   });
 }
 
-// =============================
-// 다크모드 토글
-// =============================
-const ICON_SUN = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
-const ICON_MOON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
-
-function initTheme() {
-  const btn = document.getElementById('themeToggle');
-  const saved = localStorage.getItem('theme') || 'light';
-
-  function apply(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    if (btn) btn.innerHTML = theme === 'dark' ? ICON_SUN : ICON_MOON;
-    localStorage.setItem('theme', theme);
-  }
-
-  apply(saved);
-
-  if (btn) {
-    btn.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      apply(current === 'dark' ? 'light' : 'dark');
-    });
-  }
-}
 
 // =============================
 // Header + Bottom Nav
 // =============================
-function initHeader() {
+function initHeader(lenis) {
   const header = document.querySelector('.header');
   const bottomNav = document.getElementById('bottomNav');
   const scrollTopBtn = document.getElementById('scrollTopBtn');
-  const THRESHOLD = 120;
+  const HEADER_THRESHOLD = 60;
+  const NAV_THRESHOLD = 60;
+  const BOTTOM_THRESHOLD = 120;
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
@@ -324,18 +297,47 @@ function initHeader() {
     });
   });
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > THRESHOLD) {
+  let fadeTimer = null;
+
+  function fadeInHeader() {
+    clearTimeout(fadeTimer);
+    header.style.transition = 'none';
+    header.style.transform = 'translateY(0)';
+    header.style.opacity = '0';
+    header.offsetHeight; // reflow
+    header.classList.remove('is-hidden');
+    header.style.transition = 'opacity 0.5s ease';
+    header.style.opacity = '1';
+    fadeTimer = setTimeout(() => {
+      header.style.transition = '';
+      header.style.transform = '';
+      header.style.opacity = '';
+    }, 550);
+  }
+
+  let prevHeaderShouldHide = false;
+
+  lenis.on('scroll', ({ scroll, limit }) => {
+    const headerShouldHide = scroll > HEADER_THRESHOLD;
+    const navShouldShow = scroll > NAV_THRESHOLD && scroll < limit - BOTTOM_THRESHOLD;
+
+    if (headerShouldHide && !prevHeaderShouldHide) {
+      clearTimeout(fadeTimer);
+      header.style.transition = '';
+      header.style.transform = '';
       header.classList.add('is-hidden');
-      bottomNav.classList.add('is-visible');
-    } else {
-      header.classList.remove('is-hidden');
-      bottomNav.classList.remove('is-visible');
+    } else if (!headerShouldHide && prevHeaderShouldHide) {
+      fadeInHeader();
     }
-  }, { passive: true });
+    prevHeaderShouldHide = headerShouldHide;
+
+    navShouldShow
+      ? bottomNav.classList.add('is-visible')
+      : bottomNav.classList.remove('is-visible');
+  });
 
   scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    lenis.scrollTo(0);
   });
 }
 
@@ -369,22 +371,19 @@ function initLenis() {
 // =============================
 function initHeroEntrance() {
   const nameLines = document.querySelectorAll('.hero__name-line');
-  const allChars = [...nameLines].flatMap((line) => [...splitText(line)]);
 
-  const tl = gsap.timeline({ delay: 0.2 });
-
-  // 1. 이름 — 중간 글자부터 촤르륵 내려오기
-  tl.from(allChars, {
-    opacity: 0,
-    y: '-0.6em',
-    duration: 0.6,
-    ease: 'power3.out',
-    stagger: {
-      from: 'center',
-      amount: 0.25,
-    },
+  gsap.to(nameLines, {
+    backgroundSize: '100% 100%',
+    duration: 1,
+    ease: 'power2.out',
+    stagger: 0.1,
+    delay: 0.2,
   });
 
+  gsap.fromTo('.hero__cta',
+    { opacity: 0 },
+    { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 1.5 }
+  );
 }
 
 // =============================
@@ -394,9 +393,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderClients();
   renderWorks();
   initModal();
-  initHeader();
-  initTheme();
   initHeroEntrance();
   initAnimations();
-  initLenis();
+  const lenis = initLenis();
+  initHeader(lenis);
 });
