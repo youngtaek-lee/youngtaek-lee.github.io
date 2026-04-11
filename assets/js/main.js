@@ -281,6 +281,40 @@ function initModal() {
 
 
 // =============================
+// Menu Overlay
+// =============================
+function initMenu() {
+  const menuBtn = document.getElementById('menuBtn');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const menuClose = document.getElementById('menuClose');
+  const menuBackdrop = document.getElementById('menuBackdrop');
+
+  function openMenu() {
+    menuOverlay.classList.add('is-open');
+    menuOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menuOverlay.classList.remove('is-open');
+    menuOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  menuBtn.addEventListener('click', openMenu);
+  menuClose.addEventListener('click', closeMenu);
+  menuBackdrop.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  menuOverlay.querySelectorAll('.menu-overlay__link').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+}
+
+// =============================
 // Header + Bottom Nav
 // =============================
 function initHeader(lenis) {
@@ -393,6 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderClients();
   renderWorks();
   initModal();
+  initMenu();
   initHeroEntrance();
   initAnimations();
   const lenis = initLenis();
