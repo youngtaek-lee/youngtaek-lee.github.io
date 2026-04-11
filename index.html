@@ -35,8 +35,24 @@
   </header>
 
   <!-- ========================
-    Menu
+    Menu Overlay
   ========================= -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <div class="menu-overlay__backdrop" id="menuBackdrop"></div>
+    <div class="menu-overlay__panel">
+      <button class="menu-overlay__close" id="menuClose" aria-label="메뉴 닫기">CLOSE</button>
+      <nav class="menu-overlay__nav">
+        <a href="#about" class="menu-overlay__link">About</a>
+        <a href="#works" class="menu-overlay__link">Works</a>
+        <a href="#contact" class="menu-overlay__link">Contact</a>
+      </nav>
+      <div class="menu-overlay__footer">
+        <a href="https://github.com/youngtaek-lee" class="menu-overlay__footer-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:brant7100@gmail.com" class="menu-overlay__footer-link">Email</a>
+        <a href="#" class="menu-overlay__footer-link" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </div>
 
   <!-- ========================
     Bottom Nav
@@ -62,9 +78,7 @@
   <section class="hero" id="hero">
     <div class="container hero__inner">
       <h1 class="hero__name">
-        <span class="hero__name-line">Passionate</span>
-        <span class="hero__name-line">Creative Frontend</span>
-        <span class="hero__name-line">Developer</span>
+        <span class="hero__name-line">나상훈</span>
       </h1>
       <nav class="hero__cta">
         <a href="#contact" class="hero__cta-link hero__cta-link--accent">Contact</a>
