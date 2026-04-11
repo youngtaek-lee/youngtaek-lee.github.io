@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="웹 퍼블리셔 포트폴리오 — HTML, CSS, JavaScript 기반 웹 퍼블리싱 작업물 모음" />
+  <title>Portfolio — Web Publisher</title>
+
+  <!-- OG -->
+  <meta property="og:title" content="Portfolio — Web Publisher" />
+  <meta property="og:description" content="웹 퍼블리셔 포트폴리오" />
+  <meta property="og:image" content="assets/images/og-image.jpg" />
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  <link rel="stylesheet" href="assets/css/animation.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ========================
+    Header
+  ========================= -->
+  <header class="header">
+    <a href="#hero" class="header__logo">
+      <span>Lee</span>
+      <span>Young</span>
+      <span>Taek.</span>
+    </a>
+    <nav class="header__nav">
+      <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기">MENU</button>
+    </nav>
+  </header>
+
+  <!-- ========================
+    Menu Overlay
+  ========================= -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+    <div class="menu-overlay__backdrop" id="menuBackdrop"></div>
+    <div class="menu-overlay__panel">
+      <button class="menu-overlay__close" id="menuClose" aria-label="메뉴 닫기">CLOSE</button>
+      <nav class="menu-overlay__nav">
+        <a href="#about" class="menu-overlay__link">About</a>
+        <a href="#works" class="menu-overlay__link">Works</a>
+        <a href="#contact" class="menu-overlay__link">Contact</a>
+      </nav>
+      <div class="menu-overlay__footer">
+        <a href="https://github.com/youngtaek-lee" class="menu-overlay__footer-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:brant7100@gmail.com" class="menu-overlay__footer-link">Email</a>
+        <a href="#" class="menu-overlay__footer-link" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================
+    Bottom Nav
+  ========================= -->
+  <nav class="bottom-nav" id="bottomNav" aria-label="하단 메뉴">
+    <button class="bottom-nav__top" id="scrollTopBtn" aria-label="맨 위로">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5"/>
+        <polyline points="6 11 12 5 18 11"/>
+      </svg>
+    </button>
+    <div class="bottom-nav__links">
+      <a href="#about" class="bottom-nav__link">About</a>
+      <a href="#works" class="bottom-nav__link">Work</a>
+      <a href="#contact" class="bottom-nav__link bottom-nav__link--cta">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ========================
+    HERO
+  ========================= -->
+  <main>
+  <section class="hero" id="hero">
+    <div class="container hero__inner">
+      <h1 class="hero__name">
+        <span class="hero__name-line">Passionate</span>
+        <span class="hero__name-line">Creative Frontend</span>
+        <span class="hero__name-line">Developer</span>
+      </h1>
+      <nav class="hero__cta">
+        <a href="#contact" class="hero__cta-link hero__cta-link--accent">Contact</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ========================
+    ABOUT
+  ========================= -->
+  <section class="about section" id="about">
+    <div class="about__inner">
+      <div class="about__image" id="about3d"></div>
+      <div class="about__content anim-slide-right">
+        <p class="section__label">About</p>
+        <div class="divider"></div>
+        <p class="about__summary">
+          웹 퍼블리셔로 4년간 디자인과 코드의 경계에서 일해왔습니다. 레이아웃 하나, 간격 하나에도 이유가 있어야 한다고 믿으며, 시각적 완성도와 정확한 구현이 함께할 때 비로소 좋은 웹이 된다고 생각합니다.
+        </p>
+        <p class="about__summary">
+          지금은 그 경험을 바탕으로 프론트엔드 개발자로 나아가고 있습니다. 감각은 유지하되, 만들 수 있는 것의 범위를 넓혀가는 중입니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+    STATS
+  ========================= -->
+  <section class="stats section" id="stats">
+    <div class="container">
+      <ul class="about__stats anim-fade-up">
+        <li class="about__stat-card about__stat-card--1">
+          <div class="about__stat-card__top">
+            <span class="about__stat-num">45+</span>
+            <svg class="about__stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+            </svg>
+          </div>
+          <span class="about__stat-label">지금까지 진행한 퍼블리싱 프로젝트</span>
+        </li>
+        <li class="about__stat-card about__stat-card--2">
+          <div class="about__stat-card__top">
+            <span class="about__stat-num">4Y</span>
+            <svg class="about__stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <span class="about__stat-label">웹 퍼블리셔로 쌓아온 경력</span>
+        </li>
+        <li class="about__stat-card about__stat-card--3">
+          <div class="about__stat-card__top">
+            <span class="about__stat-num">100%</span>
+            <svg class="about__stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/>
+            </svg>
+          </div>
+          <span class="about__stat-label">디자인 시안 기반 정확한 구현</span>
+        </li>
+        <li class="about__stat-card about__stat-card--4">
+          <div class="about__stat-card__top">
+            <span class="about__stat-num">2021</span>
+            <svg class="about__stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+          </div>
+          <span class="about__stat-label">웹 퍼블리싱을 시작한 해</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========================
+    WORKS
+  ========================= -->
+  <section class="works section" id="works" style="display:none">
+    <div class="container">
+      <p class="section__label anim-fade-up">Works</p>
+      <div class="divider anim-fade-up"></div>
+      <div class="works__grid">
+        <!-- JS로 렌더링 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================
+    CONTACT
+  ========================= -->
+  <section class="contact section" id="contact" style="display:none">
+    <div class="container">
+      <p class="section__label anim-fade-up">Contact</p>
+      <h2 class="section__title anim-fade-up">함께 일하고 싶으시다면 편하게 연락주세요.</h2>
+      <div class="contact__links anim-fade-up">
+        <a href="mailto:brant7100@gmail.com" class="contact__link">
+          brant7100@gmail.com
+        </a>
+        <a href="https://github.com/youngtaek-lee" class="contact__link" target="_blank" rel="noopener">
+          GitHub
+        </a>
+        <a href="pdf/portfolio.pdf" class="contact__link" target="_blank" rel="noopener">
+          PDF 다운로드
+        </a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+  <div style="height:1000px"></div>
+
+  <!-- ========================
+    CLIENTS
+  ========================= -->
+  <section class="clients" style="display:none">
+    <p class="clients__label">나를 거쳐간 회사</p>
+    <div class="clients__track-wrap">
+      <div class="clients__track" id="clientsTrack"></div>
+    </div>
+  </section>
+
+  <!-- ========================
+    Footer
+  ========================= -->
+  <footer class="footer">
+    <p>© 2026 — Designed & Published by <strong>Lee Youngtaek</strong></p>
+  </footer>
+
+  <!-- ========================
+    Modal
+  ========================= -->
+  <div class="modal-overlay" role="dialog" aria-modal="true" aria-label="프로젝트 상세">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title"></h2>
+        <button class="modal__close" aria-label="닫기">✕</button>
+      </div>
+      <div class="modal__body">
+        <img class="modal__img" src="" alt="" />
+        <div class="modal__meta"></div>
+        <p class="modal__desc"></p>
+        <a class="modal__link" href="" target="_blank" rel="noopener">사이트 바로가기 →</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/about3d.js"></script>
+</body>
+</html>

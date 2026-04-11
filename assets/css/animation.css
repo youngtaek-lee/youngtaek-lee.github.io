@@ -1,0 +1,12 @@
+/* =============================
+   글자 분해 (split-text)
+   — 애니메이션은 GSAP이 처리
+============================= */
+.char {
+  display: inline-block;
+}
+
+.char--space {
+  display: inline-block;
+  white-space: pre;
+}
