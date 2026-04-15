@@ -1,4 +1,95 @@
 // =============================
+// Background Blob (Three.js)
+// =============================
+function initBgMesh() {
+  if (typeof THREE === 'undefined') return;
+  const canvas = document.getElementById('bgCanvas');
+  if (!canvas) return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.z = 5;
+
+  // 가장자리가 자연스럽게 투명해지는 소프트 셰이더
+  const vShader = `
+    uniform float uTime;
+    uniform float uSpeed;
+    uniform float uAmp;
+    varying vec3 vNormal;
+    void main() {
+      vNormal = normalize(normalMatrix * normal);
+      vec3 pos = position;
+      float d =
+        sin(pos.x * 1.8 + uTime * uSpeed)        * uAmp +
+        sin(pos.y * 2.2 + uTime * uSpeed * 1.4)  * uAmp +
+        sin(pos.z * 1.6 + uTime * uSpeed * 0.9)  * uAmp * 0.7;
+      pos += normal * d;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    }
+  `;
+  const fShader = `
+    uniform vec3  uColor;
+    uniform float uOpacity;
+    varying vec3  vNormal;
+    void main() {
+      float rim   = clamp(dot(vNormal, vec3(0.0, 0.0, 1.0)), 0.0, 1.0);
+      float alpha = pow(rim, 1.4) * uOpacity;
+      gl_FragColor = vec4(uColor, alpha);
+    }
+  `;
+
+  function makeBlob(radius, color, x, y, z, speed, amp, opacity) {
+    const geo = new THREE.SphereGeometry(radius, 64, 64);
+    const mat = new THREE.ShaderMaterial({
+      vertexShader: vShader,
+      fragmentShader: fShader,
+      uniforms: {
+        uTime:    { value: 0 },
+        uSpeed:   { value: speed },
+        uAmp:     { value: amp },
+        uColor:   { value: new THREE.Color(color) },
+        uOpacity: { value: opacity },
+      },
+      transparent: true,
+      depthWrite: false,
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(x, y, z);
+    scene.add(mesh);
+    return mesh;
+  }
+
+  const blobs = [
+    makeBlob(3.2, '#3d5a47', -1.8,  0.6,  0,    0.7,  0.42, 0.9),
+    makeBlob(2.6, '#5bc8d8',  2.2, -0.4, -0.5,  0.6,  0.36, 0.55),
+    makeBlob(2.0, '#1e3d30',  0.4, -1.8,  0.3,  0.85, 0.32, 0.65),
+  ];
+
+  let t = 0;
+  function tick() {
+    requestAnimationFrame(tick);
+    t += 0.01;
+    blobs.forEach((b, i) => {
+      b.material.uniforms.uTime.value = t + i * 1.5;
+      b.rotation.y += 0.003 * (i % 2 === 0 ? 1 : -1);
+      b.rotation.x += 0.0015;
+    });
+    renderer.render(scene, camera);
+  }
+  tick();
+
+  window.addEventListener('resize', () => {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+  });
+}
+
+// =============================
 // 텍스트 글자 분해 (split-text)
 // =============================
 function splitText(el) {
@@ -39,6 +130,18 @@ function initAnimations() {
       stagger: 0.025,
       scrollTrigger: { trigger: el, start: TRIGGER_START },
     });
+  });
+
+  // About 카드 슬라이드업
+  gsap.to('.about__card', {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '.about__card',
+      start: 'top 85%',
+    },
   });
 
   // 블록 단위 fade-up
@@ -432,6 +535,7 @@ function initHeroEntrance() {
 // Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
+  initBgMesh();
   renderClients();
   renderWorks();
   initModal();

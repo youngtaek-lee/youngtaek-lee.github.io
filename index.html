@@ -29,6 +29,11 @@
 <body>
 
   <!-- ========================
+    Background Canvas
+  ========================= -->
+  <canvas id="bgCanvas" aria-hidden="true"></canvas>
+
+  <!-- ========================
     Header
   ========================= -->
   <header class="header">
@@ -100,11 +105,8 @@
     ABOUT
   ========================= -->
   <section class="about section" id="about">
-    <div class="about__inner">
-      <div class="about__image">
-        <img src="assets/images/profile.png" alt="이영택 프로필 사진" class="about__profile-img" />
-      </div>
-      <div class="about__content anim-slide-right">
+    <div class="container">
+      <div class="about__card">
         <p class="section__label">About</p>
         <div class="divider"></div>
         <p class="about__summary">
@@ -238,6 +240,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
