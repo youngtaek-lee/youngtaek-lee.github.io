@@ -117,6 +117,8 @@ function initAnimations() {
   const EASE = 'power2.out';
   const TRIGGER_START = 'top 88%';
 
+  // 섹션 라디우스 → sticky 닿으면 0
+
   // 글자 분해 + 스태거 애니메이션
   document.querySelectorAll(
     '.section__label, .section__title, .about__summary'
@@ -185,7 +187,7 @@ function initAnimations() {
   };
 
   gsap.to('.hero__name', { y: -400, ease: 'power2.in', scrollTrigger: heroTrigger });
-  gsap.to('.hero__cta', { y: -200, ease: 'power2.in', scrollTrigger: heroTrigger });
+  gsap.to('.hero__cta', { y: -500, ease: 'power2.in', scrollTrigger: heroTrigger });
 }
 
 

@@ -58,22 +58,22 @@
 ============================= */
 :root {
   /* Background */
-  --color-bg: #0e1a1c;
-  --color-surface: #152022;
-  --color-surface-raised: #1c2e32;
-  --color-dark: #091214;
+  --color-bg: #003840;
+  --color-surface: #005560;
+  --color-surface-raised: #006d77;
+  --color-dark: #002028;
 
   /* Border */
-  --color-line: #1f3135;
+  --color-line: #005560;
 
   /* Text */
-  --color-text: #ddeef0;
-  --color-sub: #5a8088;
+  --color-text: #edf6f9;
+  --color-sub: #83c5be;
 
   /* Accent */
-  --color-accent: #5bc8d8;
-  --color-accent-light: #7ad5e3;
-  --color-accent-dim: rgba(91, 200, 216, 0.1);
+  --color-accent: #e29578;
+  --color-accent-light: #ffddd2;
+  --color-accent-dim: rgba(226, 149, 120, 0.15);
 
   --font-base: 'Paperlogy', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -279,6 +279,10 @@ body::-webkit-scrollbar {
 /* =============================
    HERO
 ============================= */
+.section-spacer {
+  height: 50vh;
+}
+
 .hero {
   position: relative;
   overflow: hidden;
@@ -440,10 +444,47 @@ body::-webkit-scrollbar {
 }
 
 /* =============================
+   STICKY LAYER SECTIONS
+============================= */
+.about,
+.stats,
+.works,
+.contact {
+  position: sticky;
+  top: 0;
+  background: #edf6f9;
+  color: #003840;
+  box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.12);
+
+  --color-text: #003840;
+  --color-sub: #006d77;
+  --color-line: #83c5be;
+  --color-accent: #e29578;
+  --color-bg: #edf6f9;
+  --color-surface: #d8eef3;
+  --color-surface-raised: #c4e4eb;
+}
+
+.about   {
+  z-index: 10;
+  background: #006d77;
+  --color-text: #edf6f9;
+  --color-sub: #83c5be;
+  --color-accent: #ffddd2;
+  --color-line: #005560;
+}
+.stats   { z-index: 20; }
+.works   { z-index: 30; }
+.contact { z-index: 40; }
+
+.about, .stats, .works, .contact {
+  border-radius: 0;
+}
+
+/* =============================
    ABOUT
 ============================= */
 .about {
-  background: transparent;
   padding: var(--section-padding);
   min-height: 100vh;
   display: flex;
@@ -451,15 +492,9 @@ body::-webkit-scrollbar {
 }
 
 .about__card {
-  background: rgba(221, 238, 240, 0.04);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(221, 238, 240, 0.08);
-  border-radius: 28px;
-  padding: clamp(40px, 6vw, 80px);
+  border-radius: 0;
+  padding: 0;
   max-width: 760px;
-  opacity: 0;
-  transform: translateY(64px);
 }
 
 .stats {
@@ -468,12 +503,17 @@ body::-webkit-scrollbar {
   align-items: center;
 }
 
+.stats .container {
+  max-width: 100%;
+  padding: 0 24px;
+}
+
 .about__stats {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  margin-top: 60px;
+  margin-top: 0;
 }
 
 .about__stat-card {
@@ -484,10 +524,10 @@ body::-webkit-scrollbar {
   gap: 20px;
 }
 
-.about__stat-card--1 { background: #0d2d3d; }
-.about__stat-card--2 { background: #2d1f0d; }
-.about__stat-card--3 { background: #0d2d1a; }
-.about__stat-card--4 { background: #1f0d2d; }
+.about__stat-card--1 { background: #edf6f9; }
+.about__stat-card--2 { background: #ffddd2; }
+.about__stat-card--3 { background: #c8e8e4; }
+.about__stat-card--4 { background: #ffe8d8; }
 
 .about__stat-card__top {
   display: flex;
@@ -499,7 +539,7 @@ body::-webkit-scrollbar {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 700;
-  color: var(--color-text);
+  color: #1a2a2e;
   letter-spacing: -0.03em;
   line-height: 1;
 }
@@ -507,14 +547,14 @@ body::-webkit-scrollbar {
 .about__stat-icon {
   width: 28px;
   height: 28px;
-  color: var(--color-text);
+  color: #1a2a2e;
   opacity: 0.4;
   flex-shrink: 0;
 }
 
 .about__stat-label {
   font-size: 0.85rem;
-  color: var(--color-sub);
+  color: #3a5a60;
   line-height: 1.5;
 }
 
@@ -755,7 +795,6 @@ body::-webkit-scrollbar {
    CONTACT
 ============================= */
 .contact {
-  background: var(--color-surface);
   text-align: center;
 }
 
