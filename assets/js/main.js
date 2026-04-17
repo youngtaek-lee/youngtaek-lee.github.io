@@ -114,70 +114,6 @@ function splitText(el) {
 function initAnimations() {
   gsap.registerPlugin(ScrollTrigger);
 
-  const EASE = 'power2.out';
-  const TRIGGER_START = 'top 88%';
-
-  // 섹션 라디우스 → sticky 닿으면 0
-
-  // 글자 분해 + 스태거 애니메이션
-  document.querySelectorAll(
-    '.section__label, .section__title, .about__summary'
-  ).forEach((el) => {
-    const chars = splitText(el);
-    gsap.from(chars, {
-      opacity: 0,
-      y: '0.6em',
-      duration: 0.6,
-      ease: EASE,
-      stagger: 0.025,
-      scrollTrigger: { trigger: el, start: TRIGGER_START },
-    });
-  });
-
-  // About 카드 슬라이드업
-  gsap.to('.about__card', {
-    opacity: 1,
-    y: 0,
-    duration: 1,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: '.about__card',
-      start: 'top 85%',
-    },
-  });
-
-  // 블록 단위 fade-up
-  document.querySelectorAll('.anim-fade-up').forEach((el) => {
-    gsap.from(el, {
-      opacity: 0,
-      y: 24,
-      duration: 0.6,
-      ease: EASE,
-      scrollTrigger: { trigger: el, start: TRIGGER_START },
-    });
-  });
-
-  // 블록 단위 slide
-  document.querySelectorAll('.anim-slide-left').forEach((el) => {
-    gsap.from(el, {
-      opacity: 0,
-      x: -24,
-      duration: 0.6,
-      ease: EASE,
-      scrollTrigger: { trigger: el, start: TRIGGER_START },
-    });
-  });
-
-  document.querySelectorAll('.anim-slide-right').forEach((el) => {
-    gsap.from(el, {
-      opacity: 0,
-      x: 24,
-      duration: 0.6,
-      ease: EASE,
-      scrollTrigger: { trigger: el, start: TRIGGER_START },
-    });
-  });
-
   // hero 패럴렉스
   const heroTrigger = {
     trigger: '.hero',
@@ -186,8 +122,8 @@ function initAnimations() {
     scrub: 0.4,
   };
 
-  gsap.to('.hero__name', { y: -400, ease: 'power2.in', scrollTrigger: heroTrigger });
-  gsap.to('.hero__cta', { y: -500, ease: 'power2.in', scrollTrigger: heroTrigger });
+  // gsap.to('.hero__name', { y: -400, ease: 'power2.in', scrollTrigger: heroTrigger });
+  // gsap.to('.hero__cta', { y: -500, ease: 'power2.in', scrollTrigger: heroTrigger });
 }
 
 
@@ -534,6 +470,33 @@ function initHeroEntrance() {
 }
 
 // =============================
+// About 스크롤 텍스트
+// =============================
+function initAboutScroll() {
+  const words = document.querySelectorAll('.about__word');
+  if (!words.length) return;
+
+  gsap.set(words, { opacity: 0 });
+
+  const total = words.length;
+
+  ScrollTrigger.create({
+    trigger: '.about-track',
+    start: 'top 100%',
+    end: 'bottom 50%',
+    scrub: 0.3,
+    onUpdate: (self) => {
+      const activePos = self.progress * (total + 6) - 2;
+      words.forEach((word, i) => {
+        const dist = Math.abs(i - activePos);
+        const opacity = Math.max(0, Math.exp(-dist * dist * 1.2));
+        gsap.set(word, { opacity });
+      });
+    },
+  });
+}
+
+// =============================
 // Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
@@ -544,6 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMenu();
   initHeroEntrance();
   initAnimations();
+  initAboutScroll();
   const lenis = initLenis();
   initHeader(lenis);
 });

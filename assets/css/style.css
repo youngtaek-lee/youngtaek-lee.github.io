@@ -58,22 +58,22 @@
 ============================= */
 :root {
   /* Background */
-  --color-bg: #003840;
-  --color-surface: #005560;
-  --color-surface-raised: #006d77;
-  --color-dark: #002028;
+  --color-bg: #0a0a0a;
+  --color-surface: #171717;
+  --color-surface-raised: #242424;
+  --color-dark: #050505;
 
   /* Border */
-  --color-line: #005560;
+  --color-line: #2e2e2e;
 
   /* Text */
-  --color-text: #edf6f9;
-  --color-sub: #83c5be;
+  --color-text: #f0f0f0;
+  --color-sub: #888888;
 
   /* Accent */
-  --color-accent: #e29578;
-  --color-accent-light: #ffddd2;
-  --color-accent-dim: rgba(226, 149, 120, 0.15);
+  --color-accent: #f0f0f0;
+  --color-accent-light: #ffffff;
+  --color-accent-dim: rgba(240, 240, 240, 0.08);
 
   --font-base: 'Paperlogy', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -350,16 +350,18 @@ body::-webkit-scrollbar {
 }
 
 .hero__cta-link--accent {
-  background: var(--color-accent);
-  color: var(--color-bg);
-  border-color: transparent;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-text);
+  border: none;
+  outline: none;
   opacity: 1;
   font-size: 1.1rem;
   padding: 14px 32px;
 }
 
 .hero__cta-link--accent:hover {
-  background: var(--color-accent-light);
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
 }
 
 .hero__name-line {
@@ -446,55 +448,60 @@ body::-webkit-scrollbar {
 /* =============================
    STICKY LAYER SECTIONS
 ============================= */
-.about,
 .stats,
 .works,
 .contact {
   position: sticky;
   top: 0;
-  background: #edf6f9;
-  color: #003840;
-  box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.12);
+  background: #f5f5f5;
+  color: #111111;
+  box-shadow: none;
 
-  --color-text: #003840;
-  --color-sub: #006d77;
-  --color-line: #83c5be;
-  --color-accent: #e29578;
-  --color-bg: #edf6f9;
-  --color-surface: #d8eef3;
-  --color-surface-raised: #c4e4eb;
+  --color-text: #111111;
+  --color-sub: #666666;
+  --color-line: #dddddd;
+  --color-accent: #111111;
+  --color-bg: #f5f5f5;
+  --color-surface: #ebebeb;
+  --color-surface-raised: #e0e0e0;
 }
 
-.about   {
-  z-index: 10;
-  background: #006d77;
-  --color-text: #edf6f9;
-  --color-sub: #83c5be;
-  --color-accent: #ffddd2;
-  --color-line: #005560;
-}
 .stats   { z-index: 20; }
 .works   { z-index: 30; }
 .contact { z-index: 40; }
 
-.about, .stats, .works, .contact {
+.stats, .works, .contact {
   border-radius: 0;
 }
 
 /* =============================
    ABOUT
 ============================= */
+.about-track {
+  position: relative;
+  height: 300vh;
+}
+
 .about {
-  padding: var(--section-padding);
-  min-height: 100vh;
+  position: relative;
+  background: transparent;
   display: flex;
   align-items: center;
 }
 
+.about__sticky {
+  width: 100%;
+  padding: 0 48px;
+}
+
 .about__card {
-  border-radius: 0;
   padding: 0;
-  max-width: 760px;
+  max-width: none;
+}
+
+.about__word {
+  display: inline;
+  opacity: 0.12;
 }
 
 .stats {
@@ -524,10 +531,10 @@ body::-webkit-scrollbar {
   gap: 20px;
 }
 
-.about__stat-card--1 { background: #edf6f9; }
-.about__stat-card--2 { background: #ffddd2; }
-.about__stat-card--3 { background: #c8e8e4; }
-.about__stat-card--4 { background: #ffe8d8; }
+.about__stat-card--1 { background: #ebebeb; }
+.about__stat-card--2 { background: #e0e0e0; }
+.about__stat-card--3 { background: #f0f0f0; }
+.about__stat-card--4 { background: #e8e8e8; }
 
 .about__stat-card__top {
   display: flex;
@@ -559,9 +566,12 @@ body::-webkit-scrollbar {
 }
 
 .about__summary {
-  color: var(--color-sub);
-  line-height: 1.9;
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .about__skills {
