@@ -479,7 +479,6 @@ body::-webkit-scrollbar {
 ============================= */
 .about-track {
   position: relative;
-  height: 300vh;
 }
 
 .about {
@@ -487,6 +486,7 @@ body::-webkit-scrollbar {
   background: transparent;
   display: flex;
   align-items: center;
+  padding: 160px 0;
 }
 
 .about__sticky {

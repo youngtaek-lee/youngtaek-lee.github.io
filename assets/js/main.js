@@ -117,13 +117,25 @@ function initAnimations() {
   // hero 패럴렉스
   const heroTrigger = {
     trigger: '.hero',
-    start: 'top top',
-    end: '60% top',
+    start: '80% top',
+    end: '80% top',
     scrub: 0.4,
   };
 
   // gsap.to('.hero__name', { y: -400, ease: 'power2.in', scrollTrigger: heroTrigger });
   // gsap.to('.hero__cta', { y: -500, ease: 'power2.in', scrollTrigger: heroTrigger });
+
+  gsap.to('.hero__inner', {
+    opacity: 0,
+    filter: 'blur(16px)',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero',
+      start: '30% top',
+      end: 'bottom top',
+      scrub: true,
+    },
+  });
 }
 
 
@@ -481,19 +493,20 @@ function initAboutScroll() {
   const total = words.length;
 
   ScrollTrigger.create({
-    trigger: '.about-track',
-    start: 'top 100%',
-    end: 'bottom 50%',
+    trigger: '.about',
+    start: 'top 80%',
+    end: '+=100%',
     scrub: 0.3,
     onUpdate: (self) => {
-      const activePos = self.progress * (total + 6) - 2;
+      const activePos = self.progress * (total + 6) - 4;
       words.forEach((word, i) => {
         const dist = Math.abs(i - activePos);
-        const opacity = Math.max(0, Math.exp(-dist * dist * 1.2));
+        const opacity = Math.max(0, Math.exp(-dist * dist * 0.7));
         gsap.set(word, { opacity });
       });
     },
   });
+
 }
 
 // =============================
