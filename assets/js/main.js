@@ -248,34 +248,56 @@ const works = [
 ];
 
 // =============================
-// Works 카드 렌더링
+// Works 렌더링
 // =============================
 function renderWorks() {
-  const grid = document.querySelector('.works__grid');
-  if (!grid) return;
+  const list = document.querySelector('.works__list');
+  const thumbImg = document.querySelector('.works__thumb-img');
+  const thumbDesc = document.querySelector('.works__thumb-desc');
+  if (!list || !thumbImg) return;
 
-  grid.innerHTML = works
-    .map(
-      (work) => `
-    <article class="work-card" data-id="${work.id}">
-      <div class="work-card__thumb">
-        <img src="${work.thumb}" alt="${work.name} 스크린샷" loading="lazy" />
-      </div>
-      <div class="work-card__info">
-        <h3 class="work-card__name">${work.name}</h3>
-        <div class="work-card__tags">
-          ${work.tags
-            .map(
-              (tag) =>
-                `<span class="work-card__tag ${tag === '유지보수' ? 'work-card__tag--accent' : ''}">${tag}</span>`
-            )
-            .join('')}
-        </div>
-      </div>
-    </article>
-  `
-    )
-    .join('');
+  list.innerHTML = works
+      .map(
+        (work, i) =>
+          `<button class="works__item${i === 0 ? ' is-active' : ''}" data-id="${work.id}">${work.name}</button>`
+      )
+      .join('');
+
+  thumbImg.src = works[0].thumb;
+  thumbImg.alt = works[0].name;
+  thumbDesc.textContent = works[0].desc;
+
+  const items = list.querySelectorAll('.works__item');
+
+  ScrollTrigger.create({
+    trigger: '.works',
+    start: 'top 60%',
+    onEnter: () => {
+      items.forEach((item, i) => {
+        setTimeout(() => {
+          item.style.backgroundSize = '100% 100%';
+        }, i * 150);
+      });
+    },
+  });
+
+  items.forEach((item) => {
+    item.addEventListener('mouseenter', () => {
+      const work = works.find((w) => w.id === item.dataset.id);
+      if (!work) return;
+
+      list.querySelectorAll('.works__item').forEach((el) => el.classList.remove('is-active'));
+      item.classList.add('is-active');
+
+      thumbImg.style.opacity = '0';
+      setTimeout(() => {
+        thumbImg.src = work.thumb;
+        thumbImg.alt = work.name;
+        thumbDesc.textContent = work.desc;
+        thumbImg.style.opacity = '1';
+      }, 200);
+    });
+  });
 }
 
 // =============================
@@ -315,11 +337,14 @@ function closeModal() {
 
 function initModal() {
   const overlay = document.querySelector('.modal-overlay');
+  const grid = document.querySelector('.works__grid');
 
-  document.querySelector('.works__grid').addEventListener('click', (e) => {
-    const card = e.target.closest('.work-card');
-    if (card) openModal(card.dataset.id);
-  });
+  if (grid) {
+    grid.addEventListener('click', (e) => {
+      const card = e.target.closest('.work-card');
+      if (card) openModal(card.dataset.id);
+    });
+  }
 
   overlay.querySelector('.modal__close').addEventListener('click', closeModal);
 
@@ -486,9 +511,41 @@ function initHeroEntrance() {
 // =============================
 function initAboutScroll() {
   const words = document.querySelectorAll('.about__word');
+  const moreBtn = document.querySelector('.about__more-link');
+
+  const aboutCard = document.querySelector('.about__card');
+
+  if (aboutCard) {
+    gsap.to(aboutCard, {
+      opacity: 0,
+      filter: 'blur(12px)',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.about',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.5,
+      },
+    });
+  }
+
+  if (moreBtn) {
+    gsap.to(moreBtn, {
+      opacity: 0,
+      filter: 'blur(12px)',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.about',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.5,
+      },
+    });
+  }
+
   if (!words.length) return;
 
-  gsap.set(words, { opacity: 0 });
+  gsap.set(words, { opacity: 0.2 });
 
   const total = words.length;
 
@@ -501,7 +558,7 @@ function initAboutScroll() {
       const activePos = self.progress * (total + 6) - 4;
       words.forEach((word, i) => {
         const dist = Math.abs(i - activePos);
-        const opacity = Math.max(0, Math.exp(-dist * dist * 0.7));
+        const opacity = Math.max(0.1, Math.exp(-dist * dist * 0.7));
         gsap.set(word, { opacity });
       });
     },
@@ -521,6 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroEntrance();
   initAnimations();
   initAboutScroll();
+  initAboutMore();
   const lenis = initLenis();
   initHeader(lenis);
 });
