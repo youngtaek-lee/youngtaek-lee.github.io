@@ -124,20 +124,16 @@
   <!-- ========================
     WORKS
   ========================= -->
-  <section class="works section" id="works">
-    <h2 class="works__heading">Works</h2>
-    <div class="works__layout">
-      <div class="works__list">
+  <section class="works" id="works">
+    <div class="works__track-wrap">
+      <h2 class="works__heading">Works</h2>
+      <div class="works__track">
         <!-- JS로 렌더링 -->
-      </div>
-      <div class="works__preview">
-        <div class="works__thumb-wrap">
-          <img class="works__thumb-img" src="" alt="" />
-        </div>
-        <p class="works__thumb-desc"></p>
       </div>
     </div>
   </section>
+
+  <div class="fade-to-black fade-to-black--works" aria-hidden="true"></div>
 
   <!-- ========================
     CONTACT
@@ -179,25 +175,7 @@
     <p>© 2026 — Designed & Published by <strong>Lee Youngtaek</strong></p>
   </footer>
 
-  <!-- ========================
-    Modal
-  ========================= -->
-  <div class="modal-overlay" role="dialog" aria-modal="true" aria-label="프로젝트 상세">
-    <div class="modal">
-      <div class="modal__header">
-        <h2 class="modal__title"></h2>
-        <button class="modal__close" aria-label="닫기">✕</button>
-      </div>
-      <div class="modal__body">
-        <img class="modal__img" src="" alt="" />
-        <div class="modal__meta"></div>
-        <p class="modal__desc"></p>
-        <a class="modal__link" href="" target="_blank" rel="noopener">사이트 바로가기 →</a>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>

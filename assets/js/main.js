@@ -248,115 +248,48 @@ const works = [
 ];
 
 // =============================
-// Works 렌더링
+// Works 렌더링 + 수평 스크롤
 // =============================
 function renderWorks() {
-  const list = document.querySelector('.works__list');
-  const thumbImg = document.querySelector('.works__thumb-img');
-  const thumbDesc = document.querySelector('.works__thumb-desc');
-  if (!list || !thumbImg) return;
+  const track = document.querySelector('.works__track');
+  if (!track) return;
 
-  list.innerHTML = works
-      .map(
-        (work, i) =>
-          `<button class="works__item${i === 0 ? ' is-active' : ''}" data-id="${work.id}">${work.name}</button>`
-      )
-      .join('');
-
-  thumbImg.src = works[0].thumb;
-  thumbImg.alt = works[0].name;
-  thumbDesc.textContent = works[0].desc;
-
-  const items = list.querySelectorAll('.works__item');
-
-  ScrollTrigger.create({
-    trigger: '.works',
-    start: 'top 60%',
-    onEnter: () => {
-      items.forEach((item, i) => {
-        setTimeout(() => {
-          item.style.backgroundSize = '100% 100%';
-        }, i * 150);
-      });
-    },
-  });
-
-  items.forEach((item) => {
-    item.addEventListener('mouseenter', () => {
-      const work = works.find((w) => w.id === item.dataset.id);
-      if (!work) return;
-
-      list.querySelectorAll('.works__item').forEach((el) => el.classList.remove('is-active'));
-      item.classList.add('is-active');
-
-      thumbImg.style.opacity = '0';
-      setTimeout(() => {
-        thumbImg.src = work.thumb;
-        thumbImg.alt = work.name;
-        thumbDesc.textContent = work.desc;
-        thumbImg.style.opacity = '1';
-      }, 200);
-    });
-  });
-}
-
-// =============================
-// Modal
-// =============================
-function openModal(id) {
-  const work = works.find((w) => w.id === id);
-  if (!work) return;
-
-  const overlay = document.querySelector('.modal-overlay');
-  const modal = overlay.querySelector('.modal');
-
-  modal.querySelector('.modal__title').textContent = work.name;
-  modal.querySelector('.modal__img').src = work.thumb;
-  modal.querySelector('.modal__img').alt = work.name;
-  modal.querySelector('.modal__desc').textContent = work.desc;
-
-  const metaEl = modal.querySelector('.modal__meta');
-  metaEl.innerHTML = work.tags
+  track.innerHTML = works
     .map(
-      (tag) =>
-        `<span class="work-card__tag ${tag === '유지보수' ? 'work-card__tag--accent' : ''}">${tag}</span>`
+      (work) => `
+      <div class="work-item">
+        <span class="work-item__label">${work.id.toUpperCase()}</span>
+        <div class="work-item__img-wrap">
+          <img src="${work.thumb}" alt="${work.name}" loading="lazy" />
+          <h3 class="work-item__title">${work.name}</h3>
+          <div class="work-item__desc-wrap">
+            <p class="work-item__desc">${work.desc}</p>
+          </div>
+        </div>
+      </div>`
     )
     .join('');
 
-  modal.querySelector('.modal__link').href = work.url;
-
-  overlay.classList.add('is-open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  const overlay = document.querySelector('.modal-overlay');
-  overlay.classList.remove('is-open');
-  document.body.style.overflow = '';
-}
-
-function initModal() {
-  const overlay = document.querySelector('.modal-overlay');
-  const grid = document.querySelector('.works__grid');
-
-  if (grid) {
-    grid.addEventListener('click', (e) => {
-      const card = e.target.closest('.work-card');
-      if (card) openModal(card.dataset.id);
-    });
-  }
-
-  overlay.querySelector('.modal__close').addEventListener('click', closeModal);
-
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModal();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
+  let scrollTimer;
+  gsap.to(track, {
+    x: () => -(track.scrollWidth - window.innerWidth),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.works__track-wrap',
+      pin: true,
+      scrub: 1,
+      start: 'top top',
+      end: () => `+=${track.scrollWidth - window.innerWidth}`,
+      onUpdate: () => {
+        track.style.pointerEvents = 'none';
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+          track.style.pointerEvents = '';
+        }, 150);
+      },
+    },
   });
 }
-
 
 // =============================
 // Menu Overlay
@@ -573,12 +506,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initBgMesh();
   renderClients();
   renderWorks();
-  initModal();
   initMenu();
   initHeroEntrance();
   initAnimations();
   initAboutScroll();
-  initAboutMore();
   const lenis = initLenis();
   initHeader(lenis);
 });
