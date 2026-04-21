@@ -21,7 +21,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/reset.css" />
   <link rel="stylesheet" href="assets/css/animation.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
@@ -32,6 +32,7 @@
     Background Canvas
   ========================= -->
   <canvas id="bgCanvas" aria-hidden="true"></canvas>
+  <canvas id="starsCanvas" aria-hidden="true"></canvas>
 
   <!-- ========================
     Header
@@ -126,7 +127,7 @@
   ========================= -->
   <section class="works" id="works">
     <div class="works__track-wrap">
-      <h2 class="works__heading">Works</h2>
+      <h2 class="works__heading">Selected Works</h2>
       <div class="works__track">
         <!-- JS로 렌더링 -->
       </div>
@@ -140,19 +141,16 @@
   ========================= -->
   <section class="contact section" id="contact">
     <div class="container">
-      <p class="section__label anim-fade-up">Contact</p>
-      <h2 class="section__title anim-fade-up">함께 일하고 싶으시다면 편하게 연락주세요.</h2>
-      <div class="contact__links anim-fade-up">
-        <a href="mailto:brant7100@gmail.com" class="contact__link">
-          brant7100@gmail.com
-        </a>
-        <a href="https://github.com/youngtaek-lee" class="contact__link" target="_blank" rel="noopener">
-          GitHub
-        </a>
-        <a href="pdf/portfolio.pdf" class="contact__link" target="_blank" rel="noopener">
-          PDF 다운로드
-        </a>
+      <h2 class="contact__title anim-fade-up">좋은 작업은 대화에서 시작됩니다.</h2>
+      <a href="mailto:brant7100@gmail.com" class="contact__email anim-fade-up">brant7100@gmail.com</a>
+      <div class="contact__social anim-fade-up">
+        <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener">GitHub</a>
+        <span class="contact__divider">|</span>
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+        <span class="contact__divider">|</span>
+        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
       </div>
+      <a href="mailto:brant7100@gmail.com" class="contact__btn anim-fade-up">Contact</a>
     </div>
   </section>
 

@@ -268,7 +268,10 @@ function renderWorks() {
         </div>
       </div>`
     )
-    .join('');
+    .join('') + `
+    <div class="work-item work-item--more">
+      <a href="works.html" class="work-item--more__text">See More <span class="work-item--more__arrow">→</span></a>
+    </div>`;
 
   let scrollTimer;
   gsap.to(track, {
@@ -420,6 +423,24 @@ function initLenis() {
 }
 
 // =============================
+// Works 헤딩 fill 애니메이션
+// =============================
+function initWorksHeading() {
+  const heading = document.querySelector('.works__heading');
+  if (!heading) return;
+
+  gsap.to(heading, {
+    backgroundSize: '100% 100%',
+    duration: 1.2,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.works__track-wrap',
+      start: 'top 80%',
+    },
+  });
+}
+
+// =============================
 // Hero 입장 애니메이션
 // =============================
 function initHeroEntrance() {
@@ -500,14 +521,83 @@ function initAboutScroll() {
 }
 
 // =============================
+// Stars Canvas
+// =============================
+function initStars() {
+  const canvas = document.getElementById('starsCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const layers = [
+    { count: 180, minR: 0.3, maxR: 0.7, speed: 0.08, alpha: 0.35 },
+    { count: 80,  minR: 0.7, maxR: 1.2, speed: 0.18, alpha: 0.55 },
+    { count: 30,  minR: 1.2, maxR: 2.0, speed: 0.32, alpha: 0.8  },
+  ];
+
+  const stars = layers.flatMap(({ count, minR, maxR, speed, alpha }) =>
+    Array.from({ length: count }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight * 4,
+      r: minR + Math.random() * (maxR - minR),
+      speed,
+      alpha,
+    }))
+  );
+
+  let scrollY = 0;
+  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
+
+  const aboutTrack = document.querySelector('.about-track');
+  const works = document.querySelector('.works');
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.save();
+    ctx.beginPath();
+    if (aboutTrack) {
+      const r = aboutTrack.getBoundingClientRect();
+      ctx.rect(r.left, r.top, r.width, r.height);
+    }
+    if (works) {
+      const r = works.getBoundingClientRect();
+      ctx.rect(r.left, r.top, r.width, r.height);
+    }
+    ctx.clip();
+
+    stars.forEach(({ x, y, r, speed, alpha }) => {
+      const drawY = (y - scrollY * speed) % (canvas.height * 4);
+      if (drawY < -10 || drawY > canvas.height + 10) return;
+      ctx.beginPath();
+      ctx.arc(x, drawY, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.fill();
+    });
+
+    ctx.restore();
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// =============================
 // Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
   initBgMesh();
+  initStars();
   renderClients();
   renderWorks();
   initMenu();
   initHeroEntrance();
+  initWorksHeading();
   initAnimations();
   initAboutScroll();
   const lenis = initLenis();
