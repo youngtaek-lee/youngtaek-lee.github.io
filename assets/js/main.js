@@ -198,12 +198,12 @@ const works = [
     desc: '가장 오랜 기간 유지보수를 담당한 프로젝트입니다. 메인 개편, 기능 추가·제거, 자잘한 수정까지 지속적으로 대응했습니다.',
   },
   {
-    id: 'raymats',
-    name: '레이머티리얼즈',
-    thumb: 'assets/images/works/raymats.jpg',
-    url: 'https://raymats.com/html/index/',
+    id: 'bexel',
+    name: '벡셀',
+    thumb: 'assets/images/works/bexel.jpg',
+    url: 'https://www.bexel.co.kr/html/index/index.php',
     tags: ['퍼블리싱', '유지보수'],
-    desc: '퍼블리싱 완료 후 메인 영상 섹션 추가 작업을 진행했습니다. 추가 요청이 적었고 깔끔하게 마무리된 프로젝트입니다.',
+    desc: '제품 수가 많아 리스트 구조와 배치를 어떻게 효율적으로 잡을지 고민이 많았던 프로젝트입니다.',
   },
   {
     id: 'marusys',
@@ -214,20 +214,12 @@ const works = [
     desc: 'fullpage.js를 활용해 섹션 전환 방식으로 구현했습니다. 라이브러리 기반 레이아웃 구성 및 유지보수를 담당했습니다.',
   },
   {
-    id: 'bexel',
-    name: '벡셀',
-    thumb: 'assets/images/works/bexel.jpg',
-    url: 'https://www.bexel.co.kr/html/index/index.php',
+    id: 'raymats',
+    name: '레이머티리얼즈',
+    thumb: 'assets/images/works/raymats.jpg',
+    url: 'https://raymats.com/html/index/',
     tags: ['퍼블리싱', '유지보수'],
-    desc: '제품 수가 많아 리스트 구조와 배치를 어떻게 효율적으로 잡을지 고민이 많았던 프로젝트입니다.',
-  },
-  {
-    id: 'cpdc',
-    name: '충남공공디자인센터',
-    thumb: 'assets/images/works/cpdc.jpg',
-    url: 'https://www.cpdc.re.kr/html/index/',
-    tags: ['퍼블리싱', '유지보수'],
-    desc: '메인 페이지에 SVG 아이콘 애니메이션 구현 요청이 있었습니다. 공공기관 특성에 맞게 접근성을 고려해 작업했습니다.',
+    desc: '퍼블리싱 완료 후 메인 영상 섹션 추가 작업을 진행했습니다. 추가 요청이 적었고 깔끔하게 마무리된 프로젝트입니다.',
   },
   {
     id: 'optimedi',
@@ -541,11 +533,11 @@ function initStars() {
     { count: 30,  minR: 1.2, maxR: 2.0, speed: 0.32, alpha: 0.8  },
   ];
 
-  const stars = layers.flatMap(({ count, minR, maxR, speed, alpha }) =>
+  const stars = layers.flatMap(({ count, speed, alpha }) =>
     Array.from({ length: count }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight * 4,
-      r: minR + Math.random() * (maxR - minR),
+      r: 0.3,
       speed,
       alpha,
     }))
@@ -572,12 +564,19 @@ function initStars() {
     }
     ctx.clip();
 
+    const spread = Math.min(scrollY * 0.00025, 0.35);
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+
     stars.forEach(({ x, y, r, speed, alpha }) => {
       const drawY = (y - scrollY * speed) % (canvas.height * 4);
       if (drawY < -10 || drawY > canvas.height + 10) return;
+      const drawX = x + (x - cx) * spread;
+      const spreadY = drawY + (drawY - cy) * spread * 0.4;
+      const fadedAlpha = alpha * (1 - spread * 0.6);
       ctx.beginPath();
-      ctx.arc(x, drawY, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.arc(drawX, spreadY, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${fadedAlpha})`;
       ctx.fill();
     });
 
