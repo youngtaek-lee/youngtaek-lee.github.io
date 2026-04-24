@@ -1018,98 +1018,115 @@ body::-webkit-scrollbar {
    CONTACT
 ============================= */
 .contact {
-  position: relative;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  min-height: 100vh;
 }
 
-.contact .container {
+.contact__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+/* 좌측 */
+.contact__left {
+  /* border-right: 1px solid var(--color-line); */
+}
+
+/* 우측 */
+.contact__right {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* 우상단 */
+.contact__top {
+  padding: 60px 48px;
+  /* border-bottom: 1px solid var(--color-line); */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: flex-end;
   gap: 16px;
-}
-
-.contact__heading {
-  margin-bottom: 90px;
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 6vw, 6rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: rgba(240, 240, 240, 0.15);
-  background: linear-gradient(to right, var(--color-text), var(--color-text)) no-repeat left center;
-  -webkit-background-clip: text;
-  background-clip: text;
-  background-size: 0% 100%;
-  white-space: nowrap;
-  pointer-events: none;
 }
 
 .contact__title {
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.8vw, 2.4rem);
-  font-weight: 700;
+  font-size: clamp(1.2rem, 2vw, 2rem);
+  font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.3;
   color: var(--color-text);
 }
 
 .contact__email {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(3rem, 7vw, 6rem);
-  color: var(--color-sub);
+  font-family: 'Alegreya', serif;
+  font-size: clamp(2rem, 3.8vw, 4rem);
+  color: var(--color-text);
   transition: color 0.2s;
   line-height: 1.2;
+  position: relative;
+  display: inline-block;
+}
+
+.contact__email::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: var(--color-text);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
 .contact__email:hover {
-  color: var(--color-text);
+  color: var(--color-point);
 }
 
+.contact__email:hover::after {
+  background: var(--color-point);
+}
 
-.contact__social {
+/* 우하단 2단 그리드 */
+.contact__bottom {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
 }
 
-.contact__social a {
+.contact__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+}
+
+.contact__grid-item {
+  padding: 40px 48px;
+  /* border-right: 1px solid var(--color-line); */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact__grid-item:last-child {
+  border-right: none;
+}
+
+.contact__grid-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin-bottom: 11px;
+}
+
+.contact__grid-item a {
+  font-size: 1rem;
   color: var(--color-sub);
   transition: color 0.2s;
 }
 
-.contact__social a:hover {
+.contact__grid-item a:hover {
   color: var(--color-text);
-}
-
-.contact__divider {
-  color: var(--color-line);
-  opacity: 0.3;
-}
-
-.contact__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 40px;
-  border: 1px solid var(--color-text);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-text);
-  transition: background 0.2s, color 0.2s;
-}
-
-.contact__btn:hover {
-  background: var(--color-text);
-  color: #000000;
 }
 
 /* =============================
@@ -1423,57 +1440,14 @@ body::-webkit-scrollbar {
    FOOTER
 ============================= */
 .footer {
-  padding: 48px 60px;
+  padding: 20px 48px;
+  border-top: 1px solid var(--color-line);
 }
 
-.footer__inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  max-width: 800px;
-  margin: 0 auto;
-  gap: 0;
-}
-
-.footer__col {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 0.8rem;
+.footer__copy {
+  font-size: 0.75rem;
   color: var(--color-sub);
-  padding: 0 32px;
-  border-right: 1px solid var(--color-line);
-}
-
-.footer__col:first-child {
-  padding-left: 0;
-}
-
-.footer__col:last-child {
-  border-right: none;
-  padding-right: 0;
-}
-
-.footer__col--right {
-  text-align: left;
-  align-items: flex-start;
-}
-
-.footer__label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-line);
-  margin-bottom: 4px;
-}
-
-.footer__col a {
-  color: var(--color-sub);
-  transition: color 0.2s;
-}
-
-.footer__col a:hover {
-  color: var(--color-text);
+  letter-spacing: 0.04em;
 }
 
 /* =============================
