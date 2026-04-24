@@ -29,6 +29,12 @@
 <body>
 
   <!-- ========================
+    Loading Screen
+  ========================= -->
+  <div id="loadingBg" aria-hidden="true"></div>
+  <canvas id="loadingCanvas" aria-hidden="true"></canvas>
+
+  <!-- ========================
     Background Canvas
   ========================= -->
   <canvas id="bgCanvas" aria-hidden="true"></canvas>
@@ -59,6 +65,7 @@
       <nav class="menu-overlay__nav">
         <a href="#about" class="menu-overlay__link">About</a>
         <a href="#works" class="menu-overlay__link">Works</a>
+        <a href="#skills" class="menu-overlay__link">Skills</a>
         <a href="#contact" class="menu-overlay__link">Contact</a>
       </nav>
       <div class="menu-overlay__footer">
@@ -83,6 +90,7 @@
     <div class="bottom-nav__links">
       <a href="#about" class="bottom-nav__link">About</a>
       <a href="#works" class="bottom-nav__link">Work</a>
+      <a href="#skills" class="bottom-nav__link">Skills</a>
       <a href="#contact" class="bottom-nav__link bottom-nav__link--cta">Contact</a>
     </div>
   </nav>
@@ -129,10 +137,26 @@
   ========================= -->
   <section class="works" id="works">
     <div class="works__track-wrap">
-      <h2 class="works__heading">Recent Works</h2>
+      <div class="works__header">
+        <h2 class="works__heading">Recent Works</h2>
+        <p class="works__sub">다양한 업종의 클라이언트와 함께한 퍼블리싱 프로젝트입니다.</p>
+      </div>
       <div class="works__track">
         <!-- JS로 렌더링 -->
       </div>
+    </div>
+  </section>
+
+  <!-- ========================
+    SKILLS
+  ========================= -->
+  <section class="skills" id="skills">
+    <div class="skills__header">
+      <h2 class="skills__heading">Skills</h2>
+      <p class="skills__sub">HTML/CSS부터 디자인 툴까지, 실무에서 직접 사용하는 기술들입니다.</p>
+    </div>
+    <div class="skills__grid">
+      <!-- JS로 렌더링 -->
     </div>
   </section>
 
@@ -164,14 +188,26 @@
     Footer
   ========================= -->
   <footer class="footer">
-    <div class="footer__social">
-      <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener">GitHub</a>
-      <span class="contact__divider">|</span>
-      <a href="#" target="_blank" rel="noopener">Instagram</a>
-      <span class="contact__divider">|</span>
-      <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+    <div class="footer__inner">
+      <div class="footer__col">
+        <span class="footer__label">SNS</span>
+        <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener">GitHub</a>
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="footer__col">
+        <span class="footer__label">PAGES</span>
+        <a href="#about">About</a>
+        <a href="#works">Works</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer__col footer__col--right">
+        <span class="footer__label">©</span>
+        <p>2026</p>
+        <p>Designed &amp; Published</p>
+        <p>by Lee Youngtaek</p>
+      </div>
     </div>
-    <p>© 2026 — Designed & Published by <strong>Lee Youngtaek</strong></p>
   </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>

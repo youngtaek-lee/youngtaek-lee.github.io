@@ -1,4 +1,163 @@
 // =============================
+// Loading Screen
+// =============================
+// 흐름: CSS #loadingBg(베이지) → JS 즉시 제거 → canvas 4단계 애니메이션
+// grow(2→100px, 1.5s) → hold(100px, 100% 대기) → swell(100→300px, 0.8s) → burst(300→full, 0.55s, destination-out)
+function initLoadingScreen() {
+  document.getElementById('loadingBg')?.remove();
+
+  const canvas = document.getElementById('loadingCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width  = window.innerWidth;
+  const H = canvas.height = window.innerHeight;
+  const CX = W / 2, CY = H / 2;
+  const maxR = Math.sqrt(CX * CX + CY * CY) * 1.12;
+  const N = 8;
+  const BG = '#f0f5f2';
+  const R0 = 2, R1 = 100;
+
+  let r = R0, t = 0, phaseP = 0;
+  let phase = 'grow'; // grow → hold → swell → burst
+  let loadDone = false;
+  let lastTime = null;
+
+  // 실제 리소스 로딩 진행률 추적
+  const domRes = document.querySelectorAll('link[rel="stylesheet"][href], script[src], img[src]');
+  const total  = Math.max(domRes.length + 4, 10);
+  let loadedCount = Math.min(performance.getEntriesByType('resource').length, total - 1);
+  let targetPct   = Math.round((loadedCount / total) * 80);
+  let displayPct  = targetPct;
+  let po = null;
+
+  if (window.PerformanceObserver) {
+    try {
+      po = new PerformanceObserver((list) => {
+        loadedCount = Math.min(loadedCount + list.getEntries().length, total - 1);
+        if (!loadDone) targetPct = Math.min(Math.round((loadedCount / total) * 95), 95);
+      });
+      po.observe({ entryTypes: ['resource'] });
+    } catch (e) {}
+  }
+
+  window.addEventListener('load', () => {
+    loadDone = true;
+    targetPct = 100;
+    if (po) try { po.disconnect(); } catch (e) {}
+  });
+
+  function blobPath(radius) {
+    const amp = Math.max(3, radius * 0.045);
+    const pts = [];
+    for (let i = 0; i < N; i++) {
+      const a = (i / N) * Math.PI * 2;
+      const rr = radius
+        + Math.sin(a * 2 + t * 0.6) * amp
+        + Math.cos(a * 3.5 + t * 0.4) * amp * 0.6;
+      pts.push([CX + Math.cos(a) * rr, CY + Math.sin(a) * rr]);
+    }
+    ctx.beginPath();
+    ctx.moveTo((pts[N-1][0]+pts[0][0])/2, (pts[N-1][1]+pts[0][1])/2);
+    for (let i = 0; i < N; i++) {
+      const mx = (pts[i][0]+pts[(i+1)%N][0])/2;
+      const my = (pts[i][1]+pts[(i+1)%N][1])/2;
+      ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
+    }
+    ctx.closePath();
+  }
+
+  function drawPct(alpha) {
+    if (r < 36 || alpha <= 0) return;
+    const a = Math.min(1, (r - 36) / 18) * alpha;
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.fillStyle = 'rgba(0, 28, 48, 0.82)';
+    ctx.font = `700 13px "Bricolage Grotesque", sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(Math.min(Math.floor(displayPct), 100) + '%', CX, CY);
+    ctx.restore();
+  }
+
+  function draw(now) {
+    const dt = lastTime !== null ? Math.min((now - lastTime) / 1000, 0.05) : 0;
+    lastTime = now;
+    t += 0.025;
+
+    // Observer가 없거나 느릴 때 최소 진행 보장
+    if (!loadDone && targetPct < 85) targetPct = Math.min(targetPct + dt * 6, 85);
+    displayPct += (targetPct - displayPct) * Math.min(dt * 5, 0.2);
+
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = BG;
+    ctx.fillRect(0, 0, W, H);
+
+    if (phase === 'grow') {
+      // 2 → 100px, ease-out, 1.5s
+      phaseP = Math.min(phaseP + dt / 1.5, 1);
+      const e = 1 - Math.pow(1 - phaseP, 2);
+      r = R0 + (R1 - R0) * e;
+      blobPath(r); ctx.fillStyle = '#00d4ff'; ctx.fill();
+      drawPct(1);
+      if (phaseP >= 1) { phase = 'hold'; phaseP = 0; }
+
+    } else if (phase === 'hold') {
+      // 100px 유지, 100% 도달 + loadDone 대기
+      r = R1;
+      blobPath(r); ctx.fillStyle = '#00d4ff'; ctx.fill();
+      drawPct(1);
+      if (loadDone && displayPct >= 99) { phase = 'windup'; phaseP = 0; }
+
+    } else if (phase === 'windup') {
+      // 100 → 68px 으로 살짝 움츠러들었다가 burst 진입 (역동성)
+      phaseP = Math.min(phaseP + dt / 0.22, 1);
+      const e = phaseP * phaseP;
+      r = R1 - (R1 - 55) * e;
+      blobPath(r); ctx.fillStyle = '#00d4ff'; ctx.fill();
+      drawPct(Math.max(0, 1 - phaseP * 3));
+      if (phaseP >= 1) { phase = 'burst'; phaseP = 0; }
+
+    } else if (phase === 'burst') {
+      // 68 → full, cubic ease-in(서서히→빠르게), 0.9s
+      phaseP = Math.min(phaseP + dt / 0.9, 1);
+      const e = phaseP * phaseP * phaseP;
+      r = 55 + (maxR - 55) * e;
+
+      // 파란 blob: 65% 이후 서서히 페이드아웃
+      const blueAlpha = phaseP < 0.65 ? 1 : Math.max(0, 1 - (phaseP - 0.65) / 0.25);
+      ctx.globalAlpha = blueAlpha;
+      blobPath(r);
+      ctx.fillStyle = '#00d4ff';
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // 뚫기는 70% 이후부터 서서히 시작
+      const cutRatio = Math.max(0, (phaseP - 0.7) / 0.3);
+      const cutAlpha = cutRatio * cutRatio; // ease-in
+      if (cutAlpha > 0) {
+        ctx.globalAlpha = cutAlpha;
+        ctx.globalCompositeOperation = 'destination-out';
+        blobPath(r);
+        ctx.fillStyle = 'rgba(0,0,0,1)';
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+      }
+      if (phaseP >= 1) {
+        canvas.style.transition = 'opacity 0.3s ease';
+        canvas.style.opacity = '0';
+        setTimeout(() => canvas.remove(), 300);
+        return;
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  requestAnimationFrame(draw);
+}
+
+// =============================
 // Background Blob (Three.js)
 // =============================
 function initBgMesh() {
@@ -347,6 +506,46 @@ const works = [
 ];
 
 // =============================
+// Skills 렌더링
+// =============================
+const ICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/';
+
+const skills = [
+  { name: 'HTML5',       icon: `${ICON}html5/html5-original.svg` },
+  { name: 'CSS3',        icon: `${ICON}css3/css3-original.svg` },
+  { name: 'JavaScript',  icon: `${ICON}javascript/javascript-plain.svg` },
+  { name: 'jQuery',      icon: `${ICON}jquery/jquery-original.svg` },
+  { name: 'Sass',        icon: `${ICON}sass/sass-original.svg` },
+  { name: 'Git',         icon: `${ICON}git/git-original.svg` },
+  { name: 'Figma',       icon: `${ICON}figma/figma-original.svg` },
+  { name: 'Photoshop',   icon: `${ICON}photoshop/photoshop-plain.svg` },
+  { name: 'Illustrator', icon: `${ICON}illustrator/illustrator-plain.svg` },
+  { name: 'React',       icon: `${ICON}react/react-original.svg` },
+  { name: 'VSCode',      icon: `${ICON}vscode/vscode-original.svg` },
+  { name: 'GitHub',      icon: `${ICON}github/github-original.svg` },
+];
+
+function renderSkills() {
+  const grid = document.querySelector('.skills__grid');
+  if (!grid) return;
+
+  grid.innerHTML = skills.map(s => `
+    <div class="skill-item">
+      <span class="skill-item__name">${s.name}</span>
+      <img class="skill-item__icon" src="${s.icon}" alt="${s.name}" loading="lazy">
+    </div>
+  `).join('');
+
+  grid.querySelectorAll('.skill-item').forEach(item => {
+    item.addEventListener('mousemove', (e) => {
+      const r = item.getBoundingClientRect();
+      item.style.setProperty('--x', `${e.clientX - r.left}px`);
+      item.style.setProperty('--y', `${e.clientY - r.top}px`);
+    });
+  });
+}
+
+// =============================
 // Works 렌더링 + 수평 스크롤
 // =============================
 function renderWorks() {
@@ -536,6 +735,16 @@ function initWorksHeading() {
     },
   });
 
+  const skillsHeading = document.querySelector('.skills__heading');
+  if (skillsHeading) {
+    gsap.to(skillsHeading, {
+      backgroundSize: '100% 100%',
+      duration: 1.2,
+      ease: 'power2.out',
+      scrollTrigger: { trigger: '.skills', start: 'top 80%' },
+    });
+  }
+
   const contactHeading = document.querySelector('.contact__heading');
   if (!contactHeading) return;
 
@@ -708,11 +917,13 @@ function initStars() {
 // Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
+  initLoadingScreen();
   initBgMesh();
   initStars();
   initCustomCursor();
   renderClients();
   renderWorks();
+  renderSkills();
   initMenu();
   initHeroEntrance();
   initWorksHeading();
