@@ -90,6 +90,107 @@ function initBgMesh() {
 }
 
 // =============================
+// Custom Cursor
+// =============================
+function initCustomCursor() {
+  const canvas = document.getElementById('cursorCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const SIZE = 220;
+  canvas.width = SIZE;
+  canvas.height = SIZE;
+
+  const CX = SIZE / 2;
+  const CY = SIZE / 2;
+
+  let tx = -999, ty = -999;
+  let cx = -999, cy = -999;
+  let t = 0;
+  let initialized = false;
+  let hoverProgress = 0;
+  let hoverTarget = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    tx = e.clientX;
+    ty = e.clientY;
+    if (!initialized) {
+      cx = tx; cy = ty;
+      initialized = true;
+      canvas.style.opacity = '1';
+    }
+  });
+  document.addEventListener('mouseleave', () => { canvas.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { if (initialized) canvas.style.opacity = '1'; });
+
+  function draw() {
+    ctx.clearRect(0, 0, SIZE, SIZE);
+
+    const N = 8;
+    const baseR = 14 + (100 - 14) * hoverProgress;
+    const amp   = 4 * (1 - hoverProgress);
+
+    ctx.beginPath();
+    if (amp < 0.3) {
+      ctx.arc(CX, CY, baseR, 0, Math.PI * 2);
+    } else {
+      const pts = [];
+      for (let i = 0; i < N; i++) {
+        const a = (i / N) * Math.PI * 2;
+        const r = baseR
+          + Math.sin(a * 2 + t * 1.1) * amp
+          + Math.cos(a * 3.5 + t * 0.7) * amp * 0.5;
+        pts.push([CX + Math.cos(a) * r, CY + Math.sin(a) * r]);
+      }
+      ctx.moveTo(
+        (pts[N - 1][0] + pts[0][0]) / 2,
+        (pts[N - 1][1] + pts[0][1]) / 2
+      );
+      for (let i = 0; i < N; i++) {
+        const mx = (pts[i][0] + pts[(i + 1) % N][0]) / 2;
+        const my = (pts[i][1] + pts[(i + 1) % N][1]) / 2;
+        ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
+      }
+      ctx.closePath();
+    }
+    ctx.fillStyle = '#00d4ff';
+    ctx.fill();
+
+    // 텍스트: 확장 60% 이후부터 페이드인
+    if (hoverProgress > 0.6) {
+      const alpha = (hoverProgress - 0.6) / 0.4;
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = '#000';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = 'bold 13px "Bricolage Grotesque", sans-serif';
+      ctx.fillText('VIEW', CX, CY - 9);
+      ctx.fillText('WORKS', CX, CY + 9);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function tick() {
+    requestAnimationFrame(tick);
+    t += 0.04;
+
+    if (initialized) {
+      const el = document.elementFromPoint(tx, ty);
+      hoverTarget = (el && el.closest('.work-item__img-wrap')) ? 1 : 0;
+    }
+
+    hoverProgress += (hoverTarget - hoverProgress) * 0.14;
+    cx += (tx - cx) * 0.18;
+    cy += (ty - cy) * 0.18;
+
+    // 블롭 중심 고정: 커서 우하단 +34px — 크기가 커져도 중심 그대로
+    canvas.style.transform = `translate(${cx - 76}px, ${cy - 76}px)`;
+    draw();
+  }
+  tick();
+}
+
+// =============================
 // 텍스트 글자 분해 (split-text)
 // =============================
 function splitText(el) {
@@ -278,6 +379,7 @@ function renderWorks() {
       scrub: 1,
       start: 'top top',
       end: () => `+=${track.scrollWidth - window.innerWidth}`,
+
       onUpdate: () => {
         track.style.pointerEvents = 'none';
         clearTimeout(scrollTimer);
@@ -430,6 +532,19 @@ function initWorksHeading() {
     ease: 'power2.out',
     scrollTrigger: {
       trigger: '.works__track-wrap',
+      start: 'top 80%',
+    },
+  });
+
+  const contactHeading = document.querySelector('.contact__heading');
+  if (!contactHeading) return;
+
+  gsap.to(contactHeading, {
+    backgroundSize: '100% 100%',
+    duration: 1.2,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.contact',
       start: 'top 80%',
     },
   });
@@ -595,6 +710,7 @@ function initStars() {
 document.addEventListener('DOMContentLoaded', () => {
   initBgMesh();
   initStars();
+  initCustomCursor();
   renderClients();
   renderWorks();
   initMenu();
