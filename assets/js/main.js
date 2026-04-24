@@ -6,6 +6,13 @@
 function initLoadingScreen() {
   document.getElementById('loadingBg')?.remove();
 
+  // 로딩 화면 중에 Three.js 미리 다운로드 — 끝날 때 바로 쓸 수 있게
+  let threeLoaded = false;
+  const threeScript = document.createElement('script');
+  threeScript.src = 'assets/js/three-custom.min.js';
+  threeScript.onload = () => { threeLoaded = true; };
+  document.head.appendChild(threeScript);
+
   const canvas = document.getElementById('loadingCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -146,7 +153,15 @@ function initLoadingScreen() {
       if (phaseP >= 1) {
         canvas.style.transition = 'opacity 0.3s ease';
         canvas.style.opacity = '0';
-        setTimeout(() => canvas.remove(), 300);
+        setTimeout(() => {
+          canvas.remove();
+          const startBg = () => {
+            initBgMesh();
+            const bg = document.getElementById('bgCanvas');
+            if (bg) { bg.style.transition = 'opacity 1s ease'; bg.style.opacity = '1'; }
+          };
+          threeLoaded ? startBg() : (threeScript.onload = startBg);
+        }, 300);
         return;
       }
     }
@@ -917,8 +932,7 @@ function initStars() {
 // Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
-  initLoadingScreen();
-  initBgMesh();
+  initLoadingScreen(); // Three.js는 로딩 화면 종료 후 동적 로드 → initBgMesh 호출
   initStars();
   initCustomCursor();
   renderClients();

@@ -95,6 +95,7 @@
   z-index: 0;
   pointer-events: none;
   filter: blur(48px);
+  opacity: 0;
 }
 
 #starsCanvas {
