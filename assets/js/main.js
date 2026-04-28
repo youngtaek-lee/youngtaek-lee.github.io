@@ -21,7 +21,7 @@ function initLoadingScreen() {
   const CX = W / 2, CY = H / 2;
   const maxR = Math.sqrt(CX * CX + CY * CY) * 1.12;
   const N = 8;
-  const BG = '#f0f5f2';
+  const BG = '#000000';
   const R0 = 2, R1 = 100;
 
   let r = R0, t = 0, phaseP = 0;
@@ -78,7 +78,7 @@ function initLoadingScreen() {
     const a = Math.min(1, (r - 36) / 18) * alpha;
     ctx.save();
     ctx.globalAlpha = a;
-    ctx.fillStyle = 'rgba(0, 28, 48, 0.82)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
     ctx.font = `700 13px "Bricolage Grotesque", sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -354,14 +354,105 @@ function initCustomCursor() {
     }
 
     hoverProgress += (hoverTarget - hoverProgress) * 0.14;
-    cx += (tx - cx) * 0.18;
-    cy += (ty - cy) * 0.18;
+
+    cx += (tx - cx) * 0.08;
+    cy += (ty - cy) * 0.08;
 
     // 블롭 중심 고정: 커서 우하단 +34px — 크기가 커져도 중심 그대로
     canvas.style.transform = `translate(${cx - 76}px, ${cy - 76}px)`;
     draw();
   }
   tick();
+}
+
+// =============================
+// Contact Blob (Three.js)
+// =============================
+function initContactBlob() {
+  if (typeof THREE === 'undefined') return;
+  const canvas = document.getElementById('contactBlobCanvas');
+  if (!canvas) return;
+
+  const SIZE = 200;
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setSize(SIZE, SIZE);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+  camera.position.z = 5.5;
+
+  const vShader = `
+    uniform float uTime;
+    varying vec3 vNormal;
+    void main() {
+      vNormal = normalize(normalMatrix * normal);
+      vec3 pos = position;
+      float d =
+        sin(pos.x * 1.8 + uTime * 0.4) * 0.10 +
+        sin(pos.y * 2.2 + uTime * 0.5) * 0.09 +
+        sin(pos.z * 1.6 + uTime * 0.3) * 0.06;
+      pos += normal * d;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    }
+  `;
+
+  const fShader = `
+    uniform vec3 uColor;
+    varying vec3 vNormal;
+    void main() {
+      float rim = clamp(dot(vNormal, vec3(0.0, 0.0, 1.0)), 0.0, 1.0);
+      float alpha = pow(rim, 1.1) * 0.92;
+      gl_FragColor = vec4(uColor, alpha);
+    }
+  `;
+
+  const geo = new THREE.SphereGeometry(1.5, 64, 64);
+  const mat = new THREE.ShaderMaterial({
+    vertexShader: vShader,
+    fragmentShader: fShader,
+    uniforms: {
+      uTime:  { value: 0 },
+      uColor: { value: new THREE.Color('#00d4ff') },
+    },
+    transparent: true,
+    depthWrite: false,
+  });
+
+  const mesh = new THREE.Mesh(geo, mat);
+  scene.add(mesh);
+
+  let t = 0;
+  let mouseX = 0, mouseY = 0;
+  let targetX = 0, targetY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    targetX = (e.clientX / window.innerWidth  - 0.5) * 2;
+    targetY = -(e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  (function tick() {
+    requestAnimationFrame(tick);
+    t += 0.008;
+    mat.uniforms.uTime.value = t;
+    mesh.rotation.y += 0.002;
+    mesh.rotation.x += 0.001;
+
+    mouseX += (targetX - mouseX) * 0.04;
+    mouseY += (targetY - mouseY) * 0.04;
+    mesh.position.x = mouseX * 0.35;
+    mesh.position.y = mouseY * 0.35;
+
+    renderer.render(scene, camera);
+  })();
+}
+
+function loadThree(cb) {
+  if (typeof THREE !== 'undefined') { cb(); return; }
+  const s = document.createElement('script');
+  s.src = 'assets/js/three-custom.min.js';
+  s.onload = cb;
+  document.head.appendChild(s);
 }
 
 // =============================
@@ -411,6 +502,7 @@ function initAnimations() {
       scrub: true,
     },
   });
+
 }
 
 
@@ -932,7 +1024,10 @@ function initStars() {
 // Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
-  initLoadingScreen(); // Three.js는 로딩 화면 종료 후 동적 로드 → initBgMesh 호출
+  // initLoadingScreen(); // 개발 중 비활성화
+  document.getElementById('loadingBg')?.remove();
+  document.getElementById('loadingCanvas')?.remove();
+  loadThree(initContactBlob);
   initStars();
   initCustomCursor();
   renderClients();

@@ -160,38 +160,19 @@
   <section class="contact" id="contact">
     <div class="contact__inner">
 
-      <!-- 좌측: 공간 확보 -->
-      <div class="contact__left"></div>
-
-      <!-- 우측 -->
-      <div class="contact__right">
-
-        <!-- 우상단: 타이틀 + 이메일 -->
-        <div class="contact__top">
-          <h2 class="contact__title">좋은 작업은 대화에서 시작됩니다.</h2>
-          <a href="mailto:brant7100@gmail.com" class="contact__email">brant7100@gmail.com</a>
+      <!-- 타이틀 + 이메일 + SNS -->
+      <div class="contact__top">
+          <canvas id="contactBlobCanvas" aria-hidden="true"></canvas>
+        <h2 class="contact__title">좋은 작업은 대화에서 시작됩니다.</h2>
+        <a href="mailto:brant7100@gmail.com" class="contact__email">brant7100@gmail.com</a>
+        <div class="contact__sns">
+          <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="contact__sns-link">GitHub</a>
+          <a href="#" target="_blank" rel="noopener" class="contact__sns-link">Instagram</a>
+          <a href="#" target="_blank" rel="noopener" class="contact__sns-link">LinkedIn</a>
         </div>
-
-        <!-- 우하단: 2단 그리드 -->
-        <div class="contact__bottom">
-          <div class="contact__grid">
-            <div class="contact__grid-item">
-              <span class="contact__grid-label">SNS</span>
-              <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener">GitHub</a>
-              <a href="#" target="_blank" rel="noopener">Instagram</a>
-              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
-            </div>
-            <div class="contact__grid-item">
-              <span class="contact__grid-label">PAGES</span>
-              <a href="#about">About</a>
-              <a href="#works">Works</a>
-              <a href="#skills">Skills</a>
-              <a href="#contact">Contact</a>
-            </div>
-          </div>
-        </div>
-
       </div>
+
+
     </div>
   </section>
 
@@ -211,7 +192,15 @@
     Footer
   ========================= -->
   <footer class="footer">
-    <p class="footer__copy">© 2026 Designed &amp; Published by Lee Youngtaek</p>
+    <div class="footer__inner">
+      <p class="footer__copy">© 2026 Designed &amp; Published by Lee Youngtaek</p>
+      <nav class="footer__nav">
+        <a href="#about" class="footer__link">About</a>
+        <a href="#works" class="footer__link">Works</a>
+        <a href="#skills" class="footer__link">Skills</a>
+        <a href="#contact" class="footer__link">Contact</a>
+      </nav>
+    </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js" defer></script>
