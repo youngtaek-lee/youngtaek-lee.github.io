@@ -396,6 +396,7 @@ vec3 orthogonal(vec3 v) {
 
   // ── Mouse parallax ───────────────────────────────────────────
   let targetRotX = 0, targetRotY = 0;
+  let scrollRotX = 0, scrollRotY = 0;
   document.addEventListener('mousemove', e => {
     targetRotX = (e.clientY / H - 0.5) * 0.5;
     targetRotY = (e.clientX / W - 0.5) * 0.7;
@@ -417,7 +418,7 @@ vec3 orthogonal(vec3 v) {
   }, { once: true });
 
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    // Phase 1: Hero 이탈 — 좌하단으로 이동하며 fade out, scale 1.6→1.3
+    // Phase 1: Hero 이탈 — 좌하단으로 이동하며 fade out, scale 1.6→1.0
     ScrollTrigger.create({
       trigger: '#hero',
       start: 'top top',
@@ -425,14 +426,18 @@ vec3 orthogonal(vec3 v) {
       scrub: 1,
       onUpdate(self) {
         const p = self.progress;
-        mesh.position.x = gsap.utils.interpolate(0, -2.5, p);
+        const sp = gsap.parseEase('power2.in')(p);
+        mesh.position.x = gsap.utils.interpolate(0, -4.5, p);
         mesh.position.y = gsap.utils.interpolate(0, -1.5, p);
-        mesh.scale.setScalar(gsap.utils.interpolate(1.6, 1.3, p));
+        mesh.scale.setScalar(gsap.utils.interpolate(1.6, 1.0, sp));
+        scrollRotX = gsap.utils.interpolate(0,  0.35, p);
+        scrollRotY = gsap.utils.interpolate(0, -0.4,  p);
         canvas.style.opacity = 1 - p;
       },
       onLeaveBack() {
         mesh.position.set(0, 0, 0);
         mesh.scale.setScalar(1.6);
+        scrollRotX = 0; scrollRotY = 0;
         canvas.style.opacity = '1';
       },
     });
@@ -445,14 +450,18 @@ vec3 orthogonal(vec3 v) {
       scrub: 1,
       onUpdate(self) {
         const p = self.progress;
-        mesh.position.x = gsap.utils.interpolate(-4, -2, p);
+        const ep = gsap.parseEase('expoScale(0.5, 2)')(p);
+        mesh.position.x = gsap.utils.interpolate(-5, -2, p);
         mesh.position.y = gsap.utils.interpolate(2, 0, p);
-        mesh.scale.setScalar(gsap.utils.interpolate(1.3, 0.9, p));
+        mesh.scale.setScalar(gsap.utils.interpolate(1.3, 0.9, ep));
+        scrollRotX = gsap.utils.interpolate(-0.55,  0,    p);
+        scrollRotY = gsap.utils.interpolate( 0.6,  -0.15, p);
         canvas.style.opacity = Math.min(p * 2, 1);
       },
       onLeaveBack() {
         canvas.style.opacity = '0';
         mesh.scale.setScalar(1.3);
+        scrollRotX = 0; scrollRotY = 0;
       },
     });
   }
@@ -467,12 +476,12 @@ vec3 orthogonal(vec3 v) {
   const clock = new THREE.Clock();
   (function animate() {
     requestAnimationFrame(animate);
-    if (!visible) return;
+    if (!visible || parseFloat(canvas.style.opacity) === 0) return;
     const delta = clock.getDelta();
     uniforms.time.value        = (uniforms.time.value        + delta / 3) % 21.0;
     uniforms.surfaceTime.value = (uniforms.surfaceTime.value + delta / 3) % 21.0;
-    mesh.rotation.x += (targetRotX - mesh.rotation.x) * 0.05;
-    mesh.rotation.y += (targetRotY - mesh.rotation.y) * 0.05;
+    mesh.rotation.x += (targetRotX + scrollRotX - mesh.rotation.x) * 0.05;
+    mesh.rotation.y += (targetRotY + scrollRotY - mesh.rotation.y) * 0.05;
     renderer.render(scene, camera);
   })();
 }
