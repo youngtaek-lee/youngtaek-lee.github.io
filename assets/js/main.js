@@ -417,7 +417,7 @@ vec3 orthogonal(vec3 v) {
   }, { once: true });
 
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    // Phase 1: Hero 이탈 — 좌하단으로 이동하며 fade out
+    // Phase 1: Hero 이탈 — 좌하단으로 이동하며 fade out, scale 1.6→1.3
     ScrollTrigger.create({
       trigger: '#hero',
       start: 'top top',
@@ -427,31 +427,32 @@ vec3 orthogonal(vec3 v) {
         const p = self.progress;
         mesh.position.x = gsap.utils.interpolate(0, -2.5, p);
         mesh.position.y = gsap.utils.interpolate(0, -1.5, p);
+        mesh.scale.setScalar(gsap.utils.interpolate(1.6, 1.3, p));
         canvas.style.opacity = 1 - p;
       },
       onLeaveBack() {
         mesh.position.set(0, 0, 0);
+        mesh.scale.setScalar(1.6);
         canvas.style.opacity = '1';
       },
     });
 
-    // Phase 2: Contact 직전 — 좌상단에서 좌중앙으로 스윽
+    // Phase 2: Contact — 좌상단(scale 1.3)에서 좌중앙(scale 0.9)으로 서서히 안착
     ScrollTrigger.create({
       trigger: '#contact',
       start: 'top bottom',
-      end: 'top center',
+      end: 'top top',
       scrub: 1,
       onUpdate(self) {
         const p = self.progress;
         mesh.position.x = gsap.utils.interpolate(-4, -2, p);
         mesh.position.y = gsap.utils.interpolate(2, 0, p);
-        canvas.style.opacity = p;
-        const s = gsap.utils.interpolate(1.6, 0.9, p);
-        mesh.scale.setScalar(s);
+        mesh.scale.setScalar(gsap.utils.interpolate(1.3, 0.9, p));
+        canvas.style.opacity = Math.min(p * 2, 1);
       },
       onLeaveBack() {
         canvas.style.opacity = '0';
-        mesh.scale.setScalar(1.6);
+        mesh.scale.setScalar(1.3);
       },
     });
   }
