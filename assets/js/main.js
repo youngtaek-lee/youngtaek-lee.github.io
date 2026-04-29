@@ -414,9 +414,27 @@ vec3 orthogonal(vec3 v) {
   canvas.style.opacity = '1';
 
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    // Hero 이탈: 캔버스 fade out
     gsap.to(canvas, {
-      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
       opacity: 0,
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
+    });
+
+    // Contact 진입: 좌측에서 슬라이드인 + fade in
+    ScrollTrigger.create({
+      trigger: '#contact',
+      start: 'top bottom',
+      end: 'top center',
+      scrub: 1,
+      onUpdate(self) {
+        const p = self.progress;
+        mesh.position.x = -6 + p * 4;   // -6 → -2
+        canvas.style.opacity = p;
+      },
+      onLeaveBack() {
+        mesh.position.x = 0;
+        canvas.style.opacity = '0';
+      },
     });
   }
 

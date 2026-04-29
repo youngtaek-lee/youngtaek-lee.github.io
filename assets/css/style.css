@@ -92,11 +92,11 @@
    Background Canvas
 ============================= */
 #heroBlobCanvas {
-  position: absolute;
+  position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   opacity: 0;
 }
@@ -876,19 +876,29 @@ body::-webkit-scrollbar {
 
 .contact__inner {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  text-align: center;
-  padding: 80px 48px;
+  padding: 80px 0;
+}
+
+.contact__blob-side {
+  width: 50%;
+  flex-shrink: 0;
+}
+
+.contact__content-side {
+  width: 50%;
+  padding-right: 80px;
+  display: flex;
+  flex-direction: column;
   gap: 56px;
 }
 
 .contact__top {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
 }
 
