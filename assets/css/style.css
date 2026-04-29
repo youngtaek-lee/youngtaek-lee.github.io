@@ -58,26 +58,28 @@
 ============================= */
 :root {
   /* Background */
-  --color-bg: #000000;
-  --color-surface: #171717;
-  --color-surface-raised: #242424;
-  --color-dark: #050505;
+  --color-bg:             #F5F2EE;
+  --color-surface:        #E8E3DC;
+  --color-surface-raised: #DDD8D0;
+  --color-dark:           #2E2925;
 
   /* Border */
-  --color-line: #f0f0f0;
+  --color-border:         #C4BAB0;
+  --color-line:           #C4BAB0;
 
   /* Text */
-  --color-text: #f0f0f0;
-  --color-sub: #888888;
+  --color-text:           #2E2925;
+  --color-text-sub:       #7A6E65;
+  --color-sub:            #7A6E65;
 
   /* Accent */
-  --color-accent: #f0f0f0;
-  --color-accent-light: #ffffff;
-  --color-accent-dim: rgba(240, 240, 240, 0.08);
+  --color-accent:         #6B7C6E;
+  --color-accent-light:   #8A9B8D;
+  --color-accent-dim:     rgba(107, 124, 110, 0.1);
 
-  /* Point */
-  --color-point: #00d4ff;
-  --color-point-dim: rgba(0, 212, 255, 0.15);
+  /* Point (기존 참조 호환) */
+  --color-point:          #6B7C6E;
+  --color-point-dim:      rgba(107, 124, 110, 0.15);
 
   --font-base: 'Paperlogy', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -311,12 +313,12 @@ body::-webkit-scrollbar {
 
 .hero__cta-link:hover {
   opacity: 1;
-  background: rgba(221, 238, 240, 0.08);
+  background: var(--color-surface-raised);
 }
 
 .hero__cta-link--accent {
   background: var(--color-point);
-  color: #000000;
+  color: #ffffff;
   border: none !important;
   outline: none;
   opacity: 1;
@@ -325,12 +327,12 @@ body::-webkit-scrollbar {
 }
 
 .hero__cta-link--accent:hover {
-  background: #00eeff;
+  background: var(--color-accent-light);
 }
 
 .hero__name-line {
   display: block;
-  color: rgba(221, 238, 240, 0.15);
+  color: rgba(46, 41, 37, 0.1);
   background: linear-gradient(to right, var(--color-text), var(--color-text)) no-repeat left center;
   -webkit-background-clip: text;
   background-clip: text;
@@ -345,14 +347,14 @@ body::-webkit-scrollbar {
 .fade-to-black {
   height: 360px;
   margin-top: -360px;
-  background: linear-gradient(to bottom, transparent, #000000);
+  background: linear-gradient(to bottom, transparent, var(--color-surface));
   position: relative;
   z-index: -1;
 }
 
 .fade-to-black--works {
   margin-top: 0;
-  background: linear-gradient(to top, transparent, #000000);
+  background: linear-gradient(to top, transparent, var(--color-surface));
   z-index: -1;
   pointer-events: none;
 }
@@ -360,7 +362,7 @@ body::-webkit-scrollbar {
 .about-track {
   position: relative;
   padding-bottom: 160px;
-  background: #000000;
+  background: var(--color-surface);
 }
 
 
@@ -500,7 +502,7 @@ body::-webkit-scrollbar {
 }
 
 .about__more-link:hover {
-  color: #000000;
+  color: #ffffff;
   border-color: var(--color-point);
 }
 
@@ -563,21 +565,21 @@ body::-webkit-scrollbar {
    WORKS
 ============================= */
 .works {
-  background: #f0f5f2;
+  background: var(--color-surface);
 }
 
 .works .work-item__label {
-  color: #999;
+  color: var(--color-text-sub);
 }
 
 .works .work-item__label::after {
-  background: #ccc;
+  background: var(--color-border);
 }
 
 .works .work-item--more__text {
   background:
-    linear-gradient(to right, #111, #111) no-repeat left center,
-    linear-gradient(to right, rgba(0,0,0,0.25), rgba(0,0,0,0.25)) no-repeat left center;
+    linear-gradient(to right, var(--color-point), var(--color-point)) no-repeat left center,
+    linear-gradient(to right, var(--color-text), var(--color-text)) no-repeat left center;
   -webkit-background-clip: text;
   background-clip: text;
   background-size: 0% 100%, 100% 100%;
@@ -606,8 +608,8 @@ body::-webkit-scrollbar {
   font-size: clamp(3rem, 6vw, 6rem);
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: rgba(0, 0, 0, 0.08);
-  background: linear-gradient(to right, #111, #111) no-repeat left center;
+  color: rgba(46, 41, 37, 0.1);
+  background: linear-gradient(to right, var(--color-text), var(--color-text)) no-repeat left center;
   -webkit-background-clip: text;
   background-clip: text;
   background-size: 0% 100%;
@@ -617,7 +619,7 @@ body::-webkit-scrollbar {
 
 .works__sub {
   font-size: 1.35rem;
-  color: rgba(0, 0, 0, 0.35);
+  color: var(--color-text-sub);
   letter-spacing: 0.01em;
   white-space: nowrap;
 }
@@ -769,7 +771,7 @@ body::-webkit-scrollbar {
    SKILLS
 ============================= */
 .skills {
-  background: #f0f5f2;
+  background: var(--color-surface);
   padding: 80px 0 100px;
 }
 
@@ -787,8 +789,8 @@ body::-webkit-scrollbar {
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.1;
-  color: rgba(0, 0, 0, 0.08);
-  background: linear-gradient(to right, #111, #111) no-repeat left center;
+  color: rgba(46, 41, 37, 0.1);
+  background: linear-gradient(to right, var(--color-text), var(--color-text)) no-repeat left center;
   -webkit-background-clip: text;
   background-clip: text;
   background-size: 0% 100%;
@@ -797,7 +799,7 @@ body::-webkit-scrollbar {
 
 .skills__sub {
   font-size: 1.35rem;
-  color: rgba(0, 0, 0, 0.35);
+  color: var(--color-text-sub);
 }
 
 .skills__grid {
@@ -824,7 +826,7 @@ body::-webkit-scrollbar {
   left: var(--x, 50%);
   width: 10px;
   height: 10px;
-  background: #111;
+  background: var(--color-dark);
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0);
   transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
@@ -1045,7 +1047,7 @@ body::-webkit-scrollbar {
   color: transparent;
   background:
     linear-gradient(to right, var(--color-point), var(--color-point)) no-repeat left center,
-    linear-gradient(to right, #fff, #fff) no-repeat left center;
+    linear-gradient(to right, var(--color-text), var(--color-text)) no-repeat left center;
   -webkit-background-clip: text;
   background-clip: text;
   background-size: 0% 100%, 100% 100%;
@@ -1066,14 +1068,14 @@ body::-webkit-scrollbar {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--color-text);
   opacity: 0.35;
   transition: color 0.15s ease, opacity 0.25s ease;
 }
 
 .menu-overlay.is-open .menu-overlay__footer-link:hover {
   opacity: 1;
-  color: #fff;
+  color: var(--color-text);
 }
 
 /* =============================
@@ -1098,7 +1100,7 @@ body::-webkit-scrollbar {
    CLIENTS
 ============================= */
 .clients {
-  background: #f0f5f2;
+  background: var(--color-surface);
   padding: 80px 0 100px;
   overflow: hidden;
 }
@@ -1113,18 +1115,14 @@ body::-webkit-scrollbar {
   font-size: clamp(3rem, 6vw, 6rem);
   font-weight: 700;
   letter-spacing: -0.03em;
-  color: rgba(0, 0, 0, 0.08);
-  background: linear-gradient(to right, #111, #111) no-repeat left center;
-  -webkit-background-clip: text;
-  background-clip: text;
-  background-size: 100% 100%;
+  color: var(--color-text);
   line-height: 1.1;
   white-space: nowrap;
 }
 
 .clients__sub {
   font-size: 1.35rem;
-  color: rgba(0, 0, 0, 0.35);
+  color: var(--color-text-sub);
   letter-spacing: 0.01em;
   margin-top: 10px;
 }
@@ -1229,7 +1227,7 @@ body::-webkit-scrollbar {
   width: 45px;
   height: 45px;
   background: var(--color-dark);
-  color: var(--color-text);
+  color: var(--color-bg);
   border-radius: 8px;
   flex-shrink: 0;
   transition: opacity 0.2s;
@@ -1267,18 +1265,19 @@ body::-webkit-scrollbar {
 
 .bottom-nav__link:hover {
   opacity: 1;
-  background: rgba(221, 238, 240, 0.08);
+  background: var(--color-surface-raised);
 }
 
 .bottom-nav__link--cta {
   background: var(--color-point);
-  color: #000000;
+  color: #ffffff;
   border-color: var(--color-point);
   opacity: 1;
 }
 
 .bottom-nav__link--cta:hover {
-  background: #00eeff;
+  background: var(--color-accent-light);
+  border-color: var(--color-accent-light);
 }
 
 /* =============================
@@ -1286,7 +1285,7 @@ body::-webkit-scrollbar {
 ============================= */
 .footer {
   padding: 20px 48px;
-  border-top: 1px solid rgba(240, 240, 240, 0.1);
+  border-top: 1px solid var(--color-border);
 }
 
 .footer__inner {

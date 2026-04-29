@@ -477,7 +477,7 @@ function initHeadingBlobs() {
         ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
       }
       ctx.closePath();
-      ctx.fillStyle = '#00d4ff';
+      ctx.fillStyle = '#6B7C6E';
       ctx.fill();
       t += 0.008;
       rafId = requestAnimationFrame(draw);
