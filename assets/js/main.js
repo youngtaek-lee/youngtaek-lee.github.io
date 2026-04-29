@@ -420,9 +420,16 @@ vec3 orthogonal(vec3 v) {
   }
 
   // ── Loop ─────────────────────────────────────────────────────
+  let visible = true;
+  const visObserver = new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+  }, { threshold: 0 });
+  visObserver.observe(canvas);
+
   const clock = new THREE.Clock();
   (function animate() {
     requestAnimationFrame(animate);
+    if (!visible) return;
     const delta = clock.getDelta();
     uniforms.time.value        = (uniforms.time.value        + delta / 3) % 21.0;
     uniforms.surfaceTime.value = (uniforms.surfaceTime.value + delta / 3) % 21.0;
@@ -433,95 +440,6 @@ vec3 orthogonal(vec3 v) {
 }
 
 // =============================
-// Background Blob (Three.js)
-// =============================
-function initBgMesh() {
-  if (typeof THREE === 'undefined') return;
-  const canvas = document.getElementById('bgCanvas');
-  if (!canvas) return;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.z = 5;
-
-  // 가장자리가 자연스럽게 투명해지는 소프트 셰이더
-  const vShader = `
-    uniform float uTime;
-    uniform float uSpeed;
-    uniform float uAmp;
-    varying vec3 vNormal;
-    void main() {
-      vNormal = normalize(normalMatrix * normal);
-      vec3 pos = position;
-      float d =
-        sin(pos.x * 1.8 + uTime * uSpeed)        * uAmp +
-        sin(pos.y * 2.2 + uTime * uSpeed * 1.4)  * uAmp +
-        sin(pos.z * 1.6 + uTime * uSpeed * 0.9)  * uAmp * 0.7;
-      pos += normal * d;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-    }
-  `;
-  const fShader = `
-    uniform vec3  uColor;
-    uniform float uOpacity;
-    varying vec3  vNormal;
-    void main() {
-      float rim   = clamp(dot(vNormal, vec3(0.0, 0.0, 1.0)), 0.0, 1.0);
-      float alpha = pow(rim, 1.4) * uOpacity;
-      gl_FragColor = vec4(uColor, alpha);
-    }
-  `;
-
-  function makeBlob(radius, color, x, y, z, speed, amp, opacity) {
-    const geo = new THREE.SphereGeometry(radius, 64, 64);
-    const mat = new THREE.ShaderMaterial({
-      vertexShader: vShader,
-      fragmentShader: fShader,
-      uniforms: {
-        uTime:    { value: 0 },
-        uSpeed:   { value: speed },
-        uAmp:     { value: amp },
-        uColor:   { value: new THREE.Color(color) },
-        uOpacity: { value: opacity },
-      },
-      transparent: true,
-      depthWrite: false,
-    });
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.position.set(x, y, z);
-    scene.add(mesh);
-    return mesh;
-  }
-
-  const blobs = [
-    makeBlob(3.2, '#3d5a47', -1.8,  0.6,  0,    0.7,  0.42, 0.9),
-    makeBlob(2.6, '#5bc8d8',  2.2, -0.4, -0.5,  0.6,  0.36, 0.55),
-    makeBlob(2.0, '#1e3d30',  0.4, -1.8,  0.3,  0.85, 0.32, 0.65),
-  ];
-
-  let t = 0;
-  function tick() {
-    requestAnimationFrame(tick);
-    t += 0.01;
-    blobs.forEach((b, i) => {
-      b.material.uniforms.uTime.value = t + i * 1.5;
-      b.rotation.y += 0.003 * (i % 2 === 0 ? 1 : -1);
-      b.rotation.x += 0.0015;
-    });
-    renderer.render(scene, camera);
-  }
-  tick();
-
-  window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-  });
-}
 
 // =============================
 // Heading Blobs
@@ -580,189 +498,9 @@ function initHeadingBlobs() {
 }
 
 // =============================
-// Custom Cursor
-// =============================
-function initCustomCursor() {
-  const canvas = document.getElementById('cursorCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  const SIZE = 220;
-  canvas.width = SIZE;
-  canvas.height = SIZE;
-
-  const CX = SIZE / 2;
-  const CY = SIZE / 2;
-
-  let tx = -999, ty = -999;
-  let cx = -999, cy = -999;
-  let t = 0;
-  let initialized = false;
-  let hoverProgress = 0;
-  let hoverTarget = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    tx = e.clientX;
-    ty = e.clientY;
-    if (!initialized) {
-      cx = tx; cy = ty;
-      initialized = true;
-      canvas.style.opacity = '1';
-    }
-  });
-  document.addEventListener('mouseleave', () => { canvas.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { if (initialized) canvas.style.opacity = '1'; });
-
-  function draw() {
-    ctx.clearRect(0, 0, SIZE, SIZE);
-
-    const N = 8;
-    const baseR = 14 + (100 - 14) * hoverProgress;
-    const amp   = 2 * (1 - hoverProgress);
-
-    ctx.beginPath();
-    if (amp < 0.3) {
-      ctx.arc(CX, CY, baseR, 0, Math.PI * 2);
-    } else {
-      const pts = [];
-      for (let i = 0; i < N; i++) {
-        const a = (i / N) * Math.PI * 2;
-        const r = baseR
-          + Math.sin(a * 2 + t * 1.1) * amp
-          + Math.cos(a * 3.5 + t * 0.7) * amp * 0.5;
-        pts.push([CX + Math.cos(a) * r, CY + Math.sin(a) * r]);
-      }
-      ctx.moveTo(
-        (pts[N - 1][0] + pts[0][0]) / 2,
-        (pts[N - 1][1] + pts[0][1]) / 2
-      );
-      for (let i = 0; i < N; i++) {
-        const mx = (pts[i][0] + pts[(i + 1) % N][0]) / 2;
-        const my = (pts[i][1] + pts[(i + 1) % N][1]) / 2;
-        ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
-      }
-      ctx.closePath();
-    }
-    ctx.fillStyle = '#00d4ff';
-    ctx.fill();
-
-    // 텍스트: 확장 60% 이후부터 페이드인
-    if (hoverProgress > 0.6) {
-      const alpha = (hoverProgress - 0.6) / 0.4;
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = '#000';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.font = 'bold 13px "Bricolage Grotesque", sans-serif';
-      ctx.fillText('VIEW', CX, CY - 9);
-      ctx.fillText('WORKS', CX, CY + 9);
-      ctx.globalAlpha = 1;
-    }
-  }
-
-  function tick() {
-    requestAnimationFrame(tick);
-    t += 0.02;
-
-    if (initialized) {
-      const el = document.elementFromPoint(tx, ty);
-      hoverTarget = (el && el.closest('.work-item__img-wrap')) ? 1 : 0;
-    }
-
-    hoverProgress += (hoverTarget - hoverProgress) * 0.14;
-
-    cx += (tx - cx) * 0.08;
-    cy += (ty - cy) * 0.08;
-
-    // 블롭 중심 고정: 커서 우하단 +34px — 크기가 커져도 중심 그대로
-    canvas.style.transform = `translate(${cx - 76}px, ${cy - 76}px)`;
-    draw();
-  }
-  tick();
-}
-
 // =============================
 // Contact Blob (Three.js)
 // =============================
-function initContactBlob() {
-  if (typeof THREE === 'undefined') return;
-  const canvas = document.getElementById('contactBlobCanvas');
-  if (!canvas) return;
-
-  const SIZE = 200;
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setSize(SIZE, SIZE);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-  camera.position.z = 5.5;
-
-  const vShader = `
-    uniform float uTime;
-    varying vec3 vNormal;
-    void main() {
-      vNormal = normalize(normalMatrix * normal);
-      vec3 pos = position;
-      float d =
-        sin(pos.x * 1.8 + uTime * 0.4) * 0.10 +
-        sin(pos.y * 2.2 + uTime * 0.5) * 0.09 +
-        sin(pos.z * 1.6 + uTime * 0.3) * 0.06;
-      pos += normal * d;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-    }
-  `;
-
-  const fShader = `
-    uniform vec3 uColor;
-    varying vec3 vNormal;
-    void main() {
-      float rim = clamp(dot(vNormal, vec3(0.0, 0.0, 1.0)), 0.0, 1.0);
-      float alpha = pow(rim, 1.1) * 0.92;
-      gl_FragColor = vec4(uColor, alpha);
-    }
-  `;
-
-  const geo = new THREE.SphereGeometry(1.5, 64, 64);
-  const mat = new THREE.ShaderMaterial({
-    vertexShader: vShader,
-    fragmentShader: fShader,
-    uniforms: {
-      uTime:  { value: 0 },
-      uColor: { value: new THREE.Color('#00d4ff') },
-    },
-    transparent: true,
-    depthWrite: false,
-  });
-
-  const mesh = new THREE.Mesh(geo, mat);
-  scene.add(mesh);
-
-  let t = 0;
-  let mouseX = 0, mouseY = 0;
-  let targetX = 0, targetY = 0;
-
-  window.addEventListener('mousemove', (e) => {
-    targetX = (e.clientX / window.innerWidth  - 0.5) * 2;
-    targetY = -(e.clientY / window.innerHeight - 0.5) * 2;
-  });
-
-  (function tick() {
-    requestAnimationFrame(tick);
-    t += 0.008;
-    mat.uniforms.uTime.value = t;
-    mesh.rotation.y += 0.002;
-    mesh.rotation.x += 0.001;
-
-    mouseX += (targetX - mouseX) * 0.04;
-    mouseY += (targetY - mouseY) * 0.04;
-    mesh.position.x = mouseX * 0.35;
-    mesh.position.y = mouseY * 0.35;
-
-    renderer.render(scene, camera);
-  })();
-}
-
 function loadThree(cb) {
   if (typeof THREE !== 'undefined') { cb(); return; }
   const s = document.createElement('script');
@@ -1259,90 +997,12 @@ function initAboutScroll() {
 
 }
 
-// =============================
-// Stars Canvas
-// =============================
-function initStars() {
-  const canvas = document.getElementById('starsCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const layers = [
-    { count: 180, minR: 0.3, maxR: 0.7, speed: 0.08, alpha: 0.35 },
-    { count: 80,  minR: 0.7, maxR: 1.2, speed: 0.18, alpha: 0.55 },
-    { count: 30,  minR: 1.2, maxR: 2.0, speed: 0.32, alpha: 0.8  },
-  ];
-
-  const stars = layers.flatMap(({ count, speed, alpha }) =>
-    Array.from({ length: count }, () => ({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight * 4,
-      r: 0.3,
-      speed,
-      alpha,
-    }))
-  );
-
-  let scrollY = 0;
-  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
-
-  const aboutTrack = document.querySelector('.about-track');
-  const works = document.querySelector('.works');
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.save();
-    ctx.beginPath();
-    if (aboutTrack) {
-      const r = aboutTrack.getBoundingClientRect();
-      ctx.rect(r.left, r.top, r.width, r.height);
-    }
-    if (works) {
-      const r = works.getBoundingClientRect();
-      ctx.rect(r.left, r.top, r.width, r.height);
-    }
-    ctx.clip();
-
-    const spread = Math.min(scrollY * 0.00025, 0.35);
-    const cx = canvas.width / 2;
-    const cy = canvas.height / 2;
-
-    stars.forEach(({ x, y, r, speed, alpha }) => {
-      const drawY = (y - scrollY * speed) % (canvas.height * 4);
-      if (drawY < -10 || drawY > canvas.height + 10) return;
-      const drawX = x + (x - cx) * spread;
-      const spreadY = drawY + (drawY - cy) * spread * 0.4;
-      const fadedAlpha = alpha * (1 - spread * 0.6);
-      ctx.beginPath();
-      ctx.arc(drawX, spreadY, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${fadedAlpha})`;
-      ctx.fill();
-    });
-
-    ctx.restore();
-    requestAnimationFrame(draw);
-  }
-  draw();
-}
 
 // =============================
 // Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
-  // initLoadingScreen(); // 개발 중 비활성화
-  document.getElementById('loadingBg')?.remove();
-  document.getElementById('loadingCanvas')?.remove();
-  loadThree(() => { initHeroBlob(); initContactBlob(); });
-  initStars();
-  initCustomCursor();
+  initLoadingScreen();
   initHeadingBlobs();
   renderClients();
   renderWorks();

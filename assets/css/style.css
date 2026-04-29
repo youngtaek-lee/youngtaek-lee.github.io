@@ -89,10 +89,6 @@
 /* =============================
    Background Canvas
 ============================= */
-#bgCanvas {
-  display: none;
-}
-
 #heroBlobCanvas {
   position: absolute;
   inset: 0;
@@ -101,14 +97,6 @@
   z-index: 0;
   pointer-events: none;
   opacity: 0;
-}
-
-#starsCanvas {
-  position: fixed;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  mix-blend-mode: screen;
 }
 
 #loadingBg {
@@ -128,17 +116,6 @@
   pointer-events: none;
 }
 
-#cursorCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-200px, -200px);
-  opacity: 0;
-  transition: opacity 0.3s;
-  display: none;
-}
 
 /* Noise overlay */
 body::before {
@@ -913,13 +890,6 @@ body::-webkit-scrollbar {
   gap: 8px;
 }
 
-#contactBlobCanvas {
-  width: 200px;
-  height: 200px;
-  display: block;
-  margin-bottom: 20px;
-}
-
 .contact__title {
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 2vw, 2rem);
@@ -1173,6 +1143,7 @@ body::-webkit-scrollbar {
   display: flex;
   width: max-content;
   gap: 12px;
+  will-change: transform;
 }
 
 .clients__strip--l {
@@ -1198,12 +1169,16 @@ body::-webkit-scrollbar {
   width: auto;
   max-width: 120px;
   object-fit: contain;
-  filter: grayscale(1) opacity(0.55);
-  transition: filter 0.3s;
+  opacity: 0.55;
+  transition: opacity 0.3s;
 }
 
 .clients__logo:hover {
-  filter: grayscale(0) opacity(1);
+  opacity: 1;
+}
+
+.clients__logo--svg {
+  filter: grayscale(1);
 }
 
 @keyframes marquee-l {
