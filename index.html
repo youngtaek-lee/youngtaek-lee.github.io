@@ -92,6 +92,7 @@
   ========================= -->
   <main>
   <section class="hero" id="hero">
+    <canvas id="heroBlobCanvas" aria-hidden="true"></canvas>
     <div class="container hero__inner">
       <h1 class="hero__name">
         <span class="hero__name-line">Passionate</span>
@@ -130,7 +131,7 @@
   <section class="works" id="works">
     <div class="works__track-wrap">
       <div class="works__header">
-        <h2 class="works__heading">Recent Works</h2>
+        <h2 class="works__heading">Recent Works<canvas class="heading-blob" aria-hidden="true"></canvas></h2>
         <p class="works__sub">다양한 업종의 클라이언트와 함께한 퍼블리싱 프로젝트입니다.</p>
       </div>
       <div class="works__track">
@@ -144,11 +145,77 @@
   ========================= -->
   <section class="skills" id="skills">
     <div class="skills__header">
-      <h2 class="skills__heading">Skills</h2>
+      <h2 class="skills__heading">Skills<canvas class="heading-blob" aria-hidden="true"></canvas></h2>
       <p class="skills__sub">HTML/CSS부터 디자인 툴까지, 실무에서 직접 사용하는 기술들입니다.</p>
     </div>
     <div class="skills__grid">
       <!-- JS로 렌더링 -->
+    </div>
+  </section>
+
+  <!-- ========================
+    CLIENTS
+  ========================= -->
+  <section class="clients" id="clients">
+    <div class="clients__header">
+      <h2 class="clients__heading">Clients<canvas class="heading-blob" aria-hidden="true"></canvas></h2>
+      <p class="clients__sub">함께 작업한 클라이언트 &amp; 기업들</p>
+    </div>
+    <div class="clients__rows">
+      <div class="clients__overflow">
+        <div class="clients__strip clients__strip--l">
+          <div class="clients__item"><img src="assets/images/clients/sase.png" alt="Sase" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/playwinter.png" alt="Playwinter" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/raymats.png" alt="Raymats" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/marusys.svg" alt="Marusys" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/cpdc.png" alt="CPDC" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/kine.png" alt="Kine" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/triniti.png" alt="Triniti" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/chongshin.png" alt="Chongshin" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/samsung-enc.png" alt="Samsung C&amp;T" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/hahee.png" alt="Hahee" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/goodseed.png" alt="Goodseed" class="clients__logo"></div>
+          <!-- 루프용 복제 -->
+          <div class="clients__item"><img src="assets/images/clients/sase.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/playwinter.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/raymats.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/marusys.svg" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/cpdc.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/kine.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/triniti.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/chongshin.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/samsung-enc.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/hahee.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/goodseed.png" alt="" class="clients__logo"></div>
+        </div>
+      </div>
+      <div class="clients__overflow">
+        <div class="clients__strip clients__strip--r">
+          <div class="clients__item"><img src="assets/images/clients/kyonong.png" alt="Kyonong" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/youngeum.png" alt="Youngeum" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/namwon.png" alt="Namwon" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/livestock.png" alt="Livestock" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/hnam-energy.png" alt="HNAM Energy" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/ghi.png" alt="GHI" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/bexel.png" alt="Bexel" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/saekyung.png" alt="Saekyung" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/skhu-acdc.png" alt="SKHU ACDC" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/intermeta.png" alt="Intermeta" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/osan.png" alt="Osan" class="clients__logo"></div>
+          <!-- 루프용 복제 -->
+          <div class="clients__item"><img src="assets/images/clients/kyonong.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/youngeum.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/namwon.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/livestock.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/hnam-energy.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/ghi.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/bexel.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/saekyung.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/skhu-acdc.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/intermeta.png" alt="" class="clients__logo"></div>
+          <div class="clients__item"><img src="assets/images/clients/osan.png" alt="" class="clients__logo"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -178,15 +245,6 @@
 
   </main>
 
-  <!-- ========================
-    CLIENTS
-  ========================= -->
-  <section class="clients" style="display:none">
-    <p class="clients__label">나를 거쳐간 회사</p>
-    <div class="clients__track-wrap">
-      <div class="clients__track" id="clientsTrack"></div>
-    </div>
-  </section>
 
   <!-- ========================
     Footer
