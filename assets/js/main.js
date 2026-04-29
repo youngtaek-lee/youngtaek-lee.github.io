@@ -446,9 +446,12 @@ vec3 orthogonal(vec3 v) {
         mesh.position.x = gsap.utils.interpolate(-4, -2, p);
         mesh.position.y = gsap.utils.interpolate(2, 0, p);
         canvas.style.opacity = p;
+        const s = gsap.utils.interpolate(1.6, 0.9, p);
+        mesh.scale.setScalar(s);
       },
       onLeaveBack() {
         canvas.style.opacity = '0';
+        mesh.scale.setScalar(1.6);
       },
     });
   }
