@@ -364,6 +364,7 @@ vec3 orthogonal(vec3 v) {
   // ── Mesh ──────────────────────────────────────────────────────
   const geometry = new THREE.SphereBufferGeometry(1, 256, 341);
   const mesh = new THREE.Mesh(geometry, material);
+  mesh.scale.setScalar(1.6);
   scene.add(mesh);
 
   // ── Lighting ─────────────────────────────────────────────────
