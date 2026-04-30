@@ -23,9 +23,19 @@
   <!-- ========================
     Loading Screen
   ========================= -->
-  <div id="loadingBg" aria-hidden="true"></div>
-  <canvas id="loadingCanvas" aria-hidden="true"></canvas>
   <canvas id="heroBlobCanvas" aria-hidden="true"></canvas>
+
+  <!-- ========================
+    Intro Screen
+  ========================= -->
+  <div id="introScreen" aria-hidden="true">
+    <div id="introLogo">
+      <div class="intro-logo__line"><span>Lee</span></div>
+      <div class="intro-logo__line"><span>Y<span id="introO">o</span>ung</span></div>
+      <div class="intro-logo__line"><span>Taek.</span></div>
+    </div>
+    <div id="introLoader" aria-hidden="true"></div>
+  </div>
 
   <!-- ========================
     Background Canvas
@@ -128,7 +138,7 @@
   <section class="works" id="works">
     <div class="works__track-wrap">
       <div class="works__header">
-        <h2 class="works__heading">Recent Works<canvas class="heading-blob" aria-hidden="true"></canvas></h2>
+        <h2 class="works__heading">Recent Works<span class="heading-dot">.</span></h2>
         <p class="works__sub">다양한 업종의 클라이언트와 함께한 퍼블리싱 프로젝트입니다.</p>
       </div>
       <div class="works__track">
@@ -142,7 +152,7 @@
   ========================= -->
   <section class="skills" id="skills">
     <div class="skills__header">
-      <h2 class="skills__heading">Skills<canvas class="heading-blob" aria-hidden="true"></canvas></h2>
+      <h2 class="skills__heading">Skills<span class="heading-dot">.</span></h2>
       <p class="skills__sub">HTML/CSS부터 디자인 툴까지, 실무에서 직접 사용하는 기술들입니다.</p>
     </div>
     <div class="skills__grid">
@@ -155,7 +165,7 @@
   ========================= -->
   <section class="clients" id="clients">
     <div class="clients__header">
-      <h2 class="clients__heading">Clients<canvas class="heading-blob" aria-hidden="true"></canvas></h2>
+      <h2 class="clients__heading">Clients<span class="heading-dot">.</span></h2>
       <p class="clients__sub">함께 작업한 클라이언트 &amp; 기업들</p>
     </div>
     <div class="clients__rows">
@@ -256,6 +266,7 @@
     </div>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>

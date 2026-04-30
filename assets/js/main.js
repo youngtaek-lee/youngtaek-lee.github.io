@@ -1,170 +1,104 @@
 // =============================
-// Loading Screen
+// Intro Screen
 // =============================
-// 흐름: CSS #loadingBg(베이지) → JS 즉시 제거 → canvas 4단계 애니메이션
-// grow(2→100px, 1.5s) → hold(100px, 100% 대기) → swell(100→300px, 0.8s) → burst(300→full, 0.55s, destination-out)
-function initLoadingScreen() {
-  document.getElementById('loadingBg')?.remove();
+function initIntro() {
+  const screen = document.getElementById('introScreen');
+  const logo   = document.getElementById('introLogo');
+  const loader = document.getElementById('introLoader');
+  const oChar  = document.getElementById('introO');
+  const lines  = logo ? logo.querySelectorAll('.intro-logo__line > span') : [];
 
-  // 로딩 화면 중에 Three.js 미리 다운로드 — 끝날 때 바로 쓸 수 있게
-  let threeLoaded = false;
-  const threeScript = document.createElement('script');
-  threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-  threeScript.onload = () => { threeLoaded = true; };
-  document.head.appendChild(threeScript);
+  if (!screen || !logo) return;
 
-  const canvas = document.getElementById('loadingCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width  = window.innerWidth;
-  const H = canvas.height = window.innerHeight;
-  const CX = W / 2, CY = H / 2;
-  const maxR = Math.sqrt(CX * CX + CY * CY) * 1.12;
-  const N = 8;
-  const BG = '#000000';
-  const R0 = 2, R1 = 100;
+  let loadDone     = false;
+  let minDelayDone = false;
 
-  let r = R0, t = 0, phaseP = 0;
-  let phase = 'grow'; // grow → hold → swell → burst
-  let loadDone = false;
-  let lastTime = null;
+  function tryTransition() {
+    if (!loadDone || !minDelayDone) return;
 
-  // 실제 리소스 로딩 진행률 추적
-  const domRes = document.querySelectorAll('link[rel="stylesheet"][href], script[src], img[src]');
-  const total  = Math.max(domRes.length + 4, 10);
-  let loadedCount = Math.min(performance.getEntriesByType('resource').length, total - 1);
-  let targetPct   = Math.round((loadedCount / total) * 80);
-  let displayPct  = targetPct;
-  let po = null;
+    gsap.to(loader, { opacity: 0, duration: 0.3, ease: 'power1.out' });
 
-  if (window.PerformanceObserver) {
-    try {
-      po = new PerformanceObserver((list) => {
-        loadedCount = Math.min(loadedCount + list.getEntries().length, total - 1);
-        if (!loadDone) targetPct = Math.min(Math.round((loadedCount / total) * 95), 95);
-      });
-      po.observe({ entryTypes: ['resource'] });
-    } catch (e) {}
-  }
+    gsap.delayedCall(0.4, () => {
+      const oRect = oChar ? oChar.getBoundingClientRect() : null;
+      const maxR  = Math.hypot(window.innerWidth, window.innerHeight);
+      const W = window.innerWidth, H = window.innerHeight;
+      const dpr = window.devicePixelRatio || 1;
 
-  window.addEventListener('load', () => {
-    loadDone = true;
-    targetPct = 100;
-    if (po) try { po.disconnect(); } catch (e) {}
-  });
+      // 피그마에서 추출한 o 카운터 패스의 viewBox 및 중심 좌표
+      const vbW = 14, vbH = 16;
+      const cCX = 6.864, cCY = 7.612;
+      const cHH = 4.994;
 
-  function blobPath(radius) {
-    const amp = Math.max(3, radius * 0.045);
-    const pts = [];
-    for (let i = 0; i < N; i++) {
-      const a = (i / N) * Math.PI * 2;
-      const rr = radius
-        + Math.sin(a * 2 + t * 0.6) * amp
-        + Math.cos(a * 3.5 + t * 0.4) * amp * 0.6;
-      pts.push([CX + Math.cos(a) * rr, CY + Math.sin(a) * rr]);
-    }
-    ctx.beginPath();
-    ctx.moveTo((pts[N-1][0]+pts[0][0])/2, (pts[N-1][1]+pts[0][1])/2);
-    for (let i = 0; i < N; i++) {
-      const mx = (pts[i][0]+pts[(i+1)%N][0])/2;
-      const my = (pts[i][1]+pts[(i+1)%N][1])/2;
-      ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
-    }
-    ctx.closePath();
-  }
+      // measureText로 실제 글자 잉크 높이 측정 (element box ≠ glyph height)
+      const mc = document.createElement('canvas').getContext('2d');
+      mc.font = getComputedStyle(oChar || document.body).font;
+      const m = mc.measureText('o');
+      const glyphH    = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+      const glyphTopY = oRect ? oRect.top + (oRect.height - glyphH) / 2 : H / 2;
 
-  function drawPct(alpha) {
-    if (r < 36 || alpha <= 0) return;
-    const a = Math.min(1, (r - 36) / 18) * alpha;
-    ctx.save();
-    ctx.globalAlpha = a;
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
-    ctx.font = `700 13px "Bricolage Grotesque", sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(Math.min(Math.floor(displayPct), 100) + '%', CX, CY);
-    ctx.restore();
-  }
+      const HOLE_EXPAND = 1.40; // 구멍 상하 여유 — 숫자 높이면 더 뚫림
+      const baseScaleX = oRect ? oRect.width / vbW : 1;
+      const baseScaleY = glyphH / vbH * HOLE_EXPAND;
+      const screenOx   = oRect ? oRect.left + oRect.width * (cCX / vbW) : W / 2;
+      const screenOy   = glyphTopY + glyphH * (cCY / vbH);
+      const sFinal     = Math.ceil(maxR / (baseScaleY * cHH)) + 5;
 
-  function draw(now) {
-    const dt = lastTime !== null ? Math.min((now - lastTime) / 1000, 0.05) : 0;
-    lastTime = now;
-    t += 0.025;
+      // canvas로 다크 오버레이 + 카운터 모양 구멍 렌더링
+      const cvs = document.createElement('canvas');
+      cvs.width  = W * dpr;
+      cvs.height = H * dpr;
+      cvs.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;';
+      screen.insertBefore(cvs, screen.firstChild);
 
-    // Observer가 없거나 느릴 때 최소 진행 보장
-    if (!loadDone && targetPct < 85) targetPct = Math.min(targetPct + dt * 6, 85);
-    displayPct += (targetPct - displayPct) * Math.min(dt * 5, 0.2);
+      const ctx    = cvs.getContext('2d');
+      const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--color-bg').trim() || '#0f0f0f';
+      const counterPath = new Path2D('M6.908 12.606C7.68533 12.606 8.338 12.4153 8.866 12.034C9.394 11.6527 9.79733 11.1027 10.076 10.384C10.3547 9.66533 10.494 8.78533 10.494 7.744C10.494 6.65867 10.3473 5.73467 10.054 4.972C9.77533 4.20933 9.36467 3.63 8.822 3.234C8.27933 2.82333 7.61933 2.618 6.842 2.618C6.07933 2.618 5.42667 2.816 4.884 3.212C4.356 3.59333 3.94533 4.15067 3.652 4.884C3.37333 5.61733 3.234 6.52667 3.234 7.612C3.234 8.404 3.31467 9.11533 3.476 9.746C3.652 10.362 3.894 10.8827 4.202 11.308C4.51 11.7333 4.89133 12.056 5.346 12.276C5.80067 12.496 6.32133 12.606 6.908 12.606Z');
 
-    ctx.clearRect(0, 0, W, H);
-    ctx.fillStyle = BG;
-    ctx.fillRect(0, 0, W, H);
-
-    if (phase === 'grow') {
-      // 2 → 100px, ease-out, 1.5s
-      phaseP = Math.min(phaseP + dt / 1.5, 1);
-      const e = 1 - Math.pow(1 - phaseP, 2);
-      r = R0 + (R1 - R0) * e;
-      blobPath(r); ctx.fillStyle = '#00d4ff'; ctx.fill();
-      drawPct(1);
-      if (phaseP >= 1) { phase = 'hold'; phaseP = 0; }
-
-    } else if (phase === 'hold') {
-      // 100px 유지, 100% 도달 + loadDone 대기
-      r = R1;
-      blobPath(r); ctx.fillStyle = '#00d4ff'; ctx.fill();
-      drawPct(1);
-      if (loadDone && displayPct >= 99) { phase = 'windup'; phaseP = 0; }
-
-    } else if (phase === 'windup') {
-      // 100 → 68px 으로 살짝 움츠러들었다가 burst 진입 (역동성)
-      phaseP = Math.min(phaseP + dt / 0.22, 1);
-      const e = phaseP * phaseP;
-      r = R1 - (R1 - 55) * e;
-      blobPath(r); ctx.fillStyle = '#00d4ff'; ctx.fill();
-      drawPct(Math.max(0, 1 - phaseP * 3));
-      if (phaseP >= 1) { phase = 'burst'; phaseP = 0; }
-
-    } else if (phase === 'burst') {
-      // 68 → full, cubic ease-in(서서히→빠르게), 0.9s
-      phaseP = Math.min(phaseP + dt / 0.9, 1);
-      const e = phaseP * phaseP * phaseP;
-      r = 55 + (maxR - 55) * e;
-
-      // 파란 blob: 65% 이후 서서히 페이드아웃
-      const blueAlpha = phaseP < 0.65 ? 1 : Math.max(0, 1 - (phaseP - 0.65) / 0.25);
-      ctx.globalAlpha = blueAlpha;
-      blobPath(r);
-      ctx.fillStyle = '#00d4ff';
-      ctx.fill();
-      ctx.globalAlpha = 1;
-
-      // 뚫기는 70% 이후부터 서서히 시작
-      const cutRatio = Math.max(0, (phaseP - 0.7) / 0.3);
-      const cutAlpha = cutRatio * cutRatio; // ease-in
-      if (cutAlpha > 0) {
-        ctx.globalAlpha = cutAlpha;
+      function drawFrame(s) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, W, H);
         ctx.globalCompositeOperation = 'destination-out';
-        blobPath(r);
-        ctx.fillStyle = 'rgba(0,0,0,1)';
-        ctx.fill();
-        ctx.globalAlpha = 1;
+        ctx.save();
+        ctx.translate(screenOx, screenOy);
+        ctx.scale(s * baseScaleX, s * baseScaleY);
+        ctx.translate(-cCX, -cCY);
+        ctx.fill(counterPath);
+        ctx.restore();
         ctx.globalCompositeOperation = 'source-over';
       }
-      if (phaseP >= 1) {
-        canvas.style.transition = 'opacity 0.3s ease';
-        canvas.style.opacity = '0';
-        setTimeout(() => {
-          canvas.remove();
-          threeLoaded ? initHeroBlob() : (threeScript.onload = initHeroBlob);
-        }, 300);
-        return;
-      }
-    }
+      drawFrame(1);
 
-    requestAnimationFrame(draw);
+      // 인트로 screen 배경 투명화 (canvas가 bg 담당)
+      screen.style.background = 'transparent';
+
+      // 로고 scale transform-origin을 O 중심으로 설정
+      const logoRect = logo.getBoundingClientRect();
+      const originX  = ((screenOx - logoRect.left) / logoRect.width)  * 100;
+      const originY  = ((screenOy - logoRect.top)  / logoRect.height) * 100;
+      gsap.set(logo, { transformOrigin: `${originX}% ${originY}%` });
+
+      gsap.to(logo, {
+        scale: sFinal,
+        duration: 1.4,
+        ease: 'power3.in',
+        onUpdate() { drawFrame(gsap.getProperty(logo, 'scale')); },
+        onComplete: () => screen.remove(),
+      });
+    });
   }
 
-  requestAnimationFrame(draw);
+  setTimeout(() => { minDelayDone = true; tryTransition(); }, 1500);
+
+  if (document.readyState === 'complete') {
+    loadDone = true;
+  } else {
+    window.addEventListener('load', () => { loadDone = true; tryTransition(); }, { once: true });
+  }
+
+  gsap.to(lines, { y: 0, duration: 0.85, ease: 'expo.out', stagger: 0.15, delay: 0.15 });
+  gsap.to(loader, { opacity: 1, duration: 0.4, delay: 0.85, ease: 'power1.in' });
 }
 
 // =============================
@@ -410,12 +344,7 @@ vec3 orthogonal(vec3 v) {
     camera.updateProjectionMatrix();
   });
 
-  // ── Fade in ──────────────────────────────────────────────────
-  canvas.style.transition = 'opacity 1.2s ease';
   canvas.style.opacity = '1';
-  canvas.addEventListener('transitionend', () => {
-    canvas.style.transition = 'none';
-  }, { once: true });
 
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     // Phase 1: Hero 이탈 — 좌하단으로 이동하며 fade out, scale 1.6→1.0
@@ -473,6 +402,17 @@ vec3 orthogonal(vec3 v) {
   }, { threshold: 0 });
   visObserver.observe(canvas);
 
+  // ── Contact 버튼 hover → blob scale ──────────────────────────
+  const ctaBtn = document.querySelector('.hero__cta-link--accent');
+  if (ctaBtn && typeof gsap !== 'undefined') {
+    ctaBtn.addEventListener('mouseenter', () => {
+      gsap.to(mesh.scale, { x: 1.8, y: 1.8, z: 1.8, duration: 0.8, ease: 'expo.out' });
+    });
+    ctaBtn.addEventListener('mouseleave', () => {
+      gsap.to(mesh.scale, { x: 1.6, y: 1.6, z: 1.6, duration: 1.0, ease: 'expo.out' });
+    });
+  }
+
   const clock = new THREE.Clock();
   (function animate() {
     requestAnimationFrame(animate);
@@ -487,110 +427,10 @@ vec3 orthogonal(vec3 v) {
 }
 
 // =============================
-
-// =============================
-// Heading Blobs
-// =============================
-function initHeadingBlobs() {
-  const canvases = document.querySelectorAll('.heading-blob');
-  const N = 7;
-
-  canvases.forEach(canvas => {
-    const ctx = canvas.getContext('2d');
-    const S = 80;
-    canvas.width = S;
-    canvas.height = S;
-    const C = S / 2;
-    let t = 0;
-    let rafId = null;
-
-    function draw() {
-      ctx.clearRect(0, 0, S, S);
-      const baseR = S * 0.3;
-      const amp   = S * 0.038;
-      const pts   = [];
-      for (let i = 0; i < N; i++) {
-        const a = (i / N) * Math.PI * 2;
-        const r = baseR
-          + Math.sin(a * 2 + t * 0.8) * amp
-          + Math.cos(a * 3 + t * 0.5) * amp * 0.6;
-        pts.push([C + Math.cos(a) * r, C + Math.sin(a) * r]);
-      }
-      ctx.beginPath();
-      ctx.moveTo((pts[N-1][0]+pts[0][0])/2, (pts[N-1][1]+pts[0][1])/2);
-      for (let i = 0; i < N; i++) {
-        const mx = (pts[i][0]+pts[(i+1)%N][0])/2;
-        const my = (pts[i][1]+pts[(i+1)%N][1])/2;
-        ctx.quadraticCurveTo(pts[i][0], pts[i][1], mx, my);
-      }
-      ctx.closePath();
-      ctx.fillStyle = '#6B7C6E';
-      ctx.fill();
-      t += 0.008;
-      rafId = requestAnimationFrame(draw);
-    }
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          if (!rafId) rafId = requestAnimationFrame(draw);
-        } else {
-          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-        }
-      });
-    }, { threshold: 0 });
-
-    observer.observe(canvas);
-  });
-}
-
-// =============================
-// =============================
-// Contact Blob (Three.js)
-// =============================
-function loadThree(cb) {
-  if (typeof THREE !== 'undefined') { cb(); return; }
-  const s = document.createElement('script');
-  s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-  s.onload = cb;
-  document.head.appendChild(s);
-}
-
-// =============================
-// 텍스트 글자 분해 (split-text)
-// =============================
-function splitText(el) {
-  const text = el.textContent.trim();
-  el.textContent = '';
-  el.setAttribute('aria-label', text);
-
-  [...text].forEach((char) => {
-    const span = document.createElement('span');
-    span.className = char === ' ' ? 'char char--space' : 'char';
-    span.textContent = char;
-    span.setAttribute('aria-hidden', 'true');
-    el.appendChild(span);
-  });
-
-  return el.querySelectorAll('.char:not(.char--space)');
-}
-
-// =============================
 // 애니메이션 (GSAP + ScrollTrigger)
 // =============================
 function initAnimations() {
   gsap.registerPlugin(ScrollTrigger);
-
-  // hero 패럴렉스
-  const heroTrigger = {
-    trigger: '.hero',
-    start: '80% top',
-    end: '80% top',
-    scrub: 0.4,
-  };
-
-  // gsap.to('.hero__name', { y: -400, ease: 'power2.in', scrollTrigger: heroTrigger });
-  // gsap.to('.hero__cta', { y: -500, ease: 'power2.in', scrollTrigger: heroTrigger });
 
   gsap.to('.hero__inner', {
     opacity: 0,
@@ -924,43 +764,44 @@ function initLenis() {
 }
 
 // =============================
-// Works 헤딩 fill 애니메이션
+// 섹션 헤딩 등장 애니메이션
 // =============================
 function initWorksHeading() {
-  const heading = document.querySelector('.works__heading');
-  if (!heading) return;
-
-  gsap.to(heading, {
-    backgroundSize: '100% 100%',
-    duration: 1.2,
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: '.works__track-wrap',
-      start: 'top 80%',
-    },
-  });
-
+  const worksHeading  = document.querySelector('.works__heading');
   const skillsHeading = document.querySelector('.skills__heading');
-  if (skillsHeading) {
-    gsap.to(skillsHeading, {
-      backgroundSize: '100% 100%',
-      duration: 1.2,
-      ease: 'power2.out',
-      scrollTrigger: { trigger: '.skills', start: 'top 80%' },
-    });
+  const clientsHeading = document.querySelector('.clients__heading');
+
+  // Works: 등장만 (핀 섹션이라 exit 제어 안 함)
+  if (worksHeading) {
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '.works__track-wrap',
+        start: 'top 75%',
+        toggleActions: 'play none none reverse',
+      },
+    }).fromTo(worksHeading,
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }
+    );
   }
 
-  const contactHeading = document.querySelector('.contact__heading');
-  if (!contactHeading) return;
-
-  gsap.to(contactHeading, {
-    backgroundSize: '100% 100%',
-    duration: 1.2,
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: '.contact',
-      start: 'top 80%',
-    },
+  // Skills / Clients: 진입 등장 + 이탈 퇴장 + 재진입 재등장
+  [
+    { el: skillsHeading,  section: '.skills'  },
+    { el: clientsHeading, section: '.clients' },
+  ].forEach(({ el, section }) => {
+    if (!el) return;
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 80%',
+        end: 'top 15%',
+        toggleActions: 'play reverse play reverse',
+      },
+    }).fromTo(el,
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }
+    );
   });
 }
 
@@ -968,16 +809,6 @@ function initWorksHeading() {
 // Hero 입장 애니메이션
 // =============================
 function initHeroEntrance() {
-  const nameLines = document.querySelectorAll('.hero__name-line');
-
-  gsap.to(nameLines, {
-    backgroundSize: '100% 100%',
-    duration: 1,
-    ease: 'power2.out',
-    stagger: 0.1,
-    delay: 0.2,
-  });
-
   gsap.fromTo('.hero__cta',
     { opacity: 0 },
     { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 1.5 }
@@ -1049,8 +880,7 @@ function initAboutScroll() {
 // Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
-  initLoadingScreen();
-  initHeadingBlobs();
+  initIntro();
   renderClients();
   renderWorks();
   renderSkills();
@@ -1059,6 +889,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWorksHeading();
   initAnimations();
   initAboutScroll();
+  initHeroBlob();
   const lenis = initLenis();
   initHeader(lenis);
 });
