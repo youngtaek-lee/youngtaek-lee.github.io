@@ -1,0 +1,216 @@
+/* =============================
+   ABOUT
+============================= */
+.fade-to-black {
+  height: 360px;
+  margin-top: -360px;
+  background: linear-gradient(to bottom, transparent, var(--color-surface));
+  position: relative;
+  z-index: -1;
+}
+
+.fade-to-black--works {
+  margin-top: 0;
+  background: linear-gradient(to top, transparent, var(--color-surface));
+  z-index: -1;
+  pointer-events: none;
+}
+
+.about-track {
+  position: relative;
+  padding-bottom: 160px;
+  background: var(--color-surface);
+}
+
+.about {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 160px 0;
+  overflow: visible;
+}
+
+.about__sticky {
+  width: 100%;
+  padding: 0 48px;
+}
+
+.about__card {
+  padding: 0;
+  max-width: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 200px;
+}
+
+.about__word {
+  display: inline;
+  opacity: 0.12;
+}
+
+.stats {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.stats .container {
+  max-width: 100%;
+  padding: 0 24px;
+}
+
+.about__stats {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 0;
+}
+
+.about__stat-card {
+  border-radius: 16px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about__stat-card--1 { background: #ebebeb; }
+.about__stat-card--2 { background: #e0e0e0; }
+.about__stat-card--3 { background: #f0f0f0; }
+.about__stat-card--4 { background: #e8e8e8; }
+
+.about__stat-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.about__stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  color: #1a2a2e;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.about__stat-icon {
+  width: 28px;
+  height: 28px;
+  color: #1a2a2e;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+.about__stat-label {
+  font-size: 0.85rem;
+  color: #3a5a60;
+  line-height: 1.5;
+}
+
+.about__summary {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 4.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.about__more-link {
+  flex-shrink: 0;
+  align-self: center;
+  position: relative;
+  overflow: hidden;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 1px solid var(--color-sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  line-height: 1.4;
+  transition: color 0.4s ease, border-color 0.4s ease;
+}
+
+.about__more-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-point);
+  border-radius: 50%;
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about__more-link:hover::before {
+  clip-path: circle(100% at 50% 50%);
+}
+
+.about__more-link:hover {
+  color: #ffffff;
+  border-color: var(--color-point);
+}
+
+.about__more-link span {
+  position: relative;
+  z-index: 1;
+}
+
+.about__skills {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.skill-group__title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-sub);
+  margin-bottom: 12px;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  padding: 6px 14px;
+  background: var(--color-bg);
+  border: 2px solid var(--color-line);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.about__statement {
+  margin-top: clamp(60px, 8vw, 120px);
+  text-align: center;
+}
+
+.about__statement-text {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 7vw, 7rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.about__statement-text em {
+  font-style: italic;
+  color: var(--color-accent);
+}

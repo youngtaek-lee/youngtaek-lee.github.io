@@ -1,0 +1,158 @@
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-1Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-2ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-3Light.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Paperlogy';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-9Black.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+
+/* =============================
+   CSS Variables
+============================= */
+:root {
+  /* Background */
+  --color-bg:             #F5F2EE;
+  --color-surface:        #E8E3DC;
+  --color-surface-raised: #DDD8D0;
+  --color-dark:           #2E2925;
+
+  /* Border */
+  --color-border:         #C4BAB0;
+  --color-line:           #C4BAB0;
+
+  /* Text */
+  --color-text:           #2E2925;
+  --color-text-sub:       #7A6E65;
+  --color-sub:            #7A6E65;
+
+  /* Accent */
+  --color-accent:         #6B7C6E;
+  --color-accent-light:   #8A9B8D;
+  --color-accent-dim:     rgba(107, 124, 110, 0.1);
+
+  /* Point (기존 참조 호환) */
+  --color-point:          #6B7C6E;
+  --color-point-dim:      rgba(107, 124, 110, 0.15);
+
+  --font-base: 'Paperlogy', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --max-width: 1100px;
+  --section-padding: 120px 24px;
+}
+
+/* =============================
+   Background Canvas
+============================= */
+#heroBlobCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 콘텐츠가 캔버스 위로 올라오게 */
+body > main,
+body > header,
+body > footer,
+body > nav,
+body > section {
+  position: relative;
+  z-index: 2;
+}
+
+/* =============================
+   Base
+============================= */
+body {
+  font-family: var(--font-base);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  scrollbar-width: none;
+}
+
+.heading-dot {
+  color: #6B7C6E;
+  margin-left: 0.06em;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* 12컬럼 그리드 공통 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0 16px;
+}
