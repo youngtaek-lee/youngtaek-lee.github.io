@@ -88,11 +88,31 @@
   letter-spacing: -0.03em;
   line-height: 1;
   flex: 1;
-  transition: color 0.25s;
+  overflow: hidden;
+  position: relative;
+  height: 1em;
 }
 
-.works-list__item:hover .works-list__title {
+.works-list__title-en,
+.works-list__title-ko {
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.works-list__title-ko {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(105%);
   color: var(--color-accent);
+}
+
+.works-list__item:hover .works-list__title-en {
+  transform: translateY(-105%);
+}
+
+.works-list__item:hover .works-list__title-ko {
+  transform: translateY(0);
 }
 
 .works-list__meta {
