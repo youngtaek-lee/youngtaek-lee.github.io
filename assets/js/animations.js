@@ -28,42 +28,79 @@ function initHeroEntrance() {
 }
 
 // =============================
+// 섹션 헤딩 단어 분리 유틸
+// =============================
+function wrapWordsForReveal(el) {
+  const nodes = Array.from(el.childNodes);
+  el.innerHTML = '';
+  const inners = [];
+  let needSpace = false;
+
+  nodes.forEach(node => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const words = node.textContent.trim().split(/\s+/).filter(Boolean);
+      words.forEach((word, i) => {
+        if (needSpace || i > 0) el.appendChild(document.createTextNode(' '));
+        const outer = document.createElement('span');
+        outer.className = 'reveal-word';
+        const inner = document.createElement('span');
+        inner.className = 'reveal-word__inner';
+        inner.textContent = word;
+        outer.appendChild(inner);
+        el.appendChild(outer);
+        inners.push(inner);
+        needSpace = true;
+      });
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const outer = document.createElement('span');
+      outer.className = 'reveal-word';
+      const inner = document.createElement('span');
+      inner.className = 'reveal-word__inner';
+      inner.appendChild(node);
+      outer.appendChild(inner);
+      el.appendChild(outer);
+      inners.push(inner);
+      needSpace = false;
+    }
+  });
+
+  return inners;
+}
+
+// =============================
 // 섹션 헤딩 등장 애니메이션
 // =============================
 function initWorksHeading() {
-  const worksHeading   = document.querySelector('.works__heading');
-  const skillsHeading  = document.querySelector('.skills__heading');
-  const clientsHeading = document.querySelector('.clients__heading');
+  const sections = [
+    { heading: '.works__heading',  sub: '.works__sub',   extras: [],                                   hStagger: 0.1,  eStagger: 0.08, trigger: '.works__track-wrap', start: 'top 75%', toggleActions: 'play none none reverse' },
+    { heading: '.skills__heading', sub: '.skills__sub',  extras: [],                                   hStagger: 0.1,  eStagger: 0.08, trigger: '.skills',            start: 'top 80%', toggleActions: 'play reverse play reverse' },
+    { heading: '.clients__heading',sub: '.clients__sub', extras: [],                                   hStagger: 0.1,  eStagger: 0.08, trigger: '.clients',           start: 'top 80%', toggleActions: 'play reverse play reverse' },
+    { heading: '.contact__title',  sub: null,            extras: ['.contact__email', '.contact__sns'], hStagger: 0,    eStagger: 0,    trigger: '.contact',           start: 'top 75%', toggleActions: 'play none none reverse' },
+  ];
 
-  if (worksHeading) {
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: '.works__track-wrap',
-        start: 'top 75%',
-        toggleActions: 'play none none reverse',
-      },
-    }).fromTo(worksHeading,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }
-    );
-  }
+  sections.forEach(({ heading, sub, extras, hStagger, eStagger, trigger, start, toggleActions }) => {
+    const headingEl = document.querySelector(heading);
+    const subEl     = sub ? document.querySelector(sub) : null;
+    if (!headingEl) return;
 
-  [
-    { el: skillsHeading,  section: '.skills'  },
-    { el: clientsHeading, section: '.clients' },
-  ].forEach(({ el, section }) => {
-    if (!el) return;
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 80%',
-        end: 'top 15%',
-        toggleActions: 'play reverse play reverse',
-      },
-    }).fromTo(el,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' }
-    );
+    const headingWords = wrapWordsForReveal(headingEl);
+    const subWords     = subEl ? wrapWordsForReveal(subEl) : [];
+
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger, start, toggleActions },
+    });
+    tl.from(headingWords, { y: '105%', duration: 0.85, ease: 'expo.out', stagger: hStagger });
+    if (subWords.length) {
+      tl.from(subWords, { y: '105%', duration: 0.7, ease: 'expo.out', stagger: 0.06 }, '-=0.45');
+    }
+    extras.forEach(sel => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      const words = wrapWordsForReveal(el);
+      if (words.length) {
+        tl.from(words, { y: '105%', duration: 0.7, ease: 'expo.out', stagger: eStagger }, '-=0.35');
+      }
+    });
   });
 }
 

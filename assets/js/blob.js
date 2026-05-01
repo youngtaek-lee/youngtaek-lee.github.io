@@ -242,11 +242,10 @@ vec3 orthogonal(vec3 v) {
       onUpdate(self) {
         const p = self.progress;
         const sp = gsap.parseEase('power2.in')(p);
-        mesh.position.x = gsap.utils.interpolate(0, -4.5, p);
-        mesh.position.y = gsap.utils.interpolate(0, -1.5, p);
-        mesh.scale.setScalar(gsap.utils.interpolate(1.6, 1.0, sp));
-        scrollRotX = gsap.utils.interpolate(0,  0.35, p);
-        scrollRotY = gsap.utils.interpolate(0, -0.4,  p);
+        mesh.position.set(0, 0, 0);
+        mesh.scale.setScalar(gsap.utils.interpolate(1.6, 0.6, sp));
+        scrollRotX = gsap.utils.interpolate(0,  0.6, p);
+        scrollRotY = gsap.utils.interpolate(0, -0.8, p);
         canvas.style.opacity = 1 - p;
       },
       onLeaveBack() {
@@ -264,17 +263,16 @@ vec3 orthogonal(vec3 v) {
       scrub: 1,
       onUpdate(self) {
         const p = self.progress;
-        const ep = gsap.parseEase('expoScale(0.5, 2)')(p);
-        mesh.position.x = gsap.utils.interpolate(-5, -2, p);
-        mesh.position.y = gsap.utils.interpolate(2, 0, p);
-        mesh.scale.setScalar(gsap.utils.interpolate(1.3, 0.9, ep));
-        scrollRotX = gsap.utils.interpolate(-0.55,  0,    p);
-        scrollRotY = gsap.utils.interpolate( 0.6,  -0.15, p);
+        mesh.position.set(-2, 0, 0);
+        mesh.scale.setScalar(gsap.utils.interpolate(0.15, 0.9, p));
+        scrollRotX = gsap.utils.interpolate(-1.2,  0,    p);
+        scrollRotY = gsap.utils.interpolate( 1.2, -0.15, p);
         canvas.style.opacity = Math.min(p * 2, 1);
       },
       onLeaveBack() {
         canvas.style.opacity = '0';
-        mesh.scale.setScalar(1.3);
+        mesh.position.set(-2, 0, 0);
+        mesh.scale.setScalar(0.15);
         scrollRotX = 0; scrollRotY = 0;
       },
     });

@@ -32,15 +32,12 @@
 
 .about__sticky {
   width: 100%;
-  padding: 0 48px;
+  padding: 0 48px 0 10vw;
 }
 
 .about__card {
   padding: 0;
   max-width: none;
-  display: flex;
-  align-items: flex-start;
-  gap: 200px;
 }
 
 .about__word {

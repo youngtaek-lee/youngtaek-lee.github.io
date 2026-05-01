@@ -51,7 +51,7 @@ function initIntro() {
       const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--color-bg').trim() || '#0f0f0f';
       const counterPath = new Path2D('M6.908 12.606C7.68533 12.606 8.338 12.4153 8.866 12.034C9.394 11.6527 9.79733 11.1027 10.076 10.384C10.3547 9.66533 10.494 8.78533 10.494 7.744C10.494 6.65867 10.3473 5.73467 10.054 4.972C9.77533 4.20933 9.36467 3.63 8.822 3.234C8.27933 2.82333 7.61933 2.618 6.842 2.618C6.07933 2.618 5.42667 2.816 4.884 3.212C4.356 3.59333 3.94533 4.15067 3.652 4.884C3.37333 5.61733 3.234 6.52667 3.234 7.612C3.234 8.404 3.31467 9.11533 3.476 9.746C3.652 10.362 3.894 10.8827 4.202 11.308C4.51 11.7333 4.89133 12.056 5.346 12.276C5.80067 12.496 6.32133 12.606 6.908 12.606Z');
 
-      function drawFrame(s) {
+      function drawFrame(s, colorAlpha = 0) {
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, W, H);
         ctx.fillStyle = bgColor;
@@ -64,8 +64,19 @@ function initIntro() {
         ctx.fill(counterPath);
         ctx.restore();
         ctx.globalCompositeOperation = 'source-over';
+        if (colorAlpha > 0) {
+          ctx.globalAlpha = colorAlpha;
+          ctx.fillStyle = bgColor;
+          ctx.save();
+          ctx.translate(screenOx, screenOy);
+          ctx.scale(s * baseScaleX, s * baseScaleY);
+          ctx.translate(-cCX, -cCY);
+          ctx.fill(counterPath);
+          ctx.restore();
+          ctx.globalAlpha = 1;
+        }
       }
-      drawFrame(1);
+      drawFrame(1, 1);
 
       screen.style.background = 'transparent';
 
@@ -74,11 +85,13 @@ function initIntro() {
       const originY  = ((screenOy - logoRect.top)  / logoRect.height) * 100;
       gsap.set(logo, { transformOrigin: `${originX}% ${originY}%` });
 
+      const colorObj = { alpha: 1 };
+      gsap.to(colorObj, { alpha: 0, duration: 0.5, ease: 'power2.in' });
       gsap.to(logo, {
         scale: sFinal,
         duration: 1.4,
         ease: 'power3.in',
-        onUpdate() { drawFrame(gsap.getProperty(logo, 'scale')); },
+        onUpdate() { drawFrame(gsap.getProperty(logo, 'scale'), colorObj.alpha); },
         onComplete: () => screen.remove(),
       });
     });
