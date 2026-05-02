@@ -44,23 +44,11 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  transition: background 0.35s ease;
 }
 
-.skill-item::before {
-  content: '';
-  position: absolute;
-  top: var(--y, 50%);
-  left: var(--x, 50%);
-  width: 10px;
-  height: 10px;
+.skill-item:hover {
   background: var(--color-dark);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.skill-item:hover::before {
-  transform: translate(-50%, -50%) scale(50);
 }
 
 .skill-item__name {

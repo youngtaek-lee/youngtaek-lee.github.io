@@ -73,12 +73,12 @@ function wrapWordsForReveal(el) {
 function initWorksHeading() {
   const sections = [
     { heading: '.works__heading',  sub: '.works__sub',   extras: [],                                   hStagger: 0.1,  eStagger: 0.08, trigger: '.works__track-wrap', start: 'top 75%', toggleActions: 'play none none reverse' },
-    { heading: '.skills__heading', sub: '.skills__sub',  extras: [],                                   hStagger: 0.1,  eStagger: 0.08, trigger: '.skills',            start: 'top 80%', toggleActions: 'play reverse play reverse' },
-    { heading: '.clients__heading',sub: '.clients__sub', extras: [],                                   hStagger: 0.1,  eStagger: 0.08, trigger: '.clients',           start: 'top 80%', toggleActions: 'play reverse play reverse' },
+    { heading: '.skills__heading', sub: '.skills__sub',  extras: [], items: '.skill-item', hStagger: 0.1,  eStagger: 0.08, trigger: '.skills',            start: 'top 80%', toggleActions: 'play reverse play reverse' },
+    { heading: '.clients__heading',sub: '.clients__sub', extras: [], items: '.clients__overflow', itemsStagger: 0.15, hStagger: 0.1,  eStagger: 0.08, trigger: '.clients',           start: 'top 80%', toggleActions: 'play reverse play reverse' },
     { heading: '.contact__title',  sub: null,            extras: ['.contact__email', '.contact__sns'], hStagger: 0,    eStagger: 0,    trigger: '.contact',           start: 'top 75%', toggleActions: 'play none none reverse' },
   ];
 
-  sections.forEach(({ heading, sub, extras, hStagger, eStagger, trigger, start, toggleActions }) => {
+  sections.forEach(({ heading, sub, extras, items, itemsStagger, hStagger, eStagger, trigger, start, toggleActions }) => {
     const headingEl = document.querySelector(heading);
     const subEl     = sub ? document.querySelector(sub) : null;
     if (!headingEl) return;
@@ -101,6 +101,13 @@ function initWorksHeading() {
         tl.from(words, { y: '105%', duration: 0.7, ease: 'expo.out', stagger: eStagger }, '-=0.35');
       }
     });
+
+    if (items) {
+      const itemEls = document.querySelectorAll(items);
+      if (itemEls.length) {
+        tl.from(itemEls, { opacity: 0, y: -18, duration: 0.45, ease: 'power2.out', stagger: itemsStagger ?? 0.05 }, '-=0.2');
+      }
+    }
   });
 }
 

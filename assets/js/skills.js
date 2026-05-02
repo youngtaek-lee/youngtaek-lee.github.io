@@ -26,11 +26,4 @@ function renderSkills() {
     </div>
   `).join('');
 
-  grid.querySelectorAll('.skill-item').forEach(item => {
-    item.addEventListener('mousemove', (e) => {
-      const r = item.getBoundingClientRect();
-      item.style.setProperty('--x', `${e.clientX - r.left}px`);
-      item.style.setProperty('--y', `${e.clientY - r.top}px`);
-    });
-  });
 }

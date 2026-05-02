@@ -36,6 +36,7 @@
 
 #introO {
   display: inline;
+  color: var(--color-point);
 }
 
 #introLoader {

@@ -11,20 +11,31 @@ const works = [
 ];
 
 // =============================
-// Works 렌더링 + 수평 스크롤
+// Works 렌더링
 // =============================
 function renderWorks() {
   const track = document.querySelector('.works__track');
   if (!track) return;
 
-  const ul = document.createElement('ul');
-  ul.className = 'works-list';
+  track.innerHTML = `
+    <ul class="works-list"></ul>
+    <div class="works-panel">
+      <div class="works-panel__img-wrap">
+        <img class="works-panel__img works-panel__img--a" src="" alt="" />
+        <img class="works-panel__img works-panel__img--b" src="" alt="" />
+      </div>
+    </div>
+  `;
+
+  const ul = track.querySelector('.works-list');
+  const imgA = track.querySelector('.works-panel__img--a');
+  const imgB = track.querySelector('.works-panel__img--b');
+
   works.forEach((work, i) => {
     const li = document.createElement('li');
     li.className = 'works-list__item';
     li.dataset.index = i;
     li.innerHTML = `
-      <span class="works-list__num">${String(i + 1).padStart(2, '0')}</span>
       <span class="works-list__title">
         <span class="works-list__title-en">${work.title}</span>
         <span class="works-list__title-ko">${work.name}</span>
@@ -33,37 +44,62 @@ function renderWorks() {
     `;
     ul.appendChild(li);
   });
-  track.appendChild(ul);
 
-  const thumb = document.createElement('div');
-  thumb.id = 'worksThumb';
-  thumb.innerHTML = '<img src="" alt="" />';
-  document.body.appendChild(thumb);
-  const thumbImg = thumb.querySelector('img');
-  gsap.set(thumb, { opacity: 0, x: -999, y: -999 });
+  let activeIndex = -1;
+
+  // 매번 현재 y값 기준으로 "더 보이는 쪽"을 current로 판단 → 빠른 전환 시 방향 오류 방지
+  function getVisiblePair() {
+    const yA = Math.abs(parseFloat(gsap.getProperty(imgA, 'y')) || 0);
+    const yB = Math.abs(parseFloat(gsap.getProperty(imgB, 'y')) || 0);
+    return yA <= yB ? [imgA, imgB] : [imgB, imgA];
+  }
+
+  function updatePanel(i, animate = true) {
+    if (i === activeIndex) return;
+    const work = works[i];
+    activeIndex = i;
+
+    ul.querySelectorAll('.works-list__item').forEach((item, idx) => {
+      item.classList.toggle('is-active', idx === i);
+    });
+
+    gsap.killTweensOf([imgA, imgB]);
+
+    if (!animate) {
+      imgA.src = work.main;
+      imgA.alt = work.title;
+      gsap.set(imgA, { y: '0%', zIndex: 1 });
+      gsap.set(imgB, { y: '100%', zIndex: 0 });
+      return;
+    }
+
+    const [currentImg, nextImg] = getVisiblePair();
+
+    nextImg.src = work.main;
+    nextImg.alt = work.title;
+    gsap.set(nextImg,    { y: '100%', zIndex: 1 });
+    gsap.set(currentImg, { zIndex: 0 });
+
+    gsap.to(nextImg,    { y: '0%',    duration: 0.5, ease: 'power2.out' });
+    gsap.to(currentImg, { y: '-100%', duration: 0.5, ease: 'power2.out' });
+  }
+
+  const moreItem = document.createElement('li');
+  moreItem.className = 'works-list__item works-list__item--more';
+  moreItem.innerHTML = `
+    <span class="works-list__title">
+      <span class="works-list__title-en">More Works</span>
+      <span class="works-list__title-ko">더 많은 작업물보기</span>
+    </span>
+    <span class="works-list__more-plus">+</span>
+  `;
+  ul.appendChild(moreItem);
+
+  updatePanel(0, false);
 
   ul.querySelectorAll('.works-list__item').forEach((item) => {
-    const i = parseInt(item.dataset.index);
-    const work = works[i];
-
-    item.addEventListener('mouseenter', (e) => {
-      thumbImg.src = work.main;
-      gsap.set(thumb, { x: e.clientX + 28, y: e.clientY - 110 });
-      gsap.to(thumb, { opacity: 1, duration: 0.3, ease: 'power2.out' });
-    });
-
-    item.addEventListener('mousemove', (e) => {
-      gsap.to(thumb, {
-        x: e.clientX + 28,
-        y: e.clientY - 110,
-        duration: 0.45,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      });
-    });
-
-    item.addEventListener('mouseleave', () => {
-      gsap.to(thumb, { opacity: 0, duration: 0.25, ease: 'power2.in' });
+    item.addEventListener('mouseenter', () => {
+      updatePanel(parseInt(item.dataset.index));
     });
   });
 }

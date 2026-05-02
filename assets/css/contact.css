@@ -45,7 +45,7 @@
 .contact__email {
   font-family: 'Alegreya', serif;
   font-size: clamp(2rem, 3.8vw, 4rem);
-  color: var(--color-text);
+  color: var(--color-point);
   transition: color 0.2s;
   line-height: 1.2;
   position: relative;

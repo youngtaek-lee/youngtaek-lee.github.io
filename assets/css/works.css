@@ -53,8 +53,11 @@
 }
 
 .works__track {
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 0 60px;
   padding: 0 10vw;
+  align-items: start;
 }
 
 .works-list {
@@ -68,7 +71,7 @@
   gap: 40px;
   padding: 28px 0;
   border-bottom: 1px solid var(--color-line);
-  cursor: default;
+  cursor: pointer;
   user-select: none;
 }
 
@@ -83,7 +86,7 @@
 
 .works-list__title {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4.5vw, 5rem);
+  font-size: clamp(1.9rem, 3.2vw, 3.8rem);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1;
@@ -107,12 +110,36 @@
   color: var(--color-accent);
 }
 
-.works-list__item:hover .works-list__title-en {
+.works-list__item:hover .works-list__title-en,
+.works-list__item.is-active .works-list__title-en {
   transform: translateY(-105%);
 }
 
-.works-list__item:hover .works-list__title-ko {
+.works-list__item:hover .works-list__title-ko,
+.works-list__item.is-active .works-list__title-ko {
   transform: translateY(0);
+}
+
+.works-list__item--more .works-list__title-en {
+  color: var(--color-line);
+}
+
+.works-list__item--more .works-list__title-ko {
+  color: var(--color-point);
+}
+
+.works-list__more-plus {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3.2vw, 3.8rem);
+  font-weight: 700;
+  color: var(--color-line);
+  flex-shrink: 0;
+  line-height: 1;
+  transition: color 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.works-list__item--more:hover .works-list__more-plus {
+  color: var(--color-point);
 }
 
 .works-list__meta {
@@ -124,23 +151,32 @@
   flex-shrink: 0;
 }
 
-#worksThumb {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 300px;
-  pointer-events: none;
-  z-index: 200;
+.works-panel {
+  position: sticky;
+  top: 120px;
+}
+
+.works-panel__inner {
   will-change: transform, opacity;
 }
 
-#worksThumb img {
+.works-panel__img-wrap {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+  background: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.works-panel__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 6px;
-  display: block;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+  object-position: top center;
+  will-change: transform;
 }
 
 .work-item {
