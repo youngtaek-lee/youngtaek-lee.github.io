@@ -44,11 +44,6 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: background 0.35s ease;
-}
-
-.skill-item:hover {
-  background: var(--color-dark);
 }
 
 .skill-item__name {
@@ -60,24 +55,25 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.4);
-  transition: opacity 0.2s ease;
+  transition: transform 0.35s ease, opacity 0.35s ease;
 }
 
 .skill-item:hover .skill-item__name {
+  transform: translateY(120%);
   opacity: 0;
 }
 
 .skill-item__icon {
   position: absolute;
-  width: 42%;
-  height: 42%;
+  width: 36%;
+  height: 36%;
   object-fit: contain;
-  opacity: 0;
   z-index: 1;
-  transition: opacity 0.25s ease 0.1s;
-  filter: brightness(0) invert(1);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.35s ease;
+  filter: brightness(0) invert(0.6) sepia(1) hue-rotate(90deg) saturate(0.2) brightness(0.65);
 }
 
 .skill-item:hover .skill-item__icon {
-  opacity: 1;
+  clip-path: inset(0 0 0% 0);
 }

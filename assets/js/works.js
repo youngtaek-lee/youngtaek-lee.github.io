@@ -2,12 +2,12 @@
 // 프로젝트 데이터
 // =============================
 const works = [
-  { id: 'sase',     title: 'Sase',     name: '사세',          category: 'IT Solutions', year: 2023, main: 'assets/images/works/사세 메인캡쳐.png',       url: 'https://www.sase.co.kr/html/index/' },
-  { id: 'bexel',    title: 'Bexel',    name: '벡셀',          category: 'Electronics',  year: 2024, main: 'assets/images/works/벡셀 메인.png',           url: 'https://www.bexel.co.kr/html/index/index.php' },
-  { id: 'marusys',  title: 'Marusys',  name: '마르시스',      category: 'EdTech',       year: 2023, main: 'assets/images/works/마르시스 메인.png',        url: 'https://www.marusys.com/html/index/index.php' },
-  { id: 'raymats',  title: 'Raymats',  name: '레이머티리얼즈', category: 'Materials',    year: 2024, main: 'assets/images/works/레이머터리얼즈 메인.png',   url: 'https://raymats.com/html/index/' },
-  { id: 'optimedi', title: 'Optimedi', name: '옵티메디',      category: 'Healthcare',   year: 2024, main: 'assets/images/works/옵티메디 메인.png',        url: 'https://www.optimedi.kr/' },
-  { id: 'ghi',      title: 'GHI',      name: '기획인애드',    category: 'Advertising',  year: 2023, main: 'assets/images/works/기획인애드 메인.png',      url: 'http://ghi.co.kr/html/index/' },
+  { id: 'sase',     title: 'Sase',     name: '사세',          category: 'Food & Beverage',  year: 2023, main: 'assets/images/works/사세 메인캡쳐.png',       url: 'https://www.sase.co.kr/html/index/' },
+  { id: 'bexel',    title: 'Bexel',    name: '벡셀',          category: 'Electronics',      year: 2024, main: 'assets/images/works/벡셀 메인.png',           url: 'https://www.bexel.co.kr/html/index/index.php' },
+  { id: 'marusys',  title: 'Marusys',  name: '마르시스',      category: 'IT · Embedded',    year: 2023, main: 'assets/images/works/마르시스 메인.png',        url: 'https://www.marusys.com/html/index/index.php' },
+  { id: 'raymats',  title: 'Raymats',  name: '레이머티리얼즈', category: 'Materials',         year: 2024, main: 'assets/images/works/레이머터리얼즈 메인.png',   url: 'https://raymats.com/html/index/' },
+  { id: 'optimedi', title: 'Optimedi', name: '옵티메디',      category: 'Medical Device',   year: 2024, main: 'assets/images/works/옵티메디 메인.png',        url: 'https://www.optimedi.kr/' },
+  { id: 'ghi',      title: 'GHI',      name: '기획인애드',    category: 'Advertising',      year: 2023, main: 'assets/images/works/기획인애드 메인.png',      url: 'http://ghi.co.kr/html/index/' },
 ];
 
 // =============================

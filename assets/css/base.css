@@ -138,6 +138,7 @@ body {
 .heading-dot {
   color: #6B7C6E;
   margin-left: 0.06em;
+  padding-right: 0.1em;
 }
 
 body::-webkit-scrollbar {
