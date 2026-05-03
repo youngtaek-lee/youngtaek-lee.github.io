@@ -2,8 +2,9 @@
 // Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
+  gsap.registerPlugin(ScrollTrigger);
+
   initIntro();
-  renderClients();
   renderWorks();
   renderSkills();
   initMenu();
@@ -13,5 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initAboutScroll();
   initHeroBlob();
   const lenis = initLenis();
+  initWorksPanelFollow(lenis);
   initHeader(lenis);
 });

@@ -46,14 +46,13 @@ function initHeader(lenis) {
   const header       = document.querySelector('.header');
   const bottomNav    = document.getElementById('bottomNav');
   const scrollTopBtn = document.getElementById('scrollTopBtn');
+  if (!header || !bottomNav || !scrollTopBtn) return;
   const HEADER_THRESHOLD = 60;
   const NAV_THRESHOLD    = 60;
   const BOTTOM_THRESHOLD = 120;
 
   requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      header.classList.add('is-visible');
-    });
+    header.classList.add('is-visible');
   });
 
   let fadeTimer = null;

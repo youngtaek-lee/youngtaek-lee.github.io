@@ -20,16 +20,15 @@ function renderWorks() {
   track.innerHTML = `
     <ul class="works-list"></ul>
     <div class="works-panel">
-      <div class="works-panel__img-wrap">
-        <img class="works-panel__img works-panel__img--a" src="" alt="" />
-        <img class="works-panel__img works-panel__img--b" src="" alt="" />
-      </div>
+      <div class="works-panel__img-wrap"></div>
     </div>
   `;
 
-  const ul = track.querySelector('.works-list');
-  const imgA = track.querySelector('.works-panel__img--a');
-  const imgB = track.querySelector('.works-panel__img--b');
+  const ul       = track.querySelector('.works-list');
+  const imgWrap  = track.querySelector('.works-panel__img-wrap');
+  const MAX      = 3;
+  const stack    = [];
+  let activeIndex = -1;
 
   works.forEach((work, i) => {
     const li = document.createElement('li');
@@ -45,43 +44,31 @@ function renderWorks() {
     ul.appendChild(li);
   });
 
-  let activeIndex = -1;
-
-  // 매번 현재 y값 기준으로 "더 보이는 쪽"을 current로 판단 → 빠른 전환 시 방향 오류 방지
-  function getVisiblePair() {
-    const yA = Math.abs(parseFloat(gsap.getProperty(imgA, 'y')) || 0);
-    const yB = Math.abs(parseFloat(gsap.getProperty(imgB, 'y')) || 0);
-    return yA <= yB ? [imgA, imgB] : [imgB, imgA];
-  }
-
-  function updatePanel(i, animate = true) {
+  function updatePanel(i) {
     if (i === activeIndex) return;
-    const work = works[i];
     activeIndex = i;
+    const work = works[i];
 
     ul.querySelectorAll('.works-list__item').forEach((item, idx) => {
       item.classList.toggle('is-active', idx === i);
     });
 
-    gsap.killTweensOf([imgA, imgB]);
-
-    if (!animate) {
-      imgA.src = work.main;
-      imgA.alt = work.title;
-      gsap.set(imgA, { y: '0%', zIndex: 1 });
-      gsap.set(imgB, { y: '100%', zIndex: 0 });
-      return;
+    // 스택 꽉 차면 가장 오래된 것 페이드아웃 후 제거
+    if (stack.length >= MAX) {
+      const oldest = stack.shift();
+      gsap.to(oldest, { opacity: 0, duration: 0.25, onComplete: () => oldest.remove() });
     }
 
-    const [currentImg, nextImg] = getVisiblePair();
+    const img = document.createElement('img');
+    img.className = 'works-panel__img';
+    img.alt = work.title;
+    img.style.zIndex = stack.length + 1;
+    gsap.set(img, { y: '100%' });
+    imgWrap.appendChild(img);
+    stack.push(img);
 
-    nextImg.src = work.main;
-    nextImg.alt = work.title;
-    gsap.set(nextImg,    { y: '100%', zIndex: 1 });
-    gsap.set(currentImg, { zIndex: 0 });
-
-    gsap.to(nextImg,    { y: '0%',    duration: 0.5, ease: 'power2.out' });
-    gsap.to(currentImg, { y: '-100%', duration: 0.5, ease: 'power2.out' });
+    img.onload = () => gsap.to(img, { y: '0%', duration: 0.5, ease: 'power2.out' });
+    img.src = work.main;
   }
 
   const moreItem = document.createElement('li');
@@ -95,11 +82,30 @@ function renderWorks() {
   `;
   ul.appendChild(moreItem);
 
-  updatePanel(0, false);
-
   ul.querySelectorAll('.works-list__item').forEach((item) => {
     item.addEventListener('mouseenter', () => {
-      updatePanel(parseInt(item.dataset.index));
+      const idx = parseInt(item.dataset.index);
+      if (!isNaN(idx)) updatePanel(idx);
     });
+  });
+}
+
+// =============================
+// Works 패널 smooth follow
+// =============================
+function initWorksPanelFollow(lenis) {
+  const panel = document.querySelector('.works-panel');
+  const wrap  = document.querySelector('.works__track-wrap');
+  if (!panel || !wrap) return;
+
+  const TOP = 120;
+  const panelInitialTop = panel.getBoundingClientRect().top - wrap.getBoundingClientRect().top;
+  const snapY = gsap.quickTo(panel, 'y', { duration: 0.6, ease: 'power3.out' });
+
+  lenis.on('scroll', () => {
+    const wrapRect = wrap.getBoundingClientRect();
+    const raw = -wrapRect.top + TOP;
+    const max = wrap.offsetHeight - panelInitialTop - panel.offsetHeight - TOP;
+    snapY(Math.max(0, Math.min(raw, max)));
   });
 }

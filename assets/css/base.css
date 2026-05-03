@@ -64,21 +64,19 @@
   --color-dark:           #2E2925;
 
   /* Border */
-  --color-border:         #C4BAB0;
   --color-line:           #C4BAB0;
+  --color-border:         var(--color-line);
 
   /* Text */
   --color-text:           #2E2925;
-  --color-text-sub:       #7A6E65;
   --color-sub:            #7A6E65;
+  --color-text-sub:       var(--color-sub);
 
   /* Accent */
   --color-accent:         #6B7C6E;
   --color-accent-light:   #8A9B8D;
   --color-accent-dim:     rgba(107, 124, 110, 0.1);
-
-  /* Point (기존 참조 호환) */
-  --color-point:          #6B7C6E;
+  --color-point:          var(--color-accent);
   --color-point-dim:      rgba(107, 124, 110, 0.15);
 
   --font-base: 'Paperlogy', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -136,7 +134,7 @@ body {
 }
 
 .heading-dot {
-  color: #6B7C6E;
+  color: var(--color-accent);
   margin-left: 0.06em;
   padding-right: 0.1em;
 }

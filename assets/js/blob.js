@@ -231,7 +231,7 @@ vec3 orthogonal(vec3 v) {
     camera.updateProjectionMatrix();
   });
 
-  canvas.style.opacity = '1';
+  canvas.style.opacity = 1;
 
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     ScrollTrigger.create({
@@ -252,7 +252,7 @@ vec3 orthogonal(vec3 v) {
         mesh.position.set(0, 0, 0);
         mesh.scale.setScalar(1.6);
         scrollRotX = 0; scrollRotY = 0;
-        canvas.style.opacity = '1';
+        canvas.style.opacity = 1;
       },
     });
 
@@ -270,7 +270,7 @@ vec3 orthogonal(vec3 v) {
         canvas.style.opacity = Math.min(p * 2, 1);
       },
       onLeaveBack() {
-        canvas.style.opacity = '0';
+        canvas.style.opacity = 0;
         mesh.position.set(-2, 0, 0);
         mesh.scale.setScalar(0.15);
         scrollRotX = 0; scrollRotY = 0;

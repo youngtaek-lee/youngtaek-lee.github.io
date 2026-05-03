@@ -53,7 +53,7 @@
 }
 
 .contact__email:hover {
-  color: var(--color-point);
+  color: var(--color-accent-light);
 }
 
 .contact__sns {

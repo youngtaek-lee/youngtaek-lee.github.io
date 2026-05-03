@@ -6,7 +6,7 @@ function initIntro() {
   const logo   = document.getElementById('introLogo');
   const loader = document.getElementById('introLoader');
   const oChar  = document.getElementById('introO');
-  const lines  = logo ? logo.querySelectorAll('.intro-logo__line > span') : [];
+  const lines  = logo.querySelectorAll('.intro-logo__line > span');
 
   if (!screen || !logo) return;
 
@@ -92,7 +92,7 @@ function initIntro() {
         duration: 1.4,
         ease: 'power3.in',
         onUpdate() { drawFrame(gsap.getProperty(logo, 'scale'), colorObj.alpha); },
-        onComplete: () => screen.remove(),
+        onComplete: () => { screen.remove(); ScrollTrigger.refresh(); },
       });
     });
   }
