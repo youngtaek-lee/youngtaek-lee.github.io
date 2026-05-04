@@ -115,7 +115,7 @@ function initWorksHeading() {
     ScrollTrigger.create({
       trigger: '.works__track-wrap',
       start: 'top 60%',
-      onEnter:     () => gsap.to(worksPanel, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }),
+      onEnter:     () => gsap.to(worksPanel, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out', delay: 1.7 }),
       onLeaveBack: () => gsap.set(worksPanel, { opacity: 0, x: 40 }),
     });
   }
