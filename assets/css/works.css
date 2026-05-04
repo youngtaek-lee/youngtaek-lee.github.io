@@ -155,6 +155,33 @@
   position: relative;
 }
 
+.works-panel__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.works-panel__img-wrap.has-image .works-panel__placeholder {
+  opacity: 0;
+}
+
+.works-panel__logo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-text);
+  opacity: 0.2;
+  display: flex;
+  flex-direction: column;
+}
+
 .works-panel__inner {
   will-change: transform, opacity;
 }

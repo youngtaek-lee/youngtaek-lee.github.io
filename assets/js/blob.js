@@ -23,10 +23,10 @@ function initHeroBlob() {
     c.width = c.height = S;
     const ctx = c.getContext('2d');
     const h = ctx.createLinearGradient(0, 0, S, 0);
-    h.addColorStop(0,    '#3D5C40');
-    h.addColorStop(0.4,  '#7A9B6E');
-    h.addColorStop(0.7,  '#C4A882');
-    h.addColorStop(1,    '#5C4A3A');
+    h.addColorStop(0,    '#5C4A3A');
+    h.addColorStop(0.05, '#C4A882');
+    h.addColorStop(0.20, '#7A9B6E');
+    h.addColorStop(1,    '#3D5C40');
     ctx.fillStyle = h;
     ctx.fillRect(0, 0, S, S);
     const d = ctx.createLinearGradient(0, S, S, 0);

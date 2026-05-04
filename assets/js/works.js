@@ -26,6 +26,11 @@ function renderWorks() {
 
   const ul       = track.querySelector('.works-list');
   const imgWrap  = track.querySelector('.works-panel__img-wrap');
+  imgWrap.innerHTML = `
+    <div class="works-panel__placeholder">
+      <div class="works-panel__logo"><span>Lee</span><span>Young</span><span>Taek.</span></div>
+    </div>
+  `;
   const MAX      = 3;
   const stack    = [];
   let activeIndex = -1;
@@ -67,7 +72,10 @@ function renderWorks() {
     imgWrap.appendChild(img);
     stack.push(img);
 
-    img.onload = () => gsap.to(img, { y: '0%', duration: 0.5, ease: 'power2.out' });
+    img.onload = () => {
+      imgWrap.classList.add('has-image');
+      gsap.to(img, { y: '0%', duration: 0.5, ease: 'power2.out' });
+    };
     img.src = work.main;
   }
 
@@ -88,6 +96,7 @@ function renderWorks() {
       if (!isNaN(idx)) updatePanel(idx);
     });
   });
+
 }
 
 // =============================

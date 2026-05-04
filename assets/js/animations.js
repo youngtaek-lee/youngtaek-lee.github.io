@@ -70,10 +70,10 @@ function wrapWordsForReveal(el) {
 // =============================
 function initWorksHeading() {
   const sections = [
-    { heading: '.works__heading',  sub: '.works__sub',   extras: [], items: '.works-list__item', itemsStagger: 0.07, hStagger: 0.1,  eStagger: 0.08, trigger: '.works__track-wrap', start: 'top 60%', toggleActions: 'play none none none' },
-    { heading: '.skills__heading', sub: '.skills__sub',  extras: [], items: '.skill-item', hStagger: 0.1,  eStagger: 0.08, trigger: '.skills',            start: 'top 65%', toggleActions: 'play none none none' },
-    { heading: '.clients__heading',sub: '.clients__sub', extras: [], items: '.clients__overflow', itemsStagger: 0.15, hStagger: 0.1,  eStagger: 0.08, trigger: '.clients',           start: 'top 65%', toggleActions: 'play none none none' },
-    { heading: '.contact__title',  sub: null,            extras: ['.contact__email', '.contact__sns'], hStagger: 0,    eStagger: 0,    trigger: '.contact',           start: 'top 60%', toggleActions: 'play none none none' },
+    { heading: '.works__heading',  sub: '.works__sub',   extras: [], items: '.works-list__item', itemsStagger: 0.07, hStagger: 0.1,  eStagger: 0.08, trigger: '.works__track-wrap', start: 'top 60%', toggleActions: 'play none none reverse' },
+    { heading: '.skills__heading', sub: '.skills__sub',  extras: [], items: '.skill-item', hStagger: 0.1,  eStagger: 0.08, trigger: '.skills',            start: 'top 65%', toggleActions: 'play none none reverse' },
+    { heading: '.clients__heading',sub: '.clients__sub', extras: [], items: '.clients__overflow', itemsStagger: 0.15, hStagger: 0.1,  eStagger: 0.08, trigger: '.clients',           start: 'top 65%', toggleActions: 'play none none reverse' },
+    { heading: '.contact__title',  sub: null,            extras: ['.contact__email', '.contact__sns'], hStagger: 0,    eStagger: 0,    trigger: '.contact',           start: 'top 60%', toggleActions: 'play none none reverse' },
   ];
 
   sections.forEach(({ heading, sub, extras, items, itemsStagger, hStagger, eStagger, trigger, start, toggleActions }) => {
@@ -108,6 +108,17 @@ function initWorksHeading() {
     }
 
   });
+
+  const worksPanel = document.querySelector('.works-panel');
+  if (worksPanel) {
+    gsap.set(worksPanel, { opacity: 0, x: 40 });
+    ScrollTrigger.create({
+      trigger: '.works__track-wrap',
+      start: 'top 60%',
+      onEnter:     () => gsap.to(worksPanel, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }),
+      onLeaveBack: () => gsap.set(worksPanel, { opacity: 0, x: 40 }),
+    });
+  }
 }
 
 // =============================
