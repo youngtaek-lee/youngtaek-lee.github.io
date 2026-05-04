@@ -74,13 +74,16 @@
   transition: opacity 0.3s;
 }
 
-.clients__logo:hover {
+.clients__item:hover .clients__logo {
   opacity: 1;
 }
 
 .clients__logo--svg {
   filter: grayscale(1);
 }
+
+.clients__logo--sm { transform: scale(0.82); }
+.clients__logo--lg { transform: scale(1.22); }
 
 @keyframes marquee-l {
   from { transform: translateX(0); }

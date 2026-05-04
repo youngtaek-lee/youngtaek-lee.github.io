@@ -47,9 +47,10 @@ function initHeader(lenis) {
   const bottomNav    = document.getElementById('bottomNav');
   const scrollTopBtn = document.getElementById('scrollTopBtn');
   if (!header || !bottomNav || !scrollTopBtn) return;
-  const HEADER_THRESHOLD = 60;
-  const NAV_THRESHOLD    = 60;
-  const BOTTOM_THRESHOLD = 120;
+  const HEADER_THRESHOLD        = 60;
+  const NAV_THRESHOLD           = 60;
+  const BOTTOM_THRESHOLD        = 120;
+  const HEADER_BOTTOM_THRESHOLD = 300;
 
   requestAnimationFrame(() => {
     header.classList.add('is-visible');
@@ -76,7 +77,8 @@ function initHeader(lenis) {
   let prevHeaderShouldHide = false;
 
   lenis.on('scroll', ({ scroll, limit }) => {
-    const headerShouldHide = scroll > HEADER_THRESHOLD;
+    const nearBottom       = scroll > limit - HEADER_BOTTOM_THRESHOLD;
+    const headerShouldHide = scroll > HEADER_THRESHOLD && !nearBottom;
     const navShouldShow    = scroll > NAV_THRESHOLD && scroll < limit - BOTTOM_THRESHOLD;
 
     if (headerShouldHide && !prevHeaderShouldHide) {
