@@ -7,9 +7,9 @@ function initHeroBlob() {
   if (!canvas) return;
 
   let W = window.innerWidth, H = window.innerHeight;
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
   renderer.setSize(W, H);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(1);
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.physicallyCorrectLights = true;
 
@@ -187,7 +187,7 @@ vec3 orthogonal(vec3 v) {
   };
   material.customProgramCacheKey = () => 'blobmixer-hero-v1';
 
-  const geometry = new THREE.SphereBufferGeometry(1, 256, 341);
+  const geometry = new THREE.SphereBufferGeometry(1, 128, 128);
   const mesh = new THREE.Mesh(geometry, material);
   mesh.scale.setScalar(1.6);
   scene.add(mesh);
@@ -234,6 +234,7 @@ vec3 orthogonal(vec3 v) {
   canvas.style.opacity = 1;
 
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    const easeIn = gsap.parseEase('power2.in');
     ScrollTrigger.create({
       trigger: '#hero',
       start: 'top top',
@@ -241,7 +242,7 @@ vec3 orthogonal(vec3 v) {
       scrub: 1,
       onUpdate(self) {
         const p = self.progress;
-        const sp = gsap.parseEase('power2.in')(p);
+        const sp = easeIn(p);
         mesh.position.set(0, 0, 0);
         mesh.scale.setScalar(gsap.utils.interpolate(1.6, 0.6, sp));
         scrollRotX = gsap.utils.interpolate(0,  0.6, p);
@@ -284,6 +285,11 @@ vec3 orthogonal(vec3 v) {
   }, { threshold: 0 });
   visObserver.observe(canvas);
 
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) clock.stop();
+    else clock.start();
+  });
+
   const ctaBtn = document.querySelector('.hero__cta-link--accent');
   if (ctaBtn && typeof gsap !== 'undefined') {
     ctaBtn.addEventListener('mouseenter', () => {
@@ -295,8 +301,11 @@ vec3 orthogonal(vec3 v) {
   }
 
   const clock = new THREE.Clock();
-  (function animate() {
+  let lastTime = 0;
+  (function animate(now) {
     requestAnimationFrame(animate);
+    if (now - lastTime < 16) return;
+    lastTime = now;
     if (!visible || parseFloat(canvas.style.opacity) === 0) return;
     const delta = clock.getDelta();
     uniforms.time.value        = (uniforms.time.value        + delta / 3) % 21.0;
@@ -304,5 +313,5 @@ vec3 orthogonal(vec3 v) {
     mesh.rotation.x += (targetRotX + scrollRotX - mesh.rotation.x) * 0.05;
     mesh.rotation.y += (targetRotY + scrollRotY - mesh.rotation.y) * 0.05;
     renderer.render(scene, camera);
-  })();
+  })(0);
 }
