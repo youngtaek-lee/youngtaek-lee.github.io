@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="assets/css/skills.css" />
   <link rel="stylesheet" href="assets/css/clients.css" />
   <link rel="stylesheet" href="assets/css/contact.css" />
+  <link rel="stylesheet" href="assets/css/subpage.css" />
 </head>
 <body>
 
@@ -52,7 +53,7 @@
     Header
   ========================= -->
   <header class="header">
-    <a href="#hero" class="header__logo">
+    <a href="/" class="header__logo">
       <span>Lee</span>
       <span>Young</span>
       <span>Taek.</span>
@@ -70,10 +71,10 @@
     <div class="menu-overlay__panel">
       <button class="menu-overlay__close" id="menuClose" aria-label="메뉴 닫기">CLOSE</button>
       <nav class="menu-overlay__nav">
-        <a href="#about" class="menu-overlay__link">About</a>
-        <a href="#works" class="menu-overlay__link">Works</a>
-        <a href="#skills" class="menu-overlay__link">Skills</a>
-        <a href="#contact" class="menu-overlay__link">Contact</a>
+        <a href="/about" class="menu-overlay__link">About</a>
+        <a href="/works" class="menu-overlay__link">Works</a>
+        <a href="/about#skills" class="menu-overlay__link">Skills</a>
+        <a href="/contact" class="menu-overlay__link">Contact</a>
       </nav>
       <div class="menu-overlay__footer">
         <a href="https://github.com/youngtaek-lee" class="menu-overlay__footer-link" target="_blank" rel="noopener">GitHub</a>
@@ -95,10 +96,10 @@
       </svg>
     </button>
     <div class="bottom-nav__links">
-      <a href="#about" class="bottom-nav__link">About</a>
-      <a href="#works" class="bottom-nav__link">Work</a>
-      <a href="#skills" class="bottom-nav__link">Skills</a>
-      <a href="#contact" class="bottom-nav__link bottom-nav__link--cta">Contact</a>
+      <a href="/about" class="bottom-nav__link">About</a>
+      <a href="/works" class="bottom-nav__link">Work</a>
+      <a href="/about#skills" class="bottom-nav__link">Skills</a>
+      <a href="/contact" class="bottom-nav__link bottom-nav__link--cta">Contact</a>
     </div>
   </nav>
 
@@ -106,6 +107,7 @@
     HERO
   ========================= -->
   <main>
+  <div id="home-view">
   <section class="hero" id="hero">
     <div class="container hero__inner">
       <h1 class="hero__name">
@@ -114,7 +116,7 @@
         <span class="hero__name-line">Flexible</span>
       </h1>
       <nav class="hero__cta">
-        <a href="#about" class="hero__cta-link hero__cta-link--accent">EXPLORE</a>
+        <a href="/about" class="hero__cta-link hero__cta-link--accent">EXPLORE</a>
       </nav>
     </div>
   </section>
@@ -252,6 +254,8 @@
     </div>
   </section>
 
+  </div><!-- /#home-view -->
+  <div id="subpage-view" aria-hidden="true"></div>
   </main>
 
 
@@ -262,10 +266,10 @@
     <div class="footer__inner">
       <p class="footer__copy">© 2026 Designed &amp; Published by Lee Youngtaek</p>
       <nav class="footer__nav">
-        <a href="#about" class="footer__link">About</a>
-        <a href="#works" class="footer__link">Works</a>
-        <a href="#skills" class="footer__link">Skills</a>
-        <a href="#contact" class="footer__link">Contact</a>
+        <a href="/about" class="footer__link">About</a>
+        <a href="/works" class="footer__link">Works</a>
+        <a href="/about#skills" class="footer__link">Skills</a>
+        <a href="/contact" class="footer__link">Contact</a>
       </nav>
     </div>
   </footer>
@@ -281,6 +285,11 @@
   <script src="assets/js/skills.js" defer></script>
   <script src="assets/js/animations.js" defer></script>
   <script src="assets/js/nav.js" defer></script>
+  <script src="assets/js/pages/about.js" defer></script>
+  <script src="assets/js/pages/works-list.js" defer></script>
+  <script src="assets/js/pages/works-detail.js" defer></script>
+  <script src="assets/js/pages/contact.js" defer></script>
+  <script src="assets/js/router.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

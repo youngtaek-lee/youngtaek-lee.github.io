@@ -90,6 +90,8 @@
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
+  padding-right: 0.06em;
+  margin-right: -0.06em;
 }
 
 .word {
