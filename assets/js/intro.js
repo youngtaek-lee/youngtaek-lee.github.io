@@ -92,7 +92,7 @@ function initIntro() {
         duration: 1.4,
         ease: 'power3.in',
         onUpdate() { drawFrame(gsap.getProperty(logo, 'scale'), colorObj.alpha); },
-        onComplete: () => { screen.remove(); ScrollTrigger.refresh(); },
+        onComplete: () => { screen.remove(); ScrollTrigger.refresh(); document.dispatchEvent(new CustomEvent('intro:complete')); },
       });
     });
   }

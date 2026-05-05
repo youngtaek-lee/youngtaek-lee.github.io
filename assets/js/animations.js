@@ -19,10 +19,32 @@ function initAnimations() {
 // Hero 입장 애니메이션
 // =============================
 function initHeroEntrance() {
-  gsap.fromTo('.hero__cta',
-    { opacity: 0 },
-    { opacity: 1, duration: 0.6, ease: 'power2.out', delay: 1.5 }
-  );
+  const lines = document.querySelectorAll('.hero__name-line');
+
+  lines.forEach(line => {
+    const words = line.textContent.trim().split(' ');
+    line.innerHTML = words.map(w =>
+      `<span class="word-clip"><span class="word">${w}</span></span>`
+    ).join(' ');
+  });
+
+  gsap.set('.word', { yPercent: 110 });
+  gsap.set('.hero__cta', { opacity: 0 });
+
+  document.addEventListener('intro:complete', () => {
+    gsap.to('.word', {
+      yPercent: 0,
+      duration: 0.9,
+      ease: 'power3.out',
+      stagger: 0.08,
+    });
+    gsap.to('.hero__cta', {
+      opacity: 1,
+      duration: 0.6,
+      ease: 'power2.out',
+      delay: 0.5,
+    });
+  }, { once: true });
 }
 
 // =============================

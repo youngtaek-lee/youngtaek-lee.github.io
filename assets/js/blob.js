@@ -290,13 +290,31 @@ vec3 orthogonal(vec3 v) {
     else clock.start();
   });
 
+  let blobTensed = false;
+  let tensionTime = 0;
+  const blobState = { timeScale: 1 };
+
   const ctaBtn = document.querySelector('.hero__cta-link--accent');
   if (ctaBtn && typeof gsap !== 'undefined') {
+    const heroName = document.querySelector('.hero__name');
+
     ctaBtn.addEventListener('mouseenter', () => {
-      gsap.to(mesh.scale, { x: 1.8, y: 1.8, z: 1.8, duration: 0.8, ease: 'expo.out' });
+      blobTensed = true;
+      tensionTime = 0;
+      gsap.to(mesh.scale, { x: 1.35, y: 1.35, z: 1.35, duration: 0.2, ease: 'power2.out', overwrite: true });
+      gsap.to(uniforms.distort, { value: 0.54, duration: 0.4, ease: 'power2.out' });
+      gsap.to(uniforms.surfaceDistort, { value: 1.1, duration: 0.4, ease: 'power2.out' });
+      gsap.to(blobState, { timeScale: 2.8, duration: 0.4, ease: 'power2.out' });
+      if (heroName) gsap.to(heroName, { scale: 0.94, duration: 0.2, ease: 'power2.out', overwrite: true });
     });
     ctaBtn.addEventListener('mouseleave', () => {
-      gsap.to(mesh.scale, { x: 1.6, y: 1.6, z: 1.6, duration: 1.0, ease: 'expo.out' });
+      blobTensed = false;
+      mesh.position.x = 0;
+      gsap.to(mesh.scale, { x: 1.6, y: 1.6, z: 1.6, duration: 0.8, ease: 'elastic.out(1.3, 0.4)', overwrite: true });
+      gsap.to(uniforms.distort, { value: 0.5, duration: 0.6, ease: 'power2.out' });
+      gsap.to(uniforms.surfaceDistort, { value: 1.0, duration: 0.6, ease: 'power2.out' });
+      gsap.to(blobState, { timeScale: 1, duration: 0.6, ease: 'power2.out' });
+      if (heroName) gsap.to(heroName, { scale: 1, duration: 0.8, ease: 'elastic.out(1.3, 0.4)', overwrite: true });
     });
   }
 
@@ -308,10 +326,14 @@ vec3 orthogonal(vec3 v) {
     lastTime = now;
     if (!visible || parseFloat(canvas.style.opacity) === 0) return;
     const delta = clock.getDelta();
-    uniforms.time.value        = (uniforms.time.value        + delta / 3) % 21.0;
-    uniforms.surfaceTime.value = (uniforms.surfaceTime.value + delta / 3) % 21.0;
+    uniforms.time.value        = (uniforms.time.value        + delta / 3 * blobState.timeScale) % 21.0;
+    uniforms.surfaceTime.value = (uniforms.surfaceTime.value + delta / 3 * blobState.timeScale) % 21.0;
     mesh.rotation.x += (targetRotX + scrollRotX - mesh.rotation.x) * 0.05;
     mesh.rotation.y += (targetRotY + scrollRotY - mesh.rotation.y) * 0.05;
+    if (blobTensed) {
+      tensionTime += delta;
+      mesh.position.x = Math.sin(tensionTime * 40) * 0.012;
+    }
     renderer.render(scene, camera);
   })(0);
 }

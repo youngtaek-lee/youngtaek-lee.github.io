@@ -142,7 +142,9 @@
 .menu-overlay__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(30, 25, 20, 0.35);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -153,17 +155,21 @@
 
 .menu-overlay__panel {
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: min(480px, 100vw);
-  background: var(--color-surface);
-  border-left: 1px solid var(--color-line);
+  top: 16px;
+  right: 16px;
+  bottom: 16px;
+  width: 44vw;
+  background: rgba(232, 227, 220, 0.55);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(196, 186, 176, 0.4);
+  border-radius: 20px;
+  box-shadow: -4px 0 32px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 48px;
-  transform: translateX(100%);
+  transform: translateX(calc(100% + 16px));
   transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
 }
 

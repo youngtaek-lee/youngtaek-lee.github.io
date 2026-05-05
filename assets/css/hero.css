@@ -36,7 +36,7 @@
 
 .hero__cta {
   grid-column: 1 / -1;
-  margin-top: clamp(32px, 4vw, 56px);
+  margin-top: clamp(16px, 2vw, 28px);
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -67,20 +67,31 @@
 }
 
 .hero__cta-link--accent {
-  background: var(--color-point);
-  color: #ffffff;
-  border: none !important;
+  background: rgba(245, 242, 238, 0.3);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  color: var(--color-text);
+  border: 1px solid rgba(196, 186, 176, 0.5) !important;
   outline: none;
   opacity: 1;
-  font-size: 1.1rem;
-  padding: 14px 32px;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  padding: 14px 28px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
-.hero__cta-link--accent:hover {
-  background: var(--color-accent-light);
-}
 
 .hero__name-line {
   display: block;
-  color: var(--color-text);
+}
+
+.word-clip {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.word {
+  display: inline-block;
 }
