@@ -1,6 +1,6 @@
 const PageWorksList = {
   render() {
-    const items = typeof WORKS_DATA !== 'undefined' ? WORKS_DATA.filter(w => w.id !== 'more') : [];
+    const items = typeof works !== 'undefined' ? works.filter(w => w.id !== 'more') : [];
     return `
       <div class="subpage works-list-page">
 

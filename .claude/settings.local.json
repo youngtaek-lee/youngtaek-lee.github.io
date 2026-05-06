@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(git *)"
+      "PowerShell(git *)",
+      "Bash(findstr /r /i \"THREE\\\\|three\\\\.js\\\\|about3d\\\\|three-custom\" assets\\\\js\\\\*.js assets\\\\js\\\\main.js)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\korii\\\\projects\\\\portfolio\" -Recurse -File)",
+      "Bash(Select-Object FullName)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\korii\\\\projects\\\\portfolio\" -Recurse -File | ForEach-Object { $_.FullName })",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }

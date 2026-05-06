@@ -1,7 +1,7 @@
 const PageWorksDetail = {
   render(path) {
     const id   = path.replace('/works/', '');
-    const work = typeof WORKS_DATA !== 'undefined' ? WORKS_DATA.find(w => w.id === id) : null;
+    const work = typeof works !== 'undefined' ? works.find(w => w.id === id) : null;
 
     if (!work) return `<div class="subpage"><p style="padding:120px 40px">프로젝트를 찾을 수 없습니다.</p></div>`;
 

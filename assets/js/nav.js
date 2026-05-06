@@ -47,50 +47,16 @@ function initHeader(lenis) {
   const bottomNav    = document.getElementById('bottomNav');
   const scrollTopBtn = document.getElementById('scrollTopBtn');
   if (!header || !bottomNav || !scrollTopBtn) return;
-  const HEADER_THRESHOLD        = 60;
-  const NAV_THRESHOLD           = 60;
-  const BOTTOM_THRESHOLD        = 120;
-  const HEADER_BOTTOM_THRESHOLD = 300;
+
+  const NAV_THRESHOLD    = 60;
+  const BOTTOM_THRESHOLD = 120;
 
   requestAnimationFrame(() => {
     header.classList.add('is-visible');
   });
 
-  let fadeTimer = null;
-
-  function fadeInHeader() {
-    clearTimeout(fadeTimer);
-    header.style.transition = 'none';
-    header.style.transform  = 'translateY(0)';
-    header.style.opacity    = '0';
-    header.offsetHeight;
-    header.classList.remove('is-hidden');
-    header.style.transition = 'opacity 0.5s ease';
-    header.style.opacity    = '1';
-    fadeTimer = setTimeout(() => {
-      header.style.transition = '';
-      header.style.transform  = '';
-      header.style.opacity    = '';
-    }, 550);
-  }
-
-  let prevHeaderShouldHide = false;
-
   lenis.on('scroll', ({ scroll, limit }) => {
-    const nearBottom       = scroll > limit - HEADER_BOTTOM_THRESHOLD;
-    const headerShouldHide = scroll > HEADER_THRESHOLD && !nearBottom;
-    const navShouldShow    = scroll > NAV_THRESHOLD && scroll < limit - BOTTOM_THRESHOLD;
-
-    if (headerShouldHide && !prevHeaderShouldHide) {
-      clearTimeout(fadeTimer);
-      header.style.transition = '';
-      header.style.transform  = '';
-      header.classList.add('is-hidden');
-    } else if (!headerShouldHide && prevHeaderShouldHide) {
-      fadeInHeader();
-    }
-    prevHeaderShouldHide = headerShouldHide;
-
+    const navShouldShow = scroll > NAV_THRESHOLD && scroll < limit - BOTTOM_THRESHOLD;
     navShouldShow
       ? bottomNav.classList.add('is-visible')
       : bottomNav.classList.remove('is-visible');

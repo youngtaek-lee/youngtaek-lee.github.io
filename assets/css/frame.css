@@ -1,62 +1,4 @@
 /* =============================
-   Intro Screen
-============================= */
-#introScreen {
-  position: fixed;
-  inset: 0;
-  z-index: 9000;
-  background: var(--color-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-#introLogo {
-  font-family: 'Bricolage Grotesque', sans-serif;
-  font-weight: 700;
-  font-size: clamp(4rem, 12vw, 9rem);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--color-text);
-  line-height: 0.95;
-  display: flex;
-  flex-direction: column;
-  transform-origin: center center;
-}
-
-.intro-logo__line {
-  overflow: hidden;
-}
-
-.intro-logo__line > span {
-  display: block;
-  transform: translateY(105%);
-}
-
-#introO {
-  display: inline;
-  color: var(--color-point);
-}
-
-#introLoader {
-  position: fixed;
-  bottom: 40px;
-  right: 40px;
-  width: 28px;
-  height: 28px;
-  border: 2px solid rgba(46, 41, 37, 0.15);
-  border-top-color: var(--color-text);
-  border-radius: 50%;
-  opacity: 0;
-  animation: introSpin 0.75s linear infinite;
-}
-
-@keyframes introSpin {
-  to { transform: rotate(360deg); }
-}
-
-/* =============================
    Header / Nav
 ============================= */
 .header {
@@ -74,17 +16,7 @@
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: color 0.33s cubic-bezier(0.39, 0.575, 0.565, 1) 0.33s,
-              opacity 0.6s ease,
-              visibility 0.6s ease,
-              transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.header.is-hidden {
-  transform: translateY(-100%);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
 .header > * {
@@ -114,6 +46,7 @@
   transform: scale(0.93);
   color: var(--color-sub);
 }
+
 
 .header__nav {
   display: flex;
@@ -170,7 +103,7 @@
   justify-content: space-between;
   padding: 48px;
   transform: translateX(calc(100% + 16px));
-  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .menu-overlay.is-open .menu-overlay__panel {
@@ -205,18 +138,12 @@
   letter-spacing: -0.02em;
   line-height: 1.1;
   opacity: 0;
-  color: transparent;
-  background:
-    linear-gradient(to right, var(--color-point), var(--color-point)) no-repeat left center,
-    linear-gradient(to right, var(--color-text), var(--color-text)) no-repeat left center;
-  -webkit-background-clip: text;
-  background-clip: text;
-  background-size: 0% 100%, 100% 100%;
-  transition: background-size 0.4s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.15s ease;
+  color: rgba(245, 242, 238, 0.9);
+  transition: opacity 0.15s ease, color 0.2s ease;
 }
 
 .menu-overlay.is-open .menu-overlay__link:hover {
-  background-size: 100% 100%, 100% 100%;
+  color: #ffffff;
 }
 
 .menu-overlay__footer {

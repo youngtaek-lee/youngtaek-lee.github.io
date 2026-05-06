@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   Router.init();
 
-  initIntro();
   renderWorks();
   renderSkills();
   initMenu();
@@ -20,8 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initWorksHeading();
   initAnimations();
   initAboutScroll();
-  initHeroBlob();
-  const lenis = initLenis();
+const lenis = initLenis();
   initWorksPanelFollow(lenis);
   initHeader(lenis);
 });

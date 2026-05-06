@@ -31,20 +31,18 @@ function initHeroEntrance() {
   gsap.set('.word', { yPercent: 110 });
   gsap.set('.hero__cta', { opacity: 0 });
 
-  document.addEventListener('intro:complete', () => {
-    gsap.to('.word', {
-      yPercent: 0,
-      duration: 0.9,
-      ease: 'power3.out',
-      stagger: 0.08,
-    });
-    gsap.to('.hero__cta', {
-      opacity: 1,
-      duration: 0.6,
-      ease: 'power2.out',
-      delay: 0.5,
-    });
-  }, { once: true });
+  gsap.to('.word', {
+    yPercent: 0,
+    duration: 0.9,
+    ease: 'power3.out',
+    stagger: 0.08,
+  });
+  gsap.to('.hero__cta', {
+    opacity: 1,
+    duration: 0.6,
+    ease: 'power2.out',
+    delay: 0.5,
+  });
 }
 
 // =============================
@@ -125,7 +123,7 @@ function initWorksHeading() {
     if (items) {
       const itemEls = document.querySelectorAll(items);
       if (itemEls.length) {
-        tl.from(itemEls, { opacity: 0, y: 24, duration: 0.5, ease: 'power2.out', stagger: itemsStagger ?? 0.05 }, '-=0.2');
+        tl.from(itemEls, { opacity: 0, y: 24, duration: 0.5, ease: 'power2.out', stagger: itemsStagger ?? 0.05 });
       }
     }
 
