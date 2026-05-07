@@ -7,7 +7,12 @@
       "Bash(Select-Object FullName)",
       "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\korii\\\\projects\\\\portfolio\" -Recurse -File | ForEach-Object { $_.FullName })",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "WebFetch(domain:aureliencorre.fr)",
+      "WebFetch(domain:chkstepan.com)",
+      "Bash(Get-Content \"C:\\\\Users\\\\korii\\\\projects\\\\portfolio\\\\index.html\")",
+      "Bash(Select-String \"section|id=|<header|<footer|<nav|<main\")"
     ]
   }
 }

@@ -1,4 +1,5 @@
-// =============================// Init
+// =============================
+// Init
 // =============================
 document.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
@@ -13,13 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
   Router.init();
 
   renderWorks();
-  renderSkills();
+  initCursor();
   initMenu();
-  initHeroEntrance();
-  initWorksHeading();
-  initAnimations();
   initAboutScroll();
-const lenis = initLenis();
-  initWorksPanelFollow(lenis);
+  initWorksEntrance();
+
+  const lenis = initLenis();
   initHeader(lenis);
+
+  initIntro(); // 반드시 마지막 — 완료 후 initHeroEntrance 호출
 });

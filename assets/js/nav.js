@@ -1,4 +1,38 @@
 // =============================
+// Custom Cursor
+// =============================
+function initCursor() {
+  const cursor = document.getElementById('cursor');
+  if (!cursor || window.matchMedia('(hover: none)').matches) return;
+
+  let mouseX = 0;
+  let mouseY = 0;
+  let curX   = 0;
+  let curY   = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  (function animate() {
+    curX += (mouseX - curX) * 0.15;
+    curY += (mouseY - curY) * 0.15;
+    cursor.style.left = curX + 'px';
+    cursor.style.top  = curY + 'px';
+    requestAnimationFrame(animate);
+  })();
+
+  const hoverEls = 'a, button, [role="button"]';
+  document.addEventListener('mouseover', (e) => {
+    if (e.target.closest(hoverEls)) cursor.classList.add('is-hovering');
+  });
+  document.addEventListener('mouseout', (e) => {
+    if (e.target.closest(hoverEls)) cursor.classList.remove('is-hovering');
+  });
+}
+
+// =============================
 // Menu Overlay
 // =============================
 function initMenu() {
@@ -50,10 +84,6 @@ function initHeader(lenis) {
 
   const NAV_THRESHOLD    = 60;
   const BOTTOM_THRESHOLD = 120;
-
-  requestAnimationFrame(() => {
-    header.classList.add('is-visible');
-  });
 
   lenis.on('scroll', ({ scroll, limit }) => {
     const navShouldShow = scroll > NAV_THRESHOLD && scroll < limit - BOTTOM_THRESHOLD;

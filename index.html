@@ -6,14 +6,14 @@
   <meta name="description" content="웹 퍼블리셔 포트폴리오 — HTML, CSS, JavaScript 기반 웹 퍼블리싱 작업물 모음" />
   <title>Portfolio — Web Publisher</title>
 
-  <!-- OG -->
   <meta property="og:title" content="Portfolio — Web Publisher" />
   <meta property="og:description" content="웹 퍼블리셔 포트폴리오" />
   <meta property="og:image" content="assets/images/og-image.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Alegreya:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Slackside+One&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="assets/css/reset.css" />
   <link rel="stylesheet" href="assets/css/animation.css" />
   <link rel="stylesheet" href="assets/css/base.css" />
@@ -21,28 +21,26 @@
   <link rel="stylesheet" href="assets/css/hero.css" />
   <link rel="stylesheet" href="assets/css/about.css" />
   <link rel="stylesheet" href="assets/css/works.css" />
-  <link rel="stylesheet" href="assets/css/skills.css" />
-  <link rel="stylesheet" href="assets/css/clients.css" />
-  <link rel="stylesheet" href="assets/css/contact.css" />
   <link rel="stylesheet" href="assets/css/subpage.css" />
 </head>
 <body>
 
-  <!-- ========================
-    Loading Screen
-  ========================= -->
-  <!-- ========================
-    Background Canvas
-  ========================= -->
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <!-- Intro -->
+  <div class="intro" id="intro">
+    <svg class="intro__shuriken" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <path class="intro__path" d="M62,26 L100,86 L138,26 L150,116 L100,178 L50,116 Z"/>
+    </svg>
+  </div>
 
   <!-- ========================
     Header
   ========================= -->
   <header class="header">
     <a href="/" class="header__logo">
-      <span>Lee</span>
-      <span>Young</span>
-      <span>Taek.</span>
+      <span>LYT</span>
     </a>
     <nav class="header__nav">
       <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기">MENU</button>
@@ -59,7 +57,6 @@
       <nav class="menu-overlay__nav">
         <a href="/about" class="menu-overlay__link">About</a>
         <a href="/works" class="menu-overlay__link">Works</a>
-        <a href="/about#skills" class="menu-overlay__link">Skills</a>
         <a href="/contact" class="menu-overlay__link">Contact</a>
       </nav>
       <div class="menu-overlay__footer">
@@ -77,190 +74,79 @@
   <nav class="bottom-nav" id="bottomNav" aria-label="하단 메뉴">
     <button class="bottom-nav__top" id="scrollTopBtn" aria-label="맨 위로">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="12" y1="19" x2="12" y2="5"/>
-        <polyline points="6 11 12 5 18 11"/>
+        <polyline points="18 15 12 9 6 15"></polyline>
       </svg>
     </button>
     <div class="bottom-nav__links">
       <a href="/about" class="bottom-nav__link">About</a>
-      <a href="/works" class="bottom-nav__link">Work</a>
-      <a href="/about#skills" class="bottom-nav__link">Skills</a>
+      <a href="/works" class="bottom-nav__link">Works</a>
       <a href="/contact" class="bottom-nav__link bottom-nav__link--cta">Contact</a>
     </div>
   </nav>
 
-  <!-- ========================
-    HERO
-  ========================= -->
   <main>
-  <div id="home-view">
-  <section class="hero" id="hero">
-    <div class="container hero__inner">
-      <h1 class="hero__name">
-        <span class="hero__name-line">Creative</span>
-        <span class="hero__name-line">Web UI Developer</span>
-        <span class="hero__name-line">Flexible</span>
-      </h1>
-      <nav class="hero__cta">
-        <a href="/about" class="hero__cta-link hero__cta-link--accent">EXPLORE</a>
-      </nav>
-    </div>
-  </section>
+    <div id="home-view">
 
-  <!-- ========================
-    ABOUT
-  ========================= -->
-  <div class="fade-to-black" aria-hidden="true"></div>
-  <div class="about-track">
-  <section class="about" id="about">
-    <div class="about__sticky">
-      <div class="about__card">
-        <p class="about__summary">
-          <span class="about__word">웹 퍼블리셔</span> <span class="about__word">이영택입니다.</span><br>
-          <span class="about__word">디자인과</span> <span class="about__word">코드의 경계</span><br>
-          <span class="about__word">시각적 완성도,</span> <span class="about__word">정확한 구현</span><br>
-          <span class="about__word">디자인의 언어를</span> <span class="about__word">코드로 번역합니다.</span>
-        </p>
-      </div>
-    </div>
-  </section>
-  </div>
-
-  <!-- ========================
-    WORKS
-  ========================= -->
-  <section class="works" id="works">
-    <div class="works__track-wrap">
-      <div class="works__header">
-        <h2 class="works__heading">Recent Works<span class="heading-dot">.</span></h2>
-        <p class="works__sub">다양한 업종의 클라이언트와 함께한 퍼블리싱 프로젝트입니다.</p>
-      </div>
-      <div class="works__track">
-        <!-- JS로 렌더링 -->
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================
-    SKILLS
-  ========================= -->
-  <section class="skills" id="skills">
-    <div class="skills__header">
-      <h2 class="skills__heading">Skills<span class="heading-dot">.</span></h2>
-      <p class="skills__sub">HTML/CSS부터 디자인 툴까지, 실무에서 직접 사용하는 기술들입니다.</p>
-    </div>
-    <div class="skills__grid">
-      <!-- JS로 렌더링 -->
-    </div>
-  </section>
-
-  <!-- ========================
-    CLIENTS
-  ========================= -->
-  <section class="clients" id="clients">
-    <div class="clients__header">
-      <h2 class="clients__heading">Clients<span class="heading-dot">.</span></h2>
-      <p class="clients__sub">함께 작업한 클라이언트 &amp; 기업들</p>
-    </div>
-    <div class="clients__rows">
-      <div class="clients__overflow">
-        <div class="clients__strip clients__strip--l">
-          <div class="clients__item"><img src="assets/images/clients/sase.png" alt="Sase" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/playwinter.png" alt="Playwinter" class="clients__logo clients__logo--sm"></div>
-          <div class="clients__item"><img src="assets/images/clients/raymats.png" alt="Raymats" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/marusys.svg" alt="Marusys" class="clients__logo clients__logo--svg"></div>
-          <div class="clients__item"><img src="assets/images/clients/cpdc.png" alt="CPDC" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/kine.png" alt="Kine" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/chongshin.png" alt="Chongshin" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/samsung-enc.png" alt="Samsung C&amp;T" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/hahee.png" alt="Hahee" class="clients__logo clients__logo--sm"></div>
-          <div class="clients__item"><img src="assets/images/clients/goodseed.png" alt="Goodseed" class="clients__logo"></div>
-          <!-- 루프용 복제 -->
-          <div class="clients__item"><img src="assets/images/clients/sase.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/playwinter.png" alt="" class="clients__logo clients__logo--sm"></div>
-          <div class="clients__item"><img src="assets/images/clients/raymats.png" alt="" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/marusys.svg" alt="" class="clients__logo clients__logo--svg"></div>
-          <div class="clients__item"><img src="assets/images/clients/cpdc.png" alt="" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/kine.png" alt="" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/chongshin.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/samsung-enc.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/hahee.png" alt="" class="clients__logo clients__logo--sm"></div>
-          <div class="clients__item"><img src="assets/images/clients/goodseed.png" alt="" class="clients__logo"></div>
+      <!-- ========================
+        HERO
+      ========================= -->
+      <section class="hero" id="hero">
+        <div class="hero__box">
+          <!-- 수리검 텍스트 — 추후 구현 -->
         </div>
-      </div>
-      <div class="clients__overflow">
-        <div class="clients__strip clients__strip--r">
-          <div class="clients__item"><img src="assets/images/clients/kyonong.png" alt="Kyonong" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/youngeum.png" alt="Youngeum" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/namwon.png" alt="Namwon" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/livestock.png" alt="Livestock" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/hnam-energy.png" alt="HNAM Energy" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/ghi.png" alt="GHI" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/bexel.png" alt="Bexel" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/saekyung.png" alt="Saekyung" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/skhu-acdc.png" alt="SKHU ACDC" class="clients__logo clients__logo--sm"></div>
-          <div class="clients__item"><img src="assets/images/clients/intermeta.png" alt="Intermeta" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/osan.png" alt="Osan" class="clients__logo"></div>
-          <!-- 루프용 복제 -->
-          <div class="clients__item"><img src="assets/images/clients/kyonong.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/youngeum.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/namwon.png" alt="" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/livestock.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/hnam-energy.png" alt="" class="clients__logo clients__logo--lg"></div>
-          <div class="clients__item"><img src="assets/images/clients/ghi.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/bexel.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/saekyung.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/skhu-acdc.png" alt="" class="clients__logo clients__logo--sm"></div>
-          <div class="clients__item"><img src="assets/images/clients/intermeta.png" alt="" class="clients__logo"></div>
-          <div class="clients__item"><img src="assets/images/clients/osan.png" alt="" class="clients__logo"></div>
+        <p class="hero__tagline">WEB UI PUBLISHER</p>
+      </section>
+
+      <!-- ========================
+        ABOUT
+      ========================= -->
+      <section class="about" id="about">
+        <div class="about__marquee-track">
+          <p class="about__marquee-text">웹 퍼블리셔 이영택입니다. 디자인과 코드의 경계에서 시각적 완성도와 정확한 구현으로 디자인의 언어를 코드로 번역합니다.&ensp;&ensp;&ensp;</p>
+          <p class="about__marquee-text" aria-hidden="true">웹 퍼블리셔 이영택입니다. 디자인과 코드의 경계에서 시각적 완성도와 정확한 구현으로 디자인의 언어를 코드로 번역합니다.&ensp;&ensp;&ensp;</p>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <div class="fade-to-black fade-to-black--works" aria-hidden="true"></div>
-
-  <!-- ========================
-    CONTACT
-  ========================= -->
-  <section class="contact" id="contact">
-    <div class="contact__inner">
-      <div class="contact__blob-side"></div>
-      <div class="contact__content-side">
-        <div class="contact__top">
-          <h2 class="contact__title">좋은 작업은 대화에서 시작됩니다.</h2>
-          <a href="mailto:brant7100@gmail.com" class="contact__email">brant7100@gmail.com</a>
-          <div class="contact__sns">
-            <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="contact__sns-link">GitHub</a>
-            <a href="#" target="_blank" rel="noopener" class="contact__sns-link">Instagram</a>
-            <a href="#" target="_blank" rel="noopener" class="contact__sns-link">LinkedIn</a>
-          </div>
+      <!-- ========================
+        WORKS
+      ========================= -->
+      <section class="works" id="works">
+        <div class="works__inner">
+          <p class="works__label">Works</p>
+          <ul class="works__list" id="works-list">
+            <!-- JS 렌더링 -->
+          </ul>
         </div>
-      </div>
-    </div>
-  </section>
+        <img class="works__thumb" id="works-thumb" alt="" aria-hidden="true" />
+      </section>
 
-  </div><!-- /#home-view -->
-  <div id="subpage-view" aria-hidden="true"></div>
+    </div><!-- /#home-view -->
+    <div id="subpage-view" aria-hidden="true"></div>
   </main>
 
-
   <!-- ========================
-    Footer
+    Footer (Scroll Reveal)
   ========================= -->
   <footer class="footer">
-    <div class="footer__inner">
+    <div class="footer__contact">
+      <h2 class="footer__title">좋은 작업은<br>대화에서 시작됩니다.</h2>
+      <a href="mailto:brant7100@gmail.com" class="footer__email">brant7100@gmail.com</a>
+      <div class="footer__sns">
+        <a href="https://github.com/youngtaek-lee" class="footer__sns-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="#" class="footer__sns-link" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" class="footer__sns-link" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
       <p class="footer__copy">© 2026 Designed &amp; Published by Lee Youngtaek</p>
       <nav class="footer__nav">
         <a href="/about" class="footer__link">About</a>
         <a href="/works" class="footer__link">Works</a>
-        <a href="/about#skills" class="footer__link">Skills</a>
-        <a href="/contact" class="footer__link">Contact</a>
       </nav>
     </div>
   </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.33/dist/lenis.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/EasePack.min.js" defer></script>
@@ -268,6 +154,7 @@
   <script src="assets/js/skills.js" defer></script>
   <script src="assets/js/animations.js" defer></script>
   <script src="assets/js/nav.js" defer></script>
+  <script src="assets/js/intro.js" defer></script>
   <script src="assets/js/pages/about.js" defer></script>
   <script src="assets/js/pages/works-list.js" defer></script>
   <script src="assets/js/pages/works-detail.js" defer></script>
