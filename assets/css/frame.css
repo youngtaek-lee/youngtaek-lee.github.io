@@ -60,11 +60,11 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 32px 48px;
+  padding: 32px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #000;
+  /* border-bottom: 1px solid #000; */
   margin: 0 auto;
   pointer-events: none;
   opacity: 0;
@@ -83,11 +83,13 @@
 
 .header__logo {
   font-family: var(--font-base);
-  font-size: 1.3rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
+  font-size: 1.2rem;
+  /* font-weight: 700; */
+  letter-spacing: 0.05em;
   color: var(--color-text);
-  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
   text-transform: uppercase;
   transform-origin: center;
   transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), color 0.3s ease;
@@ -165,7 +167,7 @@
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   color: rgba(255,255,255,0.4);
   align-self: flex-end;
   transition: color 0.2s;
@@ -185,7 +187,7 @@
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 400;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 1.1;
   opacity: 0;
   color: rgba(255, 255, 255, 0.85);
@@ -219,9 +221,8 @@
 ============================= */
 .menu-btn {
   font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 400;
-  letter-spacing: 0.08em;
+  font-size: 1.05rem;
+  letter-spacing: 0;
   color: var(--color-text);
   cursor: pointer;
   transition: opacity 0.2s;
@@ -294,7 +295,7 @@
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 400;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--color-text);
   opacity: 0.6;

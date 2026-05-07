@@ -59,7 +59,7 @@
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 400;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 1;
 }
 
@@ -81,7 +81,7 @@
   font-size: clamp(1.8rem, 4vw, 4.5rem);
   font-weight: 400;
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 .about__skills {
@@ -129,7 +129,7 @@
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 400;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   text-transform: uppercase;
   line-height: 1.4;
   transition: color 0.4s ease;
@@ -167,7 +167,7 @@
   font-family: var(--font-display);
   font-size: clamp(2.4rem, 7vw, 7rem);
   font-weight: 400;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 1.1;
 }
 

@@ -55,9 +55,6 @@ body::before {
 /* =============================
    Base
 ============================= */
-* {
-  cursor: none !important;
-}
 
 body {
   font-family: var(--font-body);

@@ -66,6 +66,14 @@ function initHeroTaglineScroll(lenis) {
   if (!title || !tagline || !hiddenSpace) return;
 
   document.fonts.ready.then(() => {
+    // 실제 렌더된 텍스트 너비로 font-size 역산 → 컨테이너에 딱 맞게
+    const range = document.createRange();
+    range.selectNodeContents(tagline);
+    const textW  = range.getBoundingClientRect().width;
+    const availW = title.clientWidth - 60; // padding 10px * 2
+    const curPx  = parseFloat(getComputedStyle(tagline).fontSize);
+    tagline.style.fontSize = ((curPx * availW / textW) / window.innerWidth * 100).toFixed(3) + 'vw';
+
     const titleH  = title.offsetHeight;
     const taglineH = tagline.offsetHeight;
 
@@ -80,7 +88,7 @@ function initHeroTaglineScroll(lenis) {
     const ghost = document.createElement('p');
     ghost.className = 'hero__tagline';
     ghost.setAttribute('aria-hidden', 'true');
-    ghost.style.cssText = 'visibility:hidden;pointer-events:none;text-align:center;';
+    ghost.style.cssText = 'visibility:hidden;pointer-events:none;text-align:center;letter-spacing:0.08em;';
     ghost.innerHTML = 'HELLO'.split('').map(l => `<span style="display:inline-block">${l}</span>`).join('');
     title.appendChild(ghost);
     const ghostRects = Array.from(ghost.querySelectorAll('span')).map(el => el.getBoundingClientRect());
@@ -95,7 +103,8 @@ function initHeroTaglineScroll(lenis) {
     const tl = gsap.timeline({ paused: true });
 
     // Phase 1 (0 → 0.5): 상승 + 마스킹 + HELLO 재배열
-    tl.to(tagline,     { bottom: Math.round(titleH * 0.3), ease: 'none',       duration: 0.5 }, 0)
+    const centeredBottom = Math.round((window.innerHeight - taglineH) / 2);
+    tl.to(tagline,     { bottom: centeredBottom,            ease: 'none',       duration: 0.5 }, 0)
       .to(hiddenSpace, { height: titleH,                   ease: 'none',       duration: 0.5 }, 0);
 
     overLetters.forEach((el, i) => {
