@@ -1,4 +1,4 @@
-/* =============================
+﻿/* =============================
    ABOUT — Home Marquee
 ============================= */
 .about {
@@ -18,7 +18,7 @@
 
 .about__marquee-text {
   font-size: clamp(3.5rem, 9vw, 9rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1;
   white-space: nowrap;
   color: var(--color-text);
@@ -58,7 +58,7 @@
 .about__stat-num {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: -0.03em;
   line-height: 1;
 }
@@ -79,7 +79,7 @@
 .about__summary {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 4vw, 4.5rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
@@ -92,7 +92,7 @@
 
 .skill-group__title {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 0.45;
@@ -110,7 +110,7 @@
   border: 1px solid var(--color-line);
   border-radius: 100px;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .about__more-link {
@@ -128,7 +128,7 @@
   text-align: center;
   font-family: var(--font-display);
   font-size: 1.3rem;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   line-height: 1.4;
@@ -166,7 +166,7 @@
 .about__statement-text {
   font-family: var(--font-display);
   font-size: clamp(2.4rem, 7vw, 7rem);
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: -0.03em;
   line-height: 1.1;
 }

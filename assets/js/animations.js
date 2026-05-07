@@ -57,6 +57,81 @@ function initWorksEntrance() {
 }
 
 // =============================
+// Hero 타이틀 스크롤 마스킹
+// =============================
+function initHeroTaglineScroll() {
+  const title       = document.querySelector('.hero__title');
+  const tagline     = document.querySelector('.hero__tagline');
+  const hiddenSpace = document.querySelector('.hero__hidden-space');
+  if (!title || !tagline || !hiddenSpace) return;
+
+  document.fonts.ready.then(() => {
+    const titleH  = title.offsetHeight;
+    const taglineH = tagline.offsetHeight;
+
+    const initH = Math.max(0, titleH - taglineH - 40);
+    gsap.set(hiddenSpace, { height: initH });
+
+    // SCROLLWHEEL → HELLO 위치 계산
+    const overLetters = Array.from(tagline.querySelectorAll('[data-hi]'));
+    const overRects   = overLetters.map(el => el.getBoundingClientRect());
+
+    // ghost로 HELLO 각 글자 목표 위치 측정 (중앙 정렬)
+    const ghost = document.createElement('p');
+    ghost.className = 'hero__tagline';
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.style.cssText = 'visibility:hidden;pointer-events:none;text-align:center;';
+    ghost.innerHTML = 'HELLO'.split('').map(l => `<span style="display:inline-block">${l}</span>`).join('');
+    title.appendChild(ghost);
+    const ghostRects = Array.from(ghost.querySelectorAll('span')).map(el => el.getBoundingClientRect());
+    title.removeChild(ghost);
+
+    console.log('overRects x:', overRects.map(r => Math.round(r.left)));
+    console.log('ghostRects x:', ghostRects.map(r => Math.round(r.left)));
+
+    // 각 over 글자 → HELLO 목표 위치까지의 x 이동량
+    const translations = overLetters.map((el, i) => {
+      const hi = parseInt(el.dataset.hi);
+      return ghostRects[hi].left - overRects[i].left;
+    });
+
+    console.log('translations:', translations.map(t => Math.round(t)));
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: '+=200%',
+      pin: true,
+      anticipatePin: 1,
+      scrub: 1,
+      onUpdate: (self) => {
+        console.log({
+          progress:      self.progress.toFixed(3),
+          scrollY:       Math.round(window.scrollY),
+          taglineBottom: Math.round(parseFloat(getComputedStyle(tagline).bottom)),
+          hiddenH:       Math.round(parseFloat(getComputedStyle(hiddenSpace).height)),
+          titleH, taglineH, initH,
+        });
+      },
+    },
+  });
+
+    // Phase 1 (0 → 0.5): 상승 + 마스킹 + HELLO 재배열
+    tl.to(tagline,     { bottom: Math.round(titleH * 0.3), ease: 'none',       duration: 0.5 }, 0)
+      .to(hiddenSpace, { height: titleH,                   ease: 'none',       duration: 0.5 }, 0);
+
+    overLetters.forEach((el, i) => {
+      tl.to(el, { x: translations[i], ease: 'power2.out', duration: 0.5 }, 0);
+    });
+
+    // Phase 2 (0.5 → 1.0): HELLO 유지
+    tl.to({}, { duration: 0.5 }, 0.5);
+
+  }); // document.fonts.ready
+}
+
+// =============================
 // 섹션 헤딩 단어 분리 유틸
 // =============================
 function wrapWordsForReveal(el) {

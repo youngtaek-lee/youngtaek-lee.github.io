@@ -1,4 +1,4 @@
-#subpage-view {
+﻿#subpage-view {
   min-height: 100vh;
 }
 
@@ -26,7 +26,7 @@
 .subpage__title {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 7vw, 7rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--color-text);
@@ -91,7 +91,7 @@
 .process-item__title {
   font-family: var(--font-display);
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 8px;
 }
 
@@ -157,7 +157,7 @@
 .wl-item__title {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 3vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1;
   margin-bottom: 6px;
 }
@@ -236,7 +236,7 @@
 
 .wd-meta-list dd {
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .wd-link {
@@ -265,7 +265,7 @@
 .contact-info__email {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 4vw, 3.5rem);
-  font-weight: 700;
+  font-weight: 400;
   color: var(--color-text);
   transition: opacity 0.2s;
 }

@@ -11,14 +11,23 @@
 
 .hero__title {
   flex: 1;
+  position: relative;
   overflow: hidden;
-  display: flex;
-  padding-bottom: 20px;
-  align-items: flex-end;
+  isolation: isolate;
+}
+
+.hero__hidden-space {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--color-bg);
+  z-index: 2;
+  pointer-events: none;
 }
 
 .hero__tagline {
-  font-family: 'Anton', sans-serif;
+  font-family: var(--font-display);
   font-size: 20vw;
   font-weight: 400;
   line-height: 0.85;
@@ -27,4 +36,22 @@
   white-space: nowrap;
   width: 100%;
   padding: 0 10px;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+}
+
+.hero__letter--over,
+.hero__letter--under {
+  display: inline-block;
+  position: relative;
+}
+
+.hero__letter--over {
+  z-index: 3;
+}
+
+.hero__letter--under {
+  z-index: 1;
 }

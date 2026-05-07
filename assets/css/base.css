@@ -24,8 +24,13 @@
   --color-point-dim:      rgba(249, 166, 8, 0.15);
 
   /* Typography */
-  --font-base:    'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-base:    'Anton', 'Pretendard Variable', 'Pretendard', sans-serif;
+  --font-display: 'Anton', 'Pretendard Variable', 'Pretendard', sans-serif;
+  --font-body:    'Pretendard Variable', 'Pretendard', sans-serif;
+
+  --font-display-weight:  900;
+  --font-display-stretch: 1.1;
+  --font-body-stretch:    1.12;
 
   /* Layout */
   --max-width:    1280px;
@@ -55,7 +60,7 @@ body::before {
 }
 
 body {
-  font-family: var(--font-base);
+  font-family: var(--font-body);
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.5;

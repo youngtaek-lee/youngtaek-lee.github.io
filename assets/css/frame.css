@@ -1,4 +1,4 @@
-/* =============================
+﻿/* =============================
    Custom Cursor
 ============================= */
 .cursor {
@@ -65,7 +65,6 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #000;
-  max-width: 1920px;
   margin: 0 auto;
   pointer-events: none;
   opacity: 0;
@@ -83,7 +82,7 @@
 }
 
 .header__logo {
-  font-family: 'Anton', sans-serif;
+  font-family: var(--font-base);
   font-size: 1.3rem;
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -165,7 +164,7 @@
 .menu-overlay__close {
   font-family: var(--font-display);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 0.08em;
   color: rgba(255,255,255,0.4);
   align-self: flex-end;
@@ -185,7 +184,7 @@
 .menu-overlay__link {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.1;
   opacity: 0;
@@ -204,7 +203,7 @@
 
 .menu-overlay__footer-link {
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.35);
@@ -221,7 +220,7 @@
 .menu-btn {
   font-family: var(--font-display);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 400;
   letter-spacing: 0.08em;
   color: var(--color-text);
   cursor: pointer;
@@ -348,7 +347,7 @@ main {
 
 .footer__title {
   font-size: clamp(2rem, 4.5vw, 4.5rem);
-  font-weight: 700;
+  font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin-bottom: 32px;
@@ -376,7 +375,7 @@ main {
 
 .footer__sns-link {
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.4);
@@ -429,7 +428,7 @@ main {
 }
 
 .statement__text {
-  font-family: 'Anton', sans-serif;
+  font-family: var(--font-base);
   font-size: clamp(4rem, 14vw, 14rem);
   font-weight: 400;
   letter-spacing: -0.02em;
