@@ -2,42 +2,29 @@
    HERO
 ============================= */
 .hero {
-  min-height: 100vh;
+  height: 100vh;
+  padding-top: 86px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+  flex-direction: column;
   overflow: hidden;
-  background-image:
-    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
-  background-size: 80px 80px;
 }
 
-.hero__box {
-  width: min(960px, 88vw);
-  aspect-ratio: 16 / 5;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+.hero__title {
+  flex: 1;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  padding-bottom: 20px;
+  align-items: flex-end;
 }
 
 .hero__tagline {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  font-size: 19.5vw;
-  font-weight: 700;
+  font-family: 'Anton', sans-serif;
+  font-size: 20vw;
+  font-weight: 400;
   line-height: 0.85;
   letter-spacing: -0.03em;
   text-transform: uppercase;
   white-space: nowrap;
-  overflow: hidden;
-  padding: 0 0.02em;
-  pointer-events: none;
+  width: 100%;
+  padding: 0 10px;
 }

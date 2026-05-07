@@ -24,26 +24,20 @@ function initIntro() {
     // 1. 수리검 선 드로잉
     .to(path, {
       strokeDashoffset: 0,
-      duration: 1.4,
+      duration: 2.2,
       ease: 'power2.inOut',
     })
     // 2. 채우기
     .to(path, {
       fill: '#fff',
       stroke: 'none',
-      duration: 0.3,
+      duration: 0.5,
       ease: 'power2.out',
     }, '-=0.1')
-    // 3. 클로즈업 (줌인)
-    .to(shuriken, {
-      scale: 30,
-      duration: 0.75,
-      ease: 'power3.in',
-    })
-    // 4. 뚫기 (인트로 사라짐)
+    // 3. 인트로 페이드아웃
     .to(intro, {
-      clipPath: 'circle(0% at 50% 50%)',
-      duration: 0.45,
-      ease: 'power4.in',
-    }, '-=0.4');
+      opacity: 0,
+      duration: 0.6,
+      ease: 'power2.inOut',
+    }, '+=0.3');
 }

@@ -12,14 +12,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Slackside+One&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="assets/css/reset.css" />
   <link rel="stylesheet" href="assets/css/animation.css" />
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/frame.css" />
   <link rel="stylesheet" href="assets/css/hero.css" />
-  <link rel="stylesheet" href="assets/css/about.css" />
   <link rel="stylesheet" href="assets/css/works.css" />
   <link rel="stylesheet" href="assets/css/subpage.css" />
 </head>
@@ -28,20 +27,12 @@
   <!-- Cursor -->
   <div class="cursor" id="cursor"></div>
 
-  <!-- Intro -->
-  <div class="intro" id="intro">
-    <svg class="intro__shuriken" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <path class="intro__path" d="M62,26 L100,86 L138,26 L150,116 L100,178 L50,116 Z"/>
-    </svg>
-  </div>
 
   <!-- ========================
     Header
   ========================= -->
   <header class="header">
-    <a href="/" class="header__logo">
-      <span>LYT</span>
-    </a>
+    <a href="/" class="header__logo">Lee Young Taek.</a>
     <nav class="header__nav">
       <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기">MENU</button>
     </nav>
@@ -91,21 +82,11 @@
         HERO
       ========================= -->
       <section class="hero" id="hero">
-        <div class="hero__box">
-          <!-- 수리검 텍스트 — 추후 구현 -->
+        <div class="hero__title">
+          <p class="hero__tagline">DEVELOPMENT</p>
         </div>
-        <p class="hero__tagline">WEB UI PUBLISHER</p>
       </section>
 
-      <!-- ========================
-        ABOUT
-      ========================= -->
-      <section class="about" id="about">
-        <div class="about__marquee-track">
-          <p class="about__marquee-text">웹 퍼블리셔 이영택입니다. 디자인과 코드의 경계에서 시각적 완성도와 정확한 구현으로 디자인의 언어를 코드로 번역합니다.&ensp;&ensp;&ensp;</p>
-          <p class="about__marquee-text" aria-hidden="true">웹 퍼블리셔 이영택입니다. 디자인과 코드의 경계에서 시각적 완성도와 정확한 구현으로 디자인의 언어를 코드로 번역합니다.&ensp;&ensp;&ensp;</p>
-        </div>
-      </section>
 
       <!-- ========================
         WORKS
@@ -127,6 +108,10 @@
   <!-- ========================
     Footer (Scroll Reveal)
   ========================= -->
+  <div class="statement">
+    <p class="statement__text">DEVELOPMENT</p>
+  </div>
+
   <footer class="footer">
     <div class="footer__contact">
       <h2 class="footer__title">좋은 작업은<br>대화에서 시작됩니다.</h2>
@@ -154,7 +139,6 @@
   <script src="assets/js/skills.js" defer></script>
   <script src="assets/js/animations.js" defer></script>
   <script src="assets/js/nav.js" defer></script>
-  <script src="assets/js/intro.js" defer></script>
   <script src="assets/js/pages/about.js" defer></script>
   <script src="assets/js/pages/works-list.js" defer></script>
   <script src="assets/js/pages/works-detail.js" defer></script>

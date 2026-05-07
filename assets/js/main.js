@@ -22,5 +22,5 @@ document.addEventListener('DOMContentLoaded', () => {
   const lenis = initLenis();
   initHeader(lenis);
 
-  initIntro(); // 반드시 마지막 — 완료 후 initHeroEntrance 호출
+  initHeroEntrance();
 });

@@ -46,7 +46,7 @@
 .intro__path {
   fill: none;
   stroke: #fff;
-  stroke-width: 3;
+  stroke-width: 0.2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -64,6 +64,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #000;
   max-width: 1920px;
   margin: 0 auto;
   pointer-events: none;
@@ -82,14 +83,12 @@
 }
 
 .header__logo {
-  font-family: 'Slackside One', cursive;
-  font-size: 1.4rem;
+  font-family: 'Anton', sans-serif;
+  font-size: 1.3rem;
   font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--color-text);
-  display: flex;
-  flex-direction: column;
-  line-height: 0.95;
+  line-height: 1;
   text-transform: uppercase;
   transform-origin: center;
   transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), color 0.3s ease;
@@ -419,6 +418,25 @@ main {
 
 .footer__link:hover {
   color: rgba(255,255,255,0.8);
+}
+
+/* =============================
+   Statement
+============================= */
+.statement {
+  padding: 60px 24px;
+  overflow: hidden;
+}
+
+.statement__text {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(4rem, 14vw, 14rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-text);
+  white-space: nowrap;
 }
 
 /* =============================
