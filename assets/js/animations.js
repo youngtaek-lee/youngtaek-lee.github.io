@@ -59,7 +59,7 @@ function initWorksEntrance() {
 // =============================
 // Hero 타이틀 스크롤 마스킹
 // =============================
-function initHeroTaglineScroll() {
+function initHeroTaglineScroll(lenis) {
   const title       = document.querySelector('.hero__title');
   const tagline     = document.querySelector('.hero__tagline');
   const hiddenSpace = document.querySelector('.hero__hidden-space');
@@ -86,36 +86,13 @@ function initHeroTaglineScroll() {
     const ghostRects = Array.from(ghost.querySelectorAll('span')).map(el => el.getBoundingClientRect());
     title.removeChild(ghost);
 
-    console.log('overRects x:', overRects.map(r => Math.round(r.left)));
-    console.log('ghostRects x:', ghostRects.map(r => Math.round(r.left)));
-
     // 각 over 글자 → HELLO 목표 위치까지의 x 이동량
     const translations = overLetters.map((el, i) => {
       const hi = parseInt(el.dataset.hi);
       return ghostRects[hi].left - overRects[i].left;
     });
 
-    console.log('translations:', translations.map(t => Math.round(t)));
-
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.hero',
-      start: 'top top',
-      end: '+=200%',
-      pin: true,
-      anticipatePin: 1,
-      scrub: 1,
-      onUpdate: (self) => {
-        console.log({
-          progress:      self.progress.toFixed(3),
-          scrollY:       Math.round(window.scrollY),
-          taglineBottom: Math.round(parseFloat(getComputedStyle(tagline).bottom)),
-          hiddenH:       Math.round(parseFloat(getComputedStyle(hiddenSpace).height)),
-          titleH, taglineH, initH,
-        });
-      },
-    },
-  });
+    const tl = gsap.timeline({ paused: true });
 
     // Phase 1 (0 → 0.5): 상승 + 마스킹 + HELLO 재배열
     tl.to(tagline,     { bottom: Math.round(titleH * 0.3), ease: 'none',       duration: 0.5 }, 0)
@@ -127,6 +104,19 @@ function initHeroTaglineScroll() {
 
     // Phase 2 (0.5 → 1.0): HELLO 유지
     tl.to({}, { duration: 0.5 }, 0.5);
+
+    const st = ScrollTrigger.create({
+      trigger: '.hero-wrap',
+      start: 'top top',
+      end: 'bottom bottom',
+    });
+
+    // lenis.scroll(lerp된 값)로 직접 구동 → Lenis easing이 그대로 전달됨, pin 충격 없음
+    gsap.ticker.add(() => {
+      if (!st.end) return;
+      const p = gsap.utils.clamp(0, 1, (lenis.scroll - st.start) / (st.end - st.start));
+      tl.progress(p);
+    });
 
   }); // document.fonts.ready
 }

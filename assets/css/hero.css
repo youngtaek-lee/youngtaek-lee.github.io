@@ -1,7 +1,13 @@
 /* =============================
    HERO
 ============================= */
+.hero-wrap {
+  height: 300vh;
+}
+
 .hero {
+  position: sticky;
+  top: 0;
   height: 100vh;
   padding-top: 86px;
   display: flex;

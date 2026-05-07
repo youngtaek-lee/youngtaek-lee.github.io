@@ -23,5 +23,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeader(lenis);
 
   initHeroEntrance();
-  initHeroTaglineScroll();
+  initHeroTaglineScroll(lenis);
 });
