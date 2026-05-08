@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const lenis = initLenis();
   initHeader(lenis);
 
+  initHobbyPopcorn();
   initHeroEntrance();
   initHeroTaglineScroll(lenis);
 });

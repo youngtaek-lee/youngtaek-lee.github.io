@@ -274,6 +274,109 @@ function initHeroTaglineScroll(lenis) {
 }
 
 // =============================
+// Footer — Hobby Popcorn
+// =============================
+function initHobbyPopcorn() {
+  const btn = document.getElementById('hobbyBtn');
+  const container = document.getElementById('hobbyPopcorn');
+  if (!btn || !container || typeof Matter === 'undefined') return;
+
+  const { Engine, Runner, Bodies, Body, World, Events } = Matter;
+
+  const engine = Engine.create({ enableSleeping: true });
+  engine.gravity.y = 2;
+  const runner = Runner.create();
+  Runner.run(runner, engine);
+
+  const HOBBIES = [
+    'fa-gamepad', 'fa-music', 'fa-camera', 'fa-film',
+    'fa-mug-hot', 'fa-person-running', 'fa-paintbrush', 'fa-headphones',
+    'fa-leaf', 'fa-book', 'fa-dice', 'fa-guitar',
+    'fa-puzzle-piece', 'fa-bicycle', 'fa-dumbbell',
+  ];
+  const used = new Set();
+  const active = [];
+  let statics = null;
+
+  function pickUnused(count) {
+    let pool = HOBBIES.filter(h => !used.has(h));
+    if (pool.length < count) { used.clear(); pool = [...HOBBIES]; }
+    const copy = [...pool];
+    const picks = [];
+    for (let i = 0; i < count; i++) {
+      if (!copy.length) break;
+      const idx = Math.floor(Math.random() * copy.length);
+      picks.push(copy.splice(idx, 1)[0]);
+    }
+    picks.forEach(h => used.add(h));
+    return picks;
+  }
+
+  function initStatics() {
+    if (statics) return;
+    const W = container.offsetWidth;
+    const H = container.offsetHeight;
+    const T = 80;
+    statics = [
+      Bodies.rectangle(W / 2, H + T / 2, W + 200, T, { isStatic: true, friction: 0.7, restitution: 0.2 }),
+      Bodies.rectangle(-T / 2, H / 2, T, H * 10, { isStatic: true }),
+      Bodies.rectangle(W + T / 2, H / 2, T, H * 10, { isStatic: true }),
+    ];
+    World.add(engine.world, statics);
+  }
+
+  Events.on(engine, 'afterUpdate', () => {
+    const limit = container.offsetHeight + 300;
+    for (let i = active.length - 1; i >= 0; i--) {
+      const { body, el } = active[i];
+      if (body.position.y > limit) {
+        World.remove(engine.world, body);
+        el.remove();
+        active.splice(i, 1);
+        continue;
+      }
+      el.style.left = body.position.x + 'px';
+      el.style.top = body.position.y + 'px';
+      el.style.transform = `translate(-50%, -50%) rotate(${body.angle}rad)`;
+    }
+  });
+
+  btn.addEventListener('click', () => {
+    initStatics();
+
+    const count = Math.floor(Math.random() * 2) + 4; // 4~5개
+    const picks = pickUnused(count);
+    const cRect = container.getBoundingClientRect();
+    const bRect = btn.getBoundingClientRect();
+    const bx = bRect.left - cRect.left + bRect.width / 2;
+    const by = bRect.top - cRect.top + bRect.height / 2;
+
+    picks.forEach((icon, i) => {
+      setTimeout(() => {
+        const body = Bodies.circle(bx, by, 14, {
+          restitution: 0.4,
+          friction: 0.5,
+          frictionAir: 0.008,
+          density: 0.004,
+        });
+        Body.setVelocity(body, {
+          x: (Math.random() - 0.5) * 18,
+          y: -(28 + Math.random() * 16),
+        });
+        Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.5);
+        World.add(engine.world, body);
+
+        const el = document.createElement('i');
+        el.className = `fa-solid ${icon}`;
+        el.style.cssText = `position:absolute;font-size:1.3rem;color:rgba(255,255,255,0.88);pointer-events:none;user-select:none;will-change:transform;left:${bx}px;top:${by}px;transform:translate(-50%,-50%);`;
+        container.appendChild(el);
+        active.push({ body, el });
+      }, i * 65);
+    });
+  });
+}
+
+// =============================
 // 섹션 헤딩 단어 분리 유틸
 // =============================
 function wrapWordsForReveal(el) {
