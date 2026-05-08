@@ -40,7 +40,150 @@ function initAboutScroll() {
 }
 
 // =============================
-// Works 리스트 등장
+// Works 타이틀 + 리스트 스크롤 리빌
+// =============================
+function initWorksReveal() {
+  // 타이틀 글자 분리
+  const label = document.querySelector('.works__label');
+  if (label) {
+    label.innerHTML = label.textContent.split('').map(ch =>
+      `<span class="reveal-char"><span class="reveal-char__inner">${ch}</span></span>`
+    ).join('');
+
+    const chars = label.querySelectorAll('.reveal-char__inner');
+    const titleTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.works',
+        start: 'top 80%',
+        end: 'top 40%',
+        scrub: 1,
+      }
+    });
+    chars.forEach((ch, i) => {
+      titleTl.from(ch, { yPercent: 110, ease: 'none', duration: 1 }, i * 0.15);
+    });
+  }
+
+  // 서브텍스트 클립마스크 우측 등장 (타이틀 완료 후)
+  const sub = document.querySelector('.works__sub');
+  if (sub) {
+    gsap.from(sub, {
+      x: -250,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.works',
+        start: 'top 70%',
+        end: 'top 40%',
+        scrub: 1,
+      }
+    });
+  }
+
+  // 리스트 아이템 왼쪽 등장
+  const items = document.querySelectorAll('.works__item');
+  if (items.length) {
+    const listTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.works__list',
+        start: 'top 95%',
+        end: 'center 60%',
+        scrub: 1,
+      }
+    });
+    items.forEach((item, i) => {
+      listTl.from(item, { x: 150, ease: 'none', duration: 1 }, i * 0.12);
+    });
+  }
+}
+
+// =============================
+// Hero → Dark 전환
+// =============================
+function initDarkTransition() {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.hero-wrap',
+      start: '55% top',
+      end: 'bottom bottom',
+      scrub: 1,
+    }
+  });
+
+  tl.fromTo('main',
+    { backgroundColor: '#22A7E5' },
+    { backgroundColor: '#000000', ease: 'none' },
+    0
+  ).fromTo('.hero__hidden-space',
+    { backgroundColor: '#22A7E5' },
+    { backgroundColor: '#000000', ease: 'none' },
+    0
+  ).fromTo('body',
+    { color: '#000000' },
+    { color: '#ffffff', ease: 'none' },
+    0
+  ).fromTo('.header__logo',
+    { color: '#000000' },
+    { color: '#ffffff', ease: 'none' },
+    0
+  ).fromTo('.header__nav',
+    { color: '#000000' },
+    { color: '#ffffff', ease: 'none' },
+    0
+  ).fromTo('.menu-btn',
+    { color: '#000000' },
+    { color: '#ffffff', ease: 'none' },
+    0
+  );
+}
+
+// =============================
+// About 텍스트 스크롤 spotlight
+// =============================
+function initAboutTextScroll() {
+  // 타이틀 글자 분리 (works__label과 동일)
+  const label = document.querySelector('.about-text__label');
+  if (label) {
+    label.innerHTML = label.textContent.split('').map(ch =>
+      `<span class="reveal-char"><span class="reveal-char__inner">${ch}</span></span>`
+    ).join('');
+
+    const chars = label.querySelectorAll('.reveal-char__inner');
+    const titleTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.about-text',
+        start: 'top 80%',
+        end: 'top 40%',
+        scrub: 1,
+      }
+    });
+    chars.forEach((ch, i) => {
+      titleTl.from(ch, { yPercent: 110, ease: 'none', duration: 1 }, i * 0.15);
+    });
+  }
+
+  const words = document.querySelectorAll('.about__word');
+  if (!words.length) return;
+
+  const total = words.length;
+
+  ScrollTrigger.create({
+    trigger: '.about-text',
+    start: 'top 75%',
+    end: '+=120%',
+    scrub: 0.3,
+    onUpdate: (self) => {
+      const activePos = self.progress * (total + 6) - 4;
+      words.forEach((word, i) => {
+        const dist = Math.abs(i - activePos);
+        const opacity = Math.max(0.15, Math.exp(-dist * dist * 0.7));
+        gsap.set(word, { opacity });
+      });
+    },
+  });
+}
+
+// =============================
+// Works 리스트 등장 (구버전 — 미사용)
 // =============================
 function initWorksEntrance() {
   gsap.from('.works__item', {
@@ -155,6 +298,11 @@ function wrapWordsForReveal(el) {
         needSpace = true;
       });
     } else if (node.nodeType === Node.ELEMENT_NODE) {
+      if (node.tagName === 'BR') {
+        el.appendChild(node);
+        needSpace = false;
+        return;
+      }
       const outer = document.createElement('span');
       outer.className = 'reveal-word';
       const inner = document.createElement('span');

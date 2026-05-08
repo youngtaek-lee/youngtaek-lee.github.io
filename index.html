@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="assets/css/frame.css" />
   <link rel="stylesheet" href="assets/css/hero.css" />
   <link rel="stylesheet" href="assets/css/works.css" />
+  <link rel="stylesheet" href="assets/css/about.css" />
   <link rel="stylesheet" href="assets/css/subpage.css" />
 </head>
 <body>
@@ -97,13 +98,75 @@
 
 
       <!-- ========================
+        ABOUT TEXT
+      ========================= -->
+      <section class="about-text" id="about-text">
+        <p class="about-text__label">About</p>
+        <p class="about-text__summary">
+          <span class="about__word">웹 퍼블리셔</span> <span class="about__word">이영택입니다.</span>
+          <br>
+          <span class="about__word">디자인과</span> <span class="about__word">코드의 경계에서</span>
+          <br>
+          <span class="about__word">시각적 완성도와</span> <span class="about__word">정확한 구현,</span>
+          <br>
+          <span class="about__word">디자인의 언어를</span> <span class="about__word">코드로 번역합니다.</span>
+        </p>
+      </section>
+
+      <!-- ========================
         WORKS
       ========================= -->
       <section class="works" id="works">
         <div class="works__inner">
-          <p class="works__label">Works</p>
+          <div class="works__header">
+            <p class="works__label">Works</p>
+            <div class="works__sub-clip">
+              <p class="works__sub">다양한 업종의 클라이언트와 함께한<br>퍼블리싱 프로젝트입니다.</p>
+            </div>
+          </div>
           <ul class="works__list" id="works-list">
-            <!-- JS 렌더링 -->
+            <li class="works__item">
+              <a href="/works/sase" class="works__item__link">
+                <span class="works__item__num">01</span>
+                <span class="works__item__title"><span class="works__item__title__en">Sase</span><span class="works__item__title__ko">사세</span></span>
+                <span class="works__item__meta"><span class="works__item__category">Food &amp; Beverage</span><span class="works__item__sep">·</span><span class="works__item__year">2023</span></span>
+              </a>
+            </li>
+            <li class="works__item">
+              <a href="/works/bexel" class="works__item__link">
+                <span class="works__item__num">02</span>
+                <span class="works__item__title"><span class="works__item__title__en">Bexel</span><span class="works__item__title__ko">벡셀</span></span>
+                <span class="works__item__meta"><span class="works__item__category">Electronics</span><span class="works__item__sep">·</span><span class="works__item__year">2024</span></span>
+              </a>
+            </li>
+            <li class="works__item">
+              <a href="/works/marusys" class="works__item__link">
+                <span class="works__item__num">03</span>
+                <span class="works__item__title"><span class="works__item__title__en">Marusys</span><span class="works__item__title__ko">마르시스</span></span>
+                <span class="works__item__meta"><span class="works__item__category">IT · Embedded</span><span class="works__item__sep">·</span><span class="works__item__year">2023</span></span>
+              </a>
+            </li>
+            <li class="works__item">
+              <a href="/works/raymats" class="works__item__link">
+                <span class="works__item__num">04</span>
+                <span class="works__item__title"><span class="works__item__title__en">Raymats</span><span class="works__item__title__ko">레이머티리얼즈</span></span>
+                <span class="works__item__meta"><span class="works__item__category">Materials</span><span class="works__item__sep">·</span><span class="works__item__year">2024</span></span>
+              </a>
+            </li>
+            <li class="works__item">
+              <a href="/works/optimedi" class="works__item__link">
+                <span class="works__item__num">05</span>
+                <span class="works__item__title"><span class="works__item__title__en">Optimedi</span><span class="works__item__title__ko">옵티메디</span></span>
+                <span class="works__item__meta"><span class="works__item__category">Medical Device</span><span class="works__item__sep">·</span><span class="works__item__year">2024</span></span>
+              </a>
+            </li>
+            <li class="works__item">
+              <a href="/works/ghi" class="works__item__link">
+                <span class="works__item__num">06</span>
+                <span class="works__item__title"><span class="works__item__title__en">GHI</span><span class="works__item__title__ko">기획인애드</span></span>
+                <span class="works__item__meta"><span class="works__item__category">Advertising</span><span class="works__item__sep">·</span><span class="works__item__year">2023</span></span>
+              </a>
+            </li>
           </ul>
         </div>
         <img class="works__thumb" id="works-thumb" alt="" aria-hidden="true" />
@@ -116,26 +179,30 @@
   <!-- ========================
     Footer (Scroll Reveal)
   ========================= -->
-  <div class="statement">
-    <p class="statement__text">DEVELOPMENT</p>
-  </div>
+  <div class="statement"></div>
 
   <footer class="footer">
-    <div class="footer__contact">
-      <h2 class="footer__title">좋은 작업은<br>대화에서 시작됩니다.</h2>
+    <div class="footer__top">
+      <!-- <p class="footer__big">Development</p> -->
+    </div>
+    <hr class="footer__divider" />
+    <div class="footer__mid">
       <a href="mailto:brant7100@gmail.com" class="footer__email">brant7100@gmail.com</a>
-      <div class="footer__sns">
+      <div class="footer__col-divider"></div>
+      <nav class="footer__sns">
         <a href="https://github.com/youngtaek-lee" class="footer__sns-link" target="_blank" rel="noopener">GitHub</a>
         <a href="#" class="footer__sns-link" target="_blank" rel="noopener">Instagram</a>
         <a href="#" class="footer__sns-link" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
+      </nav>
+      <div class="footer__col-divider"></div>
+      <nav class="footer__pages">
+        <a href="/about" class="footer__pages-link">About</a>
+        <a href="/works" class="footer__pages-link">Works</a>
+        <a href="/contact" class="footer__pages-link">Contact</a>
+      </nav>
     </div>
     <div class="footer__bottom">
       <p class="footer__copy">© 2026 Designed &amp; Published by Lee Youngtaek</p>
-      <nav class="footer__nav">
-        <a href="/about" class="footer__link">About</a>
-        <a href="/works" class="footer__link">Works</a>
-      </nav>
     </div>
   </footer>
 

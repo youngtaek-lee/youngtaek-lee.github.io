@@ -34,7 +34,7 @@
 
   /* Layout */
   --max-width:    1280px;
-  --footer-height: 460px;
+  --footer-height: calc(100vh);
 }
 
 /* =============================
@@ -98,6 +98,16 @@ button {
 }
 
 .reveal-word__inner {
+  display: inline-block;
+}
+
+.reveal-char {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.reveal-char__inner {
   display: inline-block;
 }
 

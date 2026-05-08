@@ -13,11 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   Router.init();
 
-  renderWorks();
+  // renderWorks(); // 정적 HTML로 대체 중
+  initWorksThumb();
   initCursor();
   initMenu();
   initAboutScroll();
-  initWorksEntrance();
+  // initWorksEntrance(); // 정적 HTML로 대체 중
+  initDarkTransition();
+  initWorksReveal();
+  initAboutTextScroll();
 
   const lenis = initLenis();
   initHeader(lenis);

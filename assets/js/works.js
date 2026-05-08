@@ -11,6 +11,39 @@ const works = [
 ];
 
 // =============================
+// Works 썸네일 hover (정적 HTML용)
+// =============================
+function initWorksThumb() {
+  const thumb = document.getElementById('works-thumb');
+  if (!thumb) return;
+
+  document.querySelectorAll('.works__item').forEach(li => {
+    const href = li.querySelector('a')?.getAttribute('href') || '';
+    const id = href.split('/').pop();
+    const work = works.find(w => w.id === id);
+    if (!work) return;
+
+    li.addEventListener('mouseenter', () => {
+      thumb.src = work.main;
+      thumb.classList.add('is-visible');
+    });
+    li.addEventListener('mouseleave', () => {
+      thumb.classList.remove('is-visible');
+    });
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    gsap.to(thumb, {
+      left: e.clientX,
+      top: e.clientY,
+      duration: 0.35,
+      ease: 'power2.out',
+      overwrite: 'auto',
+    });
+  });
+}
+
+// =============================
 // Works 렌더링 — 라인 리스트
 // =============================
 function renderWorks() {
