@@ -288,29 +288,21 @@ function initHobbyPopcorn() {
   const runner = Runner.create();
   Runner.run(runner, engine);
 
-  const HOBBIES = [
-    'fa-gamepad', 'fa-music', 'fa-camera', 'fa-film',
-    'fa-mug-hot', 'fa-person-running', 'fa-paintbrush', 'fa-headphones',
-    'fa-leaf', 'fa-book', 'fa-dice', 'fa-guitar',
-    'fa-puzzle-piece', 'fa-bicycle', 'fa-dumbbell',
+  const ICONS = [
+`<img src="assets/images/netflix-icon.png" height="54" style="display:block;width:auto;">`,
+`<img src="assets/images/pepsi-icon.png" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/hanwha-icon.png" height="54" style="display:block;width:auto;">`,
+    `<img src="assets/images/claude-icon.png" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/github-icon.png" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/vscode-icon.png" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/chimchakman-icon.png" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/burgerking-icon.png" width="44" height="44" style="display:block;">`,
+    `<img src="assets/images/slack-icon.png" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/riot-icon.png" width="42" height="42" style="display:block;">`,
+    `<img src="assets/images/notion-icon.png" width="54" height="54" style="display:block;">`,
   ];
-  const used = new Set();
   const active = [];
   let statics = null;
-
-  function pickUnused(count) {
-    let pool = HOBBIES.filter(h => !used.has(h));
-    if (pool.length < count) { used.clear(); pool = [...HOBBIES]; }
-    const copy = [...pool];
-    const picks = [];
-    for (let i = 0; i < count; i++) {
-      if (!copy.length) break;
-      const idx = Math.floor(Math.random() * copy.length);
-      picks.push(copy.splice(idx, 1)[0]);
-    }
-    picks.forEach(h => used.add(h));
-    return picks;
-  }
 
   function initStatics() {
     if (statics) return;
@@ -344,35 +336,34 @@ function initHobbyPopcorn() {
   btn.addEventListener('click', () => {
     initStatics();
 
-    const count = Math.floor(Math.random() * 2) + 4; // 4~5개
-    const picks = pickUnused(count);
+    const count = Math.floor(Math.random() * 2) + 2; // 2~3개
     const cRect = container.getBoundingClientRect();
     const bRect = btn.getBoundingClientRect();
     const bx = bRect.left - cRect.left + bRect.width / 2;
     const by = bRect.top - cRect.top + bRect.height / 2;
 
-    picks.forEach((icon, i) => {
+    for (let i = 0; i < count; i++) {
       setTimeout(() => {
-        const body = Bodies.circle(bx, by, 14, {
+        const body = Bodies.circle(bx, by, 27, {
           restitution: 0.4,
           friction: 0.5,
           frictionAir: 0.008,
           density: 0.004,
         });
         Body.setVelocity(body, {
-          x: (Math.random() - 0.5) * 18,
-          y: -(28 + Math.random() * 16),
+          x: (Math.random() - 0.5) * 10,
+          y: -(16 + Math.random() * 8),
         });
         Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.5);
         World.add(engine.world, body);
 
-        const el = document.createElement('i');
-        el.className = `fa-solid ${icon}`;
-        el.style.cssText = `position:absolute;font-size:1.3rem;color:rgba(255,255,255,0.88);pointer-events:none;user-select:none;will-change:transform;left:${bx}px;top:${by}px;transform:translate(-50%,-50%);`;
+        const el = document.createElement('div');
+        el.innerHTML = ICONS[Math.floor(Math.random() * ICONS.length)];
+        el.style.cssText = `position:absolute;color:rgba(255,255,255,0.88);pointer-events:none;user-select:none;will-change:transform;left:${bx}px;top:${by}px;transform:translate(-50%,-50%);`;
         container.appendChild(el);
         active.push({ body, el });
       }, i * 65);
-    });
+    }
   });
 }
 
