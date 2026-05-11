@@ -3,7 +3,7 @@
 ============================= */
 .about-text {
   background: var(--c-dark);
-  color: var(--pair-b-text);
+  color: var(--pair-c-text);
 }
 
 .about-text__inner {

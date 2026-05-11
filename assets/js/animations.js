@@ -111,31 +111,31 @@ function initDarkTransition() {
 
   tl.fromTo('main',
     { backgroundColor: '#161415' },
-    { backgroundColor: '#EDD9C0', ease: 'none' },
+    { backgroundColor: '#DBCFB0', ease: 'none' },
     0
   ).fromTo('.hero__hidden-space',
     { backgroundColor: '#161415' },
-    { backgroundColor: '#EDD9C0', ease: 'none' },
+    { backgroundColor: '#DBCFB0', ease: 'none' },
     0
   ).fromTo('.about-text',
     { backgroundColor: '#161415' },
-    { backgroundColor: '#EDD9C0', ease: 'none' },
+    { backgroundColor: '#DBCFB0', ease: 'none' },
     0
   ).fromTo('body',
     { color: '#EDD9C0' },
-    { color: '#F15A29', ease: 'none' },
+    { color: '#161415', ease: 'none' },
     0
   ).fromTo('.header__logo',
     { color: '#EDD9C0' },
-    { color: '#F15A29', ease: 'none' },
+    { color: '#161415', ease: 'none' },
     0
   ).fromTo('.header__nav',
     { color: '#EDD9C0' },
-    { color: '#F15A29', ease: 'none' },
+    { color: '#161415', ease: 'none' },
     0
   ).fromTo('.menu-btn',
     { color: '#EDD9C0' },
-    { color: '#F15A29', ease: 'none' },
+    { color: '#161415', ease: 'none' },
     0
   );
 }
