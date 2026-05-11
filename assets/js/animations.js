@@ -110,28 +110,32 @@ function initDarkTransition() {
   });
 
   tl.fromTo('main',
-    { backgroundColor: '#22A7E5' },
-    { backgroundColor: '#000000', ease: 'none' },
+    { backgroundColor: '#161415' },
+    { backgroundColor: '#EDD9C0', ease: 'none' },
     0
   ).fromTo('.hero__hidden-space',
-    { backgroundColor: '#22A7E5' },
-    { backgroundColor: '#000000', ease: 'none' },
+    { backgroundColor: '#161415' },
+    { backgroundColor: '#EDD9C0', ease: 'none' },
+    0
+  ).fromTo('.about-text',
+    { backgroundColor: '#161415' },
+    { backgroundColor: '#EDD9C0', ease: 'none' },
     0
   ).fromTo('body',
-    { color: '#000000' },
-    { color: '#ffffff', ease: 'none' },
+    { color: '#EDD9C0' },
+    { color: '#F15A29', ease: 'none' },
     0
   ).fromTo('.header__logo',
-    { color: '#000000' },
-    { color: '#ffffff', ease: 'none' },
+    { color: '#EDD9C0' },
+    { color: '#F15A29', ease: 'none' },
     0
   ).fromTo('.header__nav',
-    { color: '#000000' },
-    { color: '#ffffff', ease: 'none' },
+    { color: '#EDD9C0' },
+    { color: '#F15A29', ease: 'none' },
     0
   ).fromTo('.menu-btn',
-    { color: '#000000' },
-    { color: '#ffffff', ease: 'none' },
+    { color: '#EDD9C0' },
+    { color: '#F15A29', ease: 'none' },
     0
   );
 }

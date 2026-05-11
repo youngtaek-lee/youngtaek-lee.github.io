@@ -2,10 +2,15 @@
    ABOUT — Scroll Text Spotlight
 ============================= */
 .about-text {
+  background: var(--c-dark);
+  color: var(--pair-b-text);
+}
+
+.about-text__inner {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 120px 0;
-  border-top: 1px solid var(--color-dark);
+  padding: 120px 48px;
+  border-top: 1px solid var(--color-line);
   text-align: right;
 }
 
@@ -17,16 +22,15 @@
   text-transform: uppercase;
   line-height: 1;
   margin-bottom: 50px;
-  color: #ffffff;
 }
 
 .about-text__summary {
   font-family: var(--font-body);
   font-size: clamp(1.6rem, 3.2vw, 4rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: #ffffff;
+  color: var(--c-dark);
 }
 
 .about__word {
@@ -80,10 +84,10 @@
   gap: 20px;
 }
 
-.about__stat-card--1 { background: rgba(0,0,0,0.06); }
-.about__stat-card--2 { background: rgba(0,0,0,0.09); }
-.about__stat-card--3 { background: rgba(0,0,0,0.06); }
-.about__stat-card--4 { background: rgba(0,0,0,0.08); }
+.about__stat-card--1 { background: var(--color-surface); }
+.about__stat-card--2 { background: var(--color-surface-raised); }
+.about__stat-card--3 { background: var(--color-surface); }
+.about__stat-card--4 { background: var(--color-surface); }
 
 .about__stat-card__top {
   display: flex;

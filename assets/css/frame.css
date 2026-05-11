@@ -1,4 +1,4 @@
-﻿/* =============================
+/* =============================
    Custom Cursor
 ============================= */
 .cursor {
@@ -8,7 +8,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--color-white);
   mix-blend-mode: difference;
   pointer-events: none;
   z-index: 99999;
@@ -28,7 +28,7 @@
 .intro {
   position: fixed;
   inset: 0;
-  background: #000;
+  background: var(--color-dark);
   z-index: 99990;
   display: flex;
   align-items: center;
@@ -45,7 +45,7 @@
 
 .intro__path {
   fill: none;
-  stroke: #fff;
+  stroke: var(--color-white);
   stroke-width: 0.2;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -64,7 +64,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* border-bottom: 1px solid #000; */
+  /* border-bottom: 1px solid var(--color-line); */
   margin: 0 auto;
   pointer-events: none;
   opacity: 0;
@@ -128,7 +128,7 @@
 .menu-overlay__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: var(--color-overlay);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
@@ -143,10 +143,10 @@
   right: 16px;
   bottom: 16px;
   width: 44vw;
-  background: rgba(0, 0, 0, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-panel);
+  border: 1px solid var(--color-border-subtle);
   border-radius: 20px;
-  box-shadow: -4px 0 48px rgba(0, 0, 0, 0.3);
+  box-shadow: -4px 0 48px var(--color-shadow);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -164,13 +164,13 @@
   font-size: 0.85rem;
   font-weight: 400;
   letter-spacing: 0;
-  color: rgba(255,255,255,0.4);
+  color: var(--color-text-dim);
   align-self: flex-end;
   transition: color 0.2s;
 }
 
 .menu-overlay__close:hover {
-  color: #fff;
+  color: var(--color-white);
 }
 
 .menu-overlay__nav {
@@ -186,12 +186,12 @@
   letter-spacing: 0;
   line-height: 1.1;
   opacity: 0;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-text-soft);
   transition: opacity 0.15s ease, color 0.2s ease;
 }
 
 .menu-overlay.is-open .menu-overlay__link:hover {
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 .menu-overlay__footer {
@@ -204,12 +204,12 @@
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: var(--color-text-dim);
   transition: color 0.15s ease;
 }
 
 .menu-overlay.is-open .menu-overlay__footer-link:hover {
-  color: rgba(255,255,255,0.9);
+  color: var(--color-text-soft);
 }
 
 /* =============================
@@ -308,7 +308,7 @@
 
 .bottom-nav__link--cta {
   background: var(--color-point);
-  color: #ffffff;
+  color: var(--color-dark);
   border: none;
   opacity: 1;
 }
@@ -334,8 +334,8 @@ main {
   left: 0;
   right: 0;
   z-index: 0;
-  background: var(--color-sub);
-  color: #fff;
+  background: var(--pair-a-bg);
+  color: var(--pair-a-text);
   padding: 40px 30px 30px;
   display: flex;
   flex-direction: column;
@@ -365,8 +365,8 @@ main {
   position: relative;
   z-index: 2;
   background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
-  color: rgba(255, 255, 255, 0.65);
+  border: 1.5px solid var(--color-border-light);
+  color: var(--color-text-mid);
   padding: 18px 52px;
   font-family: var(--font-display);
   font-size: 1.3rem;
@@ -376,7 +376,7 @@ main {
   border-radius: 2px;
 
   /* 3D depth */
-  box-shadow: 0 7px 0 rgba(255, 255, 255, 0.13);
+  box-shadow: 0 7px 0 var(--color-border-medium);
 
   transition:
     transform 0.07s ease,
@@ -386,15 +386,15 @@ main {
 }
 
 .hobby-btn:hover {
-  color: rgba(255, 255, 255, 0.9);
-  border-color: rgba(255, 255, 255, 0.7);
+  color: var(--color-text-soft);
+  border-color: var(--color-border-strong);
 }
 
 .hobby-btn:active {
   transform: translateY(7px);
-  box-shadow: 0 0 0 rgba(255, 255, 255, 0.13);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 0 var(--color-border-medium);
+  color: var(--color-white);
+  border-color: var(--color-border-strong);
 }
 
 .footer__big {
@@ -409,7 +409,7 @@ main {
 
 .footer__divider {
   border: none;
-  border-top: 1px solid rgba(255,255,255,0.15);
+  border-top: 1px solid var(--color-border-medium);
   margin: 24px 0;
 }
 
@@ -422,20 +422,20 @@ main {
 .footer__email {
   font-size: 1rem;
   font-weight: 400;
-  color: rgba(255,255,255,0.55);
+  color: var(--color-text-mid);
   text-decoration: none;
   transition: color 0.2s;
   flex-shrink: 0;
 }
 
 .footer__email:hover {
-  color: #fff;
+  color: var(--color-white);
 }
 
 .footer__col-divider {
   width: 1px;
   align-self: stretch;
-  background: rgba(255,255,255,0.15);
+  background: var(--color-border-medium);
 }
 
 .footer__sns,
@@ -451,25 +451,25 @@ main {
   font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
+  color: var(--color-text-dim);
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .footer__sns-link:hover,
 .footer__pages-link:hover {
-  color: #fff;
+  color: var(--color-white);
 }
 
 .footer__bottom {
   margin-top: 24px;
   padding-top: 16px;
-  border-top: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid var(--color-border-subtle);
 }
 
 .footer__copy {
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.25);
+  color: var(--color-text-subtle);
   letter-spacing: 0.04em;
 }
 

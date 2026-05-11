@@ -2,26 +2,66 @@
    CSS Variables
 ============================= */
 :root {
-  /* Brand */
-  --color-bg:     #22A7E5;
-  --color-text:   #000000;
-  --color-white:  #FFFFFF;
-  --color-red:    #A62B1F;
-  --color-yellow: #F9A608;
-  --color-line:   rgba(0, 0, 0, 0.18);
+  /* ── Palette ──────────────────────────────── */
+  --c-dark:   #161415;
+  --c-beige:  #EDD9C0;
+  --c-egg:    #DBCFB0;
+  --c-orange: #F15A29;
+  --c-gray:   #666666;
+  --c-white:  #F8F8F8;
 
-  /* Compat (서브페이지/컴포넌트 호환) */
-  --color-surface:        rgba(0, 0, 0, 0.06);
-  --color-surface-raised: rgba(0, 0, 0, 0.1);
-  --color-dark:           #000000;
-  --color-sub:            rgba(0, 0, 0, 0.45);
+  /* ── Color Pairs (bg / text) ──────────────────
+     A  --c-dark   / --c-beige    #161415 / #EDD9C0
+     B  --c-beige  / --c-orange   #EDD9C0 / #F15A29
+     C  --c-egg    / --c-dark     #DBCFB0 / #161415
+     D  --c-orange / --c-egg      #F15A29 / #DBCFB0
+  ──────────────────────────────────────────── */
+  --pair-a-bg:   var(--c-dark);    --pair-a-text: var(--c-beige);
+  --pair-b-bg:   var(--c-beige);   --pair-b-text: var(--c-orange);
+  --pair-c-bg:   var(--c-egg);     --pair-c-text: var(--c-dark);
+  --pair-d-bg:   var(--c-orange);  --pair-d-text: var(--c-egg);
+
+  /* ── Active Theme (Pair A) ────────────────── */
+  --color-bg:    var(--c-dark);
+  --color-text:  var(--c-beige);
+  --color-white: var(--c-white);
+  --color-line:  rgba(237, 217, 192, 0.25);
+
+  /* ── Compat ───────────────────────────────── */
+  --color-orange:         var(--c-orange);
+  --color-beige:          var(--c-beige);
+  --color-egg:            var(--c-egg);
+  --color-gray:           var(--c-gray);
+  --color-red:            var(--c-orange);
+  --color-yellow:         var(--c-beige);
+  --color-surface:        rgba(237, 217, 192, 0.08);
+  --color-surface-raised: rgba(237, 217, 192, 0.13);
+  --color-dark:           var(--c-dark);
+  --color-sub:            var(--c-gray);
   --color-text-sub:       var(--color-sub);
   --color-border:         var(--color-line);
-  --color-accent:         var(--color-red);
-  --color-point:          var(--color-yellow);
-  --color-accent-light:   var(--color-yellow);
-  --color-accent-dim:     rgba(249, 166, 8, 0.12);
-  --color-point-dim:      rgba(249, 166, 8, 0.15);
+  --color-accent:         var(--c-orange);
+  --color-point:          var(--c-beige);
+  --color-accent-light:   var(--c-beige);
+  --color-accent-dim:     rgba(241, 90, 41, 0.12);
+  --color-point-dim:      rgba(237, 217, 192, 0.15);
+
+  /* ── UI — Overlays & Panels ───────────────── */
+  --color-overlay: rgba(0, 0, 0, 0.55);
+  --color-panel:   rgba(22, 20, 21, 0.95);
+  --color-shadow:  rgba(0, 0, 0, 0.3);
+
+  /* ── UI — Beige-on-dark text ──────────────── */
+  --color-text-soft:   rgba(237, 217, 192, 0.85);
+  --color-text-mid:    rgba(237, 217, 192, 0.55);
+  --color-text-dim:    rgba(237, 217, 192, 0.4);
+  --color-text-subtle: rgba(237, 217, 192, 0.25);
+
+  /* ── UI — Beige-on-dark borders ───────────── */
+  --color-border-subtle: rgba(237, 217, 192, 0.08);
+  --color-border-medium: rgba(237, 217, 192, 0.15);
+  --color-border-light:  rgba(237, 217, 192, 0.5);
+  --color-border-strong: rgba(237, 217, 192, 0.7);
 
   /* Typography */
   --font-base:    'Anton', 'Pretendard Variable', 'Pretendard', sans-serif;

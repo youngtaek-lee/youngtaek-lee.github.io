@@ -38,8 +38,8 @@
 
 .skill-item {
   aspect-ratio: 1;
-  background: rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -50,7 +50,7 @@
 
 .skill-item:hover {
   transform: scale(1.05);
-  background: rgba(0, 0, 0, 0.14);
+  background: var(--color-surface-raised);
 }
 
 .skill-item__inner {
@@ -85,7 +85,7 @@
   font-weight: 400;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.4);
+  color: var(--color-text-sub);
   transition: color 0.3s ease;
   white-space: nowrap;
 }
