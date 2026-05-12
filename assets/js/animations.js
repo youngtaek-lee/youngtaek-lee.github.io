@@ -295,15 +295,17 @@ function initHobbyPopcorn() {
   const ICONS = [
 `<img src="assets/images/netflix-icon.png" height="54" style="display:block;width:auto;">`,
 `<img src="assets/images/pepsi-icon.png" width="54" height="54" style="display:block;">`,
-    `<img src="assets/images/hanwha-icon.png" height="54" style="display:block;width:auto;">`,
-    `<img src="assets/images/claude-icon.png" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/hanwha-icon.svg" height="54" style="display:block;width:auto;">`,
+    `<img src="assets/images/claude-icon.svg" width="54" height="54" style="display:block;">`,
     `<img src="assets/images/github-icon.png" width="54" height="54" style="display:block;">`,
-    `<img src="assets/images/vscode-icon.png" width="54" height="54" style="display:block;">`,
-    `<img src="assets/images/chimchakman-icon.png" width="54" height="54" style="display:block;">`,
-    `<img src="assets/images/burgerking-icon.png" width="44" height="44" style="display:block;">`,
-    `<img src="assets/images/slack-icon.png" width="54" height="54" style="display:block;">`,
-    `<img src="assets/images/riot-icon.png" width="42" height="42" style="display:block;">`,
-    `<img src="assets/images/notion-icon.png" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/vscode-icon.svg" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/chimchakman-icon.svg" width="44" height="44" style="display:block;">`,
+    `<img src="assets/images/burgerking-icon.svg" width="44" height="44" style="display:block;">`,
+    `<img src="assets/images/slack-icon.svg" width="44" height="44" style="display:block;">`,
+    `<img src="assets/images/riot-icon.svg" width="42" height="42" style="display:block;">`,
+    `<img src="assets/images/notion-icon.svg" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/youtube-icon.svg" height="32" style="display:block;width:auto;">`,
+    `<img src="assets/images/samsung-icon.svg" height="32" style="display:block;width:auto;">`,
   ];
   const active = [];
   let statics = null;
@@ -314,7 +316,7 @@ function initHobbyPopcorn() {
     const H = container.offsetHeight;
     const T = 80;
     statics = [
-      Bodies.rectangle(W / 2, H + T / 2, W + 200, T, { isStatic: true, friction: 0.7, restitution: 0.2 }),
+      Bodies.rectangle(W / 2, H - 30 + T / 2, W + 200, T, { isStatic: true, friction: 0.7, restitution: 0.2 }),
       Bodies.rectangle(-T / 2, H / 2, T, H * 10, { isStatic: true }),
       Bodies.rectangle(W + T / 2, H / 2, T, H * 10, { isStatic: true }),
     ];
