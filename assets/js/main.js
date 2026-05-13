@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAboutTextScroll();
 
   const lenis = initLenis();
+  window.__lenis = lenis;
   initHeader(lenis);
 
   initHobbyPopcorn();

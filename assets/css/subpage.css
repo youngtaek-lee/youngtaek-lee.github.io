@@ -15,9 +15,10 @@
 }
 
 .subpage__label {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 0.8rem;
-  letter-spacing: 0;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-sub);
   margin-bottom: 24px;
@@ -39,9 +40,10 @@
 }
 
 .subpage__section-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 0.75rem;
-  letter-spacing: 0;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-sub);
   margin-bottom: 40px;
@@ -80,18 +82,19 @@
 }
 
 .process-item__num {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 0.75rem;
+  font-weight: 500;
   color: var(--color-sub);
-  letter-spacing: 0;
+  letter-spacing: 0.04em;
   min-width: 32px;
   padding-top: 4px;
 }
 
 .process-item__title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 600;
   margin-bottom: 8px;
 }
 
@@ -108,9 +111,10 @@
 }
 
 .skill-tag {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 0.8rem;
-  letter-spacing: 0;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   padding: 8px 16px;
   border: 1px solid var(--color-line);
   border-radius: 100px;
@@ -143,10 +147,11 @@
 }
 
 .wl-item__num {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 0.7rem;
+  font-weight: 400;
   color: var(--color-sub);
-  letter-spacing: 0;
+  letter-spacing: 0.04em;
   min-width: 28px;
 }
 
@@ -184,7 +189,7 @@
 }
 
 .wl-item__arrow {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1rem;
   color: var(--color-sub);
   flex-shrink: 0;
@@ -240,9 +245,10 @@
 }
 
 .wd-link {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 0.85rem;
-  letter-spacing: 0;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   padding: 12px 20px;
   border: 1px solid var(--color-text);
   border-radius: 6px;
@@ -280,9 +286,10 @@
 }
 
 .contact-info__link {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 0.85rem;
-  letter-spacing: 0;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-sub);
   transition: color 0.2s;

@@ -303,9 +303,9 @@ function initHobbyPopcorn() {
     `<img src="assets/images/burgerking-icon.svg" width="44" height="44" style="display:block;">`,
     `<img src="assets/images/slack-icon.svg" width="44" height="44" style="display:block;">`,
     `<img src="assets/images/riot-icon.svg" width="42" height="42" style="display:block;">`,
-    `<img src="assets/images/notion-icon.svg" width="54" height="54" style="display:block;">`,
+    `<img src="assets/images/notion-icon.svg" width="46" height="46" style="display:block;">`,
     `<img src="assets/images/youtube-icon.svg" height="32" style="display:block;width:auto;">`,
-    `<img src="assets/images/samsung-icon.svg" height="32" style="display:block;width:auto;">`,
+    `<img src="assets/images/samsung-icon.svg" height="26" style="display:block;width:auto;">`,
   ];
   const active = [];
   let statics = null;
@@ -325,6 +325,7 @@ function initHobbyPopcorn() {
 
   Events.on(engine, 'afterUpdate', () => {
     const limit = container.offsetHeight + 300;
+
     for (let i = active.length - 1; i >= 0; i--) {
       const { body, el } = active[i];
       if (body.position.y > limit) {
@@ -342,7 +343,7 @@ function initHobbyPopcorn() {
   btn.addEventListener('click', () => {
     initStatics();
 
-    const count = Math.floor(Math.random() * 2) + 2; // 2~3개
+    const count = Math.floor(Math.random() * 2) + 2;
     const cRect = container.getBoundingClientRect();
     const bRect = btn.getBoundingClientRect();
     const bx = bRect.left - cRect.left + bRect.width / 2;
