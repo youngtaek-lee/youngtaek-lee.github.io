@@ -1,4 +1,27 @@
 // =============================
+// Hero Frame 높이 동적 계산
+// =============================
+function initHeroFrame() {
+  const frame     = document.querySelector('.hero__frame');
+  const tagline   = document.querySelector('.hero__tagline');
+  const heroTitle = document.querySelector('.hero__title');
+  if (!frame || !tagline || !heroTitle) return;
+
+  function update() {
+    const heroRect    = heroTitle.getBoundingClientRect();
+    const taglineRect = tagline.getBoundingClientRect();
+    const fontSize    = parseFloat(getComputedStyle(tagline).fontSize);
+    // line-height 0.85로 인한 글리프 visual overflow 보정 (em 기준 약 15%)
+    const visualOverflow = fontSize * 0.15;
+    const fromBottom  = heroRect.bottom - taglineRect.top + visualOverflow + 20;
+    frame.style.bottom = `${fromBottom}px`;
+  }
+
+  update();
+  window.addEventListener('resize', update);
+}
+
+// =============================
 // Hero 입장 애니메이션 (인트로 완료 후 호출)
 // =============================
 function initHeroEntrance() {
@@ -275,6 +298,30 @@ function initHeroTaglineScroll(lenis) {
     });
 
   }); // document.fonts.ready
+}
+
+// =============================
+// Footer Scale Reveal
+// =============================
+function initFooterScale() {
+  const footer = document.querySelector('.footer');
+  const statement = document.querySelector('.statement');
+  if (!footer || !statement) return;
+
+  gsap.fromTo(footer,
+    { scale: 0.92, transformOrigin: 'center bottom' },
+    {
+      scale: 1,
+      transformOrigin: 'center bottom',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.statement',
+        start: 'top bottom',
+        end: 'bottom bottom',
+        scrub: true,
+      }
+    }
+  );
 }
 
 // =============================
