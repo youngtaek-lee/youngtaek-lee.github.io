@@ -13,7 +13,7 @@ function initHeroFrame() {
     const fontSize    = parseFloat(getComputedStyle(tagline).fontSize);
     // line-height 0.85로 인한 글리프 visual overflow 보정 (em 기준 약 15%)
     const visualOverflow = fontSize * 0.15;
-    const fromBottom  = heroRect.bottom - taglineRect.top + visualOverflow + 20;
+    const fromBottom  = heroRect.bottom - taglineRect.top + visualOverflow + 50;
     frame.style.bottom = `${fromBottom}px`;
   }
 

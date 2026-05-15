@@ -32,4 +32,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroTaglineScroll(lenis);
   initFooterScale();
   initHeroFrame();
+  initGridAnimation();
 });

@@ -50,12 +50,18 @@
 
 .hero__frame {
   position: absolute;
-  top: 20px;
-  left: 30px;
-  right: 30px;
-  border: 1px solid var(--c-orange);
+  top: 50px;
+  left: 0;
+  right: 0;
+  /* border: 1px solid var(--c-orange); */
   z-index: 10;
   pointer-events: none;
+  overflow: hidden;
+}
+
+.hero__grid-canvas {
+  position: absolute;
+  inset: 0;
 }
 
 .hero__letter--over,
