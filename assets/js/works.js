@@ -11,6 +11,16 @@ const works = [
 ];
 
 // =============================
+// Works 리스트 스파클 마크
+// =============================
+function initWorksSparkle() {
+  const SPARKLE_SVG = `<svg class="works__sparkle" viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/></svg>`;
+  document.querySelectorAll('.works__item__link').forEach(link => {
+    link.insertAdjacentHTML('beforeend', SPARKLE_SVG);
+  });
+}
+
+// =============================
 // Works 썸네일 hover (정적 HTML용)
 // =============================
 function initWorksThumb() {

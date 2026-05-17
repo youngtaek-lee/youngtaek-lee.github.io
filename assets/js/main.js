@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // renderWorks(); // 정적 HTML로 대체 중
   initWorksThumb();
+  initWorksSparkle();
   initCursor();
   initMenu();
   initAboutScroll();

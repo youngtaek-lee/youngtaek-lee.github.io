@@ -63,6 +63,7 @@
   padding: 24px 0;
   text-decoration: none;
   color: var(--c-dark);
+  position: relative;
 }
 
 .works__item__num {
@@ -131,6 +132,30 @@
   font-size: 1rem;
   letter-spacing: -0.06em;
   font-variant-numeric: tabular-nums;
+}
+
+/* =============================
+   Works 스파클 마크
+============================= */
+.works__sparkle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  translate: 0 -50%;
+  width: 2.8rem;
+  height: 2.8rem;
+  color: var(--c-gray);
+  opacity: 0.35;
+  transform: rotate(0deg);
+  transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1),
+              color 0.3s ease,
+              opacity 0.3s ease;
+}
+
+.works__item:hover .works__sparkle {
+  transform: rotate(45deg);
+  color: var(--c-orange);
+  opacity: 1;
 }
 
 /* =============================
