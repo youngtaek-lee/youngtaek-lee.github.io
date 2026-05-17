@@ -1,4 +1,4 @@
-/* =============================
+﻿/* =============================
    Custom Cursor
 ============================= */
 .cursor {
@@ -415,6 +415,24 @@ main {
   color: var(--c-egg);
 }
 
+.footer__last-letter {
+  display: inline-block;
+  position: relative;
+}
+
+.footer__sparkle {
+  position: absolute;
+  top: -0.2em;
+  right: -0.3em;
+  width: 0.6em;
+  height: 0.6em;
+  color: var(--c-orange);
+  display: block;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 12px var(--c-orange));
+}
+
 .footer__divider {
   border: none;
   border-top: 1px solid var(--color-border-medium);
@@ -423,8 +441,14 @@ main {
 
 .footer__mid {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 40px;
+}
+
+.footer__links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
 }
 
 .footer__col {
@@ -459,6 +483,64 @@ main {
   background: var(--color-border-medium);
 }
 
+.footer__email-btn {
+  margin-left: auto;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 20px;
+  background: var(--c-beige);
+  border-radius: 100px;
+  color: var(--c-dark);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.4s ease;
+}
+
+.footer__email-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--c-orange);
+  border-radius: inherit;
+  clip-path: circle(0% at calc(100% - 25px) 50%);
+  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer__email-btn:hover::before {
+  clip-path: circle(200% at calc(100% - 25px) 50%);
+}
+
+.footer__email-btn:hover {
+  color: var(--c-egg);
+}
+
+.footer__email-btn__text {
+  position: relative;
+  z-index: 1;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.footer__email-btn__icon {
+  position: relative;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--c-orange);
+  color: var(--c-egg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+
 .footer__sns,
 .footer__pages {
   display: flex;
@@ -480,6 +562,11 @@ main {
 .footer__sns-link:hover,
 .footer__pages-link:hover {
   color: var(--color-white);
+}
+
+.footer__sns-link--soon {
+  opacity: 0.25;
+  cursor: default;
 }
 
 .footer__bottom {

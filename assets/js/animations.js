@@ -318,6 +318,10 @@ function initFooterScale() {
   const statement = document.querySelector('.statement');
   if (!footer || !statement) return;
 
+  const sparkle = document.querySelector('.footer__sparkle');
+  let sparkleShown = false;
+  if (sparkle) gsap.set(sparkle, { opacity: 0, scale: 0, rotation: -180 });
+
   gsap.fromTo(footer,
     { scale: 0.92, transformOrigin: 'center bottom' },
     {
@@ -329,6 +333,16 @@ function initFooterScale() {
         start: 'top bottom',
         end: 'bottom bottom',
         scrub: true,
+        onUpdate: (self) => {
+          if (!sparkle) return;
+          if (self.progress >= 0.85 && !sparkleShown) {
+            sparkleShown = true;
+            gsap.to(sparkle, { opacity: 1, scale: 1, rotation: 45, duration: 0.5, ease: 'back.out(2)' });
+          } else if (self.progress < 0.85 && sparkleShown) {
+            sparkleShown = false;
+            gsap.to(sparkle, { opacity: 0, scale: 0, rotation: -180, duration: 0.3, ease: 'power2.in' });
+          }
+        },
       }
     }
   );
