@@ -80,3 +80,16 @@
 .hero__letter--under {
   z-index: 1;
 }
+
+.hero__x-mark {
+  position: absolute;
+  top: -0.3em;
+  right: -0.25em;
+  width: 0.65em;
+  height: 0.65em;
+  color: var(--c-orange);
+  display: block;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px var(--c-orange));
+}

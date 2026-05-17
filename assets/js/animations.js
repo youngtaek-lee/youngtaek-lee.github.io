@@ -284,6 +284,16 @@ function initHeroTaglineScroll(lenis) {
     // Phase 2 (0.5 → 1.0): HELLO 유지
     tl.to({}, { duration: 0.5 }, 0.5);
 
+    // X mark: HELLO 완성 시점(0.5)에 회전하며 등장
+    const xMark = tagline.querySelector('.hero__x-mark');
+    if (xMark) {
+      tl.fromTo(xMark,
+        { opacity: 0, scale: 0, rotation: -180 },
+        { opacity: 1, scale: 1, rotation: 45, duration: 0.18, ease: 'back.out(2)' },
+        0.5
+      );
+    }
+
     const st = ScrollTrigger.create({
       trigger: '.hero-wrap',
       start: 'top top',
