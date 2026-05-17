@@ -5,23 +5,10 @@ function initCursor() {
   const cursor = document.getElementById('cursor');
   if (!cursor || window.matchMedia('(hover: none)').matches) return;
 
-  let mouseX = 0;
-  let mouseY = 0;
-  let curX   = 0;
-  let curY   = 0;
-
   document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
   });
-
-  (function animate() {
-    curX += (mouseX - curX) * 0.15;
-    curY += (mouseY - curY) * 0.15;
-    cursor.style.left = curX + 'px';
-    cursor.style.top  = curY + 'px';
-    requestAnimationFrame(animate);
-  })();
 
   const hoverEls = 'a, button, [role="button"]';
   document.addEventListener('mouseover', (e) => {
