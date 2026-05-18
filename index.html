@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
+  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual';</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="웹 퍼블리셔 포트폴리오 — HTML, CSS, JavaScript 기반 웹 퍼블리싱 작업물 모음" />
   <title>Portfolio — Web Publisher</title>
@@ -29,6 +30,20 @@
 
   <!-- Cursor -->
   <div class="cursor" id="cursor"></div>
+
+  <!-- ========================
+    Intro
+  ========================= -->
+  <div class="intro" id="intro">
+    <div class="intro__sparkle-wrap" id="introSparkle">
+      <svg class="intro__sparkle intro__sparkle--gray" viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/>
+      </svg>
+      <svg class="intro__sparkle intro__sparkle--orange" viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/>
+      </svg>
+    </div>
+  </div>
 
 
   <!-- ========================
@@ -245,6 +260,7 @@
   <script src="assets/js/pages/contact.js" defer></script>
   <script src="assets/js/router.js" defer></script>
   <script src="assets/js/grid.js" defer></script>
+  <script src="assets/js/intro.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

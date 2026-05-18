@@ -1,6 +1,7 @@
 // =============================
 // Init
 // =============================
+
 document.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
 
@@ -29,9 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeader(lenis);
 
   initHobbyPopcorn();
-  initHeroEntrance();
+  initIntro();
   initHeroTaglineScroll(lenis);
   initFooterScale();
   initHeroFrame();
-  initGridAnimation();
+  // initGridAnimation(); // 인트로로 이동
 });

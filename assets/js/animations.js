@@ -33,12 +33,7 @@ function initHeroEntrance() {
   });
 
   const header = document.querySelector('.header');
-  if (header) {
-    gsap.fromTo(header,
-      { opacity: 0, visibility: 'visible' },
-      { opacity: 1, duration: 0.8, ease: 'power2.out', delay: 0.3 }
-    );
-  }
+  if (header) gsap.set(header, { opacity: 1, visibility: 'visible' });
 }
 
 // =============================
@@ -385,7 +380,6 @@ function initHobbyPopcorn() {
     `<img src="assets/images/github-icon.png" width="54" height="54" style="display:block;">`,
     `<img src="assets/images/vscode-icon.svg" width="54" height="54" style="display:block;">`,
     `<img src="assets/images/chimchakman-icon.svg" width="44" height="44" style="display:block;">`,
-    `<img src="assets/images/burgerking-icon.svg" width="44" height="44" style="display:block;">`,
     `<img src="assets/images/slack-icon.svg" width="44" height="44" style="display:block;">`,
     `<img src="assets/images/riot-icon.svg" width="42" height="42" style="display:block;">`,
     `<img src="assets/images/notion-icon.svg" width="46" height="46" style="display:block;">`,

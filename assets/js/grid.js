@@ -1,8 +1,8 @@
 // =============================
 // Hero Grid Animation (Canvas 2D)
 // =============================
-function initGridAnimation() {
-  const frame = document.querySelector('.hero');
+function initGridAnimation(container) {
+  const frame = container || document.querySelector('.hero');
   if (!frame) return;
 
   const canvas = document.createElement('canvas');
@@ -14,10 +14,6 @@ function initGridAnimation() {
   const TARGET_V = 30;
   const PAD_Y    = 14;
 
-  // hover — 채워진 원
-  const HOVER_R   = 100; // 영향 반지름 (크기)
-  const COLOR_R   = 220; // 컬러 영향 반지름
-
   // 클릭 파동
   const RIPPLE_MAX_R  = 300; // 최대 확장 반지름
   const RIPPLE_W      = 28;  // 고리 두께
@@ -26,9 +22,7 @@ function initGridAnimation() {
 
   let W, H, cols, rows, spacingX, spacingY;
   let canvasRect = { left: 0, top: 0 };
-  let rawX = -9999, rawY = -9999;
-  let smoothX = -9999, smoothY = -9999;
-  const LERP   = 0.08;
+  let active = true;
   const JITTER = 0; // 위치 흔들림 (0=완벽한격자)
   let cells = [];
   const ripples = []; // { x, y, age }
@@ -65,7 +59,6 @@ function initGridAnimation() {
   window.addEventListener('resize', resize);
   window.addEventListener('scroll', () => { canvasRect = canvas.getBoundingClientRect(); });
 
-
   // 클릭 시 파동 스폰
   frame.addEventListener('click', (e) => {
     const x = e.clientX - canvasRect.left;
@@ -97,19 +90,13 @@ function initGridAnimation() {
   }
 
   function draw(timestamp) {
+    if (!active) return;
     const delta = lastTime ? (timestamp - lastTime) / 1000 : 0;
     lastTime = timestamp;
 
     // 잔파 age 진행 + 만료 제거
     for (const rp of ripples) rp.age += delta * RIPPLE_SPEED;
     while (ripples.length && ripples[0].age >= 1) ripples.shift();
-
-    const targetX = rawX > 0 ? rawX - canvasRect.left : -9999;
-    const targetY = rawY > 0 ? rawY - canvasRect.top  : -9999;
-    if (smoothX < 0 && targetX > 0) { smoothX = targetX; smoothY = targetY; }
-    else { smoothX += (targetX - smoothX) * LERP; smoothY += (targetY - smoothY) * LERP; }
-    const mouseX = smoothX;
-    const mouseY = smoothY;
 
     ctx.clearRect(0, 0, W, H);
 
@@ -120,11 +107,8 @@ function initGridAnimation() {
         const cx   = x + cell.ox;
         const y    = PAD_Y + (row + 0.5) * spacingY + cell.oy;
 
-        // hover — 채워진 원 (가까울수록 크게)
-        const hd = Math.hypot(cx - mouseX, y - mouseY);
-        let proximity = Math.max(0, 1 - hd / HOVER_R) * cell.gain;
-
         // 클릭 파동 — 도넛 고리
+        let proximity = 0;
         for (const rp of ripples) {
           const rd    = Math.hypot(cx - rp.x, y - rp.y);
           const rR    = rp.age * RIPPLE_MAX_R;
@@ -137,14 +121,9 @@ function initGridAnimation() {
         const r       = 4 + proximity * 20;
         const opacity = 0.18 + proximity * 0.65;
 
-        // beige → orange 블렌드 (컬러 전용 반지름)
-        const colorP = Math.max(0, 1 - Math.hypot(cx - mouseX, y - mouseY) / COLOR_R) * cell.gain;
-        const cr = Math.round(237 + (241 - 237) * colorP);
-        const cg = Math.round(217 + ( 90 - 217) * colorP);
-        const cb = Math.round(192 + ( 41 - 192) * colorP);
         ctx.shadowBlur  = proximity > 0.1 ? proximity * 16 : 0;
-        ctx.shadowColor = `rgba(${cr},${cg},${cb},${opacity})`;
-        ctx.fillStyle   = `rgba(${cr},${cg},${cb},${opacity.toFixed(2)})`;
+        ctx.shadowColor = `rgba(237,217,192,${opacity})`;
+        ctx.fillStyle   = `rgba(237,217,192,${opacity.toFixed(2)})`;
 
         drawSparkle(cx, y, r);
         ctx.fill();
@@ -156,4 +135,8 @@ function initGridAnimation() {
   }
 
   requestAnimationFrame(draw);
+
+  return function destroy() {
+    active = false;
+  };
 }
