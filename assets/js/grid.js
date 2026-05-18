@@ -65,14 +65,6 @@ function initGridAnimation() {
   window.addEventListener('resize', resize);
   window.addEventListener('scroll', () => { canvasRect = canvas.getBoundingClientRect(); });
 
-  window.addEventListener('mousemove', (e) => {
-    rawX = e.clientX;
-    rawY = e.clientY;
-  });
-  frame.addEventListener('mouseleave', () => {
-    rawX = -9999;
-    rawY = -9999;
-  });
 
   // 클릭 시 파동 스폰
   frame.addEventListener('click', (e) => {
