@@ -378,7 +378,7 @@ main {
 }
 
 .hobby-btn {
-  position: relative;
+  position: absolute;
   z-index: 2;
   background: var(--c-egg);
   border: 2px solid var(--c-dark);
@@ -401,7 +401,6 @@ main {
 
 .hobby-btn:active {
   box-shadow: 0 1px 0 0 var(--c-dark);
-  transform: translateY(3px);
 }
 
 .footer__big {

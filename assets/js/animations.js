@@ -356,6 +356,20 @@ function initHobbyPopcorn() {
   const container = document.getElementById('hobbyPopcorn');
   if (!btn || !container || typeof Matter === 'undefined') return;
 
+  // 아이콘 shape 따라 베이지 아웃라인 SVG 필터
+  if (!document.getElementById('icon-outline-filter')) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('id', 'icon-outline-filter');
+    svg.style.cssText = 'position:absolute;width:0;height:0;';
+    svg.innerHTML = `<defs><filter id="icon-outline" color-interpolation-filters="sRGB" x="-10%" y="-10%" width="120%" height="120%">
+      <feMorphology operator="dilate" radius="3" in="SourceAlpha" result="expanded"/>
+      <feFlood flood-color="#ffffff" flood-opacity="0.4" result="color"/>
+      <feComposite in="color" in2="expanded" operator="in" result="outline"/>
+      <feMerge><feMergeNode in="outline"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter></defs>`;
+    document.body.appendChild(svg);
+  }
+
   const { Engine, Runner, Bodies, Body, World, Events } = Matter;
 
   const engine = Engine.create({ enableSleeping: true });
@@ -376,7 +390,7 @@ function initHobbyPopcorn() {
     `<img src="assets/images/riot-icon.svg" width="42" height="42" style="display:block;">`,
     `<img src="assets/images/notion-icon.svg" width="46" height="46" style="display:block;">`,
     `<img src="assets/images/youtube-icon.svg" height="32" style="display:block;width:auto;">`,
-    `<img src="assets/images/samsung-icon.svg" height="26" style="display:block;width:auto;">`,
+    `<img src="assets/images/obsidian-icon.svg" width="44" height="44" style="display:block;">`,
   ];
   const active = [];
   let statics = null;
@@ -411,9 +425,8 @@ function initHobbyPopcorn() {
     }
   });
 
-  btn.addEventListener('click', () => {
+  function spawnIcons() {
     initStatics();
-
     const count = Math.floor(Math.random() * 2) + 2;
     const cRect = container.getBoundingClientRect();
     const bRect = btn.getBoundingClientRect();
@@ -429,20 +442,103 @@ function initHobbyPopcorn() {
           density: 0.004,
         });
         Body.setVelocity(body, {
-          x: (Math.random() - 0.5) * 10,
-          y: -(16 + Math.random() * 8),
+          x: (Math.random() - 0.5) * 20,
+          y: -(4 + Math.random() * 4),
         });
         Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.5);
         World.add(engine.world, body);
 
         const el = document.createElement('div');
         el.innerHTML = ICONS[Math.floor(Math.random() * ICONS.length)];
-        el.style.cssText = `position:absolute;color:rgba(255,255,255,0.88);pointer-events:none;user-select:none;will-change:transform;left:${bx}px;top:${by}px;transform:translate(-50%,-50%);`;
+        el.style.cssText = `position:absolute;pointer-events:none;user-select:none;will-change:transform;left:${bx}px;top:${by}px;transform:translate(-50%,-50%);filter:url(#icon-outline);`;
         container.appendChild(el);
         active.push({ body, el });
       }, i * 65);
     }
-  });
+  }
+
+  // 버튼 초기 중앙 위치 설정
+  function centerBtn() {
+    const cW = container.offsetWidth;
+    const cH = container.offsetHeight;
+    btn.style.left = (cW / 2 - btn.offsetWidth / 2) + 'px';
+    btn.style.top  = (cH / 2 - btn.offsetHeight / 2) + 'px';
+  }
+  centerBtn();
+  window.addEventListener('resize', centerBtn);
+
+  // 드래그 + 쉐이크 감지
+  let isDragging = false;
+  let offsetX = 0, offsetY = 0;
+  let lastX = 0;
+  let lastDir = 0;
+  let dirChanges = 0;
+  let lastDirChangeTime = 0;
+
+  function getClient(e) {
+    return e.touches
+      ? { x: e.touches[0].clientX, y: e.touches[0].clientY }
+      : { x: e.clientX, y: e.clientY };
+  }
+
+  btn.addEventListener('click', spawnIcons);
+  btn.addEventListener('mousedown', startDrag);
+  btn.addEventListener('touchstart', startDrag, { passive: true });
+
+  function startDrag(e) {
+    isDragging = true;
+    const { x, y } = getClient(e);
+    const bRect = btn.getBoundingClientRect();
+    offsetX = x - bRect.left;
+    offsetY = y - bRect.top;
+    lastX = x;
+    lastDir = 0;
+    dirChanges = 0;
+    btn.style.transition = 'none';
+    btn.style.cursor = 'grabbing';
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('touchmove', onDrag, { passive: true });
+    document.addEventListener('mouseup', endDrag);
+    document.addEventListener('touchend', endDrag);
+  }
+
+  function onDrag(e) {
+    if (!isDragging) return;
+    const { x, y } = getClient(e);
+    const cRect = container.getBoundingClientRect();
+    const dx = x - lastX;
+    lastX = x;
+
+    // 컨테이너 내 위치 이동 (경계 클램프)
+    const newLeft = Math.min(Math.max(x - cRect.left - offsetX, 0), cRect.width  - btn.offsetWidth);
+    const newTop  = Math.min(Math.max(y - cRect.top  - offsetY, 0), cRect.height - btn.offsetHeight);
+    btn.style.left = newLeft + 'px';
+    btn.style.top  = newTop  + 'px';
+
+    // 쉐이크 감지
+    if (Math.abs(dx) > 4) {
+      const dir = dx > 0 ? 1 : -1;
+      const now = Date.now();
+      if (lastDir !== 0 && dir !== lastDir && now - lastDirChangeTime < 300) {
+        dirChanges++;
+        if (dirChanges >= 2) {
+          spawnIcons();
+          dirChanges = 0;
+        }
+      }
+      lastDir = dir;
+      lastDirChangeTime = now;
+    }
+  }
+
+  function endDrag() {
+    isDragging = false;
+    btn.style.cursor = 'pointer';
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('touchmove', onDrag);
+    document.removeEventListener('mouseup', endDrag);
+    document.removeEventListener('touchend', endDrag);
+  }
 }
 
 // =============================

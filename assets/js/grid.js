@@ -15,7 +15,8 @@ function initGridAnimation() {
   const PAD_Y    = 14;
 
   // hover — 채워진 원
-  const HOVER_R = 100; // 영향 반지름
+  const HOVER_R   = 100; // 영향 반지름 (크기)
+  const COLOR_R   = 220; // 컬러 영향 반지름
 
   // 클릭 파동
   const RIPPLE_MAX_R  = 300; // 최대 확장 반지름
@@ -28,7 +29,7 @@ function initGridAnimation() {
   let rawX = -9999, rawY = -9999;
   let smoothX = -9999, smoothY = -9999;
   const LERP   = 0.08;
-  const JITTER = 0.22; // 위치 흔들림 (0=완벽한격자)
+  const JITTER = 0; // 위치 흔들림 (0=완벽한격자)
   let cells = [];
   const ripples = []; // { x, y, age }
   let lastTime = 0;
@@ -141,12 +142,17 @@ function initGridAnimation() {
           proximity = Math.max(proximity, rProx);
         }
 
-        const r       = 4 + proximity * 10;
+        const r       = 4 + proximity * 20;
         const opacity = 0.18 + proximity * 0.65;
 
+        // beige → orange 블렌드 (컬러 전용 반지름)
+        const colorP = Math.max(0, 1 - Math.hypot(cx - mouseX, y - mouseY) / COLOR_R) * cell.gain;
+        const cr = Math.round(237 + (241 - 237) * colorP);
+        const cg = Math.round(217 + ( 90 - 217) * colorP);
+        const cb = Math.round(192 + ( 41 - 192) * colorP);
         ctx.shadowBlur  = proximity > 0.1 ? proximity * 16 : 0;
-        ctx.shadowColor = `rgba(237,217,192,${opacity})`;
-        ctx.fillStyle   = `rgba(237,217,192,${opacity.toFixed(2)})`;
+        ctx.shadowColor = `rgba(${cr},${cg},${cb},${opacity})`;
+        ctx.fillStyle   = `rgba(${cr},${cg},${cb},${opacity.toFixed(2)})`;
 
         drawSparkle(cx, y, r);
         ctx.fill();
