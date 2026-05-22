@@ -48,8 +48,10 @@ const Router = {
       this._showHome();
     }
 
-    document.getElementById('menuOverlay')?.classList.remove('is-open');
     document.body.classList.toggle('is-subpage', !isHome);
+    document.querySelectorAll('.header__nav-btn').forEach(btn => {
+      btn.classList.toggle('is-active', path.startsWith(btn.getAttribute('href')));
+    });
     if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true });
     else window.scrollTo(0, 0);
   },
@@ -74,7 +76,6 @@ const Router = {
     if (path === '/about' || path.startsWith('/about'))  return PageAbout;
     if (path === '/works' || path === '/works/')         return PageWorksList;
     if (path.startsWith('/works/'))                      return PageWorksDetail;
-    if (path === '/contact')                             return PageContact;
     return null;
   },
 };

@@ -12,7 +12,17 @@
       "WebFetch(domain:aureliencorre.fr)",
       "WebFetch(domain:chkstepan.com)",
       "Bash(Get-Content \"C:\\\\Users\\\\korii\\\\projects\\\\portfolio\\\\index.html\")",
-      "Bash(Select-String \"section|id=|<header|<footer|<nav|<main\")"
+      "Bash(Select-String \"section|id=|<header|<footer|<nav|<main\")",
+      "Bash(Get-ChildItem C:\\\\Users\\\\korii\\\\projects -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(cmd.exe *)",
+      "Bash(gh repo *)",
+      "Bash(gh auth *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "WebFetch(domain:www.synapserstudio.com)",
+      "Bash(node *)",
+      "Bash(curl *)"
     ]
   }
 }

@@ -55,31 +55,19 @@
       <span>Young</span>
       <span>Taek.</span>
     </a>
-    <nav class="header__nav">
-      <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기">MENU</button>
+    <nav class="header__center">
+      <a href="/about" class="header__nav-btn">About</a>
+      <svg class="header__sparkle" viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/>
+      </svg>
+      <a href="/works" class="header__nav-btn">Works</a>
     </nav>
-  </header>
-
-  <!-- ========================
-    Menu Overlay
-  ========================= -->
-  <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
-    <div class="menu-overlay__backdrop" id="menuBackdrop"></div>
-    <div class="menu-overlay__panel">
-      <button class="menu-overlay__close" id="menuClose" aria-label="메뉴 닫기">CLOSE</button>
-      <nav class="menu-overlay__nav">
-        <a href="/about" class="menu-overlay__link">About</a>
-        <a href="/works" class="menu-overlay__link">Works</a>
-        <a href="/contact" class="menu-overlay__link">Contact</a>
-      </nav>
-      <div class="menu-overlay__footer">
-        <a href="https://github.com/youngtaek-lee" class="menu-overlay__footer-link" target="_blank" rel="noopener">GitHub</a>
-        <a href="mailto:brant7100@gmail.com" class="menu-overlay__footer-link">Email</a>
-        <a href="#" class="menu-overlay__footer-link" target="_blank" rel="noopener">Instagram</a>
-        <a href="#" class="menu-overlay__footer-link" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
+    <div class="header__links">
+      <a href="mailto:brant7100@gmail.com" class="header__link">Email</a>
+      <a href="https://github.com/youngtaek-lee" class="header__link" target="_blank" rel="noopener">GitHub</a>
+      <a href="#" class="header__link" target="_blank" rel="noopener">LinkedIn</a>
     </div>
-  </div>
+  </header>
 
   <!-- ========================
     Bottom Nav
@@ -94,7 +82,6 @@
     <div class="bottom-nav__links">
       <a href="/about" class="bottom-nav__link">About</a>
       <a href="/works" class="bottom-nav__link">Works</a>
-      <a href="/contact" class="bottom-nav__link bottom-nav__link--cta">Contact</a>
     </div>
   </nav>
 
@@ -230,7 +217,6 @@
           <nav class="footer__pages">
             <a href="/about" class="footer__pages-link">About</a>
             <a href="/works" class="footer__pages-link">Works</a>
-            <a href="/contact" class="footer__pages-link">Contact</a>
           </nav>
         </div>
       </div>
@@ -259,7 +245,6 @@
   <script src="assets/js/pages/about.js" defer></script>
   <script src="assets/js/pages/works-list.js" defer></script>
   <script src="assets/js/pages/works-detail.js" defer></script>
-  <script src="assets/js/pages/contact.js" defer></script>
   <script src="assets/js/router.js" defer></script>
   <script src="assets/js/grid.js" defer></script>
   <script src="assets/js/intro.js" defer></script>
