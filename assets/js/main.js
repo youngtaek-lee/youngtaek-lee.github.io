@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const lenis = initLenis();
   window.__lenis = lenis;
   initHeader(lenis);
+  initMobileMenu();
 
   initHobbyPopcorn();
   initIntro();

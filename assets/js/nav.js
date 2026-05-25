@@ -44,6 +44,42 @@ function initHeader(lenis) {
 }
 
 // =============================
+// Mobile Menu
+// =============================
+function initMobileMenu() {
+  const btn      = document.getElementById('menuBtn');
+  const overlay  = document.getElementById('menuOverlay');
+  const backdrop = document.getElementById('menuBackdrop');
+  const closeBtn = document.getElementById('menuClose');
+  if (!btn || !overlay) return;
+
+  const links = Array.from(overlay.querySelectorAll('.menu-overlay__link'));
+
+  function openMenu() {
+    overlay.classList.add('is-open');
+    window.__lenis?.stop();
+    gsap.fromTo(links,
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', stagger: 0.08, delay: 0.25 }
+    );
+  }
+
+  function closeMenu() {
+    overlay.classList.remove('is-open');
+    window.__lenis?.start();
+    gsap.set(links, { opacity: 0, y: 0 });
+  }
+
+  btn.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+  backdrop?.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeMenu();
+  });
+}
+
+// =============================
 // Lenis 스무스 스크롤
 // =============================
 function initLenis() {

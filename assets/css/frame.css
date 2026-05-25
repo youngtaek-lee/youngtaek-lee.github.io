@@ -169,6 +169,10 @@
   color: var(--color-text);
 }
 
+.header__menu-btn {
+  display: none;
+}
+
 /* =============================
    Menu Overlay
 ============================= */
@@ -178,6 +182,7 @@
   z-index: 1100;
   pointer-events: none;
   visibility: hidden;
+  overflow: clip;
   transition: visibility 0s 0.5s;
 }
 
@@ -661,10 +666,73 @@ main {
     --section-padding: 80px 20px;
   }
 
+  /* ─── Header ──────────────────────────────────── */
   .header {
     padding: 16px;
   }
 
+  .header__center {
+    display: none;
+  }
+
+  .header__links {
+    display: none;
+  }
+
+  .header__menu-btn {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 0;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .header__menu-btn:active {
+    opacity: 0.5;
+  }
+
+  .menu-overlay__panel {
+    width: calc(100% - 32px);
+    padding: 32px;
+  }
+
+  /* ─── Footer ──────────────────────────────────── */
+  .footer {
+    padding: 32px 20px 20px;
+  }
+
+  .footer__big {
+    font-size: clamp(2rem, 11vw, 13rem);
+  }
+
+  .footer__mid {
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .footer__links {
+    gap: 0 32px;
+  }
+
+  .footer__contact {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .footer__email-btn {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* 팝콘 아이콘 좌우 overflow → 가로 스크롤 원인 차단 */
+  .hobby-section {
+    overflow-x: clip;
+  }
+
+  /* ─── About ───────────────────────────────────── */
   .about__stats {
     grid-template-columns: 1fr 1fr;
   }

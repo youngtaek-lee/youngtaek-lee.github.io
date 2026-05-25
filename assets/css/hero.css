@@ -93,3 +93,17 @@
   opacity: 0;
   filter: drop-shadow(0 0 8px var(--c-orange));
 }
+
+/* =============================
+   Responsive
+============================= */
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 64px;
+    cursor: auto;
+  }
+
+  .hero__tagline {
+    padding: 0 20px;
+  }
+}
