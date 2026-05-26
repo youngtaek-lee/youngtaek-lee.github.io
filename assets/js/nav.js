@@ -91,7 +91,10 @@ function initLenis() {
     wheelMultiplier: 1,
     touchMultiplier: 1,
     overscroll: false,
+    autoResize: false,
   });
+
+  window.addEventListener('orientationchange', () => setTimeout(() => lenis.resize(), 200));
 
   lenis.on('scroll', ScrollTrigger.update);
 
