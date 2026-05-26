@@ -7,6 +7,9 @@ function setRealVH() {
   document.documentElement.style.setProperty('--real-vh', `${vh}px`);
 }
 setRealVH();
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', setRealVH);
+}
 window.addEventListener('orientationchange', () => setTimeout(setRealVH, 200));
 
 document.addEventListener('DOMContentLoaded', () => {
