@@ -3,12 +3,14 @@
 ============================= */
 .hero-wrap {
   height: 300vh;
+  height: 300dvh;
 }
 
 .hero {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100dvh;
   padding-top: 86px;
   display: flex;
   flex-direction: column;
@@ -44,7 +46,7 @@
   width: 100%;
   padding: 0 30px;
   position: absolute;
-  bottom: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   left: 0;
   right: 0;
 }
