@@ -101,6 +101,10 @@ body::before {
    Base
 ============================= */
 
+html {
+  background-color: var(--c-dark);
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg);
