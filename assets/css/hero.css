@@ -3,7 +3,7 @@
 ============================= */
 .hero-wrap {
   height: 300vh;
-  height: 300dvh;
+  height: calc(var(--real-vh, 100dvh) * 3);
 }
 
 .hero {
