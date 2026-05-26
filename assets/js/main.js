@@ -2,6 +2,13 @@
 // Init
 // =============================
 
+function setRealVH() {
+  const vh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  document.documentElement.style.setProperty('--real-vh', `${vh}px`);
+}
+setRealVH();
+window.addEventListener('orientationchange', () => setTimeout(setRealVH, 200));
+
 document.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
 
