@@ -11,6 +11,7 @@ window.addEventListener('orientationchange', () => setTimeout(setRealVH, 200));
 
 document.addEventListener('DOMContentLoaded', () => {
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load' });
 
   // GitHub Pages SPA redirect 처리
   const redirect = sessionStorage.getItem('spa-redirect');
