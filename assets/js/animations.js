@@ -451,19 +451,21 @@ function initHobbyPopcorn() {
   const runner = Runner.create();
   Runner.run(runner, engine);
 
+  const isMobile = window.innerWidth <= 768;
+  const S = isMobile ? 0.6 : 1;
   const ICONS = [
-`<img src="assets/images/netflix-icon.png" height="54" style="display:block;width:auto;">`,
-`<img src="assets/images/pepsi-icon.png" width="54" height="54" style="display:block;">`,
-    `<img src="assets/images/hanwha-icon.svg" height="54" style="display:block;width:auto;">`,
-    `<img src="assets/images/claude-icon.svg" width="54" height="54" style="display:block;">`,
-    `<img src="assets/images/github-icon.png" width="54" height="54" style="display:block;">`,
-    `<img src="assets/images/vscode-icon.svg" width="54" height="54" style="display:block;">`,
-    `<img src="assets/images/chimchakman-icon.svg" width="44" height="44" style="display:block;">`,
-    `<img src="assets/images/slack-icon.svg" width="44" height="44" style="display:block;">`,
-    `<img src="assets/images/riot-icon.svg" width="42" height="42" style="display:block;">`,
-    `<img src="assets/images/notion-icon.svg" width="46" height="46" style="display:block;">`,
-    `<img src="assets/images/youtube-icon.svg" height="32" style="display:block;width:auto;">`,
-    `<img src="assets/images/obsidian-icon.svg" width="44" height="44" style="display:block;">`,
+    `<img src="assets/images/netflix-icon.png" height="${Math.round(54*S)}" style="display:block;width:auto;">`,
+    `<img src="assets/images/pepsi-icon.png" width="${Math.round(54*S)}" height="${Math.round(54*S)}" style="display:block;">`,
+    `<img src="assets/images/hanwha-icon.svg" height="${Math.round(54*S)}" style="display:block;width:auto;">`,
+    `<img src="assets/images/claude-icon.svg" width="${Math.round(54*S)}" height="${Math.round(54*S)}" style="display:block;">`,
+    `<img src="assets/images/github-icon.png" width="${Math.round(54*S)}" height="${Math.round(54*S)}" style="display:block;">`,
+    `<img src="assets/images/vscode-icon.svg" width="${Math.round(54*S)}" height="${Math.round(54*S)}" style="display:block;">`,
+    `<img src="assets/images/chimchakman-icon.svg" width="${Math.round(44*S)}" height="${Math.round(44*S)}" style="display:block;">`,
+    `<img src="assets/images/slack-icon.svg" width="${Math.round(44*S)}" height="${Math.round(44*S)}" style="display:block;">`,
+    `<img src="assets/images/riot-icon.svg" width="${Math.round(42*S)}" height="${Math.round(42*S)}" style="display:block;">`,
+    `<img src="assets/images/notion-icon.svg" width="${Math.round(46*S)}" height="${Math.round(46*S)}" style="display:block;">`,
+    `<img src="assets/images/youtube-icon.svg" height="${Math.round(32*S)}" style="display:block;width:auto;">`,
+    `<img src="assets/images/obsidian-icon.svg" width="${Math.round(44*S)}" height="${Math.round(44*S)}" style="display:block;">`,
   ];
   const active = [];
   let statics = null;
@@ -508,7 +510,7 @@ function initHobbyPopcorn() {
 
     for (let i = 0; i < count; i++) {
       setTimeout(() => {
-        const body = Bodies.circle(bx, by, 27, {
+        const body = Bodies.circle(bx, by, Math.round(27 * S), {
           restitution: 0.4,
           friction: 0.5,
           frictionAir: 0.008,
