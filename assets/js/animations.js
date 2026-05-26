@@ -556,7 +556,6 @@ function initHobbyPopcorn() {
 
   btn.addEventListener('click', spawnIcons);
   btn.addEventListener('mousedown', startDrag);
-  btn.addEventListener('touchstart', startDrag, { passive: true });
 
   function startDrag(e) {
     isDragging = true;
@@ -570,9 +569,7 @@ function initHobbyPopcorn() {
     btn.style.transition = 'none';
     btn.style.cursor = 'grabbing';
     document.addEventListener('mousemove', onDrag);
-    document.addEventListener('touchmove', onDrag, { passive: true });
     document.addEventListener('mouseup', endDrag);
-    document.addEventListener('touchend', endDrag);
   }
 
   function onDrag(e) {
@@ -608,9 +605,7 @@ function initHobbyPopcorn() {
     isDragging = false;
     btn.style.cursor = 'pointer';
     document.removeEventListener('mousemove', onDrag);
-    document.removeEventListener('touchmove', onDrag);
     document.removeEventListener('mouseup', endDrag);
-    document.removeEventListener('touchend', endDrag);
   }
 }
 
