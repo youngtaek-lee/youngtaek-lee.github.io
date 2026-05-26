@@ -12,6 +12,7 @@
 
 .works__inner {
   width: 100%;
+  padding: 0 clamp(20px, 4vw, 48px);
 }
 
 .works__header {
@@ -59,9 +60,11 @@
 
 .works__item__link {
   display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 10px;
   padding: 24px 0;
+  padding-right: 3.5rem;
   text-decoration: none;
   color: var(--c-dark);
   position: relative;
@@ -180,4 +183,29 @@
 
 .works__thumb.is-visible {
   opacity: 1;
+}
+
+/* =============================
+   WORKS — 모바일 반응형
+============================= */
+@media (max-width: 768px) {
+  .works__item__link {
+    grid-template-columns: 1fr;
+    padding: 16px 0;
+    padding-right: 2.5rem;
+    gap: 4px;
+  }
+
+  .works__item__title {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+
+  .works__sparkle {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .works__thumb {
+    display: none;
+  }
 }

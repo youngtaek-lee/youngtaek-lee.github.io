@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHobbyPopcorn();
   initIntro();
   initHeroTaglineScroll(lenis);
+  initFooterBig();
   initFooterScale();
   initHeroFrame();
   // initGridAnimation(); // 인트로로 이동

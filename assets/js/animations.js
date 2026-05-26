@@ -151,11 +151,50 @@ function initDarkTransition() {
     { color: '#EDD9C0' },
     { color: '#161415', ease: 'none' },
     0
+  ).fromTo('.header__nav-btn',
+    { color: '#EDD9C0', borderColor: 'rgba(237,217,192,0.25)' },
+    { color: '#161415', borderColor: 'rgba(22,20,21,0.2)', ease: 'none' },
+    0
   ).fromTo('.menu-btn',
     { color: '#EDD9C0' },
     { color: '#161415', ease: 'none' },
     0
+  ).fromTo('.header__menu-btn',
+    { color: '#EDD9C0' },
+    { color: '#161415', ease: 'none' },
+    0
   );
+}
+
+// =============================
+// Footer Big 텍스트 — 높이 기준 fit
+// =============================
+function initFooterBig() {
+  const top = document.querySelector('.footer__top');
+  const big = document.querySelector('.footer__big');
+  if (!top || !big) return;
+
+  function fit() {
+    // 텍스트 제거 후 footer__top 순수 높이 측정
+    big.style.display = 'none';
+    const availH = top.clientHeight;
+    big.style.display = '';
+
+    // CSS vw 기반 너비 제약값 측정
+    big.style.fontSize = '';
+    const cssSize = parseFloat(getComputedStyle(big).fontSize);
+
+    // 높이와 너비 중 작은 쪽으로 확정
+    big.style.fontSize = Math.min(availH, cssSize) + 'px';
+  }
+
+  fit();
+
+  let raf;
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(fit);
+  });
 }
 
 // =============================

@@ -472,7 +472,7 @@ main {
 
 .footer__big {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 14vw, 13rem);
+  font-size: clamp(2rem, min(14vw, calc(50vh - 16rem)), 13rem);
   font-weight: 400;
   letter-spacing: 0;
   line-height: 1;
@@ -704,7 +704,7 @@ main {
   }
 
   .footer__big {
-    font-size: clamp(2rem, 11vw, 13rem);
+    font-size: clamp(2rem, min(11vw, calc(50vh - 16rem)), 13rem);
   }
 
   .footer__mid {
