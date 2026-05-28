@@ -22,6 +22,10 @@
   height: 64px;
 }
 
+@media (hover: none) {
+  .cursor { display: none; }
+}
+
 /* =============================
    Intro Overlay
 ============================= */

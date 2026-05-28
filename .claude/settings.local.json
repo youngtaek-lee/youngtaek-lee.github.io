@@ -22,7 +22,13 @@
       "Bash(git pull *)",
       "WebFetch(domain:www.synapserstudio.com)",
       "Bash(node *)",
-      "Bash(curl *)"
+      "Bash(curl *)",
+      "PowerShell($env:USERNAME)",
+      "Bash(git stash *)",
+      "mcp__claude_ai_Google_Calendar__list_calendars",
+      "mcp__claude_ai_Google_Calendar__create_event",
+      "mcp__claude_ai_Google_Calendar__delete_event",
+      "mcp__claude_ai_Google_Calendar__list_events"
     ]
   }
 }

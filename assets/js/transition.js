@@ -14,16 +14,12 @@ function playPageTransition(onMid) {
   const trail = document.querySelector('.page-transition__trail');
   if (!panel || !trail) { onMid(); return; }
 
-  if (window.__lenis) window.__lenis.stop();
   gsap.set([panel, trail], { y: '100%' });
 
   gsap.timeline()
     .to(panel, { y: '0%', duration: 0.65, ease: 'power3.inOut' })
     .to(trail, { y: '0%', duration: 0.65, ease: 'power3.inOut' }, 0.1)
-    .call(() => {
-      onMid();
-      if (window.__lenis) window.__lenis.start();
-    }, null, 0.75)
+    .call(onMid, null, 0.75)
     .to(panel, { y: '-100%', duration: 1.0, ease: 'power3.inOut' }, 0.85)
     .to(trail, { y: '-100%', duration: 1.0, ease: 'power3.inOut' }, 1.0);
 }

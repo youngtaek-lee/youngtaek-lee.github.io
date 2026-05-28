@@ -65,7 +65,10 @@ const Router = {
     this.subpageView.style.display = 'none';
     this.subpageView.innerHTML     = '';
     this.subpageView.setAttribute('aria-hidden', 'true');
-    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    requestAnimationFrame(() => {
+      if (typeof window.__heroTaglineRebuild === 'function') window.__heroTaglineRebuild();
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    });
   },
 
   _showSubpage(page, path) {

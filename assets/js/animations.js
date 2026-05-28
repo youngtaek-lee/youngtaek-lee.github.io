@@ -382,6 +382,8 @@ function initHeroTaglineScroll(lenis) {
       resizeTimer = setTimeout(build, 150);
     });
   });
+
+  window.__heroTaglineRebuild = build;
 }
 
 // =============================
