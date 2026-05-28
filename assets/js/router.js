@@ -68,6 +68,7 @@ const Router = {
     requestAnimationFrame(() => {
       if (typeof window.__heroTaglineRebuild === 'function') window.__heroTaglineRebuild();
       if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+      window.__lenis?.resize();
     });
   },
 
