@@ -171,3 +171,24 @@ button {
 .word {
   display: inline-block;
 }
+
+/* =============================
+   Page Transition
+============================= */
+.page-transition,
+.page-transition__trail {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+.page-transition {
+  background: var(--c-dark);
+  z-index: 99990;
+  transform: translateY(100%);
+}
+.page-transition__trail {
+  background: var(--c-orange);
+  z-index: 99989;
+  transform: translateY(100%);
+}

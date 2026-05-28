@@ -28,7 +28,11 @@ const Router = {
 
   navigate(path) {
     history.pushState({}, '', path);
-    this.render(path);
+    if (typeof playPageTransition === 'function') {
+      playPageTransition(() => this.render(path));
+    } else {
+      this.render(path);
+    }
   },
 
   render(path, isInit = false) {

@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     history.replaceState({}, '', redirect);
   }
 
+  initPageTransition();
   Router.init();
 
   // renderWorks(); // 정적 HTML로 대체 중
