@@ -215,3 +215,24 @@
   font-style: italic;
   color: var(--color-red);
 }
+
+/* =============================
+   Work Process — 디자인 해석 SVG
+============================= */
+#dh-planet1 {
+  transition: transform 0.6s ease;
+}
+
+#dh-planet2 {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.6s ease;
+}
+
+.process-card:hover #dh-planet1 {
+  transform: translate(10px, 10px);
+}
+
+.process-card:hover #dh-planet2 {
+  transform: rotate(-10deg) translate(0px, -10px);
+}
