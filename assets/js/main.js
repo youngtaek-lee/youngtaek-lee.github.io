@@ -45,4 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initFooterScale();
   initHeroFrame();
   // initGridAnimation(); // 인트로로 이동
+
+  // 직접 서브페이지로 진입 시 initDarkTransition의 FROM state가 덮어쓰므로 재적용
+  if (document.body.classList.contains('is-subpage')) {
+    gsap.set(['.header__logo', '.header__nav', '.header__menu-btn', '.menu-btn'], { color: '#161415' });
+    gsap.set('.header__nav-btn', { color: '#161415', borderColor: 'rgba(22,20,21,0.2)' });
+  }
 });

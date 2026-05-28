@@ -1,5 +1,26 @@
-﻿#subpage-view {
+﻿body.is-subpage {
+  background-color: var(--c-beige);
+}
+
+#subpage-view {
   min-height: 100vh;
+  --color-bg:              var(--c-beige);
+  --color-text:            var(--c-dark);
+  --color-line:            rgba(22, 20, 21, 0.15);
+  --color-sub:             rgba(22, 20, 21, 0.45);
+  --color-surface:         rgba(22, 20, 21, 0.05);
+  --color-surface-raised:  rgba(22, 20, 21, 0.09);
+  --color-text-soft:       rgba(22, 20, 21, 0.85);
+  --color-text-mid:        rgba(22, 20, 21, 0.55);
+  --color-text-dim:        rgba(22, 20, 21, 0.4);
+  --color-text-subtle:     rgba(22, 20, 21, 0.25);
+  --color-border-subtle:   rgba(22, 20, 21, 0.06);
+  --color-border-medium:   rgba(22, 20, 21, 0.12);
+  --color-border-light:    rgba(22, 20, 21, 0.4);
+  --color-border-strong:   rgba(22, 20, 21, 0.65);
+  --color-border:          var(--color-line);
+  --c-gray:                rgba(22, 20, 21, 0.45);
+  background-color: var(--c-beige);
 }
 
 .subpage {

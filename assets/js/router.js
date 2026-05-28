@@ -21,21 +21,24 @@ const Router = {
       }
     });
 
-    window.addEventListener('popstate', () => this.render(location.pathname));
+    window.addEventListener('popstate', () => this.render(location.pathname, true));
 
-    this.render(location.pathname, true);
+    this.render(location.pathname, true);  // 초기 로드: 전환 없으므로 즉시
   },
 
   navigate(path) {
     history.pushState({}, '', path);
     if (typeof playPageTransition === 'function') {
-      playPageTransition(() => this.render(path));
+      playPageTransition(
+        () => this.render(path),
+        () => this._pendingReveal?.()
+      );
     } else {
-      this.render(path);
+      this.render(path, true);
     }
   },
 
-  render(path, isInit = false) {
+  render(path, immediate = false) {
     const isHome = path === '/' || path === '/index.html';
     const page   = this._getPage(path);
 
@@ -45,10 +48,12 @@ const Router = {
     }
 
     if (isHome) {
+      this._pendingReveal = null;
       this._showHome();
     } else if (page) {
-      this._showSubpage(page, path);
+      this._showSubpage(page, path, immediate);
     } else {
+      this._pendingReveal = null;
       this._showHome();
     }
 
@@ -69,15 +74,38 @@ const Router = {
       if (typeof window.__heroTaglineRebuild === 'function') window.__heroTaglineRebuild();
       if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
       window.__lenis?.resize();
+      // 서브페이지에서 걸어둔 GSAP inline style 제거 → CSS var(--color-text) 복원
+      gsap.set(['.header__logo', '.header__nav', '.header__nav-btn', '.header__menu-btn', '.menu-btn'],
+        { clearProps: 'color,borderColor' });
     });
   },
 
-  _showSubpage(page, path) {
+  _showSubpage(page, path, immediate = false) {
     this.homeView.style.display    = 'none';
     this.subpageView.style.display = '';
     this.subpageView.removeAttribute('aria-hidden');
     this.subpageView.innerHTML = page.render(path);
-    this._gsapCtx = gsap.context(() => page.init(path), this.subpageView);
+
+    const runInit = () => {
+      this._gsapCtx = gsap.context(() => page.init(path), this.subpageView);
+    };
+
+    if (immediate) {
+      runInit();
+    } else {
+      // 페이지 전환 패널이 완전히 빠진 뒤(onReveal) 실행
+      this._pendingReveal = runInit;
+    }
+
+    // 투명 헤더 위에 베이지 bg가 오므로 텍스트를 dark로 강제
+    gsap.set(['.header__logo', '.header__nav', '.header__menu-btn', '.menu-btn'], { color: '#161415' });
+    gsap.set('.header__nav-btn', { color: '#161415', borderColor: 'rgba(22,20,21,0.2)' });
+
+    // footer 등 공유 요소의 ScrollTrigger 위치를 서브페이지 레이아웃 기준으로 재계산
+    requestAnimationFrame(() => {
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+      window.__lenis?.resize();
+    });
   },
 
   _getPage(path) {
