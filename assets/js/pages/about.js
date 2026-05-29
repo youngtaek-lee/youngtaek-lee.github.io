@@ -75,6 +75,12 @@
       </div>
     </div>
   `;
+
+  // 달력 높이 추가 후 스크롤 재계산
+  requestAnimationFrame(() => {
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    window.__lenis?.resize();
+  });
 }
 
 const PageAbout = {
