@@ -405,3 +405,62 @@
 .contact-info__link:hover {
   color: var(--color-text);
 }
+
+/* ── GitHub Calendar ── */
+.about-github__heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  margin-bottom: 32px;
+  color: var(--color-text);
+}
+
+
+.about-github__wrap {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.about-github__wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.about-github__wrap svg text {
+  font-family: var(--font-body), sans-serif;
+  fill: var(--color-text);
+}
+
+.about-github__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.about-github__count {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--color-sub);
+  letter-spacing: 0.04em;
+}
+
+.about-github__legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--color-sub);
+  letter-spacing: 0.04em;
+}
+
+.about-github__legend-cell {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}

@@ -1,4 +1,83 @@
-﻿const PageAbout = {
+﻿async function buildGithubCalendar(el) {
+  const CELL = 14, GAP = 3, STEP = 17, LABEL_H = 22;
+  const COLORS = [
+    'rgba(22,20,21,0.12)',
+    'rgba(241,90,41,0.28)',
+    'rgba(241,90,41,0.52)',
+    'rgba(241,90,41,0.76)',
+    '#F15A29',
+  ];
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  el.innerHTML = '<div style="opacity:0.35;font-size:0.75rem;padding:8px 0">Loading...</div>';
+
+  let contributions;
+  try {
+    const res = await fetch('https://github-contributions-api.jogruber.de/v4/youngtaek-lee');
+    const json = await res.json();
+    const cutoff = new Date();
+    cutoff.setFullYear(cutoff.getFullYear() - 1);
+    contributions = json.contributions.filter(c => new Date(c.date + 'T00:00:00') >= cutoff);
+    if (!contributions?.length) throw new Error();
+  } catch {
+    el.innerHTML = '<p style="opacity:0.4;font-size:0.8rem">데이터를 불러올 수 없습니다.</p>';
+    return;
+  }
+
+  const weeks = [];
+  let week = [];
+  const startDow = new Date(contributions[0].date + 'T00:00:00').getDay();
+  for (let i = 0; i < startDow; i++) week.push(null);
+  for (const c of contributions) {
+    week.push(c);
+    if (week.length === 7) { weeks.push(week); week = []; }
+  }
+  if (week.length) {
+    while (week.length < 7) week.push(null);
+    weeks.push(week);
+  }
+
+  const monthLabels = [];
+  let prevM = -1;
+  weeks.forEach((w, wi) => {
+    const real = w.find(Boolean);
+    if (!real) return;
+    const m = new Date(real.date + 'T00:00:00').getMonth();
+    if (m !== prevM) { monthLabels.push({ x: wi * STEP, label: MONTHS[m] }); prevM = m; }
+  });
+
+  const W = weeks.length * STEP - GAP;
+  const H = LABEL_H + 7 * STEP - GAP;
+  const total = contributions.reduce((s, c) => s + c.count, 0);
+
+  const rects = weeks.flatMap((w, wi) =>
+    w.map((day, di) =>
+      day ? `<rect x="${wi*STEP}" y="${LABEL_H+di*STEP}" width="${CELL}" height="${CELL}" fill="${COLORS[day.level]}" rx="2"/>` : ''
+    )
+  ).join('');
+
+  const labels = monthLabels.map(({ x, label }) =>
+    `<text x="${x}" y="0" dominant-baseline="hanging" font-size="10" fill="currentColor" opacity="0.5">${label}</text>`
+  ).join('');
+
+  const legendCells = COLORS.map(c =>
+    `<span class="about-github__legend-cell" style="background:${c}"></span>`
+  ).join('');
+
+  el.innerHTML = `
+    <div class="about-github__wrap">
+      <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block">${labels}${rects}</svg>
+    </div>
+    <div class="about-github__footer">
+      <span class="about-github__count">${total} contributions in the last year</span>
+      <div class="about-github__legend">
+        <span>Less</span>${legendCells}<span>More</span>
+      </div>
+    </div>
+  `;
+}
+
+const PageAbout = {
   render() {
     return `
       <div class="subpage about-page">
@@ -56,6 +135,12 @@
           </div>
         </section>
 
+        <section class="subpage__section about-github" id="github">
+          <h2 class="subpage__section-title">Activity</h2>
+          <p class="about-github__heading">Commit Log</p>
+          <div id="about-github-calendar"></div>
+        </section>
+
       </div>
     `;
   },
@@ -74,5 +159,8 @@
       stagger: 0.05,
       scrollTrigger: { trigger: '.about-skills', start: 'top 80%' },
     });
+
+    const calEl = document.getElementById('about-github-calendar');
+    if (calEl) buildGithubCalendar(calEl);
   },
 };
