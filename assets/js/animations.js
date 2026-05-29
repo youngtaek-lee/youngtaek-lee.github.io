@@ -172,9 +172,13 @@ function initDarkTransition() {
 function initFooterBig() {
   const top = document.querySelector('.footer__top');
   const big = document.querySelector('.footer__big');
-  if (!top || !big) return;
+  const footer = document.querySelector('.footer');
+  if (!top || !big || !footer) return;
 
   function fit() {
+    // JS 오버라이드 초기화 → CSS 기본값(50vh)으로 리플로우
+    document.documentElement.style.removeProperty('--footer-height');
+
     // 텍스트 제거 후 footer__top 순수 높이 측정
     big.style.display = 'none';
     const availH = top.clientHeight;
@@ -186,6 +190,13 @@ function initFooterBig() {
 
     // 높이와 너비 중 작은 쪽으로 확정
     big.style.fontSize = Math.min(availH, cssSize) + 'px';
+
+    // 폰트 적용 후 실제 렌더 높이로 spacer 동기화
+    requestAnimationFrame(() => {
+      document.documentElement.style.setProperty('--footer-height', footer.offsetHeight + 'px');
+      ScrollTrigger.refresh();
+      if (window.__lenis) window.__lenis.resize();
+    });
   }
 
   fit();
