@@ -87,6 +87,28 @@
   color: var(--color-text);
 }
 
+/* ── Process Cards — 3D hover ── */
+.process-card__icon svg .cs {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.process-card:hover .process-card__icon svg .cs {
+  opacity: 1;
+}
+.process-card__icon svg .cm {
+  transition: transform 0.3s ease;
+}
+.process-card:hover .process-card__icon svg .cm {
+  transform: translate(1px, -1px);
+}
+.process-card__icon svg path.ch {
+  fill: var(--color-bg);
+  transition: fill 0.3s ease;
+}
+.process-card:hover .process-card__icon svg path.ch {
+  fill: var(--color-accent);
+}
+
 /* ── Process Cards ── */
 .process-cards {
   display: grid;

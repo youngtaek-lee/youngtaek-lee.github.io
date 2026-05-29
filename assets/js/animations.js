@@ -191,12 +191,10 @@ function initFooterBig() {
     // 높이와 너비 중 작은 쪽으로 확정
     big.style.fontSize = Math.min(availH, cssSize) + 'px';
 
-    // 폰트 적용 후 실제 렌더 높이로 spacer 동기화
-    requestAnimationFrame(() => {
-      document.documentElement.style.setProperty('--footer-height', footer.offsetHeight + 'px');
-      ScrollTrigger.refresh();
-      if (window.__lenis) window.__lenis.resize();
-    });
+    // offsetHeight 읽기 자체가 동기 reflow 강제 → rAF 불필요
+    document.documentElement.style.setProperty('--footer-height', footer.offsetHeight + 'px');
+    ScrollTrigger.refresh();
+    if (window.__lenis) window.__lenis.resize();
   }
 
   fit();
