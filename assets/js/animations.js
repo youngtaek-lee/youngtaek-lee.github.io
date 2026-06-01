@@ -312,9 +312,18 @@ function initHeroTaglineScroll(lenis) {
     const curPx  = parseFloat(cs.fontSize);
     tagline.style.fontSize = ((curPx * availW / textW) / window.innerWidth * 100).toFixed(3) + 'vw';
 
-    const titleH   = title.offsetHeight;
-    const taglineH = tagline.offsetHeight;
-    const initH    = Math.max(0, titleH - taglineH - 40);
+    const titleH = title.offsetHeight;
+    let taglineH = tagline.offsetHeight;
+
+    // 세로 제약: 타이틀 영역(위아래 20px 여백)을 초과하면 font 축소
+    const maxTaglineH = titleH - 40;
+    if (taglineH > maxTaglineH && maxTaglineH > 0) {
+      const newFontPx = parseFloat(getComputedStyle(tagline).fontSize) * (maxTaglineH / taglineH);
+      tagline.style.fontSize = (newFontPx / window.innerWidth * 100).toFixed(3) + 'vw';
+      taglineH = tagline.offsetHeight;
+    }
+
+    const initH = Math.max(0, titleH - taglineH - 40);
     gsap.set(hiddenSpace, { height: initH });
 
     // ghost로 HELLO 각 글자 목표 위치 측정 (중앙 정렬)
