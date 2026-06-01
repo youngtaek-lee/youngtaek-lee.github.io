@@ -10,6 +10,11 @@ const works = [
   { id: 'ghi',      title: 'GHI',      name: '기획인애드',     category: 'Advertising',     year: 2023, main: 'assets/images/works/기획인애드 메인.png',      url: 'http://ghi.co.kr/html/index/' },
 ];
 
+// 자투리 프로젝트 — 이름 + 외부링크만
+const worksExtra = [
+  // { name: '프로젝트명', url: 'https://...' },
+];
+
 // =============================
 // Works 리스트 스파클 마크
 // =============================

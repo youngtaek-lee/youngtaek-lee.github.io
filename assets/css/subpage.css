@@ -248,78 +248,72 @@
   color: var(--color-text);
 }
 
+
 /* ── Works List ── */
-.wl-list {
-  list-style: none;
+.works-list-page .works__list {
+  margin-top: 60px;
 }
 
-.wl-item {
+.wl-more {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.wl-more__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--color-sub);
+  cursor: pointer;
+  transition: color 0.2s, gap 0.3s;
+}
+
+.wl-more__btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.wl-more__btn.is-open svg {
+  transform: rotate(180deg);
+}
+
+.wl-more__btn:hover {
+  color: var(--color-text);
+}
+
+.wl-extra {
+  list-style: none;
+  text-align: left;
+  border-top: 1px solid var(--color-line);
+  margin-top: 40px;
+}
+
+.wl-extra__item {
   border-bottom: 1px solid var(--color-line);
 }
 
-.wl-item__link {
+.wl-extra__link {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 28px 0;
+  justify-content: space-between;
+  padding: 18px 0;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  color: var(--color-text);
   transition: opacity 0.2s;
 }
 
-.wl-item__link:hover {
-  opacity: 0.6;
+.wl-extra__link:hover {
+  opacity: 0.5;
 }
 
-.wl-item__link:hover .wl-item__thumb img {
-  transform: scale(1.04);
-}
-
-.wl-item__num {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 400;
+.wl-extra__arrow {
   color: var(--color-sub);
-  letter-spacing: 0.04em;
-  min-width: 28px;
-}
-
-.wl-item__info {
-  flex: 1;
-}
-
-.wl-item__title {
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3vw, 2.4rem);
-  font-weight: 400;
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
-.wl-item__meta {
-  font-size: 0.8rem;
-  color: var(--color-sub);
-  letter-spacing: 0.04em;
-}
-
-.wl-item__thumb {
-  width: 80px;
-  height: 56px;
-  border-radius: 6px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.wl-item__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
-}
-
-.wl-item__arrow {
-  font-family: var(--font-body);
   font-size: 1rem;
-  color: var(--color-sub);
-  flex-shrink: 0;
 }
 
 /* ── Works Detail ── */
