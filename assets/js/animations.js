@@ -118,26 +118,19 @@ function initWorksReveal() {
 // Hero → Dark 전환
 // =============================
 function initDarkTransition() {
-  const tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.hero-wrap',
-      start: '55% top',
-      end: 'bottom bottom',
-      scrub: 1,
-    }
-  });
+  const tl = gsap.timeline({ paused: true });
 
   tl.fromTo('main',
     { backgroundColor: '#161415' },
-    { backgroundColor: '#DBCFB0', ease: 'none' },
+    { backgroundColor: '#EDD9C0', ease: 'none' },
     0
   ).fromTo('.hero__hidden-space',
     { backgroundColor: '#161415' },
-    { backgroundColor: '#DBCFB0', ease: 'none' },
+    { backgroundColor: '#EDD9C0', ease: 'none' },
     0
   ).fromTo('.about-text',
     { backgroundColor: '#161415' },
-    { backgroundColor: '#DBCFB0', ease: 'none' },
+    { backgroundColor: '#EDD9C0', ease: 'none' },
     0
   ).fromTo('body',
     { color: '#EDD9C0' },
@@ -164,6 +157,22 @@ function initDarkTransition() {
     { color: '#161415', ease: 'none' },
     0
   );
+
+  // 서브페이지 여부를 직접 체크해 헤더 충돌 없이 동작
+  ScrollTrigger.create({
+    id: 'dark-transition',
+    trigger: '.hero-wrap',
+    start: '55% top',
+    end: 'bottom bottom',
+    onUpdate(self) {
+      if (document.body.classList.contains('is-subpage')) return;
+      tl.progress(self.progress);
+    },
+    onRefresh(self) {
+      if (document.body.classList.contains('is-subpage')) return;
+      tl.progress(self.progress);
+    },
+  });
 }
 
 // =============================

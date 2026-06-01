@@ -66,7 +66,7 @@
 
   el.innerHTML = `
     <div class="about-github__wrap">
-      <svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block">${labels}${rects}</svg>
+      <svg viewBox="0 0 ${W} ${H}" style="display:block;width:100%;min-width:${W}px;height:auto">${labels}${rects}</svg>
     </div>
     <div class="about-github__footer">
       <span class="about-github__count">${total} contributions in the last year</span>
@@ -88,7 +88,8 @@ const PageAbout = {
     return `
       <div class="subpage about-page">
 
-<section class="subpage__section about-intro">
+        <section class="subpage__hero">
+          <h1 class="subpage__title">Hello</h1>
           <div class="about-intro__text">
             <p>안녕하세요, 이영택입니다.<br>웹퍼블리셔로 일하며 디자인과 코드 사이 어딘가에 서 있습니다.<br>시각적인 것을 정확하게 구현하는 데 집착하고,<br>요즘은 그 경계를 허물며 프론트엔드 개발자로 영역을 넓혀가는 중입니다.<br>같이 만들어보고 싶은 게 있다면 연락주세요.</p>
           </div>
@@ -142,8 +143,12 @@ const PageAbout = {
         </section>
 
         <section class="subpage__section about-github" id="github">
-          <h2 class="subpage__section-title">Activity</h2>
-          <p class="about-github__heading">Commit Log</p>
+          <div class="about-github__header">
+            <h2 class="subpage__section-title">Commit Log</h2>
+            <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="about-github__link" aria-label="GitHub 프로필">
+              <img src="assets/images/github-icon.png" alt="GitHub" width="28" height="28">
+            </a>
+          </div>
           <div id="about-github-calendar"></div>
         </section>
 
@@ -152,6 +157,7 @@ const PageAbout = {
   },
 
   init() {
+    gsap.from('.subpage__title', { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' });
     gsap.from('.about-intro__text', { y: 30, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power2.out' });
 
     gsap.from('.process-card', {

@@ -4,7 +4,6 @@ const PageContact = {
       <div class="subpage contact-page">
 
         <section class="subpage__hero">
-          <p class="subpage__label">Contact</p>
           <h1 class="subpage__title">좋은 작업은<br>대화에서 시작됩니다.</h1>
         </section>
 
@@ -25,7 +24,6 @@ const PageContact = {
 
   init() {
     gsap.from('.subpage__title', { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' });
-    gsap.from('.subpage__label', { y: 20, opacity: 0, duration: 0.6, ease: 'power2.out' });
     gsap.from('.contact-info__email', { y: 30, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power2.out' });
     gsap.from('.contact-info__link',  { y: 20, opacity: 0, duration: 0.6, stagger: 0.1, delay: 0.4, ease: 'power2.out' });
   },

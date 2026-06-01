@@ -9,7 +9,6 @@ const PageWorksDetail = {
       <div class="subpage works-detail-page" data-id="${work.id}">
 
         <section class="subpage__hero">
-          <p class="subpage__label"><a href="/works" class="back-link">← Works</a></p>
           <h1 class="subpage__title">${work.title}</h1>
           <p class="wd-meta">${work.category} — ${work.year}</p>
         </section>
@@ -42,7 +41,6 @@ const PageWorksDetail = {
 
   init() {
     gsap.from('.subpage__title', { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' });
-    gsap.from('.subpage__label', { y: 20, opacity: 0, duration: 0.6, ease: 'power2.out' });
     gsap.from('.wd-meta',        { y: 20, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power2.out' });
     gsap.from('.wd-main-img',    { y: 60, opacity: 0, duration: 1.0, delay: 0.2, ease: 'power3.out' });
     gsap.from('.wd-info',        {

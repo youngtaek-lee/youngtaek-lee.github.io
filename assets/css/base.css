@@ -5,7 +5,7 @@
   /* ── Palette ──────────────────────────────── */
   --c-dark:   #161415;
   --c-beige:  #EDD9C0;
-  --c-egg:    #DBCFB0;
+  --c-egg:    #EDD9C0;
   --c-orange: #F15A29;
   --c-gray:   #666666;
   --c-white:  #F8F8F8;
@@ -13,8 +13,8 @@
   /* ── Color Pairs (bg / text) ──────────────────
      A  --c-dark   / --c-beige    #161415 / #EDD9C0
      B  --c-beige  / --c-orange   #EDD9C0 / #F15A29
-     C  --c-egg    / --c-dark     #DBCFB0 / #161415
-     D  --c-orange / --c-egg      #F15A29 / #DBCFB0
+     C  --c-egg    / --c-dark     #EDD9C0 / #161415
+     D  --c-orange / --c-egg      #F15A29 / #EDD9C0
   ──────────────────────────────────────────── */
   --pair-a-bg:   var(--c-dark);    --pair-a-text: var(--c-beige);
   --pair-b-bg:   var(--c-beige);   --pair-b-text: var(--c-orange);

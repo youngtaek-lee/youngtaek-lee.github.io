@@ -71,12 +71,12 @@ const Router = {
     this.subpageView.innerHTML     = '';
     this.subpageView.setAttribute('aria-hidden', 'true');
     requestAnimationFrame(() => {
+      // gsap.set 우선순위 초기화 → onRefresh에서 tl이 올바른 색상으로 덮어쓸 수 있도록
+      gsap.set(['.header__logo', '.header__nav', '.header__nav-btn', '.header__menu-btn', '.menu-btn'],
+        { clearProps: 'color,borderColor' });
       if (typeof window.__heroTaglineRebuild === 'function') window.__heroTaglineRebuild();
       if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
       window.__lenis?.resize();
-      // 서브페이지에서 걸어둔 GSAP inline style 제거 → CSS var(--color-text) 복원
-      gsap.set(['.header__logo', '.header__nav', '.header__nav-btn', '.header__menu-btn', '.menu-btn'],
-        { clearProps: 'color,borderColor' });
     });
   },
 

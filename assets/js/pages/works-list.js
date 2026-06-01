@@ -5,7 +5,6 @@ const PageWorksList = {
       <div class="subpage works-list-page">
 
         <section class="subpage__hero">
-          <p class="subpage__label">Works</p>
           <h1 class="subpage__title">Recent<br>Works</h1>
         </section>
 
@@ -35,7 +34,6 @@ const PageWorksList = {
 
   init() {
     gsap.from('.subpage__title', { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' });
-    gsap.from('.subpage__label', { y: 20, opacity: 0, duration: 0.6, ease: 'power2.out' });
 
     gsap.from('.wl-item', {
       y: 30, opacity: 0, duration: 0.6, ease: 'power2.out',
