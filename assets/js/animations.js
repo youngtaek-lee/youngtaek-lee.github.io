@@ -333,7 +333,7 @@ function initHeroTaglineScroll(lenis) {
       return ghostRects[hi].left - overRects[i].left;
     });
 
-    const centeredBottom = Math.round((window.innerHeight - taglineH) / 2);
+    const centeredBottom = Math.max(20, Math.round((window.innerHeight - taglineH) / 2));
 
     tl = gsap.timeline({ paused: true });
 
