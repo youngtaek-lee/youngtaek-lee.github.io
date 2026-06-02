@@ -30,7 +30,7 @@
 
 /* ── Hero ── */
 .subpage__hero {
-  padding: 0 clamp(40px, 6vw, 120px) 80px;
+  padding: 80px clamp(40px, 6vw, 120px) 80px;
   border-bottom: 1px solid var(--color-line);
   margin-bottom: 80px;
   display: flex;

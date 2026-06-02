@@ -94,8 +94,9 @@ const Router = {
     if (immediate) {
       runInit();
     } else {
-      // 페이지 전환 패널이 완전히 빠진 뒤(onReveal) 실행
-      this._pendingReveal = runInit;
+      // 패널 슬라이드아웃 시작(onMid +0.1s)에 맞춰 실행 — 패널이 빠지면서 애니메이션이 드러남
+      this._pendingReveal = null;
+      setTimeout(runInit, 400);
     }
 
     // 투명 헤더 위에 베이지 bg가 오므로 텍스트를 dark로 강제

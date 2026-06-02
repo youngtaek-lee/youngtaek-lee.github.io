@@ -157,13 +157,62 @@ const PageAbout = {
   },
 
   init() {
-    gsap.from('.subpage__title', { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' });
-    gsap.from('.about-intro__text', { y: 30, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power2.out' });
+    const titleEl = document.querySelector('.subpage__title');
+    if (titleEl) {
+      titleEl.innerHTML = titleEl.textContent.split('').map(ch =>
+        `<span class="reveal-char"><span class="reveal-char__inner">${ch}</span></span>`
+      ).join('');
+      const chars = titleEl.querySelectorAll('.reveal-char__inner');
+      gsap.from(chars, { yPercent: 110, duration: 0.7, ease: 'power3.out', stagger: 0.08 });
+    }
+
+    const introP = document.querySelector('.about-intro__text p');
+    if (introP) {
+      const CHUNK = 3;
+      const nodes = Array.from(introP.childNodes);
+      let html = '';
+      let lineWords = [];
+
+      const flushLine = () => {
+        for (let i = 0; i < lineWords.length; i += CHUNK) {
+          if (i > 0) html += ' ';
+          html += `<span class="reveal-word"><span class="reveal-word__inner">${lineWords.slice(i, i + CHUNK).join(' ')}</span></span>`;
+        }
+        lineWords = [];
+      };
+
+      nodes.forEach(node => {
+        if (node.nodeName === 'BR') {
+          flushLine();
+          html += '<br>';
+        } else if (node.nodeType === Node.TEXT_NODE) {
+          lineWords.push(...node.textContent.trim().split(/\s+/).filter(Boolean));
+        }
+      });
+      flushLine();
+
+      introP.innerHTML = html;
+      const inners = introP.querySelectorAll('.reveal-word__inner');
+      gsap.from(inners, { yPercent: 110, duration: 0.6, ease: 'power2.out', stagger: 0.07, delay: 0.35 });
+    }
+
+    document.querySelectorAll('.subpage__section-title').forEach(el => {
+      el.innerHTML = el.textContent.split('').map(ch =>
+        ch === ' '
+          ? '<span class="reveal-char" style="width:0.3em;display:inline-block"></span>'
+          : `<span class="reveal-char"><span class="reveal-char__inner">${ch}</span></span>`
+      ).join('');
+      const chars = el.querySelectorAll('.reveal-char__inner');
+      gsap.from(chars, {
+        yPercent: 110, duration: 0.6, ease: 'power3.out', stagger: 0.06,
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+      });
+    });
 
     gsap.from('.process-card', {
-      y: 40, opacity: 0, duration: 0.7, ease: 'power2.out',
-      stagger: 0.12,
-      scrollTrigger: { trigger: '.about-process', start: 'top 75%' },
+      y: 50, opacity: 0, duration: 0.7, ease: 'power2.out',
+      stagger: 0.1,
+      scrollTrigger: { trigger: '.process-cards', start: 'top 80%' },
     });
 
     gsap.from('.skill-tag', {
@@ -173,6 +222,12 @@ const PageAbout = {
     });
 
     const calEl = document.getElementById('about-github-calendar');
-    if (calEl) buildGithubCalendar(calEl);
+    if (calEl) {
+      gsap.from(calEl, {
+        y: 30, opacity: 0, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: '.about-github', start: 'top 80%' },
+      });
+      buildGithubCalendar(calEl);
+    }
   },
 };

@@ -55,11 +55,39 @@ const PageWorksList = {
   },
 
   init() {
-    gsap.from('.subpage__title', { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' });
+    const titleEl = document.querySelector('#subpage-view .subpage__title');
+    if (titleEl) {
+      titleEl.innerHTML = titleEl.innerHTML.split(/<br\s*\/?>/i).map(line =>
+        line.trim().split('').map(ch =>
+          `<span class="reveal-char"><span class="reveal-char__inner">${ch}</span></span>`
+        ).join('')
+      ).join('<br>');
+      const chars = titleEl.querySelectorAll('.reveal-char__inner');
+      gsap.from(chars, { yPercent: 110, duration: 0.7, ease: 'power3.out', stagger: 0.06 });
+    }
     gsap.from('.works__item', {
       x: 150, opacity: 0, duration: 0.6, ease: 'power2.out',
       stagger: 0.08,
       delay: 0.2,
+    });
+
+    gsap.from('.wl-extra__item', {
+      y: 20, opacity: 0, duration: 0.5, ease: 'power2.out',
+      stagger: 0.04,
+      scrollTrigger: { trigger: '.wl-extra', start: 'top 85%' },
+    });
+
+    document.querySelectorAll('#subpage-view .subpage__section-title').forEach(el => {
+      el.innerHTML = el.textContent.split('').map(ch =>
+        ch === ' '
+          ? '<span class="reveal-char" style="width:0.3em;display:inline-block"></span>'
+          : `<span class="reveal-char"><span class="reveal-char__inner">${ch}</span></span>`
+      ).join('');
+      const chars = el.querySelectorAll('.reveal-char__inner');
+      gsap.from(chars, {
+        yPercent: 110, duration: 0.6, ease: 'power3.out', stagger: 0.06,
+        scrollTrigger: { trigger: el, start: 'top 85%' },
+      });
     });
 
     // 썸네일 hover
