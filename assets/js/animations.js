@@ -570,6 +570,7 @@ function initHobbyPopcorn() {
   }
   centerBtn();
   window.addEventListener('resize', centerBtn);
+  window.__centerHobbyBtn = centerBtn;
 
   // 드래그 + 쉐이크 감지
   let isDragging = false;

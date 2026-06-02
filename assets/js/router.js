@@ -75,6 +75,7 @@ const Router = {
       gsap.set(['.header__logo', '.header__nav', '.header__nav-btn', '.header__menu-btn', '.menu-btn'],
         { clearProps: 'color,borderColor' });
       if (typeof window.__heroTaglineRebuild === 'function') window.__heroTaglineRebuild();
+      if (typeof window.__centerHobbyBtn === 'function') window.__centerHobbyBtn();
       if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
       window.__lenis?.resize();
     });

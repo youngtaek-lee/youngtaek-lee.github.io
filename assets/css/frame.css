@@ -660,6 +660,7 @@ main {
 ============================= */
 .statement {
   min-height: var(--footer-height);
+  background: var(--c-dark);
 }
 
 /* =============================
