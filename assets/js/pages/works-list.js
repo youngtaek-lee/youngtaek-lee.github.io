@@ -26,28 +26,28 @@ const PageWorksList = {
               </li>
             `).join('')}
           </ul>
-
-          ${extras.length ? `
-          <div class="wl-extra-wrap">
-            <p class="subpage__section-title">More Works</p>
-            <ul class="wl-extra">
-              ${extras.map(e => `
-                <li class="wl-extra__item">
-                  ${e.url
-                    ? `<a href="${e.url}" target="_blank" rel="noopener" class="wl-extra__link">
-                        <span class="wl-extra__name">${e.name}</span>
-                        <span class="wl-extra__arrow">↗</span>
-                      </a>`
-                    : `<span class="wl-extra__link wl-extra__link--text">
-                        <span class="wl-extra__name">${e.name}</span>
-                      </span>`
-                  }
-                </li>
-              `).join('')}
-            </ul>
-          </div>
-          ` : ''}
         </section>
+
+        ${extras.length ? `
+        <section class="subpage__section">
+          <p class="subpage__section-title">More Works</p>
+          <ul class="wl-extra">
+            ${extras.map(e => `
+              <li class="wl-extra__item">
+                ${e.url
+                  ? `<a href="${e.url}" target="_blank" rel="noopener" class="wl-extra__link">
+                      <span class="wl-extra__name">${e.name}</span>
+                      <span class="wl-extra__arrow">↗</span>
+                    </a>`
+                  : `<span class="wl-extra__link wl-extra__link--text">
+                      <span class="wl-extra__name">${e.name}</span>
+                    </span>`
+                }
+              </li>
+            `).join('')}
+          </ul>
+        </section>
+        ` : ''}
 
       </div>
       <img class="works__thumb" id="works-thumb" alt="" aria-hidden="true">
