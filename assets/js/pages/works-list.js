@@ -28,24 +28,16 @@ const PageWorksList = {
           </ul>
 
           ${extras.length ? `
-          <div class="wl-more">
-            <button class="wl-more__btn" id="wlMoreBtn">
-              More Projects
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="12" y1="5" x2="12" y2="19"/><polyline points="6 13 12 19 18 13"/>
-              </svg>
-            </button>
-            <ul class="wl-extra" id="wlExtra">
-              ${extras.map(e => `
-                <li class="wl-extra__item">
-                  <a href="${e.url}" target="_blank" rel="noopener" class="wl-extra__link">
-                    ${e.name}
-                    <span class="wl-extra__arrow">↗</span>
-                  </a>
-                </li>
-              `).join('')}
-            </ul>
-          </div>
+          <ul class="wl-extra">
+            ${extras.map(e => `
+              <li class="wl-extra__item">
+                <a href="${e.url}" target="_blank" rel="noopener" class="wl-extra__link">
+                  ${e.name}<span class="wl-extra__arrow">↗</span>
+                </a>
+              </li>
+            `).join('')}
+
+          </ul>
           ` : ''}
         </section>
 
@@ -61,26 +53,6 @@ const PageWorksList = {
       stagger: 0.08,
       delay: 0.2,
     });
-
-    // More Projects 토글
-    const btn = document.getElementById('wlMoreBtn');
-    const extra = document.getElementById('wlExtra');
-    if (btn && extra) {
-      gsap.set(extra, { height: 0, overflow: 'hidden' });
-      let open = false;
-      btn.addEventListener('click', () => {
-        open = !open;
-        btn.classList.toggle('is-open', open);
-        if (open) {
-          gsap.set(extra, { height: 'auto' });
-          const h = extra.offsetHeight;
-          gsap.fromTo(extra, { height: 0 }, { height: h, duration: 0.5, ease: 'power3.out' });
-          gsap.from('.wl-extra__item', { y: 20, opacity: 0, stagger: 0.06, duration: 0.4, ease: 'power2.out', delay: 0.15 });
-        } else {
-          gsap.to(extra, { height: 0, duration: 0.4, ease: 'power3.in' });
-        }
-      });
-    }
 
     // 썸네일 hover
     const thumb = document.querySelector('#subpage-view .works__thumb');
