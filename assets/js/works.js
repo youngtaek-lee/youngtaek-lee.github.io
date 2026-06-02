@@ -12,13 +12,15 @@ const works = [
 
 // 자투리 프로젝트 — 이름 + 외부링크만
 const worksExtra = [
-  { name: '오산대학교',              url: 'https://www.osan.ac.kr/?menuno=127' },
   { name: '플레이윈터',              url: 'https://playwinter.com/kr/html/index/' },
+  { name: '영음예술기획',            url: 'http://www.iyoungeum.com/html/index/' },
+  { name: '하남시환경교육센터',       url: 'http://www.heec.co.kr/html/index/' },
+  { name: '인터메타',                url: 'https://www.intermeta.co.kr/html/index/' },
+  { name: '오산대학교',              url: 'https://www.osan.ac.kr/?menuno=127' },
   { name: '전문대학평생직업교육발전협의', url: 'https://www.colive.kr/html/index/' },
   { name: '세경대학교',              url: 'https://www.saekyung.ac.kr/intro/intro.php' },
   { name: '성공회대 첨단융합디자인센터', url: 'https://skhuacdc2.gabia.io/html/index/index.php' },
   { name: '세종직업능력개발원',       url: 'https://www.sjacademy.co.kr/_html/index.php' },
-  { name: '인터메타',                url: 'https://www.intermeta.co.kr/html/index/' },
   { name: '부산국제주류&와인박람회',  url: 'https://busan.siwse.com/' },
   { name: '중앙직업전문학교 리뉴얼',  url: 'https://www.pbi.or.kr/html/index/' },
   { name: '총신대학교 교수학습지원센터', url: 'https://cctl.csu.ac.kr/html/index/' },
@@ -28,17 +30,22 @@ const worksExtra = [
   { name: '트리니티 디아이비',        url: 'http://triniti.kr/html/index/' },
   { name: '삼성이앤씨',              url: 'http://www.samseongenc.com/html/index/' },
   { name: '슈가엔 쇼핑몰',           url: 'http://www.sugaren.co.kr/html/index.php' },
-  { name: '하남시환경교육센터',       url: 'http://www.heec.co.kr/html/index/' },
   { name: '멘토스쿨',                url: 'http://mentor-school.co.kr/html/' },
   { name: '사단법인 하희',           url: 'http://www.hahee.or.kr/html/index/index.php' },
   { name: '굿씨상담센터',            url: 'http://www.goodseed.or.kr/html/index/' },
   { name: '교농',                    url: 'http://www.kyonong.com/html/index/index.php' },
-  { name: '영음예술기획',            url: 'http://www.iyoungeum.com/html/index/' },
   { name: '팍스농',                  url: 'http://paxnong.com/' },
   { name: '남원시조합공동사업',       url: 'http://namwonunion.co.kr/html/index/' },
   { name: '재단법인 지역활성화네트워크', url: 'http://www.kistock.co.kr/html/index/' },
   { name: '쌍용직업전문학교',         url: 'http://syhrd.kr/new/html/index/' },
   { name: '하남시민에너지협동조합',   url: 'http://ghi.co.kr/html/index/' },
+  { name: '에스앤씨건설' },
+  { name: '2021 장애학생 페스티벌' },
+  { name: '제이와이이노센트' },
+  { name: '축산박람회' },
+  { name: '트리니티 딥러닝 플랫폼' },
+  { name: '올댓스포츠 브레이킹 선수권' },
+  { name: '원퍼시스컨설팅 비모션' },
 ];
 
 // =============================

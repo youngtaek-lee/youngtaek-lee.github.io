@@ -28,16 +28,24 @@ const PageWorksList = {
           </ul>
 
           ${extras.length ? `
-          <ul class="wl-extra">
-            ${extras.map(e => `
-              <li class="wl-extra__item">
-                <a href="${e.url}" target="_blank" rel="noopener" class="wl-extra__link">
-                  ${e.name}<span class="wl-extra__arrow">↗</span>
-                </a>
-              </li>
-            `).join('')}
-
-          </ul>
+          <div class="wl-extra-wrap">
+            <p class="subpage__section-title">More Works</p>
+            <ul class="wl-extra">
+              ${extras.map(e => `
+                <li class="wl-extra__item">
+                  ${e.url
+                    ? `<a href="${e.url}" target="_blank" rel="noopener" class="wl-extra__link">
+                        <span class="wl-extra__name">${e.name}</span>
+                        <span class="wl-extra__arrow">↗</span>
+                      </a>`
+                    : `<span class="wl-extra__link wl-extra__link--text">
+                        <span class="wl-extra__name">${e.name}</span>
+                      </span>`
+                  }
+                </li>
+              `).join('')}
+            </ul>
+          </div>
           ` : ''}
         </section>
 
