@@ -166,11 +166,6 @@
   font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--color-sub);
-  transition: color 0.2s;
-}
-
-.header__link:hover {
-  color: var(--color-text);
 }
 
 .header__menu-btn {
