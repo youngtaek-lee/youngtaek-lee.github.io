@@ -66,6 +66,7 @@ function initGridAnimation(container) {
         cells.push({
           type,
           rot:    0,
+          rotDir: Math.random() < 0.5 ? 1 : -1,
           scale:  1.0,
           inner:  0.22 + Math.random() * 0.08,  // 0.22 ~ 0.30
           baseOp: 0.10 + Math.random() * 0.14,
@@ -165,6 +166,7 @@ function initGridAnimation(container) {
 
         const mouseDist      = mouseX > -9000 ? Math.hypot(cx - mouseX, cy - mouseY) : 9999;
         const mouseInfluence = Math.max(0, 1 - mouseDist / 120);
+        const hoverRot  = mouseInfluence * 0.45 * cell.rotDir;
         const wave    = Math.pow(noise3D(col * 0.18, row * 0.18, time * 0.28) * 0.5 + 0.5, 2);
         const baseR   = 4 + wave * wave * 9;
         const r       = baseR * (1 - mouseInfluence * 0.85) + proximity * 7;
@@ -172,7 +174,7 @@ function initGridAnimation(container) {
 
         ctx.fillStyle = `rgba(241,90,41,${opacity.toFixed(2)})`;
 
-        drawCell(cx, cy, r, cell);
+        drawCell(cx, cy, r, { ...cell, rot: cell.rot + hoverRot });
       }
     }
 
