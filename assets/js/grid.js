@@ -10,23 +10,25 @@ function initGridAnimation(container) {
   frame.appendChild(canvas);
   const ctx = canvas.getContext('2d');
 
-  const TARGET_H = 22;
-  const TARGET_V = 30;
-  const PAD_Y    = 14;
+  const TARGET_H = 28;
+  const TARGET_V = 28;
+  const PAD_Y    = 10;
 
-  // 클릭 파동
-  const RIPPLE_MAX_R  = 300; // 최대 확장 반지름
-  const RIPPLE_W      = 28;  // 고리 두께
-  const RIPPLE_SPEED  = 0.6; // age/초
-  const RIPPLE_LIMIT  = 4;
+  const RIPPLE_MAX_R = 300;
+  const RIPPLE_W     = 28;
+  const RIPPLE_SPEED = 0.6;
+  const RIPPLE_LIMIT = 4;
+
+  const SHAPES = ['star4'];
 
   let W, H, cols, rows, spacingX, spacingY;
   let canvasRect = { left: 0, top: 0 };
   let active = true;
-  const JITTER = 0; // 위치 흔들림 (0=완벽한격자)
-  let cells = [];
-  const ripples = []; // { x, y, age }
+  let cells  = [];
+  const ripples = [];
   let lastTime = 0;
+  let time = 0;
+  let mouseX = -9999, mouseY = -9999;
 
   function resize() {
     const dpr = window.devicePixelRatio || 1;
@@ -46,23 +48,50 @@ function initGridAnimation(container) {
     cells = [];
     for (let c = 0; c < cols; c++) {
       for (let r = 0; r < rows; r++) {
+        const type = SHAPES[Math.floor(Math.random() * SHAPES.length)];
         cells.push({
-          ox:   (Math.random() - 0.5) * spacingX * JITTER,
-          oy:   (Math.random() - 0.5) * spacingY * JITTER,
-          gain: 0.7 + Math.random() * 0.6,
+          type,
+          rot:    Math.PI / 4,
+          scale:  1.0,
+          inner:  0.28 + Math.random() * 0.12,  // 0.28 ~ 0.40
+          baseOp: 0.10 + Math.random() * 0.14,
+          jitter: (Math.random() - 0.5) * 0.5,
         });
       }
     }
+  }
+
+  function noise3D(x, y, z) {
+    const ix = Math.floor(x), iy = Math.floor(y), iz = Math.floor(z);
+    const fx = x-ix, fy = y-iy, fz = z-iz;
+    const ux = fx*fx*(3-2*fx), uy = fy*fy*(3-2*fy), uz = fz*fz*(3-2*fz);
+    function h(a,b,c) {
+      const n = Math.sin(a*127.1 + b*311.7 + c*74.7) * 43758.5453;
+      return (n - Math.floor(n)) * 2 - 1;
+    }
+    return (
+      h(ix,  iy,  iz)*(1-ux)*(1-uy)*(1-uz) + h(ix+1,iy,  iz)*ux*(1-uy)*(1-uz) +
+      h(ix,  iy+1,iz)*(1-ux)*uy*(1-uz)     + h(ix+1,iy+1,iz)*ux*uy*(1-uz) +
+      h(ix,  iy,  iz+1)*(1-ux)*(1-uy)*uz   + h(ix+1,iy,  iz+1)*ux*(1-uy)*uz +
+      h(ix,  iy+1,iz+1)*(1-ux)*uy*uz       + h(ix+1,iy+1,iz+1)*ux*uy*uz
+    );
   }
 
   resize();
   window.addEventListener('resize', resize);
   window.addEventListener('scroll', () => { canvasRect = canvas.getBoundingClientRect(); });
 
-  // 클릭 시 파동 스폰
+  frame.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+  });
+  frame.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+
   frame.addEventListener('click', (e) => {
-    const x = e.clientX - canvasRect.left;
-    const y = e.clientY - canvasRect.top;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     ripples.push({ x, y, age: 0 });
     if (ripples.length > RIPPLE_LIMIT) ripples.shift();
   });
@@ -76,17 +105,19 @@ function initGridAnimation(container) {
     });
   }
 
-  function drawSparkle(cx, cy, r) {
-    const inner = r * 0.13;
+  function drawCell(cx, cy, r, cell) {
+    if (cell.type === 'none') return;
+    const inn = r * cell.inner;
     ctx.beginPath();
     for (let i = 0; i < 8; i++) {
-      const a   = (i * Math.PI / 4) - Math.PI / 2;
-      const rad = i % 2 === 0 ? r : inner;
+      const a   = (i * Math.PI / 4) - Math.PI / 2 + cell.rot;
+      const rad = i % 2 === 0 ? r : inn;
       const px  = cx + Math.cos(a) * rad;
       const py  = cy + Math.sin(a) * rad;
       i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
     }
     ctx.closePath();
+    ctx.fill();
   }
 
   function draw(timestamp) {
@@ -94,7 +125,7 @@ function initGridAnimation(container) {
     const delta = lastTime ? (timestamp - lastTime) / 1000 : 0;
     lastTime = timestamp;
 
-    // 잔파 age 진행 + 만료 제거
+    time += delta;
     for (const rp of ripples) rp.age += delta * RIPPLE_SPEED;
     while (ripples.length && ripples[0].age >= 1) ripples.shift();
 
@@ -104,13 +135,12 @@ function initGridAnimation(container) {
       const x = (col + 0.5) * spacingX;
       for (let row = 0; row < rows; row++) {
         const cell = cells[col * rows + row];
-        const cx   = x + cell.ox;
-        const y    = PAD_Y + (row + 0.5) * spacingY + cell.oy;
+        const cx   = x;
+        const cy   = PAD_Y + (row + 0.5) * spacingY;
 
-        // 클릭 파동 — 도넛 고리
         let proximity = 0;
         for (const rp of ripples) {
-          const rd    = Math.hypot(cx - rp.x, y - rp.y);
+          const rd    = Math.hypot(cx - rp.x, cy - rp.y);
           const rR    = rp.age * RIPPLE_MAX_R;
           const rDiff = rd - rR;
           const fade  = 1 - rp.age;
@@ -118,19 +148,19 @@ function initGridAnimation(container) {
           proximity = Math.max(proximity, rProx);
         }
 
-        const r       = 4 + proximity * 20;
-        const opacity = 0.18 + proximity * 0.65;
+        const mouseDist      = mouseX > -9000 ? Math.hypot(cx - mouseX, cy - mouseY) : 9999;
+        const mouseInfluence = Math.max(0, 1 - mouseDist / 120);
+        const wave    = Math.pow(noise3D(col * 0.18, row * 0.18, time * 0.28) * 0.5 + 0.5, 2);
+        const baseR   = 4 + wave * wave * 9;
+        const r       = baseR * (1 - mouseInfluence * 0.85) + proximity * 7;
+        const opacity = 0.08 + wave * 0.58 * (1 - mouseInfluence * 0.5) + proximity * 0.65;
 
-        ctx.shadowBlur  = proximity > 0.1 ? proximity * 16 : 0;
-        ctx.shadowColor = `rgba(237,217,192,${opacity})`;
-        ctx.fillStyle   = `rgba(237,217,192,${opacity.toFixed(2)})`;
+        ctx.fillStyle = `rgba(237,217,192,${opacity.toFixed(2)})`;
 
-        drawSparkle(cx, y, r);
-        ctx.fill();
+        drawCell(cx, cy, r, cell);
       }
     }
 
-    ctx.shadowBlur = 0;
     requestAnimationFrame(draw);
   }
 
