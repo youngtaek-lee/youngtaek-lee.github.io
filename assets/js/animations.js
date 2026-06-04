@@ -13,7 +13,7 @@ function initHeroFrame() {
     const fontSize    = parseFloat(getComputedStyle(tagline).fontSize);
     // line-height 0.85로 인한 글리프 visual overflow 보정 (em 기준 약 15%)
     const visualOverflow = fontSize * 0.15;
-    const fromBottom  = heroRect.bottom - taglineRect.top + visualOverflow + 50;
+    const fromBottom  = heroRect.bottom - taglineRect.top + visualOverflow + 20;
     frame.style.bottom = `${fromBottom}px`;
   }
 
@@ -121,10 +121,6 @@ function initDarkTransition() {
   const tl = gsap.timeline({ paused: true });
 
   tl.fromTo('main',
-    { backgroundColor: '#161415' },
-    { backgroundColor: '#EDD9C0', ease: 'none' },
-    0
-  ).fromTo('.hero__hidden-space',
     { backgroundColor: '#161415' },
     { backgroundColor: '#EDD9C0', ease: 'none' },
     0
@@ -284,9 +280,8 @@ function initWorksEntrance() {
 function initHeroTaglineScroll(lenis) {
   const title       = document.querySelector('.hero__title');
   const tagline     = document.querySelector('.hero__tagline');
-  const hiddenSpace = document.querySelector('.hero__hidden-space');
-  const frame       = document.querySelector('.hero__frame');
-  if (!title || !tagline || !hiddenSpace) return;
+  const frame = document.querySelector('.hero__frame');
+  if (!title || !tagline) return;
 
   let tl = null;
   let tickerFn = null;
@@ -298,7 +293,7 @@ function initHeroTaglineScroll(lenis) {
     const taglineRect = tagline.getBoundingClientRect();
     const fontSize    = parseFloat(getComputedStyle(tagline).fontSize);
     const visualOverflow = fontSize * 0.15;
-    frame.style.bottom = `${heroRect.bottom - taglineRect.top + visualOverflow + 50}px`;
+    frame.style.bottom = `${heroRect.bottom - taglineRect.top + visualOverflow + 20}px`;
   }
 
   function build() {
@@ -307,8 +302,10 @@ function initHeroTaglineScroll(lenis) {
     if (st)       { st.kill(); st = null; }
 
     // 리셋: 이전 상태 초기화 (fromTo가 명시적 from 사용하므로 DOM도 초기 위치로)
-    const overLetters = Array.from(tagline.querySelectorAll('[data-hi]'));
+    const overLetters  = Array.from(tagline.querySelectorAll('[data-hi]'));
+    const underLetters = Array.from(tagline.querySelectorAll('.hero__letter--under'));
     gsap.set(overLetters, { x: 0 });
+    gsap.set(underLetters, { opacity: 1, y: 0 });
     gsap.set(tagline, { bottom: 20 });
 
     // font-size 역산 — computed padding 기준 (미디어쿼리 변경 대응)
@@ -332,9 +329,6 @@ function initHeroTaglineScroll(lenis) {
       taglineH = tagline.offsetHeight;
     }
 
-    const initH = Math.max(0, titleH - taglineH - 40);
-    gsap.set(hiddenSpace, { height: initH });
-
     // ghost로 HELLO 각 글자 목표 위치 측정 (중앙 정렬)
     const ghost = document.createElement('p');
     ghost.className = 'hero__tagline';
@@ -356,15 +350,30 @@ function initHeroTaglineScroll(lenis) {
     tl = gsap.timeline({ paused: true });
 
     // fromTo로 명시: 리사이즈 후 현재 DOM 상태와 무관하게 항상 올바른 범위로 보간
-    tl.fromTo(tagline,     { bottom: 20 },    { bottom: centeredBottom, ease: 'none',       duration: 0.5 }, 0)
-      .fromTo(hiddenSpace, { height: initH }, { height: titleH,         ease: 'none',       duration: 0.5 }, 0);
+    tl.fromTo(tagline, { bottom: 20 }, { bottom: centeredBottom, ease: 'none', duration: 0.5 }, 0);
 
     overLetters.forEach((el, i) => {
       tl.fromTo(el, { x: 0 }, { x: translations[i], ease: 'power2.out', duration: 0.5 }, 0);
     });
 
-    // Phase 2 (0.5 → 1.0): HELLO 유지
+    const deltaY = centeredBottom - 20; // tagline이 올라가는 거리
+    underLetters.forEach(el => {
+      // y: tagline과 동일한 ease로 정확히 상쇄
+      tl.fromTo(el, { y: 0 }, { y: deltaY, ease: 'none', duration: 0.5 }, 0);
+      // opacity: 초반에 빠르게 페이드
+      tl.fromTo(el, { opacity: 1 }, { opacity: 0, ease: 'power1.in', duration: 0.3 }, 0);
+    });
+
+    // Phase 2 (0.5 → 1.0): HELLO 유지 + frame 화면 가득 확장
     tl.to({}, { duration: 0.5 }, 0.5);
+
+    if (frame) {
+      tl.fromTo(frame,
+        { opacity: 1 },
+        { opacity: 0, ease: 'none', duration: 0.25 },
+        0
+      );
+    }
 
     // X mark: HELLO 완성 시점(0.5)에 회전하며 등장
     const xMark = tagline.querySelector('.hero__x-mark');

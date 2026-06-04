@@ -30,6 +30,20 @@ function initGridAnimation(container) {
   let time = 0;
   let mouseX = -9999, mouseY = -9999;
 
+  function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    W = frame.offsetWidth;
+    H = frame.offsetHeight;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (cols > 0) spacingX = W / cols;
+    if (rows > 0) spacingY = (H - PAD_Y * 2) / rows;
+    canvasRect = canvas.getBoundingClientRect();
+  }
+
   function resize() {
     const dpr = window.devicePixelRatio || 1;
     W = frame.offsetWidth;
@@ -51,9 +65,9 @@ function initGridAnimation(container) {
         const type = SHAPES[Math.floor(Math.random() * SHAPES.length)];
         cells.push({
           type,
-          rot:    Math.PI / 4,
+          rot:    0,
           scale:  1.0,
-          inner:  0.28 + Math.random() * 0.12,  // 0.28 ~ 0.40
+          inner:  0.22 + Math.random() * 0.08,  // 0.22 ~ 0.30
           baseOp: 0.10 + Math.random() * 0.14,
           jitter: (Math.random() - 0.5) * 0.5,
         });
@@ -80,6 +94,7 @@ function initGridAnimation(container) {
   resize();
   window.addEventListener('resize', resize);
   window.addEventListener('scroll', () => { canvasRect = canvas.getBoundingClientRect(); });
+
 
   frame.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
@@ -135,8 +150,8 @@ function initGridAnimation(container) {
       const x = (col + 0.5) * spacingX;
       for (let row = 0; row < rows; row++) {
         const cell = cells[col * rows + row];
-        const cx   = x;
         const cy   = PAD_Y + (row + 0.5) * spacingY;
+        const cx   = x;
 
         let proximity = 0;
         for (const rp of ripples) {
@@ -155,7 +170,7 @@ function initGridAnimation(container) {
         const r       = baseR * (1 - mouseInfluence * 0.85) + proximity * 7;
         const opacity = 0.08 + wave * 0.58 * (1 - mouseInfluence * 0.5) + proximity * 0.65;
 
-        ctx.fillStyle = `rgba(237,217,192,${opacity.toFixed(2)})`;
+        ctx.fillStyle = `rgba(241,90,41,${opacity.toFixed(2)})`;
 
         drawCell(cx, cy, r, cell);
       }
