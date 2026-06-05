@@ -35,13 +35,8 @@ const PageWorksList = {
             ${extras.map(e => `
               <li class="wl-extra__item">
                 ${e.url
-                  ? `<a href="${e.url}" target="_blank" rel="noopener" class="wl-extra__link">
-                      <span class="wl-extra__name">${e.name}</span>
-                      <span class="wl-extra__arrow">↗</span>
-                    </a>`
-                  : `<span class="wl-extra__link wl-extra__link--text">
-                      <span class="wl-extra__name">${e.name}</span>
-                    </span>`
+                  ? `<a href="${e.url}" target="_blank" rel="noopener" class="wl-extra__link">${e.name} ↗</a>`
+                  : `<span class="wl-extra__link wl-extra__link--filled">${e.name}</span>`
                 }
               </li>
             `).join('')}
