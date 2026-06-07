@@ -334,7 +334,6 @@
   justify-content: center;
   gap: 5px;
   min-height: 58px;
-  transition: opacity 0.22s ease;
   cursor: default;
 }
 
