@@ -175,9 +175,25 @@ const PageAbout = {
 
         <section class="subpage__section about-skills" id="skills">
           <h2 class="subpage__section-title">Skills</h2>
-          <div class="skills-tags">
-            ${['HTML5','CSS3','JavaScript','jQuery','GSAP','Three.js','Git','Figma','Photoshop','Illustrator']
-              .map(s => `<span class="skill-tag">${s}</span>`).join('')}
+          <div class="skill-cards">
+            ${[
+              { name: 'HTML5',       desc: '시맨틱 마크업 & 구조화',   icon: `<i class="devicon-html5-plain"></i>`,       color: '#E34F26' },
+              { name: 'CSS3',        desc: '레이아웃 & 스타일링',       icon: `<i class="devicon-css3-plain"></i>`,        color: '#1572B6' },
+              { name: 'JavaScript',  desc: '인터랙션 & 로직 구현',      icon: `<i class="devicon-javascript-plain"></i>`,  color: '#F7DF1E' },
+              { name: 'jQuery',      desc: 'DOM 조작 & 플러그인',       icon: `<i class="devicon-jquery-plain"></i>`,      color: '#0769AD' },
+              { name: 'GSAP',        desc: '고성능 웹 애니메이션',      icon: `<img src="assets/images/gsap.svg" class="skill-card__img-icon" alt="">`, color: null },
+              { name: 'Three.js',    desc: '3D 웹 그래픽 렌더링',       icon: `<i class="devicon-threejs-original"></i>`,  color: '#ffffff' },
+              { name: 'Git',         desc: '버전 관리 & 협업',          icon: `<i class="devicon-git-plain"></i>`,         color: '#F05032' },
+              { name: 'Figma',       desc: '디자인 시안 해석',          icon: `<i class="devicon-figma-plain"></i>`,       color: '#F24E1E' },
+              { name: 'Photoshop',   desc: '이미지 편집 & 보정',        icon: `<svg viewBox="0 0 32 32" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="5" fill="#001E36"/><text x="3" y="24" font-family="Arial,sans-serif" font-weight="bold" font-size="19" fill="#31A8FF">Ps</text></svg>`, color: null },
+              { name: 'Illustrator', desc: '벡터 그래픽 & 에셋',        icon: `<svg viewBox="0 0 32 32" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="5" fill="#310000"/><text x="2" y="24" font-family="Arial,sans-serif" font-weight="bold" font-size="19" fill="#FF9A00">Ai</text></svg>`, color: null },
+            ].map(s => `
+              <div class="skill-card">
+                <div class="skill-card__icon"${s.color ? ` style="color:${s.color}"` : ''}>${s.icon}</div>
+                <span class="skill-card__name">${s.name}</span>
+                <span class="skill-card__desc">${s.desc}</span>
+              </div>
+            `).join('')}
           </div>
         </section>
 
@@ -256,9 +272,10 @@ const PageAbout = {
 
 
 
-    gsap.from('.skill-tag', {
-      y: 20, opacity: 0, duration: 0.5, ease: 'power2.out',
-      stagger: 0.05,
+    gsap.from('.skill-card', {
+      y: 24, opacity: 0, duration: 0.5, ease: 'power2.out',
+      stagger: 0.06,
+      clearProps: 'transform',
       scrollTrigger: { trigger: '.about-skills', start: 'top 80%' },
     });
 
@@ -294,5 +311,52 @@ const PageAbout = {
 
     const calEl = document.getElementById('about-github-calendar');
     if (calEl) buildGithubCalendar(calEl, calAnim);
+
+    // Skill cards: 호버 카드 오른쪽을 열어서 100% 노출, 이후 카드는 밀려남
+    const skillCardEls = [...document.querySelectorAll('.skill-card')];
+    if (skillCardEls.length) {
+      // 카드별 개별 기울기 & 브랜드 컬러 기반 어두운 배경
+      const angles  = [-2, 1, -1.5, 2.5, -0.5, 1.5, -2.2, 0.8, -1, 2];
+      const bgColors = [
+        '#3a1d14', // HTML5       — dark orange-red
+        '#142436', // CSS3        — dark blue
+        '#2a250d', // JavaScript  — dark yellow
+        '#112030', // jQuery      — dark navy
+        '#1c2a0a', // GSAP        — dark green
+        '#1e1c1d', // Three.js    — neutral dark
+        '#3a1a12', // Git         — dark red-orange
+        '#38180f', // Figma       — dark red
+        '#0f2236', // Photoshop   — dark cyan-blue
+        '#2e1d08', // Illustrator — dark amber
+      ];
+      skillCardEls.forEach((card, i) => {
+        card.style.setProperty('--card-rotate', `${angles[i]}deg`);
+        card.style.setProperty('--card-bg', bgColors[i]);
+      });
+
+      // aspect-ratio로 결정된 초기 높이를 측정 후 고정 — 너비 변화 시 높이 흔들림 방지
+      const lockHeights = () => {
+        skillCardEls.forEach(c => c.style.height = '');
+        const h = skillCardEls[0].offsetHeight;
+        skillCardEls.forEach(c => c.style.height = h + 'px');
+      };
+      requestAnimationFrame(lockHeights);
+      window.addEventListener('resize', lockHeights);
+
+      const isSingleRow = () => window.innerWidth > 768;
+
+      skillCardEls.forEach((card, i) => {
+        card.addEventListener('mouseenter', () => {
+          if (!isSingleRow()) return;
+          if (skillCardEls[i + 1]) {
+            const overlap = card.offsetWidth * 0.1;
+            skillCardEls[i + 1].style.marginLeft = `-${overlap}px`;
+          }
+        });
+        card.addEventListener('mouseleave', () => {
+          if (skillCardEls[i + 1]) skillCardEls[i + 1].style.marginLeft = '';
+        });
+      });
+    }
   },
 };
