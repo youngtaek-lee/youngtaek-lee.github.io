@@ -158,13 +158,19 @@ const PageAbout = {
         </section>
 
         <section class="subpage__section about-github" id="github">
-          <div class="about-github__header">
-            <h2 class="subpage__section-title">Commit Log</h2>
-            <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="about-github__link" aria-label="GitHub 프로필">
-              <img src="assets/images/github-icon.png" alt="GitHub" width="28" height="28">
-            </a>
+          <h2 class="subpage__section-title">Commit Log</h2>
+          <div class="about-github__card">
+            <div class="about-github__header">
+              <div>
+                <span class="about-github__label">GitHub</span>
+                <h3 class="about-github__card-title">Contributions</h3>
+              </div>
+              <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="about-github__link" aria-label="GitHub 프로필">
+                <img src="assets/images/github-icon.png" alt="GitHub" width="20" height="20">
+              </a>
+            </div>
+            <div id="about-github-calendar"></div>
           </div>
-          <div id="about-github-calendar"></div>
         </section>
 
       </div>

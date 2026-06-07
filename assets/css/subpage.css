@@ -429,21 +429,49 @@ a.wl-extra__link:hover {
 }
 
 /* ── GitHub Calendar ── */
-.about-github__header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 32px;
+.about-github__card {
+  background: #161415;
+  color: #EDD9C0;
+  border-radius: 20px;
+  padding: clamp(24px, 4vw, 48px);
 }
 
-.about-github__header .subpage__section-title {
-  margin-bottom: 0;
+.about-github__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: clamp(24px, 3.5vw, 40px);
+}
+
+.about-github__label {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(237, 217, 192, 0.38);
+  margin-bottom: 8px;
+}
+
+.about-github__card-title {
+  font-family: var(--font-body);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: #EDD9C0;
 }
 
 .about-github__link {
-  opacity: 0.5;
-  transition: opacity 0.2s;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
+  border: 1.5px solid rgba(237, 217, 192, 0.22);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.2s;
 }
 
 .about-github__link:hover {
@@ -452,7 +480,7 @@ a.wl-extra__link:hover {
 
 .about-github__link img {
   display: block;
-  filter: var(--icon-filter, none);
+  filter: brightness(0) saturate(100%) invert(90%) sepia(18%) saturate(300%) hue-rotate(10deg);
 }
 
 .about-github__wrap {
@@ -466,7 +494,7 @@ a.wl-extra__link:hover {
 
 .about-github__wrap svg text {
   font-family: var(--font-body), sans-serif;
-  fill: var(--color-text);
+  fill: #EDD9C0;
 }
 
 .about-github__footer {
@@ -481,7 +509,7 @@ a.wl-extra__link:hover {
 .about-github__count {
   font-family: var(--font-body);
   font-size: 0.72rem;
-  color: var(--color-sub);
+  color: rgba(237, 217, 192, 0.38);
   letter-spacing: 0.04em;
 }
 
@@ -491,7 +519,7 @@ a.wl-extra__link:hover {
   gap: 4px;
   font-family: var(--font-body);
   font-size: 0.7rem;
-  color: var(--color-sub);
+  color: rgba(237, 217, 192, 0.38);
   letter-spacing: 0.04em;
 }
 
