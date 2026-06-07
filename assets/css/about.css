@@ -217,22 +217,222 @@
 }
 
 /* =============================
-   Work Process — 디자인 해석 SVG
+   Work Process — Project Timeline
 ============================= */
-#dh-planet1 {
-  transition: transform 0.6s ease;
+
+.ptl {
+  --ptl-bg:       #161415;
+  --ptl-beige:    #EDD9C0;
+  --ptl-orange:   #F15A29;
+  --ptl-line:     rgba(237, 217, 192, 0.10);
+  --ptl-line-dim: rgba(237, 217, 192, 0.06);
+  --ptl-muted:    rgba(237, 217, 192, 0.38);
+
+  background: var(--ptl-bg);
+  color: var(--ptl-beige);
+  border-radius: 20px;
+  padding: clamp(24px, 4vw, 48px);
 }
 
-#dh-planet2 {
-  transform-box: fill-box;
-  transform-origin: center;
-  transition: transform 0.6s ease;
+/* ── Header ── */
+.ptl__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: clamp(24px, 3.5vw, 40px);
 }
 
-.process-card:hover #dh-planet1 {
-  transform: translate(10px, 10px);
+.ptl__label {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ptl-muted);
+  margin-bottom: 8px;
 }
 
-.process-card:hover #dh-planet2 {
-  transform: rotate(-10deg) translate(0px, -10px);
+.ptl__title {
+  font-family: var(--font-body);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  color: var(--ptl-beige);
 }
+
+.ptl__badge {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 1.5px solid rgba(237, 217, 192, 0.22);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ptl-muted);
+}
+
+/* ── Phase headers ── */
+.ptl__phases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--ptl-line);
+  padding-bottom: 12px;
+}
+
+.ptl__phase {
+  font-size: 0.60rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ptl-muted);
+  position: relative;
+}
+
+.ptl__phase + .ptl__phase {
+  padding-left: 10px;
+}
+
+.ptl__phase + .ptl__phase::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -2px;
+  bottom: -14px;
+  width: 1px;
+  background: var(--ptl-line);
+}
+
+/* ── Gantt chart (6-column grid) ── */
+.ptl__chart {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  row-gap: 10px;
+  padding: 16px 0 14px;
+  background-image: linear-gradient(
+    90deg,
+    transparent calc(100% - 1px),
+    var(--ptl-line-dim) calc(100% - 1px)
+  );
+  background-size: calc(100% / 6) 100%;
+  background-repeat: repeat-x;
+}
+
+/* ── Bar placement ── */
+.ptl__bar--1 { grid-column: 1 / span 2; grid-row: 1; }
+.ptl__bar--2 { grid-column: 2 / span 3; grid-row: 2; }
+.ptl__bar--3 { grid-column: 4 / span 3; grid-row: 3; }
+
+/* ── Bar base ── */
+.ptl__bar {
+  border-radius: 12px;
+  padding: clamp(10px, 1.2vw, 14px) clamp(12px, 1.5vw, 18px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  min-height: 58px;
+  transition: opacity 0.22s ease;
+  cursor: default;
+}
+
+.ptl__bar:hover { opacity: 0.72; }
+
+/* ── Bar colors: 1→3 ── */
+.ptl__bar--1 {
+  background: rgba(237, 217, 192, 0.07);
+  border: 1px solid rgba(237, 217, 192, 0.14);
+}
+
+.ptl__bar--2 {
+  background: linear-gradient(90deg,
+    rgba(241, 90, 41, 0.18) 0%,
+    rgba(241, 90, 41, 0.36) 100%);
+  border: 1px solid rgba(241, 90, 41, 0.28);
+}
+
+.ptl__bar--3 {
+  background: linear-gradient(90deg,
+    rgba(241, 90, 41, 0.70) 0%,
+    rgba(241, 90, 41, 0.96) 100%);
+  border: 1px solid var(--ptl-orange);
+}
+
+/* ── Bar text ── */
+.ptl__bar-name {
+  font-size: clamp(0.72rem, 1.1vw, 0.85rem);
+  font-weight: 600;
+  color: var(--ptl-beige);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ptl__bar-desc {
+  font-size: clamp(0.58rem, 0.85vw, 0.68rem);
+  color: rgba(237, 217, 192, 0.50);
+  line-height: 1.5;
+}
+
+.ptl__bar--3 .ptl__bar-name { color: rgba(237, 217, 192, 0.92); }
+.ptl__bar--3 .ptl__bar-desc { color: rgba(237, 217, 192, 0.65); }
+
+/* ── Week axis ── */
+.ptl__weeks {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border-top: 1px solid var(--ptl-line);
+  padding-top: 10px;
+}
+
+.ptl__week {
+  font-size: 0.58rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ptl-muted);
+}
+
+/* ── Footer ── */
+.ptl__footer {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border-top: 1px solid var(--ptl-line);
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.ptl__footer-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--ptl-muted);
+}
+
+.ptl__footer-text {
+  font-size: 0.75rem;
+  line-height: 1.65;
+  color: var(--ptl-muted);
+}
+
+/* ── Mobile ── */
+@media (max-width: 560px) {
+  .ptl__phases { display: none; }
+
+  .ptl__chart {
+    grid-template-columns: repeat(3, 1fr);
+    background-size: calc(100% / 3) 100%;
+  }
+
+  .ptl__bar--1 { grid-column: 1 / span 1; }
+  .ptl__bar--2 { grid-column: 1 / span 2; }
+  .ptl__bar--3 { grid-column: 2 / span 2; }
+
+  .ptl__weeks { grid-template-columns: repeat(3, 1fr); }
+  .ptl__week:nth-child(even) { display: none; }
+}
+
+

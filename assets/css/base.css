@@ -25,7 +25,7 @@
   --color-bg:    var(--c-dark);
   --color-text:  var(--c-beige);
   --color-white: var(--c-white);
-  --color-line:  rgba(237, 217, 192, 0.25);
+  --color-line:  rgba(237, 217, 192, 0.5);
 
   /* ── Compat ───────────────────────────────── */
   --color-orange:         var(--c-orange);
