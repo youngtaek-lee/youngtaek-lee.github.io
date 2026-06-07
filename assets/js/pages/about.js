@@ -318,16 +318,16 @@ const PageAbout = {
       // 카드별 개별 기울기 & 브랜드 컬러 기반 어두운 배경
       const angles  = [-2, 1, -1.5, 2.5, -0.5, 1.5, -2.2, 0.8, -1, 2];
       const bgColors = [
-        '#3a1d14', // HTML5       — dark orange-red
-        '#142436', // CSS3        — dark blue
-        '#2a250d', // JavaScript  — dark yellow
-        '#112030', // jQuery      — dark navy
-        '#1c2a0a', // GSAP        — dark green
-        '#1e1c1d', // Three.js    — neutral dark
-        '#3a1a12', // Git         — dark red-orange
-        '#38180f', // Figma       — dark red
-        '#0f2236', // Photoshop   — dark cyan-blue
-        '#2e1d08', // Illustrator — dark amber
+        '#1e0f0a', // HTML5       — dark orange-red
+        '#0a121b', // CSS3        — dark blue
+        '#151207', // JavaScript  — dark yellow
+        '#091018', // jQuery      — dark navy
+        '#0e1505', // GSAP        — dark green
+        '#111010', // Three.js    — neutral dark
+        '#1e0d09', // Git         — dark red-orange
+        '#1c0c08', // Figma       — dark red
+        '#08111b', // Photoshop   — dark cyan-blue
+        '#170f04', // Illustrator — dark amber
       ];
       skillCardEls.forEach((card, i) => {
         card.style.setProperty('--card-rotate', `${angles[i]}deg`);

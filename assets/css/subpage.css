@@ -674,3 +674,40 @@ a.wl-extra__link:hover {
   border-radius: 2px;
   flex-shrink: 0;
 }
+
+/* =============================
+   Mobile — 공통 간격
+============================= */
+@media (max-width: 768px) {
+  .subpage {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .subpage__hero {
+    padding-top: 48px;
+    padding-bottom: 48px;
+    gap: 20px;
+  }
+
+  .subpage__section {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .subpage__section-title {
+    margin-bottom: 20px;
+  }
+
+  /* wl-extra 버튼 */
+  .wl-extra__link {
+    padding: 7px 11px;
+    font-size: 0.72rem;
+  }
+
+  /* Works 상세 — 사이드바 스택 */
+  .wd-info {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
