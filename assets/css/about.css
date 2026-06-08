@@ -7,7 +7,7 @@
 }
 
 .about-text__inner {
-  padding: clamp(60px, 8vw, 120px) clamp(20px, 6vw, 120px);
+  padding: clamp(100px, 14vw, 200px) clamp(20px, 6vw, 120px) clamp(60px, 8vw, 120px);
   text-align: right;
 }
 
@@ -295,9 +295,9 @@
 .ptl__phase + .ptl__phase::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: -2px;
-  bottom: -14px;
+  left: -1px;
+  top: -1px;
+  bottom: -12px;
   width: 1px;
   background: var(--ptl-line);
 }
@@ -311,7 +311,7 @@
   background-image: linear-gradient(
     90deg,
     transparent calc(100% - 1px),
-    var(--ptl-line-dim) calc(100% - 1px)
+    var(--ptl-line) calc(100% - 1px)
   );
   background-size: calc(100% / 6) 100%;
   background-repeat: repeat-x;
