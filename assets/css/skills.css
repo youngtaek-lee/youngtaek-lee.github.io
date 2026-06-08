@@ -7,7 +7,7 @@
 }
 
 .skills__header {
-  padding: 0 calc(10vw + 16px);
+  padding: 0 clamp(20px, 6vw, 120px);
   margin-bottom: 48px;
   display: flex;
   flex-direction: column;
@@ -33,7 +33,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 4px;
-  padding: 0 calc(10vw + 16px);
+  padding: 0 clamp(20px, 6vw, 120px);
 }
 
 .skill-item {

@@ -7,7 +7,7 @@
 }
 
 .clients__header {
-  padding: 0 calc(10vw + 16px);
+  padding: 0 clamp(20px, 6vw, 120px);
   margin-bottom: 56px;
 }
 
