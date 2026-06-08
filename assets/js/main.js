@@ -41,11 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initHobbyPopcorn();
   initIntro();
-  initHeroTaglineScroll(lenis);
+  initHeroTaglineScroll();
   initFooterBig();
   initFooterScale();
-  initHeroFrame();
-  initGridAnimation(document.querySelector('.hero__frame'));
 
   // 직접 서브페이지로 진입 시 initDarkTransition의 FROM state가 덮어쓰므로 재적용
   if (document.body.classList.contains('is-subpage')) {

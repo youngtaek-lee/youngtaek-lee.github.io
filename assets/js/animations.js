@@ -1,27 +1,4 @@
 // =============================
-// Hero Frame 높이 동적 계산
-// =============================
-function initHeroFrame() {
-  const frame     = document.querySelector('.hero__frame');
-  const tagline   = document.querySelector('.hero__tagline');
-  const heroTitle = document.querySelector('.hero__title');
-  if (!frame || !tagline || !heroTitle) return;
-
-  function update() {
-    const heroRect    = heroTitle.getBoundingClientRect();
-    const taglineRect = tagline.getBoundingClientRect();
-    const fontSize    = parseFloat(getComputedStyle(tagline).fontSize);
-    // line-height 0.85로 인한 글리프 visual overflow 보정 (em 기준 약 15%)
-    const visualOverflow = fontSize * 0.15;
-    const fromBottom  = heroRect.bottom - taglineRect.top + visualOverflow + 20;
-    frame.style.bottom = `${fromBottom}px`;
-  }
-
-  update();
-  // resize 후속 처리는 initHeroTaglineScroll.build() 내 updateFrame()이 담당
-}
-
-// =============================
 // Hero 입장 애니메이션 (인트로 완료 후 호출)
 // =============================
 function initHeroEntrance() {
@@ -158,8 +135,8 @@ function initDarkTransition() {
   ScrollTrigger.create({
     id: 'dark-transition',
     trigger: '.hero-wrap',
-    start: '55% top',
-    end: 'bottom bottom',
+    start: 'top top',
+    end: 'bottom top',
     onUpdate(self) {
       if (document.body.classList.contains('is-subpage')) return;
       tl.progress(self.progress);
@@ -277,38 +254,12 @@ function initWorksEntrance() {
 // =============================
 // Hero 타이틀 스크롤 마스킹
 // =============================
-function initHeroTaglineScroll(lenis) {
-  const title       = document.querySelector('.hero__title');
-  const tagline     = document.querySelector('.hero__tagline');
-  const frame = document.querySelector('.hero__frame');
+function initHeroTaglineScroll() {
+  const title   = document.querySelector('.hero__title');
+  const tagline = document.querySelector('.hero__tagline');
   if (!title || !tagline) return;
 
-  let tl = null;
-  let tickerFn = null;
-  let st = null;
-
-  function updateFrame() {
-    if (!frame) return;
-    const heroRect    = title.getBoundingClientRect();
-    const taglineRect = tagline.getBoundingClientRect();
-    const fontSize    = parseFloat(getComputedStyle(tagline).fontSize);
-    const visualOverflow = fontSize * 0.15;
-    frame.style.bottom = `${heroRect.bottom - taglineRect.top + visualOverflow + 20}px`;
-  }
-
-  function build() {
-    if (tl)       { tl.kill(); tl = null; }
-    if (tickerFn) { gsap.ticker.remove(tickerFn); tickerFn = null; }
-    if (st)       { st.kill(); st = null; }
-
-    // 리셋: 이전 상태 초기화 (fromTo가 명시적 from 사용하므로 DOM도 초기 위치로)
-    const overLetters  = Array.from(tagline.querySelectorAll('[data-hi]'));
-    const underLetters = Array.from(tagline.querySelectorAll('.hero__letter--under'));
-    gsap.set(overLetters, { x: 0 });
-    gsap.set(underLetters, { opacity: 1, y: 0 });
-    gsap.set(tagline, { bottom: 20 });
-
-    // font-size 역산 — computed padding 기준 (미디어쿼리 변경 대응)
+  function fitFontSize() {
     const cs    = getComputedStyle(tagline);
     const padH  = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
     const range = document.createRange();
@@ -318,108 +269,27 @@ function initHeroTaglineScroll(lenis) {
     const curPx  = parseFloat(cs.fontSize);
     tagline.style.fontSize = ((curPx * availW / textW) / window.innerWidth * 100).toFixed(3) + 'vw';
 
-    const titleH = title.offsetHeight;
-    let taglineH = tagline.offsetHeight;
-
-    // 세로 제약: 타이틀 영역(위아래 20px 여백)을 초과하면 font 축소
+    const titleH    = title.offsetHeight;
+    const taglineH  = tagline.offsetHeight;
     const maxTaglineH = titleH - 40;
     if (taglineH > maxTaglineH && maxTaglineH > 0) {
       const newFontPx = parseFloat(getComputedStyle(tagline).fontSize) * (maxTaglineH / taglineH);
       tagline.style.fontSize = (newFontPx / window.innerWidth * 100).toFixed(3) + 'vw';
-      taglineH = tagline.offsetHeight;
     }
 
-    // ghost로 HELLO 각 글자 목표 위치 측정 (중앙 정렬)
-    const ghost = document.createElement('p');
-    ghost.className = 'hero__tagline';
-    ghost.setAttribute('aria-hidden', 'true');
-    ghost.style.cssText = 'visibility:hidden;pointer-events:none;text-align:center;letter-spacing:0.08em;';
-    ghost.innerHTML = 'HELLO'.split('').map(l => `<span style="display:inline-block">${l}</span>`).join('');
-    title.appendChild(ghost);
-    const ghostRects = Array.from(ghost.querySelectorAll('span')).map(el => el.getBoundingClientRect());
-    title.removeChild(ghost);
-
-    const overRects    = overLetters.map(el => el.getBoundingClientRect());
-    const translations = overLetters.map((el, i) => {
-      const hi = parseInt(el.dataset.hi);
-      return ghostRects[hi].left - overRects[i].left;
-    });
-
-    const centeredBottom = Math.max(20, Math.round((window.innerHeight - taglineH) / 2));
-
-    tl = gsap.timeline({ paused: true });
-
-    // fromTo로 명시: 리사이즈 후 현재 DOM 상태와 무관하게 항상 올바른 범위로 보간
-    tl.fromTo(tagline, { bottom: 20 }, { bottom: centeredBottom, ease: 'none', duration: 0.5 }, 0);
-
-    overLetters.forEach((el, i) => {
-      tl.fromTo(el, { x: 0 }, { x: translations[i], ease: 'power2.out', duration: 0.5 }, 0);
-    });
-
-    const deltaY = centeredBottom - 20; // tagline이 올라가는 거리
-    underLetters.forEach(el => {
-      // y: tagline과 동일한 ease로 정확히 상쇄
-      tl.fromTo(el, { y: 0 }, { y: deltaY, ease: 'none', duration: 0.5 }, 0);
-      // opacity: 초반에 빠르게 페이드
-      tl.fromTo(el, { opacity: 1 }, { opacity: 0, ease: 'power1.in', duration: 0.3 }, 0);
-    });
-
-    // Phase 2 (0.5 → 1.0): HELLO 유지 + frame 화면 가득 확장
-    tl.to({}, { duration: 0.5 }, 0.5);
-
-    if (frame) {
-      tl.fromTo(frame,
-        { opacity: 1 },
-        { opacity: 0, ease: 'none', duration: 0.25 },
-        0
-      );
-    }
-
-    // X mark: HELLO 완성 시점(0.5)에 회전하며 등장
-    const xMark = tagline.querySelector('.hero__x-mark');
-    if (xMark) {
-      tl.fromTo(xMark,
-        { opacity: 0, scale: 0, rotation: -180 },
-        { opacity: 1, scale: 1, rotation: 45, duration: 0.18, ease: 'back.out(2)' },
-        0.5
-      );
-    }
-
-    st = ScrollTrigger.create({
-      trigger: '.hero-wrap',
-      start: 'top top',
-      end: 'bottom bottom',
-    });
-
-    // 리사이즈 후 현재 스크롤 위치에 즉시 맞춤 (깜빡임 방지)
-    if (st.end > st.start) {
-      const p = gsap.utils.clamp(0, 1, (lenis.scroll - st.start) / (st.end - st.start));
-      tl.progress(p);
-    }
-
-    // lenis.scroll(lerp된 값)로 직접 구동 → Lenis easing이 그대로 전달됨, pin 충격 없음
-    tickerFn = () => {
-      if (!st || st.end <= st.start) return;
-      const p = gsap.utils.clamp(0, 1, (lenis.scroll - st.start) / (st.end - st.start));
-      tl.progress(p);
-    };
-    gsap.ticker.add(tickerFn);
-
-    // font-size 변경 후 frame 위치 재계산
-    updateFrame();
   }
 
   document.fonts.ready.then(() => {
-    build();
+    fitFontSize();
 
     let resizeTimer;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(build, 150);
+      resizeTimer = setTimeout(fitFontSize, 150);
     });
   });
 
-  window.__heroTaglineRebuild = build;
+  window.__heroTaglineRebuild = fitFontSize;
 }
 
 // =============================
