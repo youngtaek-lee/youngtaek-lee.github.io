@@ -154,6 +154,23 @@
   color: var(--color-bg);
 }
 
+.wd-header-btn {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 100px;
+  background: var(--color-accent);
+  color: #fff;
+  transition: opacity 0.2s;
+}
+
+.wd-header-btn:hover {
+  opacity: 0.8;
+}
+
 .header__links {
   display: flex;
   align-items: center;
@@ -326,15 +343,14 @@
   transform: translateX(-50%) translateY(0);
 }
 
-/* Pair C: beige bg / dark icon */
 .bottom-nav__top {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 45px;
   height: 45px;
-  background: var(--c-beige);
-  color: var(--c-dark);
+  background: var(--c-dark);
+  color: var(--c-beige);
   border-radius: 8px;
   flex-shrink: 0;
   transition: opacity 0.2s;
@@ -349,6 +365,11 @@
   opacity: 0.75;
 }
 
+.bottom-nav.is-detail .bottom-nav__top {
+  background: var(--c-dark);
+  color: var(--c-beige);
+}
+
 .bottom-nav__links {
   display: flex;
   align-items: center;
@@ -361,18 +382,17 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  color: var(--c-beige);
-  opacity: 0.6;
+  background: var(--c-beige);
+  color: var(--c-dark);
+  opacity: 0.9;
   padding: 15px 25px;
   border-radius: 8px;
-  border: 1px solid var(--color-border-medium);
-  transition: opacity 0.2s, background 0.2s, border-color 0.2s;
+  border: none;
+  transition: opacity 0.2s;
 }
 
 .bottom-nav__link:hover {
   opacity: 1;
-  background: var(--color-surface);
-  border-color: var(--color-border-light);
 }
 
 /* Pair D: orange bg / egg text */
@@ -384,7 +404,10 @@
 }
 
 .bottom-nav__link--cta:hover {
-  opacity: 0.85;
+  opacity: 1;
+  background: var(--c-orange);
+  border-color: transparent;
+  filter: brightness(0.88);
 }
 
 /* =============================

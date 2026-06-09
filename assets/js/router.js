@@ -65,7 +65,17 @@ const Router = {
     else window.scrollTo(0, 0);
   },
 
+  _restoreBottomLinks() {
+    if (this._originalBottomLinks) {
+      const links = document.querySelector('.bottom-nav__links');
+      if (links) links.innerHTML = this._originalBottomLinks;
+      this._originalBottomLinks = null;
+    }
+    document.querySelector('.bottom-nav')?.classList.remove('is-detail');
+  },
+
   _showHome() {
+    this._restoreBottomLinks();
     this.homeView.style.display    = '';
     this.subpageView.style.display = 'none';
     this.subpageView.innerHTML     = '';
@@ -82,6 +92,7 @@ const Router = {
   },
 
   _showSubpage(page, path, immediate = false) {
+    this._restoreBottomLinks();
     this.homeView.style.display    = 'none';
     this.subpageView.style.display = '';
     this.subpageView.removeAttribute('aria-hidden');

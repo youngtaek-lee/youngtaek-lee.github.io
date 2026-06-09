@@ -2,7 +2,21 @@
 // 프로젝트 데이터
 // =============================
 const works = [
-  { id: 'sase',     title: 'Sase',     name: '사세',           category: 'Food & Beverage', year: 2023, main: 'assets/images/works/사세 메인캡쳐.png',       url: 'https://www.sase.co.kr/html/index/' },
+  {
+    id: 'sase', title: 'Sase', name: '사세', category: 'Food & Beverage', year: 2023,
+    main: 'assets/images/works/사세 메인캡쳐.png',
+    url: 'https://www.sase.co.kr/html/index/',
+    overview: '글로벌 냉동식품 기업 사세의 웹사이트 퍼블리싱 및 유지보수 작업을 진행했습니다. 제품의 품질감과 브랜드 신뢰를 시각적으로 전달하기 위해 비주얼 중심의 레이아웃을 구현하였습니다.',
+    role: '퍼블리싱 및 유지보수',
+    contribution: 100,
+    tags: ['HTML', 'CSS', 'jQuery', 'Responsive'],
+    gallery: [
+      'assets/images/works/sase-fullpage.png',
+      'assets/images/works/sase-about.png',
+      'assets/images/works/sase-distribution.png',
+      'assets/images/works/sase-production.png',
+    ],
+  },
   { id: 'bexel',    title: 'Bexel',    name: '벡셀',           category: 'Electronics',     year: 2024, main: 'assets/images/works/벡셀 메인.png',           url: 'https://www.bexel.co.kr/html/index/index.php' },
   { id: 'marusys',  title: 'Marusys',  name: '마르시스',       category: 'IT · Embedded',   year: 2023, main: 'assets/images/works/마르시스 메인.png',        url: 'https://www.marusys.com/html/index/index.php' },
   { id: 'raymats',  title: 'Raymats',  name: '레이머티리얼즈', category: 'Materials',        year: 2024, main: 'assets/images/works/레이머터리얼즈 메인.png',   url: 'https://raymats.com/html/index/' },
