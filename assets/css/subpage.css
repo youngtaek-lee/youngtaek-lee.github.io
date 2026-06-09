@@ -2,6 +2,10 @@
   background-color: var(--c-beige);
 }
 
+body.is-subpage:has(.works-detail-page) {
+  background-color: var(--c-beige);
+}
+
 #subpage-view {
   min-height: 100vh;
   --color-bg:              var(--c-beige);
@@ -20,6 +24,10 @@
   --color-border-strong:   rgba(22, 20, 21, 0.65);
   --color-border:          var(--color-line);
   --c-gray:                rgba(22, 20, 21, 0.45);
+  background-color: var(--c-beige);
+}
+
+#subpage-view:has(.works-detail-page) {
   background-color: var(--c-beige);
 }
 
@@ -166,7 +174,7 @@
 
 .process-card__border-rect {
   fill: none;
-  stroke: var(--c-gray);
+  stroke: var(--c-beige);
   stroke-width: 1;
   stroke-dasharray: 6 4;
   stroke-dashoffset: 5;
@@ -448,8 +456,6 @@ a.wl-extra__link:hover {
 
 
 /* ── Works Detail ── */
-.works-detail-page .subpage__hero,
-.works-detail-page .wd-main-img,
 .works-detail-page .wd-gallery,
 .works-detail-page .wd-nav {
   max-width: 1000px;

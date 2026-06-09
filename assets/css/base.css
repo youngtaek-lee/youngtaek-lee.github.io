@@ -5,7 +5,6 @@
   /* ── Palette ──────────────────────────────── */
   --c-dark:   #161415;
   --c-beige:  #EDD9C0;
-  --c-egg:    #DBCFB0;
   --c-orange: #F15A29;
   --c-gray:   #666666;
   --c-white:  #F8F8F8;
@@ -13,13 +12,13 @@
   /* ── Color Pairs (bg / text) ──────────────────
      A  --c-dark   / --c-beige    #161415 / #EDD9C0
      B  --c-beige  / --c-orange   #EDD9C0 / #F15A29
-     C  --c-egg    / --c-dark     #EDD9C0 / #161415
-     D  --c-orange / --c-egg      #F15A29 / #EDD9C0
+     C  --c-beige  / --c-dark     #EDD9C0 / #161415
+     D  --c-orange / --c-beige      #F15A29 / #EDD9C0
   ──────────────────────────────────────────── */
   --pair-a-bg:   var(--c-dark);    --pair-a-text: var(--c-beige);
   --pair-b-bg:   var(--c-beige);   --pair-b-text: var(--c-orange);
-  --pair-c-bg:   var(--c-egg);     --pair-c-text: var(--c-dark);
-  --pair-d-bg:   var(--c-orange);  --pair-d-text: var(--c-egg);
+  --pair-c-bg:   var(--c-beige);     --pair-c-text: var(--c-dark);
+  --pair-d-bg:   var(--c-orange);  --pair-d-text: var(--c-beige);
 
   /* ── Active Theme (Pair A) ────────────────── */
   --color-bg:    var(--c-dark);
@@ -30,7 +29,7 @@
   /* ── Compat ───────────────────────────────── */
   --color-orange:         var(--c-orange);
   --color-beige:          var(--c-beige);
-  --color-egg:            var(--c-egg);
+  --color-egg:            var(--c-beige);
   --color-gray:           var(--c-gray);
   --color-red:            var(--c-orange);
   --color-yellow:         var(--c-beige);
@@ -85,7 +84,7 @@ body::before {
   position: fixed;
   inset: 0;
   background: url('/assets/images/noise.png');
-  opacity: 0.45;
+  opacity: 0.65;
   pointer-events: none;
   z-index: 9000;
   animation: grainFlicker 1s steps(8, end) infinite;

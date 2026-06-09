@@ -398,7 +398,7 @@
 /* Pair D: orange bg / egg text */
 .bottom-nav__link--cta {
   background: var(--c-orange);
-  color: var(--c-egg);
+  color: var(--c-beige);
   border: none;
   opacity: 1;
 }
@@ -469,7 +469,7 @@ main {
 .hobby-btn {
   position: absolute;
   z-index: 2;
-  background: var(--c-egg);
+  background: var(--c-beige);
   border: 2px solid var(--c-dark);
   border-radius: 40px;
   color: var(--c-dark);
@@ -485,7 +485,7 @@ main {
 }
 
 .hobby-btn:hover {
-  background: var(--c-egg);
+  background: var(--c-beige);
 }
 
 .hobby-btn:active {
