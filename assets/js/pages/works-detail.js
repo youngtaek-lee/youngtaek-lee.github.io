@@ -51,7 +51,7 @@ const PageWorksDetail = {
     const links = document.querySelector('.bottom-nav__links');
     if (links && work?.url) {
       Router._originalBottomLinks = links.innerHTML;
-      links.innerHTML = `<a href="${work.url}" target="_blank" rel="noopener" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--c-orange);color:var(--c-beige)">VIEW SITE</a>`;
+      links.innerHTML = `<a href="mailto:koriiscat@gmail.com" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--c-dark);color:var(--c-beige);font-family:'Anton',sans-serif;font-weight:400">CONTACT</a><a href="${work.url}" target="_blank" rel="noopener" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--c-orange);color:var(--c-dark);font-family:'Anton',sans-serif;font-weight:400">VIEW SITE</a>`;
     }
     document.querySelector('.bottom-nav')?.classList.add('is-detail');
 

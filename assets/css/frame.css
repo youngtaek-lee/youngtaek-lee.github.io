@@ -349,8 +349,8 @@
   justify-content: center;
   width: 45px;
   height: 45px;
-  background: var(--c-dark);
-  color: var(--c-beige);
+  background: var(--c-beige);
+  color: var(--c-dark);
   border-radius: 8px;
   flex-shrink: 0;
   transition: opacity 0.2s;
@@ -366,8 +366,8 @@
 }
 
 .bottom-nav.is-detail .bottom-nav__top {
-  background: var(--c-dark);
-  color: var(--c-beige);
+  background: var(--c-beige);
+  color: var(--c-dark);
 }
 
 .bottom-nav__links {
@@ -382,8 +382,8 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  background: var(--c-beige);
-  color: var(--c-dark);
+  background: var(--c-dark);
+  color: var(--c-beige);
   opacity: 0.9;
   padding: 15px 25px;
   border-radius: 8px;
@@ -500,7 +500,7 @@ main {
   line-height: 1;
   text-transform: uppercase;
   text-align: left;
-  color: var(--c-egg);
+  color: var(--c-beige);
 }
 
 .footer__last-letter {
