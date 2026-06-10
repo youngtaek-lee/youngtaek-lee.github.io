@@ -1,4 +1,4 @@
-﻿/* =============================
+/* =============================
    Custom Cursor
 ============================= */
 .cursor {
@@ -32,7 +32,7 @@
 .intro {
   position: fixed;
   inset: 0;
-  background: var(--color-dark);
+  background: var(--color-bg);
   z-index: 99990;
   display: flex;
   align-items: center;
@@ -56,12 +56,12 @@
 }
 
 .intro__sparkle--gray {
-  color: #555;
+  color: var(--color-gray);
   opacity: 0;
 }
 
 .intro__sparkle--orange {
-  color: var(--c-orange);
+  color: var(--color-accent);
   clip-path: inset(100% 0 0 0);
 }
 
@@ -171,6 +171,12 @@
   opacity: 0.8;
 }
 
+.header__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .header__links {
   display: flex;
   align-items: center;
@@ -188,6 +194,34 @@
 .header__menu-btn {
   display: none;
 }
+
+/* =============================
+   Theme Toggle
+============================= */
+.theme-toggle {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-toggle:hover {
+  transform: rotate(25deg);
+}
+
+.theme-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.theme-toggle__moon { display: none; }
+[data-theme="summer"] .theme-toggle__sun  { display: none; }
+[data-theme="summer"] .theme-toggle__moon { display: block; }
 
 /* =============================
    Menu Overlay
@@ -325,8 +359,8 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  background: var(--c-dark);
-  color: var(--c-beige);
+  background: var(--basic-dark);
+  color: var(--basic-beige);
   border: 1px solid var(--color-border-medium);
   border-radius: 10px;
   padding: 4px;
@@ -349,8 +383,8 @@
   justify-content: center;
   width: 45px;
   height: 45px;
-  background: var(--c-beige);
-  color: var(--c-dark);
+  background: var(--basic-beige);
+  color: var(--basic-dark);
   border-radius: 8px;
   flex-shrink: 0;
   transition: opacity 0.2s;
@@ -366,8 +400,8 @@
 }
 
 .bottom-nav.is-detail .bottom-nav__top {
-  background: var(--c-beige);
-  color: var(--c-dark);
+  background: var(--basic-beige);
+  color: var(--basic-dark);
 }
 
 .bottom-nav__links {
@@ -382,8 +416,8 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  background: var(--c-dark);
-  color: var(--c-beige);
+  background: var(--basic-dark);
+  color: var(--basic-beige);
   opacity: 0.9;
   padding: 15px 25px;
   border-radius: 8px;
@@ -397,15 +431,15 @@
 
 /* Pair D: orange bg / egg text */
 .bottom-nav__link--cta {
-  background: var(--c-orange);
-  color: var(--c-beige);
+  background: var(--basic-orange);
+  color: var(--basic-beige);
   border: none;
   opacity: 1;
 }
 
 .bottom-nav__link--cta:hover {
   opacity: 1;
-  background: var(--c-orange);
+  background: var(--basic-orange);
   border-color: transparent;
   filter: brightness(0.88);
 }
@@ -426,14 +460,23 @@ main {
   overflow: visible;
 }
 
+/* summer 푸터: 쿨 그레이 배경 + 로얄 텍스트 */
+[data-theme="summer"] .footer,
+[data-theme="summer"] .statement {
+  --c-fg-rgb: 0, 86, 179;
+  --c-bg-rgb: 184, 196, 204;
+  --color-bg:   var(--summer-cool-gray);
+  --color-text: var(--summer-royal);
+}
+
 .footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 0;
-  background: var(--pair-a-bg);
-  color: var(--pair-a-text);
+  background: var(--color-bg);
+  color: var(--color-text);
   padding: 40px 30px 30px;
   display: flex;
   flex-direction: column;
@@ -469,10 +512,10 @@ main {
 .hobby-btn {
   position: absolute;
   z-index: 2;
-  background: var(--c-beige);
-  border: 2px solid var(--c-dark);
+  background: var(--color-text);
+  border: 2px solid var(--color-bg);
   border-radius: 40px;
-  color: var(--c-dark);
+  color: var(--color-bg);
   padding: 16px 40px;
   font-family: var(--font-display);
   font-size: 1.1rem;
@@ -480,16 +523,16 @@ main {
   text-transform: uppercase;
   cursor: pointer;
   outline: none;
-  box-shadow: 0 4px 0 0 var(--c-dark);
+  box-shadow: 0 4px 0 0 var(--color-bg);
   transition: all 0.1s ease;
 }
 
 .hobby-btn:hover {
-  background: var(--c-beige);
+  background: var(--color-text);
 }
 
 .hobby-btn:active {
-  box-shadow: 0 1px 0 0 var(--c-dark);
+  box-shadow: 0 1px 0 0 var(--color-bg);
 }
 
 .footer__big {
@@ -500,7 +543,7 @@ main {
   line-height: 1;
   text-transform: uppercase;
   text-align: left;
-  color: var(--c-beige);
+  color: var(--color-text);
 }
 
 .footer__last-letter {
@@ -514,11 +557,11 @@ main {
   right: -0.3em;
   width: 0.6em;
   height: 0.6em;
-  color: var(--c-orange);
+  color: var(--color-accent);
   display: block;
   pointer-events: none;
   opacity: 0;
-  filter: drop-shadow(0 0 12px var(--c-orange));
+  filter: drop-shadow(0 0 12px var(--color-accent));
 }
 
 .footer__divider {
@@ -562,7 +605,7 @@ main {
 }
 
 .footer__email:hover {
-  color: var(--color-white);
+  color: var(--color-text);
 }
 
 .footer__col-divider {
@@ -587,7 +630,7 @@ main {
   padding: 5px;
   min-width: 280px;
   height: 50px;
-  border: 1.5px solid var(--c-orange);
+  border: 1.5px solid var(--color-accent);
   border-radius: 100px;
   text-decoration: none;
   white-space: nowrap;
@@ -596,8 +639,8 @@ main {
 .footer__email-btn__chip {
   position: absolute;
   inset: 4px;
-  background: var(--c-orange);
-  color: var(--c-dark);
+  background: var(--color-accent);
+  color: var(--color-bg);
   border-radius: 100px;
   display: flex;
   align-items: center;
@@ -621,14 +664,14 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--c-orange);
+  color: var(--color-accent);
   font-size: 1.1rem;
   flex-shrink: 0;
   transition: color 0.3s ease;
 }
 
 .footer__email-btn:hover .footer__email-btn__arrow {
-  color: var(--c-dark);
+  color: var(--color-bg);
 }
 
 
@@ -652,7 +695,7 @@ main {
 
 .footer__sns-link:hover,
 .footer__pages-link:hover {
-  color: var(--color-white);
+  color: var(--color-text);
 }
 
 .footer__sns-link--soon {
@@ -678,7 +721,7 @@ main {
 ============================= */
 .statement {
   min-height: var(--footer-height);
-  background: var(--c-dark);
+  background: var(--color-bg);
 }
 
 /* =============================

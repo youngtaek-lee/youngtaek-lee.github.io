@@ -1,4 +1,4 @@
-﻿async function buildGithubCalendar(el, calAnim) {
+async function buildGithubCalendar(el, calAnim) {
   const CELL = 14, GAP = 3, STEP = 17, LABEL_H = 22;
   const COLORS = [
     'rgba(237,217,192,0.10)',

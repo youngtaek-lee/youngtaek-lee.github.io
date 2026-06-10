@@ -1,15 +1,15 @@
-﻿body.is-subpage {
-  background-color: var(--c-beige);
+body.is-subpage {
+  background-color: var(--basic-beige);
 }
 
 body.is-subpage:has(.works-detail-page) {
-  background-color: var(--c-beige);
+  background-color: var(--basic-beige);
 }
 
 #subpage-view {
   min-height: 100vh;
-  --color-bg:              var(--c-beige);
-  --color-text:            var(--c-dark);
+  --color-bg:              var(--basic-beige);
+  --color-text:            var(--basic-dark);
   --color-line:            rgba(22, 20, 21, 0.15);
   --color-sub:             rgba(22, 20, 21, 0.45);
   --color-surface:         rgba(22, 20, 21, 0.05);
@@ -23,12 +23,12 @@ body.is-subpage:has(.works-detail-page) {
   --color-border-light:    rgba(22, 20, 21, 0.4);
   --color-border-strong:   rgba(22, 20, 21, 0.65);
   --color-border:          var(--color-line);
-  --c-gray:                rgba(22, 20, 21, 0.45);
-  background-color: var(--c-beige);
+  --basic-gray:                rgba(22, 20, 21, 0.45);
+  background-color: var(--basic-beige);
 }
 
 #subpage-view:has(.works-detail-page) {
-  background-color: var(--c-beige);
+  background-color: var(--basic-beige);
 }
 
 .subpage {
@@ -174,7 +174,7 @@ body.is-subpage:has(.works-detail-page) {
 
 .process-card__border-rect {
   fill: none;
-  stroke: var(--c-beige);
+  stroke: var(--basic-beige);
   stroke-width: 1;
   stroke-dasharray: 6 4;
   stroke-dashoffset: 5;
@@ -182,7 +182,7 @@ body.is-subpage:has(.works-detail-page) {
 }
 
 .process-card:hover .process-card__border-rect {
-  stroke: var(--c-orange);
+  stroke: var(--basic-orange);
   stroke-dasharray: 10 0;
   stroke-dashoffset: 0;
 }
@@ -431,9 +431,9 @@ body.is-subpage:has(.works-detail-page) {
 .wl-extra__link {
   display: flex;
   align-items: center;
-  background: var(--c-dark);
-  color: var(--c-beige);
-  border: 1px solid var(--c-dark);
+  background: var(--basic-dark);
+  color: var(--basic-beige);
+  border: 1px solid var(--basic-dark);
   border-radius: 8px;
   padding: 12px 20px;
   font-family: var(--font-body);

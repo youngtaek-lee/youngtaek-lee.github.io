@@ -92,60 +92,26 @@ function initWorksReveal() {
 }
 
 // =============================
-// Hero → Dark 전환
+// Hero → Dark 전환 (비활성화 — CSS 변수로 처리)
 // =============================
+let _darkTransitionTl = null;
+
 function initDarkTransition() {
-  const tl = gsap.timeline({ paused: true });
+  return;
+}
 
-  tl.fromTo('main',
-    { backgroundColor: '#161415' },
-    { backgroundColor: '#EDD9C0', ease: 'none' },
-    0
-  ).fromTo('.about-text',
-    { backgroundColor: '#161415' },
-    { backgroundColor: '#EDD9C0', ease: 'none' },
-    0
-  ).fromTo('body',
-    { color: '#EDD9C0' },
-    { color: '#161415', ease: 'none' },
-    0
-  ).fromTo('.header__logo',
-    { color: '#EDD9C0' },
-    { color: '#161415', ease: 'none' },
-    0
-  ).fromTo('.header__nav',
-    { color: '#EDD9C0' },
-    { color: '#161415', ease: 'none' },
-    0
-  ).fromTo('.header__nav-btn',
-    { color: '#EDD9C0', borderColor: 'rgba(237,217,192,0.25)' },
-    { color: '#161415', borderColor: 'rgba(22,20,21,0.2)', ease: 'none' },
-    0
-  ).fromTo('.menu-btn',
-    { color: '#EDD9C0' },
-    { color: '#161415', ease: 'none' },
-    0
-  ).fromTo('.header__menu-btn',
-    { color: '#EDD9C0' },
-    { color: '#161415', ease: 'none' },
-    0
+function refreshDarkTransition() {
+  ScrollTrigger.getById('dark-transition')?.kill();
+  if (_darkTransitionTl) {
+    _darkTransitionTl.kill();
+    _darkTransitionTl = null;
+  }
+  gsap.set(
+    ['main', '.about-text', 'body', '.header__logo', '.header__nav',
+     '.header__nav-btn', '.menu-btn', '.header__menu-btn', '.theme-toggle'],
+    { clearProps: 'all' }
   );
-
-  // 서브페이지 여부를 직접 체크해 헤더 충돌 없이 동작
-  ScrollTrigger.create({
-    id: 'dark-transition',
-    trigger: '.hero-wrap',
-    start: 'top top',
-    end: 'bottom top',
-    onUpdate(self) {
-      if (document.body.classList.contains('is-subpage')) return;
-      tl.progress(self.progress);
-    },
-    onRefresh(self) {
-      if (document.body.classList.contains('is-subpage')) return;
-      tl.progress(self.progress);
-    },
-  });
+  initDarkTransition();
 }
 
 // =============================

@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     history.replaceState({}, '', redirect);
   }
 
+  initTheme();
   initPageTransition();
   Router.init();
 

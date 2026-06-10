@@ -1,8 +1,9 @@
-﻿/* =============================
+/* =============================
    CONTACT
 ============================= */
 .contact {
   min-height: 100vh;
+  background: var(--basic-cool-dark);
 }
 
 .contact__inner {

@@ -1,9 +1,8 @@
-﻿/* =============================
+/* =============================
    WORKS — Home List
 ============================= */
 .works {
   /* padding: 100px 0px; */
-  border-top: 1px solid var(--color-line);
   padding-bottom: 0;
   overflow-x: clip;
 }
@@ -19,7 +18,6 @@
   align-items: flex-end;
   justify-content: flex-start;
   padding: 20px 0;
-  border-bottom: 1px solid var(--color-line);
 }
 
 .works__sub-clip {
@@ -29,7 +27,7 @@
 .works__sub {
   display: none;
   font-size: 1rem;
-  color: var(--c-dark);
+  color: var(--basic-dark);
   line-height: 1.3;
   margin-left: 15px;
   margin-bottom: 15px;
@@ -64,7 +62,7 @@
   padding: 24px 0;
   padding-right: 3.5rem;
   text-decoration: none;
-  color: var(--c-dark);
+  color: var(--color-text);
   position: relative;
 }
 
@@ -146,7 +144,7 @@
   translate: 0 -50%;
   width: 2.8rem;
   height: 2.8rem;
-  color: var(--c-gray);
+  color: var(--basic-gray);
   opacity: 0.35;
   transform: rotate(0deg);
   transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1),
@@ -156,7 +154,7 @@
 
 .works__item:hover .works__sparkle {
   transform: rotate(45deg);
-  color: var(--c-orange);
+  color: var(--basic-orange);
   opacity: 1;
 }
 

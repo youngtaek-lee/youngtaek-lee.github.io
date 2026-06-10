@@ -1,79 +1,61 @@
 /* =============================
-   CSS Variables
+   Palette
 ============================= */
 :root {
-  /* ── Palette ──────────────────────────────── */
-  --c-dark:   #161415;
-  --c-beige:  #EDD9C0;
-  --c-orange: #F15A29;
-  --c-gray:   #666666;
-  --c-white:  #F8F8F8;
-
-  /* ── Color Pairs (bg / text) ──────────────────
-     A  --c-dark   / --c-beige    #161415 / #EDD9C0
-     B  --c-beige  / --c-orange   #EDD9C0 / #F15A29
-     C  --c-beige  / --c-dark     #EDD9C0 / #161415
-     D  --c-orange / --c-beige      #F15A29 / #EDD9C0
-  ──────────────────────────────────────────── */
-  --pair-a-bg:   var(--c-dark);    --pair-a-text: var(--c-beige);
-  --pair-b-bg:   var(--c-beige);   --pair-b-text: var(--c-orange);
-  --pair-c-bg:   var(--c-beige);     --pair-c-text: var(--c-dark);
-  --pair-d-bg:   var(--c-orange);  --pair-d-text: var(--c-beige);
-
-  /* ── Active Theme (Pair A) ────────────────── */
-  --color-bg:    var(--c-dark);
-  --color-text:  var(--c-beige);
-  --color-white: var(--c-white);
-  --color-line:  rgba(237, 217, 192, 0.5);
-
-  /* ── Compat ───────────────────────────────── */
-  --color-orange:         var(--c-orange);
-  --color-beige:          var(--c-beige);
-  --color-egg:            var(--c-beige);
-  --color-gray:           var(--c-gray);
-  --color-red:            var(--c-orange);
-  --color-yellow:         var(--c-beige);
-  --color-surface:        rgba(237, 217, 192, 0.08);
-  --color-surface-raised: rgba(237, 217, 192, 0.13);
-  --color-dark:           var(--c-dark);
-  --color-sub:            var(--c-gray);
-  --color-text-sub:       var(--color-sub);
-  --color-border:         var(--color-line);
-  --color-accent:         var(--c-orange);
-  --color-point:          var(--c-beige);
-  --color-accent-light:   var(--c-beige);
-  --color-accent-dim:     rgba(241, 90, 41, 0.12);
-  --color-point-dim:      rgba(237, 217, 192, 0.15);
-
-  /* ── UI — Overlays & Panels ───────────────── */
-  --color-overlay: rgba(0, 0, 0, 0.55);
-  --color-panel:   rgba(22, 20, 21, 0.95);
-  --color-shadow:  rgba(0, 0, 0, 0.3);
-
-  /* ── UI — Beige-on-dark text ──────────────── */
-  --color-text-soft:   rgba(237, 217, 192, 0.85);
-  --color-text-mid:    rgba(237, 217, 192, 0.55);
-  --color-text-dim:    rgba(237, 217, 192, 0.4);
-  --color-text-subtle: rgba(237, 217, 192, 0.25);
-
-  /* ── UI — Beige-on-dark borders ───────────── */
-  --color-border-subtle: rgba(237, 217, 192, 0.08);
-  --color-border-medium: rgba(237, 217, 192, 0.15);
-  --color-border-light:  rgba(237, 217, 192, 0.5);
-  --color-border-strong: rgba(237, 217, 192, 0.7);
+  --basic-orange:    hsl(15, 88%, 55%);
+  --basic-beige:     #EDD9C0;
+  --basic-dark:      #1C1A17;
+  --basic-gray:      #666666;
+  --basic-white:     #F8F8F8;
+  --basic-line:      #F8F8F8;
+  
+  --summer-royal:    #0056B3;
+  --summer-cream:    #EAE8DF;
+  --summer-dark:     #15191f;
+  --summer-gray:     #b8c4cc;
+  --summer-white:    #15191f;
+  --summer-line:     #15191f;
 
   /* Typography */
   --font-base:    'Anton', 'Pretendard Variable', 'Pretendard', sans-serif;
   --font-display: 'Anton', 'Pretendard Variable', 'Pretendard', sans-serif;
   --font-body:    'Pretendard Variable', 'Pretendard', sans-serif;
-
   --font-display-weight:  900;
   --font-display-stretch: 1.1;
   --font-body-stretch:    1.12;
 
   /* Layout */
-  --max-width:    1280px;
+  --max-width:     1280px;
   --footer-height: 50vh;
+}
+
+/* =============================
+   Theme: basic
+============================= */
+[data-theme="basic"] {
+  --color-bg:           var(--basic-dark);
+  --color-text:         var(--basic-beige);
+  --color-accent:       var(--basic-orange);
+  --color-white:        var(--basic-white);
+  --color-gray:         var(--basic-gray);
+  --color-line:         var(--basic-line);
+}
+
+/* =============================
+   Theme: summer
+============================= */
+[data-theme="summer"] {
+  --color-bg:           var(--summer-cream);
+  --color-text:         var(--summer-black);
+  --color-accent:       var(--summer-royal);
+  --color-white:        var(--summer-cream);
+  --color-gray:         var(--summer-gray);
+  --color-line:         var(--summer-line);
+}
+
+/* FOUC prevention — summer hero starts royal */
+html[data-theme="summer"] {
+  background-color: var(--summer-royal);
 }
 
 /* =============================
@@ -90,6 +72,10 @@ body::before {
   animation: grainFlicker 1s steps(8, end) infinite;
 }
 
+[data-theme="summer"] body::before {
+  opacity: 0.35;
+}
+
 @keyframes grainFlicker {
   0%   { background-position: 0 0; }
   50%  { background-position: -1000px -1000px; }
@@ -99,9 +85,8 @@ body::before {
 /* =============================
    Base
 ============================= */
-
 html {
-  background-color: var(--c-dark);
+  background-color: var(--color-bg);
 }
 
 body {
@@ -110,11 +95,10 @@ body {
   color: var(--color-text);
   line-height: 1.5;
   scrollbar-width: none;
+  transition: background-color 0.35s ease;
 }
 
-body::-webkit-scrollbar {
-  display: none;
-}
+body::-webkit-scrollbar { display: none; }
 
 a {
   text-decoration: none;
@@ -145,9 +129,7 @@ button {
   margin-right: -0.06em;
 }
 
-.reveal-word__inner {
-  display: inline-block;
-}
+.reveal-word__inner { display: inline-block; }
 
 .reveal-char {
   display: inline-block;
@@ -157,9 +139,7 @@ button {
   margin-bottom: -0.2em;
 }
 
-.reveal-char__inner {
-  display: inline-block;
-}
+.reveal-char__inner { display: inline-block; }
 
 .word-clip {
   display: inline-block;
@@ -169,9 +149,7 @@ button {
   margin-right: -0.06em;
 }
 
-.word {
-  display: inline-block;
-}
+.word { display: inline-block; }
 
 /* =============================
    Page Transition
@@ -184,12 +162,12 @@ button {
   will-change: transform;
 }
 .page-transition {
-  background: var(--c-dark);
+  background: var(--basic-dark);
   z-index: 99990;
   transform: translateY(100%);
 }
 .page-transition__trail {
-  background: var(--c-orange);
+  background: var(--basic-orange);
   z-index: 99989;
   transform: translateY(100%);
 }

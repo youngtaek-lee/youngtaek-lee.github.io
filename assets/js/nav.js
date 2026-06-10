@@ -80,6 +80,24 @@ function initMobileMenu() {
 }
 
 // =============================
+// Theme Toggle
+// =============================
+function initTheme() {
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+
+  btn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'basic' ? 'summer' : 'basic';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    refreshDarkTransition();
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = next === 'basic' ? '#1C1A17' : '#0056B3';
+  });
+}
+
+// =============================
 // Lenis 스무스 스크롤
 // =============================
 function initLenis() {
