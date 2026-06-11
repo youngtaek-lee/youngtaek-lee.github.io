@@ -359,9 +359,9 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  background: var(--basic-dark);
+  background: var(--color-bg);
+  border:1px solid var(--color-line);
   color: var(--basic-beige);
-  border: 1px solid var(--color-border-medium);
   border-radius: 10px;
   padding: 4px;
   line-height: 1;

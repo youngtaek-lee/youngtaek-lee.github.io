@@ -311,7 +311,7 @@ function initHobbyPopcorn() {
     svg.style.cssText = 'position:absolute;width:0;height:0;';
     svg.innerHTML = `<defs><filter id="icon-outline" color-interpolation-filters="sRGB" x="-10%" y="-10%" width="120%" height="120%">
       <feMorphology operator="dilate" radius="3" in="SourceAlpha" result="expanded"/>
-      <feFlood flood-color="#ffffff" flood-opacity="0.4" result="color"/>
+      <feFlood flood-color="#ffffff" flood-opacity="0.8" result="color"/>
       <feComposite in="color" in2="expanded" operator="in" result="outline"/>
       <feMerge><feMergeNode in="outline"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter></defs>`;
