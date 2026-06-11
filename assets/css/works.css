@@ -82,7 +82,8 @@
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0;
-  overflow: hidden;
+  overflow: visible;
+  clip-path: inset(0 0 -0.25em 0);
   position: relative;
   height: 1em;
 }
@@ -97,13 +98,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  transform: translateY(105%);
+  transform: translateY(130%);
   font-family: var(--font-body);
   font-weight: 700;
 }
 
 .works__item:hover .works__item__title__en {
-  transform: translateY(-105%);
+  transform: translateY(-130%);
 }
 
 .works__item:hover .works__item__title__ko {
