@@ -24,16 +24,26 @@ async function buildGithubCalendar(el, calAnim) {
     return;
   }
 
+  contributions.sort((a, b) => (a.date < b.date ? -1 : 1));
+  const dayMap = new Map(contributions.map(c => [c.date, c]));
+  const firstDate = new Date(contributions[0].date + 'T00:00:00');
+  const lastDate = new Date(contributions[contributions.length - 1].date + 'T00:00:00');
+  // 첫째 날이 속한 주의 일요일로 시작
+  const gridStart = new Date(firstDate);
+  gridStart.setDate(gridStart.getDate() - gridStart.getDay());
+  // 마지막 날이 속한 주의 토요일로 끝
+  const gridEnd = new Date(lastDate);
+  gridEnd.setDate(gridEnd.getDate() + (6 - gridEnd.getDay()));
+
   const weeks = [];
-  let week = [];
-  const startDow = new Date(contributions[0].date + 'T00:00:00').getDay();
-  for (let i = 0; i < startDow; i++) week.push(null);
-  for (const c of contributions) {
-    week.push(c);
-    if (week.length === 7) { weeks.push(week); week = []; }
-  }
-  if (week.length) {
-    while (week.length < 7) week.push(null);
+  const cur = new Date(gridStart);
+  while (cur <= gridEnd) {
+    const week = [];
+    for (let d = 0; d < 7; d++) {
+      const key = `${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}-${String(cur.getDate()).padStart(2,'0')}`;
+      week.push(dayMap.get(key) ?? null);
+      cur.setDate(cur.getDate() + 1);
+    }
     weeks.push(week);
   }
 
