@@ -129,6 +129,27 @@
   height: 24px;
   color: var(--color-accent);
   flex-shrink: 0;
+  opacity: 0;
+}
+
+.header__sparkle-fixed {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  z-index: 1001;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  color: var(--color-accent);
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.header__sparkle-fixed svg {
+  width: 24px;
+  height: 24px;
 }
 
 .header__nav-btn {
@@ -146,12 +167,6 @@
 
 .header__nav-btn:hover {
   opacity: 0.7;
-}
-
-.header__nav-btn.is-active {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-bg);
 }
 
 .wd-header-btn {

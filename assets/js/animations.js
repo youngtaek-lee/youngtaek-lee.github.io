@@ -11,6 +11,14 @@ function initHeroEntrance() {
 
   const header = document.querySelector('.header');
   if (header) gsap.set(header, { opacity: 1, visibility: 'visible' });
+  const sparkleFxd = document.querySelector('.header__sparkle-fixed');
+  if (sparkleFxd && header) {
+    sparkleFxd.style.height = header.offsetHeight + 'px';
+    gsap.set(sparkleFxd, { opacity: 1, visibility: 'visible' });
+    window.addEventListener('resize', () => {
+      sparkleFxd.style.height = header.offsetHeight + 'px';
+    });
+  }
 }
 
 // =============================
