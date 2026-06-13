@@ -110,10 +110,6 @@ const Router = {
       setTimeout(runInit, 400);
     }
 
-    // 투명 헤더 위에 베이지 bg가 오므로 텍스트를 dark로 강제
-    gsap.set(['.header__logo', '.header__nav', '.header__menu-btn', '.menu-btn'], { color: '#161415' });
-    gsap.set('.header__nav-btn', { color: '#161415', borderColor: 'rgba(22,20,21,0.2)' });
-
     // footer 등 공유 요소의 ScrollTrigger 위치를 서브페이지 레이아웃 기준으로 재계산
     requestAnimationFrame(() => {
       if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();

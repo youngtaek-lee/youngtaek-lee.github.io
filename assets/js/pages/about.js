@@ -191,15 +191,15 @@ const PageAbout = {
               { name: 'CSS3',        desc: '레이아웃 & 스타일링',       icon: `<i class="devicon-css3-plain"></i>`,        color: '#1572B6' },
               { name: 'JavaScript',  desc: '인터랙션 & 로직 구현',      icon: `<i class="devicon-javascript-plain"></i>`,  color: '#F7DF1E' },
               { name: 'jQuery',      desc: 'DOM 조작 & 플러그인',       icon: `<i class="devicon-jquery-plain"></i>`,      color: '#0769AD' },
-              { name: 'GSAP',        desc: '고성능 웹 애니메이션',      icon: `<img src="assets/images/gsap.svg" class="skill-card__img-icon" alt="">`, color: null },
+              { name: 'GSAP',        desc: '고성능 웹 애니메이션',      color: '#88CE02', icon: `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor"><path d="M9.83 7.59c.817.005 1.437.238 1.842.692c.383.431.567 1.054.547 1.85l-.014.061a.16.16 0 0 1-.148.095h-1.659a.2.2 0 0 1-.199-.195q.002-.634-.39-.71l-.12-.011c-.342 0-.564.211-.57.579c-.007.41.225.783.885 1.423c.868.816 1.217 1.539 1.2 2.493c-.027 1.544-1.077 2.543-2.673 2.543c-.815 0-1.438-.219-1.853-.649c-.42-.437-.612-1.078-.572-1.906a.17.17 0 0 1 .049-.112a.16.16 0 0 1 .112-.045h1.716a.2.2 0 0 1 .069.017a.17.17 0 0 1 .083.098q.008.03.002.06c-.019.298.034.521.151.645a.4.4 0 0 0 .311.121c.317 0 .503-.225.51-.615c.006-.337-.102-.634-.682-1.232c-.751-.734-1.424-1.492-1.403-2.684a2.48 2.48 0 0 1 .774-1.781c.514-.482 1.216-.737 2.032-.737m-5.783.028c.747-.006 1.334.224 1.742.685c.432.487.651 1.221.652 2.182a.16.16 0 0 1-.161.158H4.479a.13.13 0 0 1-.084-.036a.13.13 0 0 1-.035-.085c-.014-.623-.188-.946-.532-.984l-.071-.004c-.69.001-1.097.938-1.313 1.458a5.5 5.5 0 0 0-.426 2.301c.015.366.074.88.42 1.093c.308.189.747.064 1.013-.146c.265-.209.479-.571.569-.901q.02-.07.001-.098q-.01-.011-.032-.015l-.504-.004a.18.18 0 0 1-.129-.06a.1.1 0 0 1-.025-.05a.1.1 0 0 1 0-.056l.316-1.374a.18.18 0 0 1 .157-.134v-.003h3.035l.021.001c.079.01.135.084.134.164v.004l-.316 1.371c-.017.078-.095.135-.184.135h-.381a.064.064 0 0 0-.061.046c-.352 1.194-.829 2.016-1.458 2.509c-.536.42-1.195.616-2.077.616c-.792 0-1.326-.255-1.779-.758c-.598-.666-.845-1.754-.695-3.067c.27-2.463 1.546-4.948 4.004-4.948m16.969.132c2.01 0 3.014.912 2.983 2.711c-.037 2.108-1.321 3.658-3.254 4.016q-.413.073-.833.068l-.934-.004a.06.06 0 0 0-.058.057q0 .015.008.029a.1.1 0 0 0 .022.021l.794.414q.098.053.076.164l-.207.933c-.017.078-.08.123-.171.123h-1.703a.2.2 0 0 1-.071-.015a.2.2 0 0 1-.058-.044a.12.12 0 0 1-.025-.107l1.896-8.241c.019-.086.1-.124.172-.124zm-3.743.012a.2.2 0 0 1 .051.033a.2.2 0 0 1 .034.052a.2.2 0 0 1 .011.059l-.011 8.213a.14.14 0 0 1-.003.058a.14.14 0 0 1-.081.091a.14.14 0 0 1-.064.013h-1.813a.16.16 0 0 1-.111-.045a.2.2 0 0 1-.033-.051a.2.2 0 0 1-.012-.06l.039-.797c.002-.087 0-.111-.051-.117l-.068-.002h-1.714c-.124 0-.133.011-.177.125l-.356.857q-.048.09-.192.09h-1.795c-.109 0-.187-.108-.146-.209l3.718-8.199c.025-.049.063-.123.149-.123h2.566q.03 0 .059.012M15.5 9.985c-.008-.032-.034-.029-.055.013a1 1 0 0 0-.04.093l-1.284 3.183l-.016.048q-.002.01-.001.019l.007.017a.04.04 0 0 0 .015.012a.04.04 0 0 0 .017.006l1.072.014c.119-.01.125-.016.137-.137c.002-.043.154-3.231.148-3.268m4.612-.403a.06.06 0 0 0-.04.017a.06.06 0 0 0-.018.04a.06.06 0 0 0 .03.051l.842.445c.042.023.043.063.029.132c-.007.031-.54 2.375-.539 2.377c.003.003.019.011.099.011h.036c.895-.036 1.383-1.094 1.401-2.121c.009-.555-.18-.896-.523-.946l-.071-.006z"/></svg>`, color: null },
               { name: 'Three.js',    desc: '3D 웹 그래픽 렌더링',       icon: `<i class="devicon-threejs-original"></i>`,  color: '#ffffff' },
               { name: 'Git',         desc: '버전 관리 & 협업',          icon: `<i class="devicon-git-plain"></i>`,         color: '#F05032' },
               { name: 'Figma',       desc: '디자인 시안 해석',          icon: `<i class="devicon-figma-plain"></i>`,       color: '#F24E1E' },
-              { name: 'Photoshop',   desc: '이미지 편집 & 보정',        icon: `<svg viewBox="0 0 32 32" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="5" fill="#001E36"/><text x="3" y="24" font-family="Arial,sans-serif" font-weight="bold" font-size="19" fill="#31A8FF">Ps</text></svg>`, color: null },
-              { name: 'Illustrator', desc: '벡터 그래픽 & 에셋',        icon: `<svg viewBox="0 0 32 32" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><rect width="32" height="32" rx="5" fill="#310000"/><text x="2" y="24" font-family="Arial,sans-serif" font-weight="bold" font-size="19" fill="#FF9A00">Ai</text></svg>`, color: null },
+              { name: 'Photoshop',   desc: '이미지 편집 & 보정',        icon: `<i class="devicon-photoshop-plain"></i>`,   color: '#31A8FF' },
+              { name: 'Illustrator', desc: '벡터 그래픽 & 에셋',        icon: `<i class="devicon-illustrator-plain"></i>`, color: '#FF9A00' },
             ].map(s => `
-              <div class="skill-card">
-                <div class="skill-card__icon"${s.color ? ` style="color:${s.color}"` : ''}>${s.icon}</div>
+              <div class="skill-card"${s.color ? ` style="--icon-color:${s.color}"` : ''}>
+                <div class="skill-card__icon">${s.icon}</div>
                 <span class="skill-card__name">${s.name}</span>
                 <span class="skill-card__desc">${s.desc}</span>
               </div>
@@ -322,51 +322,5 @@ const PageAbout = {
     const calEl = document.getElementById('about-github-calendar');
     if (calEl) buildGithubCalendar(calEl, calAnim);
 
-    // Skill cards: 호버 카드 오른쪽을 열어서 100% 노출, 이후 카드는 밀려남
-    const skillCardEls = [...document.querySelectorAll('.skill-card')];
-    if (skillCardEls.length) {
-      // 카드별 개별 기울기 & 브랜드 컬러 기반 어두운 배경
-      const angles  = [-2, 1, -1.5, 2.5, -0.5, 1.5, -2.2, 0.8, -1, 2];
-      const bgColors = [
-        '#1e0f0a', // HTML5       — dark orange-red
-        '#0a121b', // CSS3        — dark blue
-        '#151207', // JavaScript  — dark yellow
-        '#091018', // jQuery      — dark navy
-        '#0e1505', // GSAP        — dark green
-        '#111010', // Three.js    — neutral dark
-        '#1e0d09', // Git         — dark red-orange
-        '#1c0c08', // Figma       — dark red
-        '#08111b', // Photoshop   — dark cyan-blue
-        '#170f04', // Illustrator — dark amber
-      ];
-      skillCardEls.forEach((card, i) => {
-        card.style.setProperty('--card-rotate', `${angles[i]}deg`);
-        card.style.setProperty('--card-bg', bgColors[i]);
-      });
-
-      // aspect-ratio로 결정된 초기 높이를 측정 후 고정 — 너비 변화 시 높이 흔들림 방지
-      const lockHeights = () => {
-        skillCardEls.forEach(c => c.style.height = '');
-        const h = skillCardEls[0].offsetHeight;
-        skillCardEls.forEach(c => c.style.height = h + 'px');
-      };
-      requestAnimationFrame(lockHeights);
-      window.addEventListener('resize', lockHeights);
-
-      const isSingleRow = () => window.innerWidth > 768;
-
-      skillCardEls.forEach((card, i) => {
-        card.addEventListener('mouseenter', () => {
-          if (!isSingleRow()) return;
-          if (skillCardEls[i + 1]) {
-            const overlap = card.offsetWidth * 0.1;
-            skillCardEls[i + 1].style.marginLeft = `-${overlap}px`;
-          }
-        });
-        card.addEventListener('mouseleave', () => {
-          if (skillCardEls[i + 1]) skillCardEls[i + 1].style.marginLeft = '';
-        });
-      });
-    }
   },
 };
