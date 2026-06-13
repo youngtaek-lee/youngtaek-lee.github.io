@@ -31,12 +31,12 @@ const PageWorksList = {
         ${extras.length ? `
         <section class="subpage__section">
           <p class="subpage__section-title">More Works</p>
-          <ul class="wl-extra">
+          <ul class="more-works">
             ${extras.map(e => `
-              <li class="wl-extra__item">
+              <li class="more-works__item">
                 ${e.url
-                  ? `<a href="${e.url}" target="_blank" rel="noopener" class="wl-extra__link">${e.name} ↗</a>`
-                  : `<span class="wl-extra__link wl-extra__link--filled">${e.name}</span>`
+                  ? `<a href="${e.url}" target="_blank" rel="noopener" class="more-works__link">${e.name} ↗</a>`
+                  : `<span class="more-works__link more-works__link--filled">${e.name}</span>`
                 }
               </li>
             `).join('')}
@@ -66,10 +66,10 @@ const PageWorksList = {
       delay: 0.2,
     });
 
-    gsap.from('.wl-extra__item', {
+    gsap.from('.more-works__item', {
       y: 20, opacity: 0, duration: 0.5, ease: 'power2.out',
       stagger: 0.04,
-      scrollTrigger: { trigger: '.wl-extra', start: 'top 85%' },
+      scrollTrigger: { trigger: '.more-works', start: 'top 85%' },
     });
 
     document.querySelectorAll('#subpage-view .subpage__section-title').forEach(el => {
