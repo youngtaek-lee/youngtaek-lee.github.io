@@ -14,9 +14,13 @@ const PageWorksDetail = {
       <div class="subpage works-detail-page" data-id="${work.id}">
 
         <section class="subpage__hero wd-hero">
-          <h1 class="subpage__title">${work.title}</h1>
-          <p class="wd-meta">${work.category} — ${work.year}</p>
-          <p class="wd-overview">${work.overview || ''}</p>
+          <div class="wd-hero__left">
+            <h1 class="subpage__title">${work.title}</h1>
+            <p class="wd-meta">${work.category} — ${work.year}</p>
+          </div>
+          <div class="wd-hero__right">
+            <p class="wd-overview">${work.overview || ''}</p>
+          </div>
         </section>
 
         <section class="wd-main-img">

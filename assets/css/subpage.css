@@ -472,21 +472,34 @@ a.more-works__link:hover {
 /* ── Works Detail ── */
 
 .wd-hero {
-  gap: 20px;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 60px;
+}
+
+.wd-hero__left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wd-hero__right {
+  display: flex;
+  align-items: flex-end;
 }
 
 .wd-meta {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: var(--color-sub);
   letter-spacing: 0.06em;
 }
 
 .wd-overview {
-  font-size: 1rem;
+  font-size: 1.2rem;
   line-height: 1.8;
   color: var(--color-text);
-  max-width: 640px;
-  margin-top: 12px;
+  max-width: 44ch;
+  word-break: keep-all;
 }
 
 .wd-main-img {
@@ -837,5 +850,15 @@ a.more-works__link:hover {
   .wd-info {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .wd-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .wd-hero__right {
+    align-items: flex-start;
   }
 }
