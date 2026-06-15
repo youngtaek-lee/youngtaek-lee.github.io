@@ -48,7 +48,16 @@ const works = [
       'assets/images/works/raymats-eyewear.png',
     ],
   },
-  { id: 'optimedi', title: 'Optimedi', name: '옵티메디',       category: 'Medical Device',  year: 2024, main: 'assets/images/works/옵티메디 메인.png',        url: 'https://www.optimedi.kr/' },
+  {
+    id: 'optimedi', title: 'Optimedi', name: '옵티메디', category: 'Medical Device', year: 2024,
+    main: 'assets/images/works/옵티메디 메인.png',
+    url: 'https://www.optimedi.kr/',
+    overview: '의료기기 전문 기업 옵티메디의 웹사이트 퍼블리싱 및 유지보수 작업을 진행했습니다. 의료 분야 특유의 신뢰감과 전문성을 전달하기 위해 간결하고 안정적인 레이아웃과 명확한 정보 구조를 구현하였습니다.',
+    gallery: [
+      'assets/images/works/optimedi-fullpage.png',
+      'assets/images/works/optimedi-greeting.png',
+    ],
+  },
   { id: 'ghi',      title: 'GHI',      name: '기획인애드',     category: 'Advertising',     year: 2023, main: 'assets/images/works/기획인애드 메인.png',      url: 'http://ghi.co.kr/html/index/' },
 ];
 
