@@ -56,6 +56,7 @@ const works = [
     gallery: [
       'assets/images/works/optimedi-fullpage.png',
       'assets/images/works/optimedi-greeting.png',
+      'assets/images/works/optimedi-quality.png',
     ],
   },
   { id: 'ghi',      title: 'GHI',      name: '기획인애드',     category: 'Advertising',     year: 2023, main: 'assets/images/works/기획인애드 메인.png',      url: 'http://ghi.co.kr/html/index/' },
