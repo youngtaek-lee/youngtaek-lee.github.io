@@ -59,7 +59,15 @@ const works = [
       'assets/images/works/optimedi-quality.png',
     ],
   },
-  { id: 'ghi',      title: 'GHI',      name: '기획인애드',     category: 'Advertising',     year: 2023, main: 'assets/images/works/기획인애드 메인.png',      url: 'http://ghi.co.kr/html/index/' },
+  {
+    id: 'ghi', title: 'GHI', name: '기획인애드', category: 'Advertising', year: 2023,
+    main: 'assets/images/works/기획인애드 메인.png',
+    url: 'http://ghi.co.kr/html/index/',
+    overview: '광고·마케팅 전문 기업 기획인애드의 웹사이트 퍼블리싱 및 유지보수 작업을 진행했습니다. 브랜드 아이덴티티를 직관적으로 전달하기 위해 깔끔한 구성과 시각적 완성도를 중심으로 레이아웃을 구현하였습니다.',
+    gallery: [
+      'assets/images/works/ghi-fullpage.png',
+    ],
+  },
 ];
 
 // 자투리 프로젝트 — 이름 + 외부링크만
