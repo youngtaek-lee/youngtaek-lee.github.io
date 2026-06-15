@@ -7,9 +7,6 @@ const works = [
     main: 'assets/images/works/사세 메인캡쳐.png',
     url: 'https://www.sase.co.kr/html/index/',
     overview: '글로벌 냉동식품 기업 사세의 웹사이트 퍼블리싱 및 유지보수 작업을 진행했습니다. 제품의 품질감과 브랜드 신뢰를 시각적으로 전달하기 위해 비주얼 중심의 레이아웃을 구현하였습니다.',
-    role: '퍼블리싱 및 유지보수',
-    contribution: 100,
-    tags: ['HTML', 'CSS', 'jQuery', 'Responsive'],
     gallery: [
       'assets/images/works/sase-fullpage.png',
       'assets/images/works/sase-about.png',
@@ -17,9 +14,40 @@ const works = [
       'assets/images/works/sase-production.png',
     ],
   },
-  { id: 'bexel',    title: 'Bexel',    name: '벡셀',           category: 'Electronics',     year: 2024, main: 'assets/images/works/벡셀 메인.png',           url: 'https://www.bexel.co.kr/html/index/index.php' },
-  { id: 'marusys',  title: 'Marusys',  name: '마르시스',       category: 'IT · Embedded',   year: 2023, main: 'assets/images/works/마르시스 메인.png',        url: 'https://www.marusys.com/html/index/index.php' },
-  { id: 'raymats',  title: 'Raymats',  name: '레이머티리얼즈', category: 'Materials',        year: 2024, main: 'assets/images/works/레이머터리얼즈 메인.png',   url: 'https://raymats.com/html/index/' },
+  {
+    id: 'bexel', title: 'Bexel', name: '벡셀', category: 'Electronics', year: 2024,
+    main: 'assets/images/works/벡셀 메인.png',
+    url: 'https://www.bexel.co.kr/html/index/index.php',
+    overview: '국내 배터리·전자제품 브랜드 벡셀의 웹사이트 퍼블리싱 및 유지보수 작업을 진행했습니다. 다크 톤 비주얼과 오렌지 포인트 컬러를 활용해 브랜드 신뢰감과 제품 라인업을 효과적으로 전달하는 레이아웃을 구현하였습니다.',
+    gallery: [
+      'assets/images/works/bexel-fullpage.png',
+      'assets/images/works/bexel-product.png',
+      'assets/images/works/bexel-acc.png',
+    ],
+  },
+  {
+    id: 'marusys', title: 'Marusys', name: '마르시스', category: 'IT · Embedded', year: 2023,
+    main: 'assets/images/works/마르시스 메인.png',
+    url: 'https://www.marusys.com/html/index/index.php',
+    overview: 'IT·임베디드 솔루션 기업 마르시스의 웹사이트 퍼블리싱 및 유지보수 작업을 진행했습니다. 다크 톤의 모던한 레이아웃과 브랜드 아이덴티티를 살린 비주얼 구성으로 기업 신뢰감과 기술력을 효과적으로 전달하였습니다.',
+    gallery: [
+      'assets/images/works/marusys-fullpage.png',
+      'assets/images/works/marusys-iptv.png',
+      'assets/images/works/marusys-about.png',
+    ],
+  },
+  {
+    id: 'raymats', title: 'Raymats', name: '레이머티리얼즈', category: 'Materials', year: 2024,
+    main: 'assets/images/works/레이머터리얼즈 메인.png',
+    url: 'https://raymats.com/html/index/',
+    overview: '첨단 소재 전문 기업 레이머티리얼즈의 웹사이트 퍼블리싱 및 유지보수 작업을 진행했습니다. 소재의 혁신성과 기술 신뢰를 전달하기 위해 깔끔한 레이아웃과 비주얼 중심의 콘텐츠 구성을 구현하였습니다.',
+    gallery: [
+      'assets/images/works/raymats-fullpage.png',
+      'assets/images/works/raymats-about.png',
+      'assets/images/works/raymats-tech.png',
+      'assets/images/works/raymats-eyewear.png',
+    ],
+  },
   { id: 'optimedi', title: 'Optimedi', name: '옵티메디',       category: 'Medical Device',  year: 2024, main: 'assets/images/works/옵티메디 메인.png',        url: 'https://www.optimedi.kr/' },
   { id: 'ghi',      title: 'GHI',      name: '기획인애드',     category: 'Advertising',     year: 2023, main: 'assets/images/works/기획인애드 메인.png',      url: 'http://ghi.co.kr/html/index/' },
 ];
