@@ -475,6 +475,7 @@ a.more-works__link:hover {
   flex-direction: row;
   align-items: flex-end;
   gap: 60px;
+  display: none;
 }
 
 .wd-hero__left {
@@ -500,6 +501,21 @@ a.more-works__link:hover {
   color: var(--color-text);
   max-width: 44ch;
   word-break: keep-all;
+}
+
+.wd-logo {
+  padding: 80px clamp(20px, 6vw, 120px) 0;
+  display: none;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  margin-bottom: -60px;
+}
+
+.wd-logo img {
+  height: 120px;
+  width: auto;
+  display: block;
 }
 
 .wd-main-img {

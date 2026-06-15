@@ -4,6 +4,7 @@
 const works = [
   {
     id: 'sase', title: 'Sase', name: '사세', category: 'Food & Beverage', year: 2023,
+    logo: 'assets/images/clients/sase.svg',
     main: 'assets/images/works/사세 메인캡쳐.png',
     url: 'https://www.sase.co.kr/html/index/',
     overview: '글로벌 냉동식품 기업 사세의 웹사이트 퍼블리싱 및 유지보수 작업을 진행했습니다. 제품의 품질감과 브랜드 신뢰를 시각적으로 전달하기 위해 비주얼 중심의 레이아웃을 구현하였습니다.',
@@ -16,6 +17,7 @@ const works = [
   },
   {
     id: 'bexel', title: 'Bexel', name: '벡셀', category: 'Electronics', year: 2024,
+    logo: 'assets/images/clients/bexel.svg',
     main: 'assets/images/works/벡셀 메인.png',
     url: 'https://www.bexel.co.kr/html/index/index.php',
     overview: '국내 배터리·전자제품 브랜드 벡셀의 웹사이트 퍼블리싱 및 유지보수 작업을 진행했습니다. 다크 톤 비주얼과 오렌지 포인트 컬러를 활용해 브랜드 신뢰감과 제품 라인업을 효과적으로 전달하는 레이아웃을 구현하였습니다.',

@@ -23,6 +23,11 @@ const PageWorksDetail = {
           </div>
         </section>
 
+        ${work.logo ? `
+        <section class="wd-logo">
+          <img src="${work.logo}" alt="${work.title} 로고">
+        </section>` : ''}
+
         <section class="wd-main-img">
           <img src="${work.main}" alt="${work.title}">
         </section>
