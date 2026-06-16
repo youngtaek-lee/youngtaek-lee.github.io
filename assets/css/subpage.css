@@ -471,27 +471,38 @@ a.more-works__link:hover {
 
 /* ── Works Detail ── */
 
-.wd-hero {
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 60px;
-  display: none;
+.works-detail-page {
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
-.wd-hero__left {
+.wd-hero {
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.wd-subtitle {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  max-width: 60ch;
+  word-break: keep-all;
+}
+
+.wd-main-img {
+  padding: 0 clamp(20px, 6vw, 120px);
+}
+
+.wd-info {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.wd-hero__right {
-  display: flex;
-  align-items: flex-end;
+  gap: 36px;
+  padding: 100px clamp(20px, 6vw, 120px) 100px;
 }
 
 .wd-meta {
   font-size: 1rem;
-  color: var(--color-sub);
+  color: var(--color-text);
   letter-spacing: 0.06em;
 }
 
@@ -499,27 +510,8 @@ a.more-works__link:hover {
   font-size: 1.2rem;
   line-height: 1.8;
   color: var(--color-text);
-  max-width: 44ch;
+  max-width: 60ch;
   word-break: keep-all;
-}
-
-.wd-logo {
-  padding: 80px clamp(20px, 6vw, 120px) 0;
-  display: none;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-  margin-bottom: -60px;
-}
-
-.wd-logo img {
-  height: 120px;
-  width: auto;
-  display: block;
-}
-
-.wd-main-img {
-  padding: 0 clamp(20px, 6vw, 120px) 16px;
 }
 
 .wd-main-img img {
@@ -531,15 +523,15 @@ a.more-works__link:hover {
 .wd-gallery {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  padding: 0 clamp(20px, 6vw, 120px);
+  gap: 32px;
+  padding: 0 clamp(20px, 6vw, 120px) 60px;
 }
 
 .wd-gallery__col {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
 }
 
 .wd-gallery img {
@@ -587,7 +579,7 @@ a.more-works__link:hover {
 .wd-nav {
   display: flex;
   gap: 0;
-  padding: 16px clamp(20px, 6vw, 120px) 80px;
+  padding: 160px clamp(20px, 6vw, 120px) 40px;
 }
 
 .wd-nav__item {
@@ -862,19 +854,43 @@ a.more-works__link:hover {
     transform: translate(3px, 3px);
   }
 
-  /* Works 상세 — 사이드바 스택 */
+  /* Works 상세 */
   .wd-info {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 20px;
+    padding-top: 48px;
+    padding-bottom: 48px;
   }
 
-  .wd-hero {
+  .wd-gallery {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
   }
 
-  .wd-hero__right {
+  .wd-nav {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .wd-nav__item {
+    flex: 1 1 100%;
+    border-radius: 12px;
+  }
+
+  .wd-nav__item--next {
     align-items: flex-start;
+    text-align: left;
+  }
+
+  .wd-nav__item--next .wd-nav__arrow {
+    right: auto;
+    left: clamp(24px, 4vw, 48px);
+    transform: translateX(-16px);
+  }
+
+  .wd-nav__item--next:hover .wd-nav__arrow {
+    transform: translateX(-3px);
+  }
+
+  .wd-nav__item--next:hover .wd-nav__title {
+    transform: translateX(42px);
   }
 }

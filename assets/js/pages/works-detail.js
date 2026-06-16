@@ -14,22 +14,17 @@ const PageWorksDetail = {
       <div class="subpage works-detail-page" data-id="${work.id}">
 
         <section class="subpage__hero wd-hero">
-          <div class="wd-hero__left">
-            <h1 class="subpage__title">${work.title}</h1>
-            <p class="wd-meta">${work.category} — ${work.year}</p>
-          </div>
-          <div class="wd-hero__right">
-            <p class="wd-overview">${work.overview || ''}</p>
-          </div>
+          <h1 class="subpage__title">${work.title}</h1>
+          ${work.subtitle ? `<p class="wd-subtitle">${work.subtitle}</p>` : ''}
         </section>
-
-        ${work.logo ? `
-        <section class="wd-logo">
-          <img src="${work.logo}" alt="${work.title} 로고">
-        </section>` : ''}
 
         <section class="wd-main-img">
           <img src="${work.main}" alt="${work.title}">
+        </section>
+
+        <section class="wd-info">
+          <p class="wd-meta">${work.category} — ${work.year}</p>
+          <p class="wd-overview">${work.overview || ''}</p>
         </section>
 
         ${work.gallery?.length ? (() => {
@@ -88,10 +83,17 @@ const PageWorksDetail = {
     }
     document.querySelector('.bottom-nav')?.classList.add('is-detail');
 
-    gsap.from('.subpage__title', { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' });
-    gsap.from('.wd-meta',        { y: 20, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power2.out' });
-    gsap.from('.wd-overview',    { y: 20, opacity: 0, duration: 0.6, delay: 0.2, ease: 'power2.out' });
-    gsap.from('.wd-main-img',    { y: 60, opacity: 0, duration: 1.0, delay: 0.3, ease: 'power3.out' });
+    gsap.from('.subpage__title',  { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' });
+    gsap.from('.wd-subtitle',     { y: 20, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power2.out' });
+    gsap.from('.wd-main-img',     { y: 60, opacity: 0, duration: 1.0, delay: 0.25, ease: 'power3.out' });
+    gsap.from('.wd-meta',         {
+      y: 20, opacity: 0, duration: 0.6, ease: 'power2.out',
+      scrollTrigger: { trigger: '.wd-info', start: 'top 85%' },
+    });
+    gsap.from('.wd-overview',     {
+      y: 20, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power2.out',
+      scrollTrigger: { trigger: '.wd-info', start: 'top 85%' },
+    });
     gsap.from('.wd-nav',         {
       y: 30, opacity: 0, duration: 0.7, ease: 'power2.out',
       scrollTrigger: { trigger: '.wd-nav', start: 'top 90%' },
