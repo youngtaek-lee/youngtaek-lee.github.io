@@ -546,6 +546,7 @@ a.more-works__link:hover {
   justify-content: center;
   border-radius: 12px;
   padding: 28px;
+  min-height: 160px;
   background: var(--basic-orange);
   text-decoration: none;
   transition: filter 0.3s ease;
@@ -557,7 +558,7 @@ a.more-works__link:hover {
 
 .wd-gallery__next-title {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-size: clamp(2rem, 3vw, 2.8rem);
   font-weight: 400;
   color: var(--basic-dark);
   line-height: 1;
@@ -565,8 +566,8 @@ a.more-works__link:hover {
 }
 
 .wd-gallery__next-icon {
-  width: clamp(2rem, 3vw, 3rem);
-  height: clamp(2rem, 3vw, 3rem);
+  width: clamp(2.2rem, 3vw, 3rem);
+  height: clamp(2.2rem, 3vw, 3rem);
   color: var(--basic-dark);
   margin-top: 16px;
   transition: transform 0.3s ease;
@@ -652,8 +653,8 @@ a.more-works__link:hover {
 }
 
 .wd-nav__label {
-  font-size: 0.65rem;
-  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -855,6 +856,20 @@ a.more-works__link:hover {
   }
 
   /* Works 상세 */
+  .wd-subtitle {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .wd-overview {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .wd-meta {
+    font-size: 0.875rem;
+  }
+
   .wd-info {
     gap: 20px;
     padding-top: 48px;
@@ -865,33 +880,44 @@ a.more-works__link:hover {
     flex-direction: column;
   }
 
+  .wd-gallery__next {
+    display: none;
+  }
+
   .wd-nav {
-    flex-direction: column;
-    gap: 12px;
     padding-top: 60px;
   }
 
   .wd-nav__item {
-    flex: 1 1 100%;
-    border-radius: 12px;
+    padding: 20px 24px;
+    min-height: 110px;
   }
 
-  .wd-nav__item--next {
-    align-items: flex-start;
-    text-align: left;
+  .wd-nav__bottom {
+    gap: 8px;
   }
 
+  .wd-nav__arrow {
+    position: static;
+    bottom: auto;
+  }
+
+  .wd-nav__item--prev .wd-nav__arrow,
   .wd-nav__item--next .wd-nav__arrow {
+    left: auto;
     right: auto;
-    left: clamp(24px, 4vw, 48px);
-    transform: translateX(-16px);
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 
+  .wd-nav__item--prev:hover .wd-nav__arrow,
   .wd-nav__item--next:hover .wd-nav__arrow {
-    transform: translateX(-3px);
+    transform: none;
   }
 
+  .wd-nav__item--prev:hover .wd-nav__title,
   .wd-nav__item--next:hover .wd-nav__title {
-    transform: translateX(42px);
+    transform: none;
   }
 }
