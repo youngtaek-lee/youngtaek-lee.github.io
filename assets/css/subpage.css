@@ -524,7 +524,7 @@ a.more-works__link:hover {
   display: flex;
   align-items: flex-start;
   gap: 32px;
-  padding: 0 clamp(20px, 6vw, 120px) 60px;
+  padding: 0 clamp(20px, 6vw, 120px) 30px;
 }
 
 .wd-gallery__col {
@@ -580,7 +580,7 @@ a.more-works__link:hover {
 .wd-nav {
   display: flex;
   gap: 0;
-  padding: 160px clamp(20px, 6vw, 120px) 40px;
+  padding: 0px clamp(20px, 6vw, 120px) 0px;
 }
 
 .wd-nav__item {
@@ -882,10 +882,6 @@ a.more-works__link:hover {
 
   .wd-gallery__next {
     display: none;
-  }
-
-  .wd-nav {
-    padding-top: 60px;
   }
 
   .wd-nav__item {

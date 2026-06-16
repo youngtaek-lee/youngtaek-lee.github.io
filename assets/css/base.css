@@ -39,6 +39,16 @@
   --color-white:        var(--basic-white);
   --color-gray:         var(--basic-gray);
   --color-line:         var(--basic-line);
+
+  --color-panel:          #242120;
+  --color-overlay:        rgba(0, 0, 0, 0.55);
+  --color-shadow:         rgba(0, 0, 0, 0.35);
+  --color-text-soft:      rgba(237, 217, 192, 0.85);
+  --color-text-mid:       rgba(237, 217, 192, 0.55);
+  --color-text-dim:       rgba(237, 217, 192, 0.4);
+  --color-text-subtle:    rgba(237, 217, 192, 0.25);
+  --color-border-subtle:  rgba(237, 217, 192, 0.08);
+  --color-border-medium:  rgba(237, 217, 192, 0.15);
 }
 
 /* =============================
@@ -46,11 +56,21 @@
 ============================= */
 [data-theme="summer"] {
   --color-bg:           var(--summer-cream);
-  --color-text:         var(--summer-black);
+  --color-text:         var(--summer-dark);
   --color-accent:       var(--summer-royal);
   --color-white:        var(--summer-cream);
   --color-gray:         var(--summer-gray);
   --color-line:         var(--summer-line);
+
+  --color-panel:          #F5F4EE;
+  --color-overlay:        rgba(0, 0, 0, 0.35);
+  --color-shadow:         rgba(0, 0, 0, 0.18);
+  --color-text-soft:      rgba(21, 25, 31, 0.85);
+  --color-text-mid:       rgba(21, 25, 31, 0.55);
+  --color-text-dim:       rgba(21, 25, 31, 0.4);
+  --color-text-subtle:    rgba(21, 25, 31, 0.25);
+  --color-border-subtle:  rgba(21, 25, 31, 0.08);
+  --color-border-medium:  rgba(21, 25, 31, 0.15);
 }
 
 /* FOUC prevention — summer hero starts royal */

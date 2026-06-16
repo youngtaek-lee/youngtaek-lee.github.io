@@ -756,6 +756,10 @@ main {
     display: none;
   }
 
+  .header__sparkle-fixed {
+    display: none;
+  }
+
   .header__links {
     display: none;
   }
