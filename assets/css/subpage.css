@@ -868,6 +868,7 @@ a.more-works__link:hover {
   .wd-nav {
     flex-direction: column;
     gap: 12px;
+    padding-top: 60px;
   }
 
   .wd-nav__item {
