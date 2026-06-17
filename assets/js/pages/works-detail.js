@@ -88,7 +88,7 @@ const PageWorksDetail = {
       titleEl.innerHTML = titleEl.textContent.trim().split(/\s+/).map(w =>
         `<span class="reveal-word"><span class="reveal-word__inner">${w}</span></span>`
       ).join(' ');
-      gsap.set(titleEl.querySelectorAll('.reveal-word__inner'), { yPercent: 110 });
+      gsap.set(titleEl.querySelectorAll('.reveal-word__inner'), { yPercent: 120 });
     }
     gsap.set('.wd-meta', { y: 12, opacity: 0 });
 

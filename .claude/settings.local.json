@@ -28,7 +28,23 @@
       "mcp__claude_ai_Google_Calendar__list_calendars",
       "mcp__claude_ai_Google_Calendar__create_event",
       "mcp__claude_ai_Google_Calendar__delete_event",
-      "mcp__claude_ai_Google_Calendar__list_events"
+      "mcp__claude_ai_Google_Calendar__list_events",
+      "Bash(git -C \"C:\\\\Users\\\\korii\\\\projects\\\\portfolio\" log --oneline --all)",
+      "PowerShell(Remove-Item *)",
+      "Bash(git checkout *)",
+      "Bash(git status *)",
+      "WebFetch(domain:laurentiwebdesign.it)",
+      "Bash(cp \"/c/Users/korii/Downloads/screencapture-sase-co-kr-html-index-2026-06-16-16_09_55.png\" assets/images/works/sase-fullpage.png)",
+      "Bash(cp \"/c/Users/korii/Downloads/screencapture-sase-co-kr-html-about-about-php-2026-06-16-16_10_54.png\" assets/images/works/sase-about.png)",
+      "Bash(cp \"/c/Users/korii/Downloads/screencapture-sase-co-kr-html-capacity-rnd-php-2026-06-16-16_11_40.png\" assets/images/works/sase-capacity.png)",
+      "Read(//d/Koriiscat/02_작업/**)",
+      "Read(//d/Koriiscat/01_포트폴리오/섹션별/**)",
+      "Bash(npx playwright *)",
+      "Read(//c/Users/korii/AppData/Local/ms-playwright/**)",
+      "Read(//c//**)",
+      "Bash(where python *)",
+      "WebFetch(domain:youngtaek-lee.github.io)",
+      "PowerShell(\\(Get-CimInstance Win32_OperatingSystem\\).LastBootUpTime)"
     ]
   }
 }
