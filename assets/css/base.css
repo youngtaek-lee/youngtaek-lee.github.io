@@ -147,6 +147,8 @@ button {
   vertical-align: bottom;
   padding-right: 0.06em;
   margin-right: -0.06em;
+  padding-bottom: 0.2em;
+  margin-bottom: -0.2em;
 }
 
 .reveal-word__inner { display: inline-block; }
