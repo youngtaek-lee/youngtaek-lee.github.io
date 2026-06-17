@@ -27,6 +27,7 @@ function initIntro() {
   tl.to(gray,   { opacity: 1, duration: 0.5, ease: 'power2.inOut' })
     .to(orange,  { clipPath: 'inset(0% 0 0 0)', duration: 1.6, ease: 'power2.inOut' }, '+=0.15')
     .to(intro,   { y: '-100%', duration: 1.2, ease: 'power3.inOut',
+        onStart: () => { window.__onIntroComplete?.(); window.__onIntroComplete = null; },
         onComplete: () => intro.remove() }, '+=0.2')
     .to(trail,   { y: '-100%', duration: 1.2, ease: 'power3.inOut',
         onComplete: () => trail.remove() }, '<+=0.15');

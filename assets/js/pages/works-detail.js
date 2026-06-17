@@ -83,8 +83,36 @@ const PageWorksDetail = {
     }
     document.querySelector('.bottom-nav')?.classList.add('is-detail');
 
-    gsap.from('.subpage__title',  { y: 40, opacity: 0, duration: 0.9, ease: 'power3.out' });
-    gsap.from('.wd-subtitle',     { y: 20, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power2.out' });
+    const titleEl    = document.querySelector('.subpage__title');
+    const subtitleEl = document.querySelector('.wd-subtitle');
+
+    if (titleEl) {
+      titleEl.innerHTML = titleEl.textContent.trim().split(/\s+/).map(w =>
+        `<span class="reveal-word"><span class="reveal-word__inner">${w}</span></span>`
+      ).join(' ');
+      gsap.set(titleEl.querySelectorAll('.reveal-word__inner'), { yPercent: 110 });
+    }
+    if (subtitleEl) {
+      subtitleEl.innerHTML = subtitleEl.textContent.trim().split(/\s+/).map(w =>
+        `<span class="reveal-word"><span class="reveal-word__inner">${w}</span></span>`
+      ).join(' ');
+      gsap.set(subtitleEl.querySelectorAll('.reveal-word__inner'), { yPercent: 110 });
+    }
+
+    const doHeroReveal = () => {
+      if (titleEl) gsap.to(titleEl.querySelectorAll('.reveal-word__inner'), {
+        yPercent: 0, duration: 0.85, ease: 'power3.out', stagger: 0.08, delay: 0.1,
+      });
+      if (subtitleEl) gsap.to(subtitleEl.querySelectorAll('.reveal-word__inner'), {
+        yPercent: 0, duration: 0.65, ease: 'power2.out', stagger: 0.06, delay: 0.35,
+      });
+    };
+
+    if (document.getElementById('intro')) {
+      window.__onIntroComplete = doHeroReveal;
+    } else {
+      doHeroReveal();
+    }
     gsap.from('.wd-main-img',     { y: 60, opacity: 0, duration: 1.0, delay: 0.25, ease: 'power3.out' });
     gsap.from('.wd-meta',         {
       y: 20, opacity: 0, duration: 0.6, ease: 'power2.out',

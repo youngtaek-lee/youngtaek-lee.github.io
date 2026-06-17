@@ -107,7 +107,7 @@ const Router = {
     } else {
       // 패널 슬라이드아웃 시작(onMid +0.1s)에 맞춰 실행 — 패널이 빠지면서 애니메이션이 드러남
       this._pendingReveal = null;
-      setTimeout(runInit, 400);
+      setTimeout(runInit, 100);
     }
 
     // footer 등 공유 요소의 ScrollTrigger 위치를 서브페이지 레이아웃 기준으로 재계산

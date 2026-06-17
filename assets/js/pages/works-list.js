@@ -51,20 +51,28 @@ const PageWorksList = {
 
   init() {
     const titleEl = document.querySelector('#subpage-view .subpage__title');
+    let chars;
     if (titleEl) {
       titleEl.innerHTML = titleEl.innerHTML.split(/<br\s*\/?>/i).map(line =>
         line.trim().split('').map(ch =>
           `<span class="reveal-char"><span class="reveal-char__inner">${ch}</span></span>`
         ).join('')
       ).join('<br>');
-      const chars = titleEl.querySelectorAll('.reveal-char__inner');
-      gsap.from(chars, { yPercent: 110, duration: 0.7, ease: 'power3.out', stagger: 0.06 });
+      chars = titleEl.querySelectorAll('.reveal-char__inner');
+      gsap.set(chars, { yPercent: 110 });
     }
-    gsap.from('.works__item', {
-      x: 150, opacity: 0, duration: 0.6, ease: 'power2.out',
-      stagger: 0.08,
-      delay: 0.2,
-    });
+    gsap.set('.works__item', { x: 150, opacity: 0 });
+
+    const doHeroReveal = () => {
+      if (chars) gsap.to(chars, { yPercent: 0, duration: 0.7, ease: 'power3.out', stagger: 0.06, delay: 0.1 });
+      gsap.to('.works__item', { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.08, delay: 0.2 });
+    };
+
+    if (document.getElementById('intro')) {
+      window.__onIntroComplete = doHeroReveal;
+    } else {
+      doHeroReveal();
+    }
 
     gsap.from('.more-works__item', {
       y: 20, opacity: 0, duration: 0.5, ease: 'power2.out',

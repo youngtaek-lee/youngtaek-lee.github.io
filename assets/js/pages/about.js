@@ -229,15 +229,17 @@ const PageAbout = {
 
   init() {
     const titleEl = document.querySelector('.subpage__title');
+    let chars;
     if (titleEl) {
       titleEl.innerHTML = titleEl.textContent.split('').map(ch =>
         `<span class="reveal-char"><span class="reveal-char__inner">${ch}</span></span>`
       ).join('');
-      const chars = titleEl.querySelectorAll('.reveal-char__inner');
-      gsap.from(chars, { yPercent: 110, duration: 0.7, ease: 'power3.out', stagger: 0.08 });
+      chars = titleEl.querySelectorAll('.reveal-char__inner');
+      gsap.set(chars, { yPercent: 110 });
     }
 
     const introP = document.querySelector('.about-intro__text p');
+    let inners;
     if (introP) {
       const CHUNK = 3;
       const nodes = Array.from(introP.childNodes);
@@ -263,8 +265,19 @@ const PageAbout = {
       flushLine();
 
       introP.innerHTML = html;
-      const inners = introP.querySelectorAll('.reveal-word__inner');
-      gsap.from(inners, { yPercent: 110, duration: 0.6, ease: 'power2.out', stagger: 0.07, delay: 0.35 });
+      inners = introP.querySelectorAll('.reveal-word__inner');
+      gsap.set(inners, { yPercent: 110 });
+    }
+
+    const doHeroReveal = () => {
+      if (chars) gsap.to(chars, { yPercent: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, delay: 0.1 });
+      if (inners) gsap.to(inners, { yPercent: 0, duration: 0.6, ease: 'power2.out', stagger: 0.07, delay: 0.45 });
+    };
+
+    if (document.getElementById('intro')) {
+      window.__onIntroComplete = doHeroReveal;
+    } else {
+      doHeroReveal();
     }
 
     document.querySelectorAll('.subpage__section-title').forEach(el => {
