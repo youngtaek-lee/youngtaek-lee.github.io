@@ -15,7 +15,7 @@ const PageWorksDetail = {
 
         <section class="subpage__hero wd-hero">
           <h1 class="subpage__title">${work.title}</h1>
-          ${work.subtitle ? `<p class="wd-subtitle">${work.subtitle}</p>` : ''}
+          <p class="wd-meta">${work.category} — ${work.year}</p>
         </section>
 
         <section class="wd-main-img">
@@ -23,7 +23,6 @@ const PageWorksDetail = {
         </section>
 
         <section class="wd-info">
-          <p class="wd-meta">${work.category} — ${work.year}</p>
           <p class="wd-overview">${work.overview || ''}</p>
         </section>
 
@@ -83,8 +82,7 @@ const PageWorksDetail = {
     }
     document.querySelector('.bottom-nav')?.classList.add('is-detail');
 
-    const titleEl    = document.querySelector('.subpage__title');
-    const subtitleEl = document.querySelector('.wd-subtitle');
+    const titleEl = document.querySelector('.subpage__title');
 
     if (titleEl) {
       titleEl.innerHTML = titleEl.textContent.trim().split(/\s+/).map(w =>
@@ -92,37 +90,26 @@ const PageWorksDetail = {
       ).join(' ');
       gsap.set(titleEl.querySelectorAll('.reveal-word__inner'), { yPercent: 110 });
     }
-    if (subtitleEl) {
-      subtitleEl.innerHTML = subtitleEl.textContent.trim().split(/\s+/).map(w =>
-        `<span class="reveal-word"><span class="reveal-word__inner">${w}</span></span>`
-      ).join(' ');
-      gsap.set(subtitleEl.querySelectorAll('.reveal-word__inner'), { yPercent: 110 });
-    }
+    gsap.set('.wd-meta', { y: 12, opacity: 0 });
 
     const doHeroReveal = () => {
       if (titleEl) gsap.to(titleEl.querySelectorAll('.reveal-word__inner'), {
         yPercent: 0, duration: 0.85, ease: 'power3.out', stagger: 0.08, delay: 0.1,
       });
-      if (subtitleEl) gsap.to(subtitleEl.querySelectorAll('.reveal-word__inner'), {
-        yPercent: 0, duration: 0.65, ease: 'power2.out', stagger: 0.06, delay: 0.35,
-      });
+      gsap.to('.wd-meta', { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.35 });
     };
 
-    if (document.getElementById('intro')) {
-      window.__onIntroComplete = doHeroReveal;
+    if (document.getElementById('intro') || gsap.isTweening(document.querySelector('.page-transition'))) {
+      window.__onCurtainMid = doHeroReveal;
     } else {
       doHeroReveal();
     }
-    gsap.from('.wd-main-img',     { y: 60, opacity: 0, duration: 1.0, delay: 0.25, ease: 'power3.out' });
-    gsap.from('.wd-meta',         {
-      y: 20, opacity: 0, duration: 0.6, ease: 'power2.out',
-      scrollTrigger: { trigger: '.wd-info', start: 'top 85%' },
-    });
-    gsap.from('.wd-overview',     {
+    gsap.from('.wd-main-img', { y: 60, opacity: 0, duration: 1.0, delay: 0.25, ease: 'power3.out' });
+    gsap.from('.wd-overview', {
       y: 20, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power2.out',
       scrollTrigger: { trigger: '.wd-info', start: 'top 85%' },
     });
-    gsap.from('.wd-nav',         {
+    gsap.from('.wd-nav', {
       y: 30, opacity: 0, duration: 0.7, ease: 'power2.out',
       scrollTrigger: { trigger: '.wd-nav', start: 'top 90%' },
     });
@@ -135,6 +122,14 @@ const PageWorksDetail = {
       if (loaded === imgs.length) {
         const cols = document.querySelectorAll('.wd-gallery__col');
         const nextCard = document.querySelector('.wd-gallery__next');
+        // 갤러리 이미지 ScrollTrigger — 이미지 로드 후 레이아웃 확정된 시점에 등록
+        document.querySelectorAll('.wd-gallery img').forEach(img => {
+          gsap.from(img, {
+            y: 40, opacity: 0, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: img, start: 'top 90%' },
+          });
+        });
+
         if (cols.length === 2 && nextCard) {
           const shorterIdx = cols[0].offsetHeight <= cols[1].offsetHeight ? 0 : 1;
           cols[shorterIdx].appendChild(nextCard);

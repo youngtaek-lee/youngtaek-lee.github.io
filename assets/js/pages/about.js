@@ -274,8 +274,8 @@ const PageAbout = {
       if (inners) gsap.to(inners, { yPercent: 0, duration: 0.6, ease: 'power2.out', stagger: 0.07, delay: 0.45 });
     };
 
-    if (document.getElementById('intro')) {
-      window.__onIntroComplete = doHeroReveal;
+    if (document.getElementById('intro') || gsap.isTweening(document.querySelector('.page-transition'))) {
+      window.__onCurtainMid = doHeroReveal;
     } else {
       doHeroReveal();
     }

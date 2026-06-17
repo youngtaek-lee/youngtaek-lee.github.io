@@ -23,18 +23,34 @@ function initIntro() {
   const heroSection = document.querySelector('.hero');
   if (heroSection) gsap.set(heroSection, { y: 160, opacity: 0 });
 
+  // 탭 비활성 중 인트로가 멈춘 채 복귀하면 즉시 스킵
+  const skipIntro = () => {
+    document.removeEventListener('visibilitychange', onVisible);
+    tl.kill();
+    intro.isConnected && intro.remove();
+    trail.isConnected && trail.remove();
+    document.body.style.overflow = '';
+    if (heroSection) gsap.set(heroSection, { clearProps: 'transform,opacity' });
+    window.__onCurtainMid?.();
+    window.__onCurtainMid = null;
+    initHeroEntrance();
+  };
+  const onVisible = () => { if (!document.hidden && intro.isConnected) skipIntro(); };
+  document.addEventListener('visibilitychange', onVisible);
+
   const tl = gsap.timeline();
   tl.to(gray,   { opacity: 1, duration: 0.5, ease: 'power2.inOut' })
     .to(orange,  { clipPath: 'inset(0% 0 0 0)', duration: 1.6, ease: 'power2.inOut' }, '+=0.15')
     .to(intro,   { y: '-100%', duration: 1.2, ease: 'power3.inOut',
-        onStart: () => { window.__onIntroComplete?.(); window.__onIntroComplete = null; },
         onComplete: () => intro.remove() }, '+=0.2')
     .to(trail,   { y: '-100%', duration: 1.2, ease: 'power3.inOut',
-        onComplete: () => trail.remove() }, '<+=0.15');
+        onComplete: () => trail.remove() }, '<+=0.15')
+    .call(() => { window.__onCurtainMid?.(); window.__onCurtainMid = null; }, null, 3.05);
 
   if (heroSection) tl.to(heroSection, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.inOut' }, '<-0.15');
 
   tl.call(() => {
+    document.removeEventListener('visibilitychange', onVisible);
     document.body.style.overflow = '';
     initHeroEntrance();
   });

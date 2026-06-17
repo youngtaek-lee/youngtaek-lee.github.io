@@ -68,8 +68,8 @@ const PageWorksList = {
       gsap.to('.works__item', { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.08, delay: 0.2 });
     };
 
-    if (document.getElementById('intro')) {
-      window.__onIntroComplete = doHeroReveal;
+    if (document.getElementById('intro') || gsap.isTweening(document.querySelector('.page-transition'))) {
+      window.__onCurtainMid = doHeroReveal;
     } else {
       doHeroReveal();
     }

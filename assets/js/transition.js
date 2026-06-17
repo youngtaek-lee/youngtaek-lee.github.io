@@ -22,5 +22,6 @@ function playPageTransition(onMid, onReveal) {
     .call(onMid, null, 0.75)
     .to(panel, { y: '-100%', duration: 1.0, ease: 'power3.inOut' }, 0.85)
     .to(trail, { y: '-100%', duration: 1.0, ease: 'power3.inOut' }, 1.0)
+    .call(() => { window.__onCurtainMid?.(); window.__onCurtainMid = null; }, null, 1.35)
     .call(() => onReveal?.(), null, 1.85);
 }
