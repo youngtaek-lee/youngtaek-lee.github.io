@@ -376,7 +376,7 @@
   gap: 4px;
   background: var(--color-bg);
   border:1px solid var(--color-line);
-  color: var(--basic-beige);
+  color: var(--color-text);
   border-radius: 10px;
   padding: 4px;
   line-height: 1;
@@ -398,8 +398,8 @@
   justify-content: center;
   width: 45px;
   height: 45px;
-  background: var(--basic-beige);
-  color: var(--basic-dark);
+  background: var(--color-text);
+  color: var(--color-bg);
   border-radius: 8px;
   flex-shrink: 0;
   transition: opacity 0.2s;
@@ -415,8 +415,8 @@
 }
 
 .bottom-nav.is-detail .bottom-nav__top {
-  background: var(--basic-beige);
-  color: var(--basic-dark);
+  background: var(--color-text);
+  color: var(--color-bg);
 }
 
 .bottom-nav__links {
@@ -431,8 +431,8 @@
   font-weight: 400;
   letter-spacing: 0;
   text-transform: uppercase;
-  background: var(--basic-dark);
-  color: var(--basic-beige);
+  background: var(--color-bg);
+  color: var(--color-text);
   opacity: 0.9;
   padding: 15px 25px;
   border-radius: 8px;
@@ -444,17 +444,17 @@
   opacity: 1;
 }
 
-/* Pair D: orange bg / egg text */
+/* Pair D: accent bg / inverted text */
 .bottom-nav__link--cta {
-  background: var(--basic-orange);
-  color: var(--basic-beige);
+  background: var(--color-accent);
+  color: var(--color-bg);
   border: none;
   opacity: 1;
 }
 
 .bottom-nav__link--cta:hover {
   opacity: 1;
-  background: var(--basic-orange);
+  background: var(--color-accent);
   border-color: transparent;
   filter: brightness(0.88);
 }

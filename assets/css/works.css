@@ -27,7 +27,7 @@
 .works__sub {
   display: none;
   font-size: 1rem;
-  color: var(--basic-dark);
+  color: var(--color-bg);
   line-height: 1.3;
   margin-left: 15px;
   margin-bottom: 15px;
@@ -145,7 +145,7 @@
   translate: 0 -50%;
   width: 2.8rem;
   height: 2.8rem;
-  color: var(--basic-gray);
+  color: var(--color-gray);
   opacity: 0.35;
   transform: rotate(0deg);
   transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1),
@@ -155,7 +155,7 @@
 
 .works__item:hover .works__sparkle {
   transform: rotate(45deg);
-  color: var(--basic-orange);
+  color: var(--color-accent);
   opacity: 1;
 }
 

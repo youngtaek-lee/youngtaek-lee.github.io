@@ -123,6 +123,56 @@ function refreshDarkTransition() {
 }
 
 // =============================
+// Hero/About/Works 스크롤 색상 리빌 — 테마 색상 반영
+// =============================
+let _colorRevealTls = [];
+
+function getThemeColors() {
+  const cs = getComputedStyle(document.documentElement);
+  return {
+    bg: cs.getPropertyValue('--color-bg').trim(),
+    text: cs.getPropertyValue('--color-text').trim(),
+  };
+}
+
+function initScrollColorReveals() {
+  const { bg, text } = getThemeColors();
+
+  _colorRevealTls.push(
+    gsap.timeline({
+      scrollTrigger: { id: 'color-reveal-hero', trigger: '.hero-wrap', start: 'bottom bottom', end: 'bottom top', scrub: 1 },
+    }).fromTo('main', { backgroundColor: bg }, { backgroundColor: text, ease: 'none' })
+      .fromTo('.hero__tagline', { color: text }, { color: bg, ease: 'none' }, 0)
+  );
+
+  _colorRevealTls.push(
+    gsap.timeline({
+      scrollTrigger: { id: 'color-reveal-about', trigger: '.about-text', start: 'top bottom', end: 'top center', scrub: 1 },
+    }).fromTo('.about-text__label, .about__word', { color: text }, { color: bg, ease: 'none' })
+  );
+
+  _colorRevealTls.push(
+    gsap.timeline({
+      scrollTrigger: { id: 'color-reveal-works', trigger: '.works', start: 'top bottom', end: 'top center', scrub: 1 },
+    }).fromTo('.works__label, .works__sub, .works__item__num, .works__item__title__en, .works__item__title__ko, .works__item__meta',
+      { color: text }, { color: bg, ease: 'none' })
+  );
+}
+
+function refreshScrollColorReveals() {
+  ['color-reveal-hero', 'color-reveal-about', 'color-reveal-works'].forEach(id => ScrollTrigger.getById(id)?.kill());
+  _colorRevealTls.forEach(tl => tl.kill());
+  _colorRevealTls = [];
+  gsap.set(
+    ['main', '.hero__tagline', '.about-text__label', '.about__word',
+     '.works__label', '.works__sub', '.works__item__num', '.works__item__title__en', '.works__item__title__ko', '.works__item__meta'],
+    { clearProps: 'backgroundColor,color' }
+  );
+  initScrollColorReveals();
+  ScrollTrigger.refresh();
+}
+
+// =============================
 // Footer Big 텍스트 — 높이 기준 fit
 // =============================
 function initFooterBig() {

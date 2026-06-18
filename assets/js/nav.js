@@ -92,6 +92,7 @@ function initTheme() {
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
     refreshDarkTransition();
+    refreshScrollColorReveals();
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.content = next === 'basic' ? '#1C1A17' : '#0056B3';
   });

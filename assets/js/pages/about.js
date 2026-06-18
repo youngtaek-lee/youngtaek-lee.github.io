@@ -1,11 +1,14 @@
 async function buildGithubCalendar(el, calAnim) {
   const CELL = 14, GAP = 3, STEP = 17, LABEL_H = 22;
+  const rootStyle = getComputedStyle(document.documentElement);
+  const themeText = rootStyle.getPropertyValue('--color-text').trim();
+  const themeAccent = rootStyle.getPropertyValue('--color-accent').trim();
   const COLORS = [
-    'rgba(237,217,192,0.10)',
-    'rgba(241,90,41,0.28)',
-    'rgba(241,90,41,0.52)',
-    'rgba(241,90,41,0.76)',
-    '#F15A29',
+    `color-mix(in srgb, ${themeText} 10%, transparent)`,
+    `color-mix(in srgb, ${themeAccent} 28%, transparent)`,
+    `color-mix(in srgb, ${themeAccent} 52%, transparent)`,
+    `color-mix(in srgb, ${themeAccent} 76%, transparent)`,
+    themeAccent,
   ];
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
