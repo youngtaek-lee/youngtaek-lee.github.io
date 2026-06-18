@@ -52,6 +52,7 @@ body.is-subpage:has(.works-detail-page) {
   line-height: 1;
   letter-spacing: 0;
   color: var(--color-text);
+  overflow: hidden;
 }
 
 /* ── Sections ── */
