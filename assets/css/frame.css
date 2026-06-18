@@ -87,6 +87,10 @@
   mix-blend-mode: difference;
 }
 
+[data-theme="summer"] .header {
+  mix-blend-mode: normal;
+}
+
 .header > * {
   pointer-events: auto;
 }

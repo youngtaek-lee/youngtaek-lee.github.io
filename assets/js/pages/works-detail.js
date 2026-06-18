@@ -78,7 +78,7 @@ const PageWorksDetail = {
     const links = document.querySelector('.bottom-nav__links');
     if (links && work?.url) {
       Router._originalBottomLinks = links.innerHTML;
-      links.innerHTML = `<a href="mailto:koriiscat@gmail.com" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--basic-dark);color:var(--basic-beige);font-family:'Anton',sans-serif;font-weight:400">CONTACT</a><a href="${work.url}" target="_blank" rel="noopener" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--basic-orange);color:var(--basic-dark);font-family:'Anton',sans-serif;font-weight:400">VIEW SITE</a>`;
+      links.innerHTML = `<a href="mailto:koriiscat@gmail.com" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--color-bg);color:var(--color-text);font-family:'Anton',sans-serif;font-weight:400">CONTACT</a><a href="${work.url}" target="_blank" rel="noopener" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--color-accent);color:var(--color-bg);font-family:'Anton',sans-serif;font-weight:400">VIEW SITE</a>`;
     }
     document.querySelector('.bottom-nav')?.classList.add('is-detail');
 
