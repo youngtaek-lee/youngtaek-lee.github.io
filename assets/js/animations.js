@@ -82,12 +82,12 @@ function initWorksReveal() {
     });
   }
 
-  // 리스트 아이템 왼쪽 등장
-  const items = document.querySelectorAll('.works__item');
+  // 리스트 아이템 왼쪽 등장 (홈페이지 전용 — 서브페이지 .works__item과 분리)
+  const items = document.querySelectorAll('#home-view .works__item');
   if (items.length) {
     const listTl = gsap.timeline({
       scrollTrigger: {
-        trigger: '.works__list',
+        trigger: '#home-view .works__list',
         start: 'top 95%',
         end: 'center 60%',
         scrub: 1,

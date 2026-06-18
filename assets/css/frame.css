@@ -131,7 +131,7 @@
 .header__sparkle {
   width: 24px;
   height: 24px;
-  color: var(--color-accent);
+  color: var(--color-sparkle);
   flex-shrink: 0;
   opacity: 0;
 }
@@ -147,7 +147,7 @@
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  color: var(--color-accent);
+  color: var(--color-sparkle);
   transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
@@ -583,11 +583,11 @@ main {
   right: -0.3em;
   width: 0.6em;
   height: 0.6em;
-  color: var(--color-accent);
+  color: var(--color-sparkle);
   display: block;
   pointer-events: none;
   opacity: 0;
-  filter: drop-shadow(0 0 12px var(--color-accent));
+  filter: drop-shadow(0 0 12px var(--color-sparkle));
 }
 
 .footer__divider {

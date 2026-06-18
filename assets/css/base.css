@@ -10,6 +10,7 @@
   --basic-line:      #edd9c08e;
   
   --summer-royal:    #0056B3;
+  --summer-yellow:   #f1b94c;
   --summer-cream:    #EAE8DF;
   --summer-dark:     #15191f;
   --summer-gray:     #b8c4cc;
@@ -39,6 +40,7 @@
   --color-white:        var(--basic-white);
   --color-gray:         var(--basic-gray);
   --color-line:         var(--basic-line);
+  --color-sparkle:      var(--basic-orange);
 
   --color-panel:          #242120;
   --color-overlay:        rgba(0, 0, 0, 0.55);
@@ -55,6 +57,23 @@
   --color-border-light:   rgba(237, 217, 192, 0.4);
   --color-border-strong:  rgba(237, 217, 192, 0.65);
   --color-border:         var(--color-line);
+
+  /* 서브페이지 — basic 메인과 반대로 항상 라이트 고정 */
+  --subpage-bg:             var(--basic-beige);
+  --subpage-text:           var(--basic-dark);
+  --subpage-accent:         var(--basic-orange);
+  --subpage-line:           rgba(22, 20, 21, 0.15);
+  --subpage-sub:            rgba(22, 20, 21, 0.45);
+  --subpage-surface:        rgba(22, 20, 21, 0.05);
+  --subpage-surface-raised: rgba(22, 20, 21, 0.09);
+  --subpage-text-soft:      rgba(22, 20, 21, 0.85);
+  --subpage-text-mid:       rgba(22, 20, 21, 0.55);
+  --subpage-text-dim:       rgba(22, 20, 21, 0.4);
+  --subpage-text-subtle:    rgba(22, 20, 21, 0.25);
+  --subpage-border-subtle:  rgba(22, 20, 21, 0.06);
+  --subpage-border-medium:  rgba(22, 20, 21, 0.12);
+  --subpage-border-light:   rgba(22, 20, 21, 0.4);
+  --subpage-border-strong:  rgba(22, 20, 21, 0.65);
 }
 
 /* =============================
@@ -67,6 +86,7 @@
   --color-white:        var(--summer-cream);
   --color-gray:         var(--summer-gray);
   --color-line:         var(--summer-line);
+  --color-sparkle:      var(--summer-yellow);
 
   --color-panel:          #F5F4EE;
   --color-overlay:        rgba(0, 0, 0, 0.35);
@@ -83,6 +103,23 @@
   --color-border-light:   rgba(21, 25, 31, 0.4);
   --color-border-strong:  rgba(21, 25, 31, 0.65);
   --color-border:         var(--color-line);
+
+  /* 서브페이지 — summer는 메인과 방향이 같아 글로벌 토큰 그대로 사용 */
+  --subpage-bg:             var(--color-bg);
+  --subpage-text:           var(--color-text);
+  --subpage-accent:         var(--color-accent);
+  --subpage-line:           var(--color-line);
+  --subpage-sub:            var(--color-sub);
+  --subpage-surface:        var(--color-surface);
+  --subpage-surface-raised: var(--color-surface-raised);
+  --subpage-text-soft:      var(--color-text-soft);
+  --subpage-text-mid:       var(--color-text-mid);
+  --subpage-text-dim:       var(--color-text-dim);
+  --subpage-text-subtle:    var(--color-text-subtle);
+  --subpage-border-subtle:  var(--color-border-subtle);
+  --subpage-border-medium:  var(--color-border-medium);
+  --subpage-border-light:   var(--color-border-light);
+  --subpage-border-strong:  var(--color-border-strong);
 }
 
 /* FOUC prevention — summer hero starts royal */

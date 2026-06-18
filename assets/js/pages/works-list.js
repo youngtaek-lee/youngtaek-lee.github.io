@@ -61,11 +61,11 @@ const PageWorksList = {
       chars = titleEl.querySelectorAll('.reveal-char__inner');
       gsap.set(chars, { yPercent: 110 });
     }
-    gsap.set('.works__item', { x: 150, opacity: 0 });
+    gsap.set('#subpage-view .works__item', { x: 150, opacity: 0 });
 
     const doHeroReveal = () => {
       if (chars) gsap.to(chars, { yPercent: 0, duration: 0.7, ease: 'power3.out', stagger: 0.06, delay: 0.1 });
-      gsap.to('.works__item', { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.08, delay: 0.2 });
+      gsap.to('#subpage-view .works__item', { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.08, delay: 0.2 });
     };
 
     if (document.getElementById('intro') || gsap.isTweening(document.querySelector('.page-transition'))) {

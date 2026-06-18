@@ -275,6 +275,19 @@ const PageAbout = {
     const doHeroReveal = () => {
       if (chars) gsap.to(chars, { yPercent: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, delay: 0.1 });
       if (inners) gsap.to(inners, { yPercent: 0, duration: 0.6, ease: 'power2.out', stagger: 0.07, delay: 0.45 });
+
+      // Work Process — 커튼/인트로가 사라지는 시점부터 같은 기준으로 시작 (고정 delay는 새로고침 시 인트로 뒤에서 먼저 끝나버림)
+      if (document.querySelector('.ptl')) {
+        gsap.timeline({ delay: 1.0 })
+          .from('.ptl', { y: 30, opacity: 0, duration: 0.6, ease: 'power2.out' })
+          .from('.ptl__header', { y: 24, opacity: 0, duration: 0.55, ease: 'power2.out' }, '-=0.3')
+          .from('.ptl__phases .ptl__phase', { y: 10, opacity: 0, duration: 0.4, stagger: 0.07, ease: 'power2.out' }, '-=0.25')
+          .from('.ptl__bar--1', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, '-=0.15')
+          .from('.ptl__bar--2', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, `<+=${0.55 * 0.5}`)
+          .from('.ptl__bar--3', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, `<+=${0.55 * (2/3)}`)
+          .from('.ptl__weeks .ptl__week', { y: 8, opacity: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out' }, '-=0.2')
+          .from('.ptl__footer', { y: 14, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.1');
+      }
     };
 
     if (document.getElementById('intro') || gsap.isTweening(document.querySelector('.page-transition'))) {
@@ -304,20 +317,6 @@ const PageAbout = {
       clearProps: 'transform',
       scrollTrigger: { trigger: '.about-skills', start: 'top 80%' },
     });
-
-    // Work Process animations — 초기 뷰포트 내 위치하므로 ScrollTrigger 대신 delay 사용
-    // delay 2.0s = 전환 패널 잔여(0.7s) + 섹션 타이틀 차 애니메이션 완료(~1.2s)
-    if (document.querySelector('.ptl')) {
-      gsap.timeline({ delay: 1.0 })
-        .from('.ptl', { y: 30, opacity: 0, duration: 0.6, ease: 'power2.out' })
-        .from('.ptl__header', { y: 24, opacity: 0, duration: 0.55, ease: 'power2.out' }, '-=0.3')
-        .from('.ptl__phases .ptl__phase', { y: 10, opacity: 0, duration: 0.4, stagger: 0.07, ease: 'power2.out' }, '-=0.25')
-        .from('.ptl__bar--1', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, '-=0.15')
-        .from('.ptl__bar--2', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, `<+=${0.55 * 0.5}`)
-        .from('.ptl__bar--3', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, `<+=${0.55 * (2/3)}`)
-        .from('.ptl__weeks .ptl__week', { y: 8, opacity: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out' }, '-=0.2')
-        .from('.ptl__footer', { y: 14, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.1');
-    }
 
     // Commit Log animations — 폴드 아래 위치, ScrollTrigger 사용
     const calAnim = { ready: false, trigger: null };

@@ -1,10 +1,10 @@
 body.is-subpage {
-  background-color: var(--color-bg);
+  background-color: var(--subpage-bg);
 }
 
 #subpage-view {
   min-height: 100vh;
-  background-color: var(--color-bg);
+  background-color: var(--subpage-bg);
 }
 
 .subpage {
@@ -27,7 +27,7 @@ body.is-subpage {
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: 0;
-  color: var(--color-text);
+  color: var(--subpage-text);
   overflow: hidden;
 }
 
@@ -42,25 +42,25 @@ body.is-subpage {
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.01em;
-  color: var(--color-text);
+  color: var(--subpage-text);
   margin-bottom: 32px;
 }
 
 /* ── Back link ── */
 .back-link {
-  color: var(--color-sub);
+  color: var(--subpage-sub);
   transition: color 0.2s;
 }
 
 .back-link:hover {
-  color: var(--color-text);
+  color: var(--subpage-text);
 }
 
 /* ── About ── */
 .about-intro__text {
   font-size: clamp(1.2rem, 2.5vw, 2rem);
   line-height: 1.6;
-  color: var(--color-text);
+  color: var(--subpage-text);
 }
 
 /* ── Process Cards ── */
@@ -71,7 +71,7 @@ body.is-subpage {
 }
 
 .process-card {
-  background: var(--color-surface);
+  background: var(--subpage-surface);
   border-radius: 20px;
   padding: 36px 28px;
   display: flex;
@@ -83,13 +83,13 @@ body.is-subpage {
   font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--subpage-text);
 }
 
 .process-card__desc {
   font-family: var(--font-body);
   font-size: 0.8rem;
-  color: var(--color-sub);
+  color: var(--subpage-sub);
   line-height: 1.7;
 }
 
@@ -115,7 +115,7 @@ body.is-subpage {
   transform: translate(1px, -1px);
 }
 .process-card__icon svg path.ch {
-  fill: var(--color-bg);
+  fill: var(--subpage-bg);
   transition: fill 0.3s ease;
 }
 .process-card:hover .process-card__icon svg path.ch {
@@ -131,7 +131,7 @@ body.is-subpage {
 .process-card {
   position: relative;
   padding: 36px 24px;
-  background: var(--color-surface);
+  background: var(--subpage-surface);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -167,7 +167,7 @@ body.is-subpage {
 .process-card__icon {
   width: 80px;
   height: 80px;
-  color: var(--color-text);
+  color: var(--subpage-text);
 }
 
 .process-card__icon svg {
@@ -180,13 +180,13 @@ body.is-subpage {
   font-family: var(--font-body);
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--subpage-text);
 }
 
 .process-card__desc {
   font-family: var(--font-body);
   font-size: 0.8rem;
-  color: var(--color-sub);
+  color: var(--subpage-sub);
   line-height: 1.7;
 }
 
@@ -252,41 +252,41 @@ body.is-subpage {
 }
 
 .skill-card {
-  background: var(--color-bg);
-  border: 2px solid var(--color-text);
+  background: var(--subpage-bg);
+  border: 2px solid var(--subpage-text);
   border-radius: 12px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   aspect-ratio: 4 / 5;
-  box-shadow: 6px 6px 0 0 var(--color-text);
+  box-shadow: 6px 6px 0 0 var(--subpage-text);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
 .skill-card:hover {
-  background: var(--color-text);
-  border-color: var(--color-bg);
-  box-shadow: 0px 0px 0 0 var(--color-bg);
+  background: var(--subpage-text);
+  border-color: var(--subpage-bg);
+  box-shadow: 0px 0px 0 0 var(--subpage-bg);
   transform: translate(6px, 6px);
 }
 
 .skill-card__icon {
   font-size: 2.4rem;
   line-height: 1;
-  color: var(--color-text);
+  color: var(--subpage-text);
   transition: color 0.2s ease;
 }
 
 .skill-card:hover .skill-card__icon {
-  color: var(--icon-color, var(--color-bg));
+  color: var(--icon-color, var(--subpage-bg));
 }
 
 .skill-card:hover .skill-card__name {
-  color: var(--color-bg);
+  color: var(--subpage-bg);
 }
 
 .skill-card:hover .skill-card__desc {
-  color: var(--color-bg);
+  color: var(--subpage-bg);
 }
 
 .skill-card__abbr {
@@ -309,13 +309,13 @@ body.is-subpage {
   padding-top: 12px;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: var(--subpage-text);
 }
 
 .skill-card__desc {
   margin-top: 4px;
   font-size: 0.7rem;
-  color: var(--color-text);
+  color: var(--subpage-text);
   opacity: 0.55;
   line-height: 1.35;
 }
@@ -328,11 +328,11 @@ body.is-subpage {
 
   .skill-card {
     padding: 20px 18px;
-    box-shadow: 5px 5px 0 0 var(--color-text);
+    box-shadow: 5px 5px 0 0 var(--subpage-text);
   }
 
   .skill-card:hover {
-    box-shadow: 0 0 0 0 var(--color-bg);
+    box-shadow: 0 0 0 0 var(--subpage-bg);
     transform: translate(5px, 5px);
   }
 }
@@ -344,11 +344,11 @@ body.is-subpage {
 
   .skill-card {
     padding: 16px 14px;
-    box-shadow: 4px 4px 0 0 var(--color-text);
+    box-shadow: 4px 4px 0 0 var(--subpage-text);
   }
 
   .skill-card:hover {
-    box-shadow: 0 0 0 0 var(--color-bg);
+    box-shadow: 0 0 0 0 var(--subpage-bg);
     transform: translate(4px, 4px);
   }
 
@@ -373,12 +373,12 @@ body.is-subpage {
 
   .skill-card {
     padding: 12px 8px;
-    box-shadow: 3px 3px 0 0 var(--color-text);
+    box-shadow: 3px 3px 0 0 var(--subpage-text);
     border-radius: 8px;
   }
 
   .skill-card:hover {
-    box-shadow: 0 0 0 0 var(--color-bg);
+    box-shadow: 0 0 0 0 var(--subpage-bg);
     transform: translate(3px, 3px);
   }
 
@@ -401,6 +401,18 @@ body.is-subpage {
   margin-top: 60px;
 }
 
+.works-list-page .works__item__link {
+  color: var(--subpage-text);
+}
+
+.works-list-page .works__list {
+  border-top-color: var(--subpage-line);
+}
+
+.works-list-page .works__item {
+  border-bottom-color: var(--subpage-line);
+}
+
 
 
 
@@ -418,9 +430,9 @@ body.is-subpage {
 .more-works__link {
   display: flex;
   align-items: center;
-  background: var(--color-bg);
-  color: var(--color-text);
-  border: 2px solid var(--color-text);
+  background: var(--subpage-bg);
+  color: var(--subpage-text);
+  border: 2px solid var(--subpage-text);
   border-radius: 100px;
   padding: 10px 20px;
   font-family: var(--font-body);
@@ -428,14 +440,14 @@ body.is-subpage {
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
-  box-shadow: 4px 4px 0 0 var(--color-text);
+  box-shadow: 4px 4px 0 0 var(--subpage-text);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 a.more-works__link:hover {
-  background: var(--color-text);
-  color: var(--color-bg);
-  box-shadow: 0 0 0 0 var(--color-bg);
+  background: var(--subpage-text);
+  color: var(--subpage-bg);
+  box-shadow: 0 0 0 0 var(--subpage-bg);
   transform: translate(4px, 4px);
 }
 
@@ -461,7 +473,7 @@ a.more-works__link:hover {
 .wd-subtitle {
   font-size: 1.2rem;
   line-height: 1.8;
-  color: var(--color-text);
+  color: var(--subpage-text);
   max-width: 60ch;
   word-break: keep-all;
 }
@@ -479,14 +491,14 @@ a.more-works__link:hover {
 
 .wd-meta {
   font-size: 1rem;
-  color: var(--color-text);
+  color: var(--subpage-text);
   letter-spacing: 0.06em;
 }
 
 .wd-overview {
   font-size: 1.2rem;
   line-height: 1.8;
-  color: var(--color-text);
+  color: var(--subpage-text);
   max-width: 60ch;
   word-break: keep-all;
 }
@@ -537,7 +549,7 @@ a.more-works__link:hover {
   font-family: var(--font-display);
   font-size: clamp(2rem, 3vw, 2.8rem);
   font-weight: 400;
-  color: var(--color-bg);
+  color: var(--subpage-bg);
   line-height: 1;
   letter-spacing: 0.02em;
 }
@@ -545,7 +557,7 @@ a.more-works__link:hover {
 .wd-gallery__next-icon {
   width: clamp(2.2rem, 3vw, 3rem);
   height: clamp(2.2rem, 3vw, 3rem);
-  color: var(--color-bg);
+  color: var(--subpage-bg);
   margin-top: 16px;
   transition: transform 0.3s ease;
 }
@@ -575,14 +587,14 @@ a.more-works__link:hover {
 }
 
 .wd-nav__item--prev {
-  background: var(--color-text);
+  background: var(--subpage-text);
   border-radius: 12px 0 0 12px;
 }
 
 .wd-nav__item--next {
   align-items: flex-end;
   text-align: right;
-  background: var(--color-text);
+  background: var(--subpage-text);
   border-radius: 0 12px 12px 0;
 }
 
@@ -596,7 +608,7 @@ a.more-works__link:hover {
   bottom: calc(clamp(28px, 4vw, 48px) + 4px);
   display: flex;
   align-items: center;
-  color: var(--color-bg);
+  color: var(--subpage-bg);
 }
 
 .wd-nav__item--prev .wd-nav__arrow {
@@ -637,7 +649,7 @@ a.more-works__link:hover {
 
 .wd-nav__item--prev .wd-nav__label,
 .wd-nav__item--next .wd-nav__label {
-  color: var(--color-bg);
+  color: var(--subpage-bg);
   opacity: 0.5;
 }
 
@@ -646,7 +658,7 @@ a.more-works__link:hover {
   font-size: clamp(1.6rem, 3vw, 2.6rem);
   font-weight: 400;
   line-height: 1;
-  color: var(--color-bg);
+  color: var(--subpage-bg);
   transition: transform 0.4s ease;
 }
 
@@ -669,7 +681,7 @@ a.more-works__link:hover {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 4vw, 3.5rem);
   font-weight: 400;
-  color: var(--color-text);
+  color: var(--subpage-text);
   transition: opacity 0.2s;
 }
 
@@ -688,18 +700,18 @@ a.more-works__link:hover {
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--color-sub);
+  color: var(--subpage-sub);
   transition: color 0.2s;
 }
 
 .contact-info__link:hover {
-  color: var(--color-text);
+  color: var(--subpage-text);
 }
 
 /* ── GitHub Calendar ── */
 .about-github__card {
   background: var(--color-panel);
-  color: var(--color-text);
+  color: var(--subpage-text);
   border-radius: 20px;
   padding: clamp(24px, 4vw, 48px);
 }
@@ -716,7 +728,7 @@ a.more-works__link:hover {
   font-size: 0.65rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-text-dim);
+  color: var(--subpage-text-dim);
   margin-bottom: 8px;
 }
 
@@ -726,14 +738,14 @@ a.more-works__link:hover {
   font-weight: 700;
   letter-spacing: -0.025em;
   line-height: 1;
-  color: var(--color-text);
+  color: var(--subpage-text);
 }
 
 .about-github__link {
   width: 40px;
   height: 40px;
   flex-shrink: 0;
-  border: 1.5px solid color-mix(in srgb, var(--color-text) 70%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--subpage-text) 70%, transparent);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -765,7 +777,7 @@ a.more-works__link:hover {
 
 .about-github__wrap svg text {
   font-family: var(--font-body), sans-serif;
-  fill: var(--color-text);
+  fill: var(--subpage-text);
 }
 
 .about-github__footer {
@@ -780,7 +792,7 @@ a.more-works__link:hover {
 .about-github__count {
   font-family: var(--font-body);
   font-size: 0.72rem;
-  color: var(--color-text-dim);
+  color: var(--subpage-text-dim);
   letter-spacing: 0.04em;
 }
 
@@ -790,7 +802,7 @@ a.more-works__link:hover {
   gap: 4px;
   font-family: var(--font-body);
   font-size: 0.7rem;
-  color: var(--color-text-dim);
+  color: var(--subpage-text-dim);
   letter-spacing: 0.04em;
 }
 
@@ -829,11 +841,11 @@ a.more-works__link:hover {
   .more-works__link {
     padding: 8px 14px;
     font-size: 0.8rem;
-    box-shadow: 3px 3px 0 0 var(--color-text);
+    box-shadow: 3px 3px 0 0 var(--subpage-text);
   }
 
   a.more-works__link:hover {
-    box-shadow: 0 0 0 0 var(--color-bg);
+    box-shadow: 0 0 0 0 var(--subpage-bg);
     transform: translate(3px, 3px);
   }
 
