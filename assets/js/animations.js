@@ -94,7 +94,7 @@ function initWorksReveal() {
       }
     });
     items.forEach((item, i) => {
-      listTl.from(item, { x: 150, ease: 'none', duration: 1 }, i * 0.12);
+      listTl.from(item, { x: 150, ease: 'none', duration: 1, clearProps: 'transform' }, i * 0.12);
     });
   }
 }
