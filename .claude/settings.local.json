@@ -130,7 +130,18 @@
       "Bash(powershell -Command \"\\(Get-Content -Raw assets/css/subpage.css\\) -replace 'var\\\\\\(--color-bg\\\\\\)','var\\(--subpage-bg\\)' -replace 'var\\\\\\(--color-text-dim\\\\\\)','var\\(--subpage-text-dim\\)' -replace 'var\\\\\\(--color-text\\\\\\)','var\\(--subpage-text\\)' -replace 'var\\\\\\(--color-sub\\\\\\)','var\\(--subpage-sub\\)' -replace 'var\\\\\\(--color-surface\\\\\\)','var\\(--subpage-surface\\)' -replace 'var\\\\\\(--basic-beige\\\\\\)','var\\(--subpage-bg\\)' -replace 'var\\\\\\(--basic-orange\\\\\\)','var\\(--subpage-accent\\)' | Set-Content -NoNewline -Encoding utf8 assets/css/subpage.css\")",
       "Bash(netstat -ano)",
       "Bash(nohup python -m http.server 8765)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "WebFetch(domain:gall.dcinside.com)",
+      "WebFetch(domain:brunch.co.kr)",
+      "Bash(cp /tmp/shot.js ./shot_tmp.js)",
+      "Bash(rm shot_tmp.js)",
+      "Bash(npx --yes playwright screenshot --help)",
+      "Bash(npx --yes playwright screenshot --viewport-size=1440,900 --wait-for-timeout=4800 \"http://localhost:8765\" \"/c/Users/이영택/projects/portfolio/shot_header_full.png\")",
+      "Bash(rm -f shot_header.png shot_header_full.png)",
+      "Bash(npx --yes playwright install chromium)",
+      "Bash(npx --yes playwright screenshot --viewport-size=1440,900 --wait-for-timeout=4800 \"http://localhost:8765\" \"/c/Users/이영택/projects/portfolio/shot_header.png\")",
+      "Bash(npx --yes playwright screenshot --viewport-size=1440,900 --wait-for-timeout=4800 \"http://localhost:8765\" \"shot_header2.png\")",
+      "Bash(rm -f shot_header.png shot_header_crop.png shot_header_zoom.png shot_header2.png shot_header2_crop.png shot_header2_zoom.png)"
     ]
   }
 }

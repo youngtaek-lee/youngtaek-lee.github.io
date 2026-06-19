@@ -13,10 +13,22 @@ function initHeroEntrance() {
   const sparkleFxd = document.querySelector('.header__sparkle-fixed');
   if (sparkleFxd && header) {
     sparkleFxd.style.height = header.offsetHeight + 'px';
+    syncSparklePosition();
     window.addEventListener('resize', () => {
       sparkleFxd.style.height = header.offsetHeight + 'px';
+      syncSparklePosition();
     });
   }
+}
+
+// 헤더 nav가 비대칭 레이아웃(About/Works/토글)이라 sparkle의 실제 가로 위치가
+// 뷰포트 중앙과 다름 — 인비저블 sparkle의 실측 위치를 fixed 트윈에 동기화
+function syncSparklePosition() {
+  const sparkle = document.querySelector('.header__sparkle');
+  const sparkleFxd = document.querySelector('.header__sparkle-fixed');
+  if (!sparkle || !sparkleFxd) return;
+  const rect = sparkle.getBoundingClientRect();
+  sparkleFxd.style.left = (rect.left + rect.width / 2) + 'px';
 }
 
 // =============================
@@ -152,20 +164,24 @@ let _colorRevealTls = [];
 
 function getThemeColors() {
   const cs = getComputedStyle(document.documentElement);
+  const isSummer = document.documentElement.getAttribute('data-theme') === 'summer';
   return {
     bg: cs.getPropertyValue('--color-bg').trim(),
     text: cs.getPropertyValue('--color-text').trim(),
+    taglineStart: isSummer
+      ? cs.getPropertyValue('--color-accent').trim()
+      : cs.getPropertyValue('--color-text').trim(),
   };
 }
 
 function initScrollColorReveals() {
-  const { bg, text } = getThemeColors();
+  const { bg, text, taglineStart } = getThemeColors();
 
   _colorRevealTls.push(
     gsap.timeline({
       scrollTrigger: { id: 'color-reveal-hero', trigger: '.hero-wrap', start: 'bottom bottom', end: 'bottom top', scrub: 1 },
     }).fromTo('main', { backgroundColor: bg }, { backgroundColor: text, ease: 'none' })
-      .fromTo('.hero__tagline', { color: text }, { color: bg, ease: 'none' }, 0)
+      .fromTo('.hero__tagline', { color: taglineStart }, { color: bg, ease: 'none' }, 0)
   );
 
   _colorRevealTls.push(

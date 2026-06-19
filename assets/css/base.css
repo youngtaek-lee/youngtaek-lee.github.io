@@ -10,7 +10,7 @@
   --basic-line:      var(--basic-dark);
   
   --summer-royal:    #0056B3;
-  --summer-yellow:   #f1b94c;
+  --summer-yellow:   #e79900;
   --summer-cream:    #EAE8DF;
   --summer-dark:     #15191f;
   --summer-gray:     #b8c4cc;
@@ -148,7 +148,7 @@ body::before {
 }
 
 [data-theme="summer"] body::before {
-  opacity: 0.35;
+  opacity: 0;
 }
 
 @keyframes grainFlicker {

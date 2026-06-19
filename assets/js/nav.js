@@ -83,10 +83,10 @@ function initMobileMenu() {
 // Theme Toggle
 // =============================
 function initTheme() {
-  const btn = document.getElementById('themeToggle');
-  if (!btn) return;
+  const btns = document.querySelectorAll('.theme-switch');
+  if (!btns.length) return;
 
-  btn.addEventListener('click', () => {
+  btns.forEach((btn) => btn.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme');
     const next = current === 'basic' ? 'summer' : 'basic';
     document.documentElement.setAttribute('data-theme', next);
@@ -96,7 +96,7 @@ function initTheme() {
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.content = next === 'basic' ? '#1C1A17' : '#0056B3';
     debugTheme();
-  });
+  }));
 }
 
 // 콘솔에서 window.debugWorksAnim() 호출 — /works 진입 직후에 바로 실행
