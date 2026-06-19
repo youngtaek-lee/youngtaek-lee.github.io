@@ -126,7 +126,9 @@
       "PowerShell(winget uninstall *)",
       "PowerShell(explorer \"C:\\\\Users\\\\이영택\\\\projects\\\\portfolio\\\\assets\\\\images\\\\clients\")",
       "Read(//c//**)",
-      "Bash(npm root *)"
+      "Bash(npm root *)",
+      "Bash(powershell -Command \"\\(Get-Content -Raw assets/css/subpage.css\\) -replace 'var\\\\\\(--color-bg\\\\\\)','var\\(--subpage-bg\\)' -replace 'var\\\\\\(--color-text-dim\\\\\\)','var\\(--subpage-text-dim\\)' -replace 'var\\\\\\(--color-text\\\\\\)','var\\(--subpage-text\\)' -replace 'var\\\\\\(--color-sub\\\\\\)','var\\(--subpage-sub\\)' -replace 'var\\\\\\(--color-surface\\\\\\)','var\\(--subpage-surface\\)' -replace 'var\\\\\\(--basic-beige\\\\\\)','var\\(--subpage-bg\\)' -replace 'var\\\\\\(--basic-orange\\\\\\)','var\\(--subpage-accent\\)' | Set-Content -NoNewline -Encoding utf8 assets/css/subpage.css\")",
+      "Bash(netstat -ano)"
     ]
   }
 }
