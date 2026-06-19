@@ -41,6 +41,7 @@
   --color-gray:         var(--basic-gray);
   --color-line:         var(--basic-line);
   --color-sparkle:      var(--basic-orange);
+  --header-text:        var(--basic-beige);
 
   --color-panel:          #242120;
   --color-overlay:        rgba(0, 0, 0, 0.55);
@@ -87,6 +88,7 @@
   --color-gray:         var(--summer-gray);
   --color-line:         var(--summer-line);
   --color-sparkle:      var(--summer-yellow);
+  --header-text:        var(--summer-cream);
 
   --color-panel:          #F5F4EE;
   --color-overlay:        rgba(0, 0, 0, 0.35);

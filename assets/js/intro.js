@@ -8,6 +8,7 @@ function initIntro() {
   const orange = intro ? intro.querySelector('.intro__sparkle--orange') : null;
   if (!intro || !wrap || !gray || !orange) {
     initHeroEntrance();
+    revealHeader();
     return;
   }
 
@@ -34,6 +35,7 @@ function initIntro() {
     window.__onCurtainMid?.();
     window.__onCurtainMid = null;
     initHeroEntrance();
+    revealHeader();
   };
   const onVisible = () => { if (!document.hidden && intro.isConnected) skipIntro(); };
   document.addEventListener('visibilitychange', onVisible);
@@ -45,9 +47,10 @@ function initIntro() {
         onComplete: () => intro.remove() }, '+=0.2')
     .to(trail,   { y: '-100%', duration: 1.2, ease: 'power3.inOut',
         onComplete: () => trail.remove() }, '<+=0.15')
-    .call(() => { window.__onCurtainMid?.(); window.__onCurtainMid = null; }, null, 3.05);
+    .call(() => { window.__onCurtainMid?.(); window.__onCurtainMid = null; }, null, 3.05)
+    .call(() => revealHeader(), null, 3.85);
 
-  if (heroSection) tl.to(heroSection, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.inOut' }, '<-0.15');
+  if (heroSection) tl.to(heroSection, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.inOut' }, 2.9);
 
   tl.call(() => {
     document.removeEventListener('visibilitychange', onVisible);

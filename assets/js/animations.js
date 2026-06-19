@@ -10,14 +10,37 @@ function initHeroEntrance() {
   });
 
   const header = document.querySelector('.header');
-  if (header) gsap.set(header, { opacity: 1, visibility: 'visible' });
   const sparkleFxd = document.querySelector('.header__sparkle-fixed');
   if (sparkleFxd && header) {
     sparkleFxd.style.height = header.offsetHeight + 'px';
-    gsap.set(sparkleFxd, { opacity: 1, visibility: 'visible' });
     window.addEventListener('resize', () => {
       sparkleFxd.style.height = header.offsetHeight + 'px';
     });
+  }
+}
+
+// =============================
+// Header 입장 — 커튼 중간 지점(__onCurtainMid)에 맞춰 히어로 텍스트와 동일한 슬라이드+페이드
+// =============================
+let __headerRevealed = false;
+function revealHeader() {
+  if (__headerRevealed) return;
+  __headerRevealed = true;
+
+  const header = document.querySelector('.header');
+  const sparkleFxd = document.querySelector('.header__sparkle-fixed');
+
+  if (header) {
+    gsap.fromTo(header,
+      { y: 24, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: 'power2.out' }
+    );
+  }
+  if (sparkleFxd) {
+    gsap.fromTo(sparkleFxd,
+      { y: 24, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: 'power2.out' }
+    );
   }
 }
 

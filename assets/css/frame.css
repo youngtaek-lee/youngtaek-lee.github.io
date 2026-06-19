@@ -82,22 +82,11 @@
   margin: 0 auto;
   pointer-events: none;
   opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
   mix-blend-mode: difference;
-}
-
-[data-theme="summer"] .header {
-  mix-blend-mode: normal;
 }
 
 .header > * {
   pointer-events: auto;
-}
-
-.header.is-visible {
-  opacity: 1;
-  visibility: visible;
 }
 
 .header__logo {
@@ -105,7 +94,7 @@
   font-size: 1.2rem;
   /* font-weight: 700; */
   letter-spacing: 0.05em;
-  color: var(--color-text);
+  color: var(--header-text);
   display: flex;
   flex-direction: column;
   line-height: 1.05;
@@ -146,9 +135,7 @@
   z-index: 1001;
   pointer-events: none;
   opacity: 0;
-  visibility: hidden;
   color: var(--color-sparkle);
-  transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
 .header__sparkle-fixed svg {
@@ -162,7 +149,7 @@
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-text);
+  color: var(--header-text);
   padding: 6px 16px;
   border: 1px solid var(--color-line);
   border-radius: 100px;
@@ -207,7 +194,7 @@
   font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: 0.04em;
-  color: var(--color-text);
+  color: var(--header-text);
 }
 
 .header__menu-btn {
@@ -482,9 +469,6 @@ main {
 /* summer 푸터: 쿨 그레이 배경 + 로얄 텍스트 */
 [data-theme="summer"] .footer,
 [data-theme="summer"] .statement {
-  --c-fg-rgb: 0, 86, 179;
-  --c-bg-rgb: 184, 196, 204;
-  --color-bg:   var(--summer-cool-gray);
   --color-text: var(--summer-royal);
 }
 
