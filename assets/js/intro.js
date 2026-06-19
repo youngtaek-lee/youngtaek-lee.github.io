@@ -16,7 +16,7 @@ function initIntro() {
 
   // 오렌지 트레일 레이어 — 인트로 바로 뒤에서 살짝 늦게 따라올라감
   const trail = document.createElement('div');
-  trail.style.cssText = 'position:fixed;inset:0;background:var(--color-accent);z-index:99989;pointer-events:none;';
+  trail.style.cssText = 'position:fixed;inset:0;background:var(--intro-trail-bg);z-index:99989;pointer-events:none;';
   document.body.appendChild(trail);
 
   // hero-wrap은 ScrollTrigger trigger라 건드리지 않고, 내부 .hero(section)만 이동

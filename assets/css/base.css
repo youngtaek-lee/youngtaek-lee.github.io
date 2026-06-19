@@ -7,7 +7,7 @@
   --basic-dark:      #1C1A17;
   --basic-gray:      #666666;
   --basic-white:     #F8F8F8;
-  --basic-line:      #edd9c08e;
+  --basic-line:      var(--basic-dark);
   
   --summer-royal:    #0056B3;
   --summer-yellow:   #f1b94c;
@@ -42,6 +42,8 @@
   --color-line:         var(--basic-line);
   --color-sparkle:      var(--basic-orange);
   --header-text:        var(--basic-beige);
+  --intro-bg:           var(--color-bg);
+  --intro-trail-bg:     var(--color-accent);
 
   --color-panel:          #242120;
   --color-overlay:        rgba(0, 0, 0, 0.55);
@@ -89,6 +91,8 @@
   --color-line:         var(--summer-line);
   --color-sparkle:      var(--summer-yellow);
   --header-text:        var(--summer-cream);
+  --intro-bg:           var(--summer-dark);
+  --intro-trail-bg:     var(--summer-dark);
 
   --color-panel:          #F5F4EE;
   --color-overlay:        rgba(0, 0, 0, 0.35);
@@ -124,9 +128,9 @@
   --subpage-border-strong:  var(--color-border-strong);
 }
 
-/* FOUC prevention — summer hero starts royal */
+/* FOUC prevention — summer hero starts dark */
 html[data-theme="summer"] {
-  background-color: var(--summer-royal);
+  background-color: var(--summer-dark);
 }
 
 /* =============================
@@ -235,7 +239,7 @@ button {
   will-change: transform;
 }
 .page-transition {
-  background: var(--color-bg);
+  background: var(--intro-bg);
   z-index: 99990;
   transform: translateY(100%);
 }

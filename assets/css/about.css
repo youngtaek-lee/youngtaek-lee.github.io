@@ -224,6 +224,7 @@
 
   background: var(--ptl-bg);
   color: var(--ptl-beige);
+  border: 1px solid var(--ptl-line);
   border-radius: 20px;
   padding: clamp(24px, 4vw, 48px);
 }

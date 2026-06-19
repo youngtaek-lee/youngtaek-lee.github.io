@@ -272,21 +272,42 @@ const PageAbout = {
       gsap.set(inners, { yPercent: 110 });
     }
 
+    // Work Process 제목 — 스크롤 없이 바로 보이는 화면이라 ScrollTrigger 대신 커튼 콜백 기준으로 처리
+    const processTitleEl = document.querySelector('#process .subpage__section-title');
+    let processChars;
+    if (processTitleEl) {
+      processTitleEl.innerHTML = processTitleEl.textContent.split('').map(ch =>
+        ch === ' '
+          ? '<span class="reveal-char" style="width:0.3em;display:inline-block"></span>'
+          : `<span class="reveal-char"><span class="reveal-char__inner">${ch}</span></span>`
+      ).join('');
+      processChars = processTitleEl.querySelectorAll('.reveal-char__inner');
+      gsap.set(processChars, { yPercent: 130 });
+    }
+
+    const ptlEl = document.querySelector('.ptl');
+    if (ptlEl) {
+      gsap.set(ptlEl, { y: 30, opacity: 0 });
+      gsap.set(ptlEl.querySelectorAll('.ptl__header, .ptl__phases .ptl__phase, .ptl__bar--1, .ptl__bar--2, .ptl__bar--3, .ptl__weeks .ptl__week, .ptl__footer'),
+        { opacity: 0 });
+    }
+
     const doHeroReveal = () => {
       if (chars) gsap.to(chars, { yPercent: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08, delay: 0.1 });
       if (inners) gsap.to(inners, { yPercent: 0, duration: 0.6, ease: 'power2.out', stagger: 0.07, delay: 0.45 });
+      if (processChars) gsap.to(processChars, { yPercent: 0, duration: 0.6, ease: 'power3.out', stagger: 0.06, delay: 0.7 });
 
       // Work Process — 커튼/인트로가 사라지는 시점부터 같은 기준으로 시작 (고정 delay는 새로고침 시 인트로 뒤에서 먼저 끝나버림)
-      if (document.querySelector('.ptl')) {
+      if (ptlEl) {
         gsap.timeline({ delay: 1.0 })
-          .from('.ptl', { y: 30, opacity: 0, duration: 0.6, ease: 'power2.out' })
-          .from('.ptl__header', { y: 24, opacity: 0, duration: 0.55, ease: 'power2.out' }, '-=0.3')
-          .from('.ptl__phases .ptl__phase', { y: 10, opacity: 0, duration: 0.4, stagger: 0.07, ease: 'power2.out' }, '-=0.25')
-          .from('.ptl__bar--1', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, '-=0.15')
-          .from('.ptl__bar--2', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, `<+=${0.55 * 0.5}`)
-          .from('.ptl__bar--3', { y: 20, opacity: 0, duration: 0.55, ease: 'power2.out' }, `<+=${0.55 * (2/3)}`)
-          .from('.ptl__weeks .ptl__week', { y: 8, opacity: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out' }, '-=0.2')
-          .from('.ptl__footer', { y: 14, opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=0.1');
+          .fromTo('.ptl', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' })
+          .fromTo('.ptl__header', { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out' }, '-=0.3')
+          .fromTo('.ptl__phases .ptl__phase', { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, stagger: 0.07, ease: 'power2.out' }, '-=0.25')
+          .fromTo('.ptl__bar--1', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out' }, '-=0.15')
+          .fromTo('.ptl__bar--2', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out' }, `<+=${0.55 * 0.5}`)
+          .fromTo('.ptl__bar--3', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out' }, `<+=${0.55 * (2/3)}`)
+          .fromTo('.ptl__weeks .ptl__week', { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, stagger: 0.04, ease: 'power2.out' }, '-=0.2')
+          .fromTo('.ptl__footer', { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: 'power2.out' }, '-=0.1');
       }
     };
 
@@ -297,6 +318,7 @@ const PageAbout = {
     }
 
     document.querySelectorAll('.subpage__section-title').forEach(el => {
+      if (el === processTitleEl) return;
       el.innerHTML = el.textContent.split('').map(ch =>
         ch === ' '
           ? '<span class="reveal-char" style="width:0.3em;display:inline-block"></span>'
@@ -304,7 +326,7 @@ const PageAbout = {
       ).join('');
       const chars = el.querySelectorAll('.reveal-char__inner');
       gsap.from(chars, {
-        yPercent: 110, duration: 0.6, ease: 'power3.out', stagger: 0.06,
+        yPercent: 130, duration: 0.6, ease: 'power3.out', stagger: 0.06,
         scrollTrigger: { trigger: el, start: 'top 85%' },
       });
     });
