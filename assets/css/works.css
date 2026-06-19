@@ -115,6 +115,14 @@
   transform: translateY(0);
 }
 
+/* 메인 Works만 — hero 스크롤로 main bg가 반전된 뒤라 텍스트도 반전 색 필요 */
+#home-view .works__label,
+#home-view .works__item__title__en,
+#home-view .works__item__title__ko,
+#home-view .works__item__meta {
+  color: var(--color-bg);
+}
+
 .works__item__meta {
   display: flex;
   align-items: center;

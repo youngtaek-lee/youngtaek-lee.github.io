@@ -173,22 +173,14 @@ function initScrollColorReveals() {
       scrollTrigger: { id: 'color-reveal-about', trigger: '.about-text', start: 'top bottom', end: 'top center', scrub: 1 },
     }).fromTo('.about-text__label, .about__word', { color: text }, { color: bg, ease: 'none' })
   );
-
-  _colorRevealTls.push(
-    gsap.timeline({
-      scrollTrigger: { id: 'color-reveal-works', trigger: '.works', start: 'top bottom', end: 'top center', scrub: 1 },
-    }).fromTo('.works__label, .works__sub, .works__item__num, .works__item__title__en, .works__item__title__ko, .works__item__meta',
-      { color: text }, { color: bg, ease: 'none' })
-  );
 }
 
 function refreshScrollColorReveals() {
-  ['color-reveal-hero', 'color-reveal-about', 'color-reveal-works'].forEach(id => ScrollTrigger.getById(id)?.kill());
+  ['color-reveal-hero', 'color-reveal-about'].forEach(id => ScrollTrigger.getById(id)?.kill());
   _colorRevealTls.forEach(tl => tl.kill());
   _colorRevealTls = [];
   gsap.set(
-    ['main', '.hero__tagline', '.about-text__label', '.about__word',
-     '.works__label', '.works__sub', '.works__item__num', '.works__item__title__en', '.works__item__title__ko', '.works__item__meta'],
+    ['main', '.hero__tagline', '.about-text__label', '.about__word'],
     { clearProps: 'backgroundColor,color' }
   );
   initScrollColorReveals();
@@ -402,7 +394,7 @@ function initHobbyPopcorn() {
   const { Engine, Runner, Bodies, Body, World, Events } = Matter;
 
   const engine = Engine.create({ enableSleeping: true });
-  engine.gravity.y = 2;
+  engine.gravity.y = 0.5;
   const runner = Runner.create();
   Runner.run(runner, engine);
 
@@ -441,17 +433,23 @@ function initHobbyPopcorn() {
   Events.on(engine, 'afterUpdate', () => {
     const limit = container.offsetHeight + 300;
 
+    const now = performance.now();
+    const POP_MS = 220;
+
     for (let i = active.length - 1; i >= 0; i--) {
-      const { body, el } = active[i];
+      const { body, el, born } = active[i];
       if (body.position.y > limit) {
         World.remove(engine.world, body);
         el.remove();
         active.splice(i, 1);
         continue;
       }
+      const age = now - born;
+      const t = Math.min(age / POP_MS, 1);
+      const scale = t >= 1 ? 1 : 0.3 + 0.7 * (1 - Math.pow(1 - t, 3));
       el.style.left = body.position.x + 'px';
       el.style.top = body.position.y + 'px';
-      el.style.transform = `translate(-50%, -50%) rotate(${body.angle}rad)`;
+      el.style.transform = `translate(-50%, -50%) scale(${scale}) rotate(${body.angle}rad)`;
     }
   });
 
@@ -472,17 +470,18 @@ function initHobbyPopcorn() {
           density: 0.004,
         });
         Body.setVelocity(body, {
-          x: (Math.random() - 0.5) * 20,
-          y: -(4 + Math.random() * 4),
+          x: (Math.random() - 0.5) * 10,
+          y: -(5 + Math.random() * 5),
         });
-        Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.5);
+        Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.25);
         World.add(engine.world, body);
 
         const el = document.createElement('div');
         el.innerHTML = ICONS[Math.floor(Math.random() * ICONS.length)];
-        el.style.cssText = `position:absolute;pointer-events:none;user-select:none;will-change:transform;left:${bx}px;top:${by}px;transform:translate(-50%,-50%);filter:url(#icon-outline);`;
+        el.style.cssText = `position:absolute;pointer-events:none;user-select:none;will-change:transform,opacity;left:${bx}px;top:${by}px;transform:translate(-50%,-50%) scale(0.3);opacity:0;filter:url(#icon-outline);transition:opacity 0.25s ease-out;`;
         container.appendChild(el);
-        active.push({ body, el });
+        requestAnimationFrame(() => { el.style.opacity = '1'; });
+        active.push({ body, el, born: performance.now() });
       }, i * 65);
     }
   }
