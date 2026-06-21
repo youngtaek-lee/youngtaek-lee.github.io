@@ -410,7 +410,7 @@ function initHobbyPopcorn() {
   const { Engine, Runner, Bodies, Body, World, Events } = Matter;
 
   const engine = Engine.create({ enableSleeping: true });
-  engine.gravity.y = 0.5;
+  engine.gravity.y = 1;
   const runner = Runner.create();
   Runner.run(runner, engine);
 
@@ -432,14 +432,18 @@ function initHobbyPopcorn() {
   ];
   const active = [];
   let statics = null;
+  let floor = null;
+  let floorOpen = false;
+  const FLOOR_BURST_LIMIT = 40;
 
   function initStatics() {
     if (statics) return;
     const W = container.offsetWidth;
     const H = container.offsetHeight;
     const T = 80;
+    floor = Bodies.rectangle(W / 2, H - 30 + T / 2, W + 200, T, { isStatic: true, friction: 0.7, restitution: 0.2 });
     statics = [
-      Bodies.rectangle(W / 2, H - 30 + T / 2, W + 200, T, { isStatic: true, friction: 0.7, restitution: 0.2 }),
+      floor,
       Bodies.rectangle(-T / 2, H / 2, T, H * 10, { isStatic: true }),
       Bodies.rectangle(W + T / 2, H / 2, T, H * 10, { isStatic: true }),
     ];
@@ -451,6 +455,21 @@ function initHobbyPopcorn() {
 
     const now = performance.now();
     const POP_MS = 220;
+
+    if (!floorOpen && active.length >= FLOOR_BURST_LIMIT) {
+      floorOpen = true;
+      World.remove(engine.world, floor);
+      for (const { body } of active) {
+        Body.setVelocity(body, {
+          x: (Math.random() - 0.5) * 8,
+          y: -(2 + Math.random() * 3),
+        });
+        Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.3);
+      }
+    } else if (floorOpen && active.length === 0) {
+      floorOpen = false;
+      World.add(engine.world, floor);
+    }
 
     for (let i = active.length - 1; i >= 0; i--) {
       const { body, el, born } = active[i];
