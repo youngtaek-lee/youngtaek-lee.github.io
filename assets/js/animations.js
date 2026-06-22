@@ -135,29 +135,6 @@ function initWorksReveal() {
 }
 
 // =============================
-// Hero → Dark 전환 (비활성화 — CSS 변수로 처리)
-// =============================
-let _darkTransitionTl = null;
-
-function initDarkTransition() {
-  return;
-}
-
-function refreshDarkTransition() {
-  ScrollTrigger.getById('dark-transition')?.kill();
-  if (_darkTransitionTl) {
-    _darkTransitionTl.kill();
-    _darkTransitionTl = null;
-  }
-  gsap.set(
-    ['main', '.about-text', 'body', '.header__logo', '.header__nav',
-     '.header__nav-btn', '.menu-btn', '.header__menu-btn', '.theme-toggle'],
-    { clearProps: 'all' }
-  );
-  initDarkTransition();
-}
-
-// =============================
 // Hero/About/Works 스크롤 색상 리빌 — 테마 색상 반영
 // =============================
 let _colorRevealTls = [];
@@ -285,23 +262,6 @@ function initAboutTextScroll() {
         const opacity = Math.max(0.15, Math.exp(-dist * dist * 0.7));
         gsap.set(word, { opacity });
       });
-    },
-  });
-}
-
-// =============================
-// Works 리스트 등장 (구버전 — 미사용)
-// =============================
-function initWorksEntrance() {
-  gsap.from('.works__item', {
-    opacity: 0,
-    y: 16,
-    duration: 0.5,
-    ease: 'power2.out',
-    stagger: 0.06,
-    scrollTrigger: {
-      trigger: '.works__list',
-      start: 'top 78%',
     },
   });
 }
@@ -601,47 +561,3 @@ function initHobbyPopcorn() {
   }
 }
 
-// =============================
-// 섹션 헤딩 단어 분리 유틸
-// =============================
-function wrapWordsForReveal(el) {
-  const nodes = Array.from(el.childNodes);
-  el.innerHTML = '';
-  const inners = [];
-  let needSpace = false;
-
-  nodes.forEach(node => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      const words = node.textContent.trim().split(/\s+/).filter(Boolean);
-      words.forEach((word, i) => {
-        if (needSpace || i > 0) el.appendChild(document.createTextNode(' '));
-        const outer = document.createElement('span');
-        outer.className = 'reveal-word';
-        const inner = document.createElement('span');
-        inner.className = 'reveal-word__inner';
-        inner.textContent = word;
-        outer.appendChild(inner);
-        el.appendChild(outer);
-        inners.push(inner);
-        needSpace = true;
-      });
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.tagName === 'BR') {
-        el.appendChild(node);
-        needSpace = false;
-        return;
-      }
-      const outer = document.createElement('span');
-      outer.className = 'reveal-word';
-      const inner = document.createElement('span');
-      inner.className = 'reveal-word__inner';
-      inner.appendChild(node);
-      outer.appendChild(inner);
-      el.appendChild(outer);
-      inners.push(inner);
-      needSpace = false;
-    }
-  });
-
-  return inners;
-}

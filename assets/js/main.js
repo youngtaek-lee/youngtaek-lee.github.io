@@ -30,8 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initWorksSparkle();
   initCursor();
   initAboutScroll();
-  // initWorksEntrance(); // 정적 HTML로 대체 중
-  initDarkTransition();
   initScrollColorReveals();
 
   initWorksReveal();
