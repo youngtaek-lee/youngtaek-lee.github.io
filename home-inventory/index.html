@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>살림 재고 관리</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --card-bg: #ffffff;
+    --text: #1f2430;
+    --text-dim: #6b7280;
+    --border: #e3e5ea;
+    --accent: #3b82f6;
+    --accent-dim: #eef2ff;
+    --danger: #e0523f;
+    --danger-bg: #fdecea;
+    --warn: #d97706;
+    --warn-bg: #fef3e0;
+    --ok: #16a34a;
+    --ok-bg: #e7f7ec;
+    --caution: #ca8a04;
+    --caution-bg: #fef9c3;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    padding: 20px 24px 0;
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  #readOnlyToggleBtn {
+    font-size: 12.5px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-dim);
+    cursor: pointer;
+    white-space: nowrap;
+    margin-bottom: 16px;
+  }
+  body.readonly .add-tab,
+  body.readonly .fridge-add-btn,
+  body.readonly .item-actions,
+  body.readonly .category-toolbar,
+  body.readonly .add-form {
+    display: none !important;
+  }
+  body.readonly #readOnlyToggleBtn {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  h1 {
+    font-size: 20px;
+    margin: 0 0 16px;
+  }
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .tab {
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .tab.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .tab.add-tab {
+    color: var(--accent);
+    border-style: dashed;
+  }
+  main {
+    max-width: 760px;
+    margin: 16px auto 60px;
+    padding: 0 24px;
+  }
+  .category-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .category-toolbar button {
+    font-size: 12px;
+    color: var(--text-dim);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .add-form {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 1.2fr 0.6fr 0.9fr 1.2fr 1fr auto;
+    gap: 8px;
+  }
+  .add-form .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .add-form .field label {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    font-weight: 600;
+    padding-left: 1px;
+  }
+  .add-form input, .add-form select {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+    width: 100%;
+    font-family: inherit;
+  }
+  .add-form input[type="file"] {
+    padding: 5px;
+    font-size: 12px;
+  }
+  .add-form button {
+    align-self: end;
+    padding: 8px 16px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .item-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .item-card.expired { border-color: var(--danger); background: var(--danger-bg); }
+  .item-card.soon { border-color: var(--warn); background: var(--warn-bg); }
+  .item-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: var(--bg);
+  }
+  .item-main {
+    flex: 1;
+    min-width: 0;
+  }
+  .item-name {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .item-cat-tag {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 400;
+    margin-left: 6px;
+  }
+  .item-meta {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 3px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .item-meta .dday.expired { color: var(--danger); font-weight: 600; }
+  .item-meta .dday.soon { color: var(--warn); font-weight: 600; }
+  .item-memo {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+  .item-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+    max-width: 130px;
+  }
+  .item-actions button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .item-actions button:hover { background: var(--accent-dim); color: var(--accent); }
+  .item-actions button.del:hover { background: var(--danger-bg); color: var(--danger); }
+  .empty-msg {
+    text-align: center;
+    color: var(--text-dim);
+    padding: 40px 0;
+    font-size: 14px;
+  }
+  @media (max-width: 600px) {
+    .add-form { grid-template-columns: 1fr 1fr; }
+    .add-form button { grid-column: span 2; }
+  }
+
+  /* 냉장고 구간도 */
+  .fridge-diagram {
+    display: flex;
+    gap: 6px;
+    background: #d9dee5;
+    border-radius: var(--radius);
+    padding: 14px 10px;
+    margin-bottom: 16px;
+  }
+  .fridge-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .fridge-col.wing { flex: 0.72; }
+  .fridge-col-label {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 2px;
+    font-weight: 600;
+  }
+  .fridge-cell-row {
+    flex: 1;
+    position: relative;
+    display: flex;
+  }
+  .fridge-cell {
+    flex: 1;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    min-height: 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--text-dim);
+    padding: 4px 22px 4px 8px;
+    text-align: left;
+    line-height: 1.3;
+  }
+  .fridge-cell:hover { border-color: var(--accent); }
+  .fridge-cell .fc-num { font-weight: 600; color: var(--text); font-size: 12px; }
+  .fridge-cell .fc-count { font-size: 10.5px; }
+  .fridge-cell.has-items { border-color: var(--ok); background: var(--ok-bg); }
+  .fridge-cell.soon { border-color: var(--caution); background: var(--caution-bg); }
+  .fridge-cell.expired { border-color: var(--danger); background: var(--danger-bg); }
+  .fridge-cell.selected { outline: 2.5px solid var(--accent); outline-offset: 1px; }
+  .fridge-add-btn {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--card-bg);
+    color: #fff;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+  }
+  .fridge-add-btn:hover { background: #2563eb; }
+
+  .fridge-diagram-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin: -10px 0 16px;
+  }
+  .fridge-diagram-toolbar button {
+    font-size: 12.5px;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  /* 냉장고 칸 추가 모달 */
+  .modal-add-form {
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 0;
+  }
+  .modal-add-form button { grid-column: span 2; }
+
+  /* 구간 이동 모달 */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 22, 28, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 10;
+  }
+  .modal {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 18px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 82vh;
+    overflow-y: auto;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .modal-header h2 { font-size: 16px; margin: 0; }
+  .modal-header button {
+    border: none;
+    background: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-dim);
+    padding: 4px 8px;
+  }
+  .lightbox-overlay img {
+    max-width: 92vw;
+    max-height: 92vh;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #000;
+  }
+  .move-modal {
+    max-width: 420px;
+  }
+  .move-modal .fridge-diagram {
+    margin-bottom: 0;
+  }
+
+  /* 로그인 화면 */
+  .login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .login-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    max-width: 320px;
+    width: 100%;
+    text-align: center;
+  }
+  .login-box h1 {
+    font-size: 18px;
+    margin: 0 0 18px;
+  }
+  .login-box input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  .login-box button {
+    width: 100%;
+    padding: 10px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .login-error {
+    color: var(--danger);
+    font-size: 12.5px;
+    margin: 8px 0 0;
+    min-height: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <h1>🏠 살림 재고 관리</h1>
+    <form id="loginForm">
+      <input type="password" id="loginPin" placeholder="PIN 입력" inputmode="numeric" autocomplete="off">
+      <button type="submit">입장</button>
+      <p class="login-error" id="loginError"></p>
+    </form>
+  </div>
+</div>
+
+<div id="appRoot" hidden>
+
+<header>
+  <h1>🏠 살림 재고 관리</h1>
+  <button id="readOnlyToggleBtn"></button>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+
+<main>
+  <div class="category-toolbar" id="categoryToolbar" hidden>
+    <button id="renameCategoryBtn">카테고리 이름 변경</button>
+    <button id="deleteCategoryBtn">카테고리 삭제</button>
+  </div>
+
+  <div class="fridge-diagram" id="fridgeDiagram" hidden></div>
+  <div class="fridge-diagram-toolbar" id="fridgeDiagramToolbar" hidden>
+    <button id="selectAllCompartmentsBtn">전체선택</button>
+  </div>
+
+  <div class="add-form" id="addForm">
+    <div class="field">
+      <label for="itemName">품명</label>
+      <input type="text" id="itemName" placeholder="예: 계란">
+    </div>
+    <div class="field">
+      <label for="itemQty">수량</label>
+      <input type="text" id="itemQty" placeholder="예: 10개">
+    </div>
+    <div class="field">
+      <label for="itemExpiry">유통기한</label>
+      <input type="date" id="itemExpiry">
+    </div>
+    <div class="field">
+      <label for="itemMemo">메모</label>
+      <input type="text" id="itemMemo" placeholder="선택 입력">
+    </div>
+    <div class="field">
+      <label for="itemPhoto">사진</label>
+      <input type="file" id="itemPhoto" accept="image/*">
+    </div>
+    <button id="addItemBtn">추가</button>
+  </div>
+
+  <div class="item-list" id="itemList"></div>
+  <div class="empty-msg" id="emptyMsg" hidden>등록된 품목이 없어요.</div>
+</main>
+
+<div class="modal-overlay lightbox-overlay" id="photoLightbox" hidden>
+  <img id="photoLightboxImg" alt="사진 크게보기">
+</div>
+
+<div class="modal-overlay" id="addItemModal" hidden>
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="addModalTitle"></h2>
+      <button id="closeAddModalBtn">✕ 닫기</button>
+    </div>
+    <div class="add-form modal-add-form" id="addModalForm">
+      <div class="field">
+        <label for="mItemName">품명</label>
+        <input type="text" id="mItemName" placeholder="예: 계란">
+      </div>
+      <div class="field">
+        <label for="mItemQty">수량</label>
+        <input type="text" id="mItemQty" placeholder="예: 10개">
+      </div>
+      <div class="field">
+        <label for="mItemExpiry">유통기한</label>
+        <input type="date" id="mItemExpiry">
+      </div>
+      <div class="field">
+        <label for="mItemMemo">메모</label>
+        <input type="text" id="mItemMemo" placeholder="선택 입력">
+      </div>
+      <div class="field">
+        <label for="mItemPhoto">사진</label>
+        <input type="file" id="mItemPhoto" accept="image/*">
+      </div>
+      <button id="mAddItemBtn">추가</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="moveModal" hidden>
+  <div class="modal move-modal">
+    <div class="modal-header">
+      <h2>칸 이동 (옮길 칸을 누르세요)</h2>
+      <button id="closeMoveModalBtn">✕ 닫기</button>
+    </div>
+    <div class="fridge-diagram" id="moveDiagram"></div>
+  </div>
+</div>
+
+</div>
+
+<script src="seed-data.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
