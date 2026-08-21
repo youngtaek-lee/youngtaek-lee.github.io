@@ -64,7 +64,7 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
     for (const g of FRIDGE_GROUPS) {
       if (compartmentId.indexOf(g.key + '-') === 0) {
         const n = compartmentId.slice(g.key.length + 1);
-        return `${g.label} ${n}`;
+        return `${g.label} ${n}번 칸`;
       }
     }
     return compartmentId;
@@ -127,9 +127,16 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
   const storedReadOnly = localStorage.getItem(READONLY_KEY);
   let readOnly = storedReadOnly === null ? true : storedReadOnly === 'true';
 
+  const LIST_VIEW_KEY = 'home-inventory-list-view';
+  let listView = localStorage.getItem(LIST_VIEW_KEY) === 'true';
+  let searchQuery = '';
+
   const tabsEl = document.getElementById('tabs');
   const itemListEl = document.getElementById('itemList');
   const emptyMsgEl = document.getElementById('emptyMsg');
+  const itemSearchInputEl = document.getElementById('itemSearchInput');
+  const itemListStatusEl = document.getElementById('itemListStatus');
+  const viewToggleBtnEl = document.getElementById('viewToggleBtn');
   const addFormEl = document.getElementById('addForm');
   const categoryToolbarEl = document.getElementById('categoryToolbar');
   const itemNameEl = document.getElementById('itemName');
@@ -142,7 +149,6 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
   const fridgePhotoInnerEl = document.getElementById('fridgePhotoInner');
   const fridgeDiagramEl = document.getElementById('fridgeDiagram');
   const fridgeDiagramToolbarEl = document.getElementById('fridgeDiagramToolbar');
-  const selectAllBtnEl = document.getElementById('selectAllCompartmentsBtn');
   const calibrateToggleBtnEl = document.getElementById('calibrateToggleBtn');
   const copyRectsBtnEl = document.getElementById('copyRectsBtn');
 
@@ -256,8 +262,8 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
   const mItemMemoEl = document.getElementById('mItemMemo');
   const mItemPhotoEl = document.getElementById('mItemPhoto');
 
-  // 냉장고 탭에서 화면에 표시할(리스트에 노출할) 칸들 — 여러 칸 동시 선택 가능
-  let selectedCompartments = new Set();
+  // 냉장고 탭에서 리스트에 노출할 칸 — 선택 없으면(null) 전체 품목 표시, 한 번에 한 칸만 선택
+  let selectedCompartment = null;
   // + 버튼으로 연 추가 모달이 지금 겨냥하고 있는 칸
   let addTargetCompartment = null;
   let moveItemId = null;
@@ -296,7 +302,7 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
       photos,
       createdAt: Date.now(),
     });
-    selectedCompartments.add(addTargetCompartment);
+    selectedCompartment = addTargetCompartment;
     mItemNameEl.value = '';
     mItemQtyEl.value = '';
     mItemExpiryEl.value = '';
@@ -365,7 +371,7 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
     const item = state.items.find((it) => it.id === moveItemId);
     if (!item) { closeMoveModal(); return; }
     await updateDoc(doc(itemsCol, moveItemId), { compartment: compartmentId });
-    selectedCompartments.add(compartmentId);
+    selectedCompartment = compartmentId;
     closeMoveModal();
   }
 
@@ -665,12 +671,19 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
 
   function getVisibleItems() {
     let items;
+    const searching = searchQuery.trim() !== '';
     if (activeTab === ALL_TAB) {
       items = state.items.slice();
     } else if (activeTab === FRIDGE_ID) {
-      items = state.items.filter((it) => it.categoryId === FRIDGE_ID && selectedCompartments.has(it.compartment));
+      items = (searching || !selectedCompartment)
+        ? state.items.filter((it) => it.categoryId === FRIDGE_ID)
+        : state.items.filter((it) => it.categoryId === FRIDGE_ID && it.compartment === selectedCompartment);
     } else {
       items = state.items.filter((it) => it.categoryId === activeTab);
+    }
+    if (searching) {
+      const q = searchQuery.trim().toLowerCase();
+      items = items.filter((it) => it.name.toLowerCase().includes(q));
     }
     items.sort((a, b) => {
       const da = daysUntil(a.expiry);
@@ -801,12 +814,24 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
 
   function renderItems() {
     itemListEl.innerHTML = '';
-    const items = getVisibleItems();
-    emptyMsgEl.hidden = items.length > 0;
+    itemListEl.classList.toggle('list-view', listView);
+
     if (activeTab === FRIDGE_ID) {
-      emptyMsgEl.textContent = selectedCompartments.size === 0
-        ? '칸을 선택하면 그 안의 품목이 여기 표시돼요.'
-        : '이 칸엔 아직 아무것도 없어요.';
+      itemListStatusEl.hidden = false;
+      itemListStatusEl.textContent = selectedCompartment
+        ? `${compartmentLabel(selectedCompartment)}이에요.`
+        : '전체 품목이에요.';
+    } else {
+      itemListStatusEl.hidden = true;
+    }
+
+    const items = getVisibleItems();
+    const showAddCard = activeTab === FRIDGE_ID && selectedCompartment && searchQuery.trim() === '';
+    emptyMsgEl.hidden = items.length > 0 || showAddCard;
+    if (searchQuery.trim() !== '') {
+      emptyMsgEl.textContent = '검색 결과가 없어요.';
+    } else if (activeTab === FRIDGE_ID && selectedCompartment) {
+      emptyMsgEl.textContent = '이 칸엔 아직 아무것도 없어요.';
     } else {
       emptyMsgEl.textContent = '등록된 품목이 없어요.';
     }
@@ -817,6 +842,15 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
         showCompartmentTag: activeTab === ALL_TAB || activeTab === FRIDGE_ID,
       }));
     });
+
+    if (showAddCard) {
+      const addCard = document.createElement('button');
+      addCard.type = 'button';
+      addCard.className = 'item-card item-add-card';
+      addCard.textContent = '+ 제품 추가하기';
+      addCard.addEventListener('click', () => openAddModal(selectedCompartment));
+      itemListEl.appendChild(addCard);
+    }
   }
 
   // ---- 냉장고 구간도 ----
@@ -839,7 +873,7 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
       cell.setAttribute('role', 'button');
       cell.tabIndex = 0;
       cell.className = 'fov-cell'
-        + (selectedCompartments.has(compartmentId) ? ' selected' : '')
+        + (selectedCompartment === compartmentId ? ' selected' : '')
         + (calibrating ? ' calibrating' : '');
       cell.style.left = rect.left + '%';
       cell.style.top = rect.top + '%';
@@ -876,18 +910,7 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
   }
 
   function toggleCompartment(compartmentId) {
-    if (selectedCompartments.has(compartmentId)) {
-      selectedCompartments.delete(compartmentId);
-    } else {
-      selectedCompartments.add(compartmentId);
-    }
-    render();
-  }
-
-  function toggleSelectAllCompartments() {
-    const allIds = allCompartmentIds();
-    const allSelected = allIds.every((id) => selectedCompartments.has(id));
-    selectedCompartments = allSelected ? new Set() : new Set(allIds);
+    selectedCompartment = selectedCompartment === compartmentId ? null : compartmentId;
     render();
   }
 
@@ -908,6 +931,7 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
     document.body.classList.toggle('readonly', readOnly);
     document.body.classList.toggle('fridge-view', isFridge);
     document.getElementById('readOnlyToggleBtn').textContent = readOnly ? '✏️ 편집 모드로' : '👁 읽기 전용으로';
+    viewToggleBtnEl.textContent = listView ? '🖼 카드로 보기' : '📋 텍스트로 보기';
 
     addFormEl.hidden = !isCategory || isFridge;
     categoryToolbarEl.hidden = !isCategory || isFridge;
@@ -915,11 +939,6 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
     calibrateToggleBtnEl.hidden = readOnly;
     calibrateToggleBtnEl.textContent = calibrating ? '✅ 보정 완료' : '📐 칸 위치 보정';
     copyRectsBtnEl.hidden = readOnly || !calibrating;
-    if (isFridge) {
-      const allIds = allCompartmentIds();
-      const allSelected = allIds.every((id) => selectedCompartments.has(id));
-      selectAllBtnEl.textContent = allSelected ? '전체해제' : '전체선택';
-    }
 
     if (isFridge) renderFridgeDiagram();
     renderItems();
@@ -931,7 +950,6 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
   });
   document.getElementById('renameCategoryBtn').addEventListener('click', renameCategory);
   document.getElementById('deleteCategoryBtn').addEventListener('click', deleteCategory);
-  selectAllBtnEl.addEventListener('click', toggleSelectAllCompartments);
 
   calibrateToggleBtnEl.addEventListener('click', () => {
     calibrating = !calibrating;
@@ -991,6 +1009,17 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
   });
 
   document.getElementById('readOnlyToggleBtn').addEventListener('click', toggleReadOnly);
+
+  viewToggleBtnEl.addEventListener('click', () => {
+    listView = !listView;
+    localStorage.setItem(LIST_VIEW_KEY, String(listView));
+    render();
+  });
+
+  itemSearchInputEl.addEventListener('input', () => {
+    searchQuery = itemSearchInputEl.value;
+    renderItems();
+  });
 
   // ---- 로그인 ----
   const loginScreenEl = document.getElementById('loginScreen');

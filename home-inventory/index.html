@@ -46,6 +46,9 @@
     align-items: center;
     gap: 12px;
   }
+  body.fridge-view header {
+    max-width: 1500px;
+  }
   #readOnlyToggleBtn {
     font-size: 12.5px;
     padding: 7px 12px;
@@ -63,7 +66,7 @@
   body.readonly .fridge-add-btn,
   body.readonly .item-actions,
   body.readonly .category-toolbar,
-  body.readonly .add-form {
+  body.readonly #addForm {
     display: none !important;
   }
   body.readonly #readOnlyToggleBtn {
@@ -114,24 +117,33 @@
   body.fridge-view main {
     max-width: 1500px;
     display: grid;
-    grid-template-columns: 680px 1fr;
+    grid-template-columns: 600px 1fr;
     grid-template-rows: auto calc(100vh - 220px);
     gap: 32px;
     align-items: center;
   }
   body.fridge-view #categoryToolbar { grid-column: 1 / -1; grid-row: 1; }
   body.fridge-view #fridgeLeftCol { grid-column: 1; grid-row: 2; }
-  body.fridge-view #itemList,
-  body.fridge-view #emptyMsg { grid-column: 2; grid-row: 2; }
+  body.fridge-view .item-list-toolbar { margin-bottom: 0; }
+  body.fridge-view #itemListCol {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: stretch;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0;
+  }
   body.fridge-view #itemList,
   body.fridge-view #emptyMsg {
     background: var(--card-bg);
     border-radius: var(--radius);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    align-self: stretch;
+    flex: 1;
+    min-height: 0;
   }
   body.fridge-view #itemList {
-    height: 100%;
     overflow-y: auto;
     scrollbar-gutter: stable;
     padding: 16px;
@@ -160,6 +172,37 @@
     color: var(--accent);
     font-weight: 700;
     padding: 40px 0;
+  }
+  .item-list-toolbar {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .item-list-status {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+  #itemSearchInput {
+    flex: 1;
+    min-width: 0;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--card-bg);
+  }
+  #viewToggleBtn {
+    font-size: 12.5px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card-bg);
+    color: var(--text-dim);
+    cursor: pointer;
+    white-space: nowrap;
   }
   .category-toolbar {
     display: flex;
@@ -219,10 +262,35 @@
     font-size: 14px;
     white-space: nowrap;
   }
+  .item-list-toolbar {
+    margin-bottom: 12px;
+  }
   .item-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+  }
+  .item-list.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .item-list.list-view .item-card {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 12px;
+    gap: 12px;
+  }
+  .item-list.list-view .item-thumb-wrap,
+  .item-list.list-view .item-memo {
+    display: none;
+  }
+  .item-list.list-view .item-main {
+    flex: 1;
+    min-width: 0;
+  }
+  .item-list.list-view .item-actions {
+    flex-shrink: 0;
   }
   .item-card {
     background: var(--card-bg);
@@ -237,6 +305,22 @@
   }
   .item-card.expired { border-color: var(--danger); background: var(--danger-bg); }
   .item-card.soon { border-color: var(--warn); background: var(--warn-bg); }
+  .item-add-card {
+    border-style: dashed;
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 110px;
+    font-family: inherit;
+  }
+  .item-list.list-view .item-add-card {
+    min-height: auto;
+    justify-content: center;
+  }
   .item-thumb-wrap {
     position: relative;
     flex-shrink: 0;
@@ -272,15 +356,17 @@
     font-weight: 600;
   }
   .item-cat-tag {
+    display: block;
     font-size: 11px;
     color: var(--text-dim);
     font-weight: 400;
-    margin-left: 6px;
+    margin-left: 0;
+    margin-top: 2px;
   }
   .item-meta {
     font-size: 13px;
     color: var(--text-dim);
-    margin-top: 3px;
+    margin-top: 8px;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
@@ -418,7 +504,7 @@
   }
   .fridge-photo-inner {
     position: relative;
-    width: 71.4%;
+    width: 80.4%;
     margin: 0 auto;
     border-radius: var(--radius);
     overflow: hidden;
@@ -517,16 +603,23 @@
     z-index: 2;
   }
 
+  .fridge-left-col {
+    position: relative;
+  }
   .fridge-diagram-toolbar {
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
-    margin: -10px 0 16px;
+    gap: 8px;
   }
   .fridge-diagram-toolbar button {
     font-size: 12.5px;
     color: var(--accent);
     background: var(--accent-dim);
-    border: none;
+    border: 1.5px solid var(--accent);
     padding: 6px 12px;
     border-radius: 999px;
     cursor: pointer;
@@ -758,7 +851,6 @@
     <div class="fridge-diagram-toolbar" id="fridgeDiagramToolbar">
       <button id="calibrateToggleBtn" hidden>📐 칸 위치 보정</button>
       <button id="copyRectsBtn" hidden>좌표 복사</button>
-      <button id="selectAllCompartmentsBtn">전체선택</button>
     </div>
   </div>
 
@@ -786,8 +878,15 @@
     <button id="addItemBtn">추가</button>
   </div>
 
-  <div class="item-list" id="itemList"></div>
-  <div class="empty-msg" id="emptyMsg" hidden>등록된 품목이 없어요.</div>
+  <div class="item-list-col" id="itemListCol">
+    <div class="item-list-toolbar">
+      <input type="search" id="itemSearchInput" placeholder="🔍 제품명 검색">
+      <button id="viewToggleBtn" type="button"></button>
+    </div>
+    <div class="item-list-status" id="itemListStatus" hidden></div>
+    <div class="item-list" id="itemList"></div>
+    <div class="empty-msg" id="emptyMsg" hidden>등록된 품목이 없어요.</div>
+  </div>
 </main>
 
 <div class="modal-overlay lightbox-overlay" id="photoLightbox" hidden>
