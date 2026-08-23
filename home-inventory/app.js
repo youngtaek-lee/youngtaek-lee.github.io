@@ -538,7 +538,7 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
   function urgencyClass(days) {
     if (days === null) return '';
     if (days <= 3) return 'expired';
-    if (days <= 7) return 'soon';
+    if (days <= 30) return 'soon';
     return '';
   }
 
@@ -931,6 +931,17 @@ import { db, auth, FAMILY_LOGIN_EMAIL } from './firebase-init.js';
     document.body.classList.toggle('readonly', readOnly);
     document.body.classList.toggle('fridge-view', isFridge);
     document.getElementById('readOnlyToggleBtn').textContent = readOnly ? '✏️ 편집 모드로' : '👁 읽기 전용으로';
+    const lastModifiedEl = document.getElementById('lastModifiedEl');
+    if (lastModifiedEl) {
+      const latest = state.items.reduce((acc, it) => Math.max(acc, it.createdAt || 0), 0);
+      if (latest) {
+        const d = new Date(latest);
+        const pad = (n) => String(n).padStart(2, '0');
+        lastModifiedEl.textContent = `최근 수정 ${d.getFullYear()}.${pad(d.getMonth() + 1)}.${pad(d.getDate())}`;
+      } else {
+        lastModifiedEl.textContent = '';
+      }
+    }
     viewToggleBtnEl.textContent = listView ? '🖼 카드로 보기' : '📋 텍스트로 보기';
 
     addFormEl.hidden = !isCategory || isFridge;

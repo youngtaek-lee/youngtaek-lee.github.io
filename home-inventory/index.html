@@ -62,6 +62,13 @@
     grid-column: 3;
     justify-self: end;
   }
+  .last-modified {
+    grid-column: 1;
+    justify-self: start;
+    font-size: 11px;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
   body.readonly .add-tab,
   body.readonly .fridge-add-btn,
   body.readonly .item-actions,
@@ -829,6 +836,7 @@
 <div id="appRoot" hidden>
 
 <header>
+  <span id="lastModifiedEl" class="last-modified"></span>
   <h1>김정아 냉장고</h1>
   <button id="readOnlyToggleBtn"></button>
 </header>
