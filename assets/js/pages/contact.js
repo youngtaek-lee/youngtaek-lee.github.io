@@ -14,7 +14,7 @@ const PageContact = {
           <div class="contact-info__links">
             <a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="contact-info__link">GitHub</a>
             <a href="#" target="_blank" rel="noopener" class="contact-info__link">Instagram</a>
-            <a href="#" target="_blank" rel="noopener" class="contact-info__link">LinkedIn</a>
+            <a href="#" target="_blank" rel="noopener" class="contact-info__link" style="display:none">LinkedIn</a>
           </div>
         </section>
 

@@ -1,4 +1,11 @@
 const PageWorksList = {
+  meta() {
+    return {
+      title: 'Works',
+      description: '이영택의 웹 퍼블리싱 프로젝트 목록 — 브랜드 사이트, 제품 소개 페이지 등 작업물을 소개합니다.',
+    };
+  },
+
   render() {
     const items = typeof works !== 'undefined' ? works.filter(w => w.id !== 'more') : [];
     const extras = typeof worksExtra !== 'undefined' ? worksExtra : [];

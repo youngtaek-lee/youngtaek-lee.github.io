@@ -1,4 +1,15 @@
 const PageWorksDetail = {
+  meta(path) {
+    const id   = path.replace('/works/', '');
+    const list = typeof works !== 'undefined' ? works : [];
+    const work = list.find(w => w.id === id);
+    if (!work) return null;
+    return {
+      title: work.title,
+      description: work.subtitle || `${work.category} — ${work.year}`,
+    };
+  },
+
   render(path) {
     const id    = path.replace('/works/', '');
     const list  = typeof works !== 'undefined' ? works : [];

@@ -10,6 +10,8 @@ const Router = {
   init() {
     this.homeView    = document.getElementById('home-view');
     this.subpageView = document.getElementById('subpage-view');
+    this._defaultTitle       = document.title;
+    this._defaultDescription = document.querySelector('meta[name="description"]')?.content || '';
 
     document.addEventListener('click', e => {
       const link = e.target.closest('a[href]');
@@ -50,11 +52,18 @@ const Router = {
     if (isHome) {
       this._pendingReveal = null;
       this._showHome();
+      this._setMeta(this._defaultTitle, this._defaultDescription);
     } else if (page) {
       this._showSubpage(page, path, immediate);
+      const meta = typeof page.meta === 'function' ? page.meta(path) : null;
+      this._setMeta(
+        meta?.title ? `${meta.title} — ${this._defaultTitle}` : this._defaultTitle,
+        meta?.description || this._defaultDescription
+      );
     } else {
       this._pendingReveal = null;
       this._showHome();
+      this._setMeta(this._defaultTitle, this._defaultDescription);
     }
 
     document.body.classList.toggle('is-subpage', !isHome);
@@ -63,6 +72,12 @@ const Router = {
     });
     if (window.__lenis) window.__lenis.scrollTo(0, { immediate: true });
     else window.scrollTo(0, 0);
+  },
+
+  _setMeta(title, description) {
+    document.title = title;
+    const descTag = document.querySelector('meta[name="description"]');
+    if (descTag) descTag.setAttribute('content', description);
   },
 
   _restoreBottomLinks() {

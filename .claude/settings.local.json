@@ -167,7 +167,19 @@
       "Bash(rm \"C:/Users/korii/OneDrive/Koriiscat/03_Resources/Travel/2024-07 오사카/\"*.jpg)",
       "Bash(rm \"C:/Users/korii/OneDrive/Koriiscat/03_Resources/Travel/2024-10 도쿄/\"*.jpg)",
       "Bash(rm -rf \"C:/Users/korii/OneDrive/Desktop/2024-07 오사카 업로드용\")",
-      "Bash(rm -rf \"C:/Users/korii/OneDrive/Desktop/2024-10 도쿄 업로드용\")"
+      "Bash(rm -rf \"C:/Users/korii/OneDrive/Desktop/2024-10 도쿄 업로드용\")",
+      "Bash(npm start *)",
+      "Bash(npx --yes http-server -p 8080 -c-1)",
+      "PowerShell(Start-Process \"http://localhost:8080\")",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "Bash(cp .scratch-og-preview.jpg assets/images/og-image.jpg)",
+      "Bash(rm .scratch-gen-og.js .scratch-og-preview.jpg)",
+      "Bash(FONTCONFIG_FILE=\"/c/Users/korii/AppData/Local/Temp/claude/fonts.conf\" node .scratch-gen-og.js)",
+      "Bash(FONTCONFIG_FILE=\"/c/Users/korii/AppData/Local/Temp/claude/fonts.conf\" node -e \"console.log\\('FCFILE=', process.env.FONTCONFIG_FILE\\)\")",
+      "Bash(npm install *)",
+      "Bash(xxd .scratch-anton.ttf)",
+      "Bash(rm -f .scratch-gen-og.js .scratch-og-preview.jpg .scratch-anton.ttf .scratch-og.svg)",
+      "Bash(npm uninstall *)"
     ]
   }
 }
