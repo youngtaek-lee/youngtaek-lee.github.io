@@ -29,14 +29,29 @@ const Router = {
   },
 
   navigate(path) {
-    history.pushState({}, '', path);
-    if (typeof playPageTransition === 'function') {
-      playPageTransition(
-        () => this.render(path),
-        () => this._pendingReveal?.()
-      );
+    const toStudy       = path.startsWith('/study');
+    const enteringStudy = toStudy && !document.body.classList.contains('is-study');
+    document.body.style.setProperty('--intro-bg', toStudy ? 'var(--dark-bg)' : '');
+    document.body.style.setProperty('--intro-trail-bg', toStudy ? 'var(--dark-accent)' : '');
+
+    const proceed = () => {
+      history.pushState({}, '', path);
+      if (typeof playPageTransition === 'function') {
+        playPageTransition(
+          () => this.render(path),
+          () => this._pendingReveal?.()
+        );
+      } else {
+        this.render(path, true);
+      }
+    };
+
+    const header = document.querySelector('.header');
+    if (enteringStudy && header) {
+      gsap.set(header, { maxWidth: '100%' });
+      gsap.to(header, { maxWidth: '1024px', duration: 0.75, ease: 'back.out(1.2)', onComplete: proceed });
     } else {
-      this.render(path, true);
+      proceed();
     }
   },
 
@@ -67,6 +82,12 @@ const Router = {
     }
 
     document.body.classList.toggle('is-subpage', !isHome);
+    const isStudy = path.startsWith('/study');
+    document.body.classList.toggle('is-study', isStudy);
+    if (!isStudy) {
+      const header = document.querySelector('.header');
+      if (header) gsap.set(header, { clearProps: 'maxWidth' });
+    }
     document.querySelectorAll('.header__nav-btn').forEach(btn => {
       btn.classList.toggle('is-active', path.startsWith(btn.getAttribute('href')));
     });
@@ -136,6 +157,8 @@ const Router = {
     if (path === '/about' || path.startsWith('/about'))  return PageAbout;
     if (path === '/works' || path === '/works/')         return PageWorksList;
     if (path.startsWith('/works/'))                      return PageWorksDetail;
+    if (path === '/study' || path === '/study/')         return PageStudyList;
+    if (path.startsWith('/study/'))                      return PageStudyDetail;
     return null;
   },
 };

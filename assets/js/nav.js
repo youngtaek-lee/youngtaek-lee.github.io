@@ -26,6 +26,7 @@ function initHeader(lenis) {
   const header       = document.querySelector('.header');
   const bottomNav    = document.getElementById('bottomNav');
   const scrollTopBtn = document.getElementById('scrollTopBtn');
+  const studyBtn     = document.getElementById('studyBtn');
   if (!header || !bottomNav || !scrollTopBtn) return;
 
   const NAV_THRESHOLD    = 60;
@@ -36,6 +37,11 @@ function initHeader(lenis) {
     navShouldShow
       ? bottomNav.classList.add('is-visible')
       : bottomNav.classList.remove('is-visible');
+    if (studyBtn) {
+      navShouldShow
+        ? studyBtn.classList.add('is-visible')
+        : studyBtn.classList.remove('is-visible');
+    }
   });
 
   scrollTopBtn.addEventListener('click', () => {

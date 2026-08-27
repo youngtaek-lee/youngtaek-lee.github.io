@@ -17,6 +17,24 @@
   --summer-white:    #15191f;
   --summer-line:     #15191f;
 
+  /* Dark — always-dark, theme(data-theme)와 무관하게 고정, GitHub Dark 팔레트 */
+  --dark-bg:                 #0D1117;
+  --dark-text:                #C9D1D9;
+  --dark-accent:              #58A6FF;
+  --dark-line:                #30363D;
+  --dark-panel:                #161B22;
+  --dark-sub:                  #8B949E;
+  --dark-surface:              #161B22;
+  --dark-surface-raised:       #21262D;
+  --dark-text-soft:            #C9D1D9;
+  --dark-text-mid:             #8B949E;
+  --dark-text-dim:             #6E7681;
+  --dark-text-subtle:          #484F58;
+  --dark-border-subtle:        #21262D;
+  --dark-border-medium:        #30363D;
+  --dark-border-light:         #30363D;
+  --dark-border-strong:        #6E7681;
+
   /* Typography */
   --font-base:    'Anton', 'Pretendard Variable', 'Pretendard', sans-serif;
   --font-display: 'Anton', 'Pretendard Variable', 'Pretendard', sans-serif;
