@@ -28,6 +28,20 @@ const PageStudyDetail = {
   },
 
   init(path) {
+    const id0   = path.replace('/study/', '');
+    const list0 = typeof studyPosts !== 'undefined' ? studyPosts : [];
+    const idx0  = list0.findIndex(p => p.id === id0);
+    if (idx0 !== -1 && list0.length > 1) {
+      const prev = list0[(idx0 - 1 + list0.length) % list0.length];
+      const next = list0[(idx0 + 1) % list0.length];
+      const links = document.querySelector('.bottom-nav__links');
+      if (links) {
+        Router._originalBottomLinks = links.innerHTML;
+        links.innerHTML = `<a href="/study/${prev.id}" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--color-bg);color:var(--color-text)">Prev Page</a><a href="/study/${next.id}" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--color-accent);color:var(--color-bg)">Next Page</a>`;
+      }
+      document.querySelector('.bottom-nav')?.classList.add('is-detail');
+    }
+
     const titleEl = document.querySelector('#subpage-view .subpage__title');
     if (titleEl) {
       titleEl.innerHTML = titleEl.textContent.trim().split(/\s+/).map(w =>

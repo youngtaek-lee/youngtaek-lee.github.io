@@ -29,29 +29,17 @@ const Router = {
   },
 
   navigate(path) {
-    const toStudy       = path.startsWith('/study');
-    const enteringStudy = toStudy && !document.body.classList.contains('is-study');
+    const toStudy = path.startsWith('/study');
     document.body.style.setProperty('--intro-bg', toStudy ? 'var(--dark-bg)' : '');
     document.body.style.setProperty('--intro-trail-bg', toStudy ? 'var(--dark-accent)' : '');
-
-    const proceed = () => {
-      history.pushState({}, '', path);
-      if (typeof playPageTransition === 'function') {
-        playPageTransition(
-          () => this.render(path),
-          () => this._pendingReveal?.()
-        );
-      } else {
-        this.render(path, true);
-      }
-    };
-
-    const header = document.querySelector('.header');
-    if (enteringStudy && header) {
-      gsap.set(header, { maxWidth: '100%' });
-      gsap.to(header, { maxWidth: '1024px', duration: 0.75, ease: 'back.out(1.2)', onComplete: proceed });
+    history.pushState({}, '', path);
+    if (typeof playPageTransition === 'function') {
+      playPageTransition(
+        () => this.render(path),
+        () => this._pendingReveal?.()
+      );
     } else {
-      proceed();
+      this.render(path, true);
     }
   },
 
@@ -84,9 +72,18 @@ const Router = {
     document.body.classList.toggle('is-subpage', !isHome);
     const isStudy = path.startsWith('/study');
     document.body.classList.toggle('is-study', isStudy);
-    if (!isStudy) {
-      const header = document.querySelector('.header');
-      if (header) gsap.set(header, { clearProps: 'maxWidth' });
+    const studyBtn = document.getElementById('studyBtn');
+    if (studyBtn) {
+      studyBtn.textContent = isStudy ? 'Home' : 'Study';
+      studyBtn.setAttribute('href', isStudy ? '/' : '/study');
+    }
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    if (scrollTopBtn) {
+      const isStudyDetail = path.startsWith('/study/');
+      scrollTopBtn.setAttribute('aria-label', isStudyDetail ? '목록으로' : '맨 위로');
+      scrollTopBtn.innerHTML = isStudyDetail
+        ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>`
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="6 11 12 5 18 11"></polyline></svg>`;
     }
     document.querySelectorAll('.header__nav-btn').forEach(btn => {
       btn.classList.toggle('is-active', path.startsWith(btn.getAttribute('href')));

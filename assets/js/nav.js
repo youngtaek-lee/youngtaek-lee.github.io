@@ -45,7 +45,11 @@ function initHeader(lenis) {
   });
 
   scrollTopBtn.addEventListener('click', () => {
-    lenis.scrollTo(0);
+    if (location.pathname.startsWith('/study/')) {
+      Router.navigate('/study');
+    } else {
+      lenis.scrollTo(0);
+    }
   });
 }
 

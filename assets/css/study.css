@@ -39,10 +39,9 @@ body.is-study {
   --color-border:           var(--dark-line);
 }
 
-body.is-study .header {
-  max-width: 1024px;
-  padding-left: clamp(20px, 6vw, 120px);
-  padding-right: clamp(20px, 6vw, 120px);
+body.is-study .study-btn {
+  background: var(--basic-orange);
+  color: var(--basic-dark);
 }
 
 /* ── Floating Study Button ── */
