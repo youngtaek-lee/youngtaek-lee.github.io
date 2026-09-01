@@ -72,6 +72,11 @@ const Router = {
     document.body.classList.toggle('is-subpage', !isHome);
     const isStudy = path.startsWith('/study');
     document.body.classList.toggle('is-study', isStudy);
+    const bottomLinks = document.querySelector('.bottom-nav__links');
+    if (isStudy && bottomLinks) {
+      if (this._originalBottomLinks == null) this._originalBottomLinks = bottomLinks.innerHTML;
+      bottomLinks.innerHTML = `<a href="/study" class="bottom-nav__link">Index</a><a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="bottom-nav__link">GitHub</a>`;
+    }
     const studyBtn = document.getElementById('studyBtn');
     if (studyBtn) {
       studyBtn.textContent = isStudy ? 'Home' : 'Study';

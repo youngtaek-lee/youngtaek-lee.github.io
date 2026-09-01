@@ -14,6 +14,10 @@ const PageStudyDetail = {
 
     if (!post) return `<div class="subpage"><p style="padding:120px 40px">글을 찾을 수 없습니다.</p></div>`;
 
+    const idx  = list.findIndex(p => p.id === id);
+    const prev = list.length > 1 ? list[(idx - 1 + list.length) % list.length] : null;
+    const next = list.length > 1 ? list[(idx + 1) % list.length] : null;
+
     return `
       <div class="subpage study-detail-page" data-id="${post.id}">
         <section class="subpage__hero">
@@ -23,25 +27,32 @@ const PageStudyDetail = {
         <section class="subpage__section study__body" id="study-body">
           <p style="opacity:0.4">불러오는 중...</p>
         </section>
+
+        <nav class="wd-nav">
+          ${prev ? `<a href="/study/${prev.id}" class="wd-nav__item wd-nav__item--prev">
+            <span class="wd-nav__label">Prev</span>
+            <div class="wd-nav__bottom">
+              <div class="wd-nav__arrow">
+                <svg class="wd-nav__arrow-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
+              </div>
+              <span class="wd-nav__title">${prev.title}</span>
+            </div>
+          </a>` : ''}
+          ${next ? `<a href="/study/${next.id}" class="wd-nav__item wd-nav__item--next">
+            <span class="wd-nav__label">Next</span>
+            <div class="wd-nav__bottom">
+              <span class="wd-nav__title">${next.title}</span>
+              <div class="wd-nav__arrow">
+                <svg class="wd-nav__arrow-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </div>
+            </div>
+          </a>` : ''}
+        </nav>
       </div>
     `;
   },
 
   init(path) {
-    const id0   = path.replace('/study/', '');
-    const list0 = typeof studyPosts !== 'undefined' ? studyPosts : [];
-    const idx0  = list0.findIndex(p => p.id === id0);
-    if (idx0 !== -1 && list0.length > 1) {
-      const prev = list0[(idx0 - 1 + list0.length) % list0.length];
-      const next = list0[(idx0 + 1) % list0.length];
-      const links = document.querySelector('.bottom-nav__links');
-      if (links) {
-        Router._originalBottomLinks = links.innerHTML;
-        links.innerHTML = `<a href="/study/${prev.id}" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--color-bg);color:var(--color-text)">Prev Page</a><a href="/study/${next.id}" class="bottom-nav__link bottom-nav__link--cta" style="background:var(--color-accent);color:var(--color-bg)">Next Page</a>`;
-      }
-      document.querySelector('.bottom-nav')?.classList.add('is-detail');
-    }
-
     const titleEl = document.querySelector('#subpage-view .subpage__title');
     if (titleEl) {
       titleEl.innerHTML = titleEl.textContent.trim().split(/\s+/).map(w =>
@@ -63,6 +74,11 @@ const PageStudyDetail = {
     } else {
       doHeroReveal();
     }
+
+    gsap.from('#subpage-view .wd-nav', {
+      y: 30, opacity: 0, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: '#subpage-view .wd-nav', start: 'top 90%' },
+    });
 
     const id   = path.replace('/study/', '');
     const list = typeof studyPosts !== 'undefined' ? studyPosts : [];
