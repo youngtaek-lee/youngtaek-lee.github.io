@@ -1,5 +1,5 @@
-/* ── Study — 항상 다크(흑백+그레이), 테마 토글과 무관 ── */
-body.is-study {
+/* ── Notes — 항상 다크(흑백+그레이), 테마 토글과 무관 ── */
+body.is-notes {
   --subpage-bg:             var(--dark-bg);
   --subpage-text:           var(--dark-text);
   --subpage-accent:         var(--dark-accent);
@@ -39,13 +39,13 @@ body.is-study {
   --color-border:           var(--dark-line);
 }
 
-body.is-study .study-btn {
+body.is-notes .notes-btn {
   background: var(--basic-orange);
   color: var(--basic-dark);
 }
 
-/* ── Floating Study Button ── */
-.study-btn {
+/* ── Floating Notes Button ── */
+.notes-btn {
   position: fixed;
   bottom: 24px;
   left: 24px;
@@ -74,82 +74,114 @@ body.is-study .study-btn {
               filter 0.2s;
 }
 
-.study-btn.is-visible {
+.notes-btn.is-visible {
   clip-path: inset(0% round 10px);
   opacity: 1;
   transform: translateY(0) rotate(0deg) scale(1);
 }
 
-.study-btn:hover {
+.notes-btn:hover {
   filter: brightness(0.92);
 }
 
-/* ── Study List ── */
-.study-list-page .subpage__section {
+/* ── Notes Home ── */
+.notes-home-page .subpage__section {
   max-width: 1024px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.study__list {
-  list-style: none;
+.notes-home__groups {
   margin-top: 60px;
-}
-
-.study__item {
-  border-bottom: 1px solid var(--color-line);
-}
-
-.study__item:first-child {
-  border-top: 1px solid var(--color-line);
-}
-
-.study__item--empty {
-  padding: 24px 0;
-  opacity: 0.5;
-}
-
-.study__item__link {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 24px 0;
-  text-decoration: none;
-  color: var(--subpage-text);
+  gap: 36px;
 }
 
-.study__item__date {
+.notes-home__group-label {
   font-family: var(--font-body);
-  font-size: 0.85rem;
-  opacity: 0.5;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+  margin-bottom: 12px;
 }
 
-.study__item__title {
+.notes-home__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.notes-home__subgroup {
+  margin-top: 16px;
+  padding-left: 16px;
+  border-left: 2px solid var(--subpage-border-subtle);
+}
+
+.notes-home__subgroup-label {
   font-family: var(--font-body);
-  font-size: clamp(1.3rem, 2.6vw, 2rem);
-  font-weight: 700;
-  line-height: 1.3;
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.35;
+  margin-bottom: 10px;
 }
 
-.study__item__excerpt {
+.notes-home__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 18px;
+  border: 1px solid var(--subpage-border-medium);
+  border-radius: 8px;
   font-family: var(--font-body);
   font-size: 0.95rem;
-  opacity: 0.6;
-  line-height: 1.5;
+  font-weight: 500;
+  color: var(--subpage-text);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, border-color 0.2s;
 }
 
-/* ── Study Detail — markdown body ── */
-.study-detail-page .subpage__hero {
+.notes-home__tab:hover {
+  background: var(--subpage-surface);
+  border-color: var(--subpage-border-strong);
+}
+
+.notes-home__count {
+  opacity: 0.4;
+  font-size: 0.85em;
+}
+
+/* ── Notes Detail back link ── */
+.notes-list__back {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  opacity: 0.4;
+  text-decoration: none;
+  color: var(--subpage-text);
+  margin-bottom: 8px;
+}
+
+.notes-list__back:hover {
+  opacity: 0.7;
+}
+
+/* ── Notes Detail — markdown body ── */
+.notes-detail-page .subpage__hero {
   max-width: 1024px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.study-detail-page .subpage__title {
+.notes-detail-page .subpage__title {
   font-size: clamp(1.8rem, 4vw, 3.5rem);
+  font-family: var(--font-body);
+  font-weight: 700;
 }
 
-.study__body {
+.notes__body {
   max-width: 1024px;
   margin-left: auto;
   margin-right: auto;
@@ -158,44 +190,44 @@ body.is-study .study-btn {
   line-height: 1.75;
 }
 
-.study__body h2 {
-  font-family: var(--font-display);
+.notes__body h2 {
+  font-family: var(--font-body);
   font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: 400;
   margin: 2.5em 0 0.8em;
 }
 
-.study__body h2:first-child {
+.notes__body h2:first-child {
   margin-top: 0;
 }
 
-.study__body h3 {
+.notes__body h3 {
   font-size: 1.15rem;
   font-weight: 700;
   margin: 1.8em 0 0.6em;
 }
 
-.study__body p {
+.notes__body p {
   margin: 0 0 1.2em;
   opacity: 0.85;
 }
 
-.study__body ul,
-.study__body ol {
+.notes__body ul,
+.notes__body ol {
   margin: 0 0 1.2em;
   padding-left: 1.4em;
   opacity: 0.85;
 }
 
-.study__body li {
+.notes__body li {
   margin-bottom: 0.4em;
 }
 
-.study__body li input[type="checkbox"] {
+.notes__body li input[type="checkbox"] {
   margin-right: 0.5em;
 }
 
-.study__body code {
+.notes__body code {
   font-family: 'SFMono-Regular', Consolas, monospace;
   font-size: 0.85em;
   background: var(--subpage-surface);
@@ -203,7 +235,7 @@ body.is-study .study-btn {
   border-radius: 4px;
 }
 
-.study__body pre {
+.notes__body pre {
   background: var(--subpage-surface-raised);
   border: 1px solid var(--subpage-border-subtle);
   border-radius: 8px;
@@ -212,12 +244,12 @@ body.is-study .study-btn {
   margin: 0 0 1.5em;
 }
 
-.study__body pre code {
+.notes__body pre code {
   background: none;
   padding: 0;
 }
 
-.study__body strong {
+.notes__body strong {
   font-weight: 700;
   opacity: 1;
 }

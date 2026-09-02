@@ -26,7 +26,7 @@ function initHeader(lenis) {
   const header       = document.querySelector('.header');
   const bottomNav    = document.getElementById('bottomNav');
   const scrollTopBtn = document.getElementById('scrollTopBtn');
-  const studyBtn     = document.getElementById('studyBtn');
+  const notesBtn     = document.getElementById('notesBtn');
   if (!header || !bottomNav || !scrollTopBtn) return;
 
   const NAV_THRESHOLD    = 60;
@@ -37,16 +37,16 @@ function initHeader(lenis) {
     navShouldShow
       ? bottomNav.classList.add('is-visible')
       : bottomNav.classList.remove('is-visible');
-    if (studyBtn) {
+    if (notesBtn) {
       navShouldShow
-        ? studyBtn.classList.add('is-visible')
-        : studyBtn.classList.remove('is-visible');
+        ? notesBtn.classList.add('is-visible')
+        : notesBtn.classList.remove('is-visible');
     }
   });
 
   scrollTopBtn.addEventListener('click', () => {
-    if (location.pathname.startsWith('/study/')) {
-      Router.navigate('/study');
+    if (location.pathname.startsWith('/notes/')) {
+      Router.navigate('/notes');
     } else {
       lenis.scrollTo(0);
     }

@@ -29,9 +29,9 @@ const Router = {
   },
 
   navigate(path) {
-    const toStudy = path.startsWith('/study');
-    document.body.style.setProperty('--intro-bg', toStudy ? 'var(--dark-bg)' : '');
-    document.body.style.setProperty('--intro-trail-bg', toStudy ? 'var(--dark-accent)' : '');
+    const toNotes = path.startsWith('/notes');
+    document.body.style.setProperty('--intro-bg', toNotes ? 'var(--dark-bg)' : '');
+    document.body.style.setProperty('--intro-trail-bg', toNotes ? 'var(--dark-accent)' : '');
     history.pushState({}, '', path);
     if (typeof playPageTransition === 'function') {
       playPageTransition(
@@ -70,23 +70,23 @@ const Router = {
     }
 
     document.body.classList.toggle('is-subpage', !isHome);
-    const isStudy = path.startsWith('/study');
-    document.body.classList.toggle('is-study', isStudy);
+    const isNotes = path.startsWith('/notes');
+    document.body.classList.toggle('is-notes', isNotes);
     const bottomLinks = document.querySelector('.bottom-nav__links');
-    if (isStudy && bottomLinks) {
+    if (isNotes && bottomLinks) {
       if (this._originalBottomLinks == null) this._originalBottomLinks = bottomLinks.innerHTML;
-      bottomLinks.innerHTML = `<a href="/study" class="bottom-nav__link">Index</a><a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="bottom-nav__link">GitHub</a>`;
+      bottomLinks.innerHTML = `<a href="/notes" class="bottom-nav__link">Index</a><a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="bottom-nav__link">GitHub</a>`;
     }
-    const studyBtn = document.getElementById('studyBtn');
-    if (studyBtn) {
-      studyBtn.textContent = isStudy ? 'Home' : 'Study';
-      studyBtn.setAttribute('href', isStudy ? '/' : '/study');
+    const notesBtn = document.getElementById('notesBtn');
+    if (notesBtn) {
+      notesBtn.textContent = isNotes ? 'Home' : 'Notes';
+      notesBtn.setAttribute('href', isNotes ? '/' : '/notes');
     }
     const scrollTopBtn = document.getElementById('scrollTopBtn');
     if (scrollTopBtn) {
-      const isStudyDetail = path.startsWith('/study/');
-      scrollTopBtn.setAttribute('aria-label', isStudyDetail ? '목록으로' : '맨 위로');
-      scrollTopBtn.innerHTML = isStudyDetail
+      const isNotesDetail = path.startsWith('/notes/');
+      scrollTopBtn.setAttribute('aria-label', isNotesDetail ? '목록으로' : '맨 위로');
+      scrollTopBtn.innerHTML = isNotesDetail
         ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>`
         : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="6 11 12 5 18 11"></polyline></svg>`;
     }
@@ -159,8 +159,8 @@ const Router = {
     if (path === '/about' || path.startsWith('/about'))  return PageAbout;
     if (path === '/works' || path === '/works/')         return PageWorksList;
     if (path.startsWith('/works/'))                      return PageWorksDetail;
-    if (path === '/study' || path === '/study/')         return PageStudyList;
-    if (path.startsWith('/study/'))                      return PageStudyDetail;
+    if (path === '/notes' || path === '/notes/')         return PageNotesHome;
+    if (path.startsWith('/notes/'))                       return PageNotesDetail;
     return null;
   },
 };

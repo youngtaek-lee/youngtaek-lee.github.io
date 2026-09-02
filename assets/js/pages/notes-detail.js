@@ -1,47 +1,50 @@
-const PageStudyDetail = {
+const PageNotesDetail = {
+  _category(path) {
+    const slug = path.replace('/notes/', '');
+    const list = typeof notesAllCategories !== 'undefined' ? notesAllCategories : [];
+    return list.find(c => c.slug === slug) || null;
+  },
+
   meta(path) {
-    const id   = path.replace('/study/', '');
-    const list = typeof studyPosts !== 'undefined' ? studyPosts : [];
-    const post = list.find(p => p.id === id);
-    if (!post) return null;
-    return { title: post.title, description: post.excerpt };
+    const cat = this._category(path);
+    if (!cat) return null;
+    return { title: cat.label, description: '이영택의 학습 기록 — 새로 배운 기술과 개념을 정리합니다.' };
   },
 
   render(path) {
-    const id   = path.replace('/study/', '');
-    const list = typeof studyPosts !== 'undefined' ? studyPosts : [];
-    const post = list.find(p => p.id === id);
+    const cat = this._category(path);
+    if (!cat) return `<div class="subpage"><p style="padding:120px 40px">글을 찾을 수 없습니다.</p></div>`;
 
-    if (!post) return `<div class="subpage"><p style="padding:120px 40px">글을 찾을 수 없습니다.</p></div>`;
-
-    const idx  = list.findIndex(p => p.id === id);
+    const list = typeof notesAllCategories !== 'undefined' ? notesAllCategories : [];
+    const idx  = list.findIndex(c => c.slug === cat.slug);
     const prev = list.length > 1 ? list[(idx - 1 + list.length) % list.length] : null;
     const next = list.length > 1 ? list[(idx + 1) % list.length] : null;
 
     return `
-      <div class="subpage study-detail-page" data-id="${post.id}">
+      <div class="subpage notes-detail-page" data-id="${cat.slug}">
         <section class="subpage__hero">
-          <p class="wd-meta">${post.date}</p>
-          <h1 class="subpage__title">${post.title}</h1>
+          <a href="/notes" class="notes-list__back">&larr; Notes</a>
+          ${cat.date ? `<p class="wd-meta">${cat.date}</p>` : ''}
+          <h1 class="subpage__title">${cat.label}</h1>
         </section>
-        <section class="subpage__section study__body" id="study-body">
-          <p style="opacity:0.4">불러오는 중...</p>
+        <section class="subpage__section notes__body" id="notes-body">
+          ${cat.file ? `<p style="opacity:0.4">불러오는 중...</p>` : `<p style="opacity:0.4">아직 작성된 글이 없습니다.</p>`}
         </section>
 
         <nav class="wd-nav">
-          ${prev ? `<a href="/study/${prev.id}" class="wd-nav__item wd-nav__item--prev">
+          ${prev ? `<a href="/notes/${prev.slug}" class="wd-nav__item wd-nav__item--prev">
             <span class="wd-nav__label">Prev</span>
             <div class="wd-nav__bottom">
               <div class="wd-nav__arrow">
                 <svg class="wd-nav__arrow-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m7-7-7 7 7 7"/></svg>
               </div>
-              <span class="wd-nav__title">${prev.title}</span>
+              <span class="wd-nav__title">${prev.label}</span>
             </div>
           </a>` : ''}
-          ${next ? `<a href="/study/${next.id}" class="wd-nav__item wd-nav__item--next">
+          ${next ? `<a href="/notes/${next.slug}" class="wd-nav__item wd-nav__item--next">
             <span class="wd-nav__label">Next</span>
             <div class="wd-nav__bottom">
-              <span class="wd-nav__title">${next.title}</span>
+              <span class="wd-nav__title">${next.label}</span>
               <div class="wd-nav__arrow">
                 <svg class="wd-nav__arrow-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </div>
@@ -80,15 +83,13 @@ const PageStudyDetail = {
       scrollTrigger: { trigger: '#subpage-view .wd-nav', start: 'top 90%' },
     });
 
-    const id   = path.replace('/study/', '');
-    const list = typeof studyPosts !== 'undefined' ? studyPosts : [];
-    const post = list.find(p => p.id === id);
-    if (!post) return;
+    const cat = this._category(path);
+    if (!cat || !cat.file) return;
 
-    fetch(post.file)
+    fetch(cat.file)
       .then(res => res.text())
       .then(md => {
-        const body = document.getElementById('study-body');
+        const body = document.getElementById('notes-body');
         if (!body) return;
         body.innerHTML = typeof marked !== 'undefined' ? marked.parse(md) : md;
         gsap.from(body.children, { y: 16, opacity: 0, duration: 0.5, stagger: 0.04, ease: 'power2.out' });
@@ -98,7 +99,7 @@ const PageStudyDetail = {
         });
       })
       .catch(() => {
-        const body = document.getElementById('study-body');
+        const body = document.getElementById('notes-body');
         if (body) body.innerHTML = '<p>글을 불러오지 못했습니다.</p>';
       });
   },
