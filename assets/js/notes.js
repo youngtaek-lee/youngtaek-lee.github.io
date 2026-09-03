@@ -1,8 +1,15 @@
 const notesCategoryGroups = [
   {
+    group: 'Concepts',
+    categories: [
+      { slug: 'ioc',              label: 'IoC란?',                    file: '/content/notes/ioc.md', date: '2026-09-03' },
+      { slug: 'lib-vs-framework', label: '프레임워크와 라이브러리의 차이점', file: null, date: null },
+    ],
+  },
+  {
     group: 'Framework',
     categories: [
-      { slug: 'framework',     label: '프레임워크란?', file: null, date: null },
+      { slug: 'framework',     label: 'Framework',    file: null, date: null },
     ],
     subgroups: [
       {

@@ -65,11 +65,15 @@ const PageNotesDetail = {
     }
     gsap.set('#subpage-view .wd-meta', { y: 12, opacity: 0 });
 
+    const bodyEl = document.getElementById('notes-body');
+    if (bodyEl) gsap.set(bodyEl, { opacity: 0, y: 20 });
+
     const doHeroReveal = () => {
       if (titleEl) gsap.to(titleEl.querySelectorAll('.reveal-word__inner'), {
         yPercent: 0, duration: 0.85, ease: 'power3.out', stagger: 0.08, delay: 0.1,
       });
       gsap.to('#subpage-view .wd-meta', { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.35 });
+      if (bodyEl) gsap.to(bodyEl, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', delay: 0.75 });
     };
 
     if (document.getElementById('intro') || gsap.isTweening(document.querySelector('.page-transition'))) {
@@ -92,7 +96,15 @@ const PageNotesDetail = {
         const body = document.getElementById('notes-body');
         if (!body) return;
         body.innerHTML = typeof marked !== 'undefined' ? marked.parse(md) : md;
-        gsap.from(body.children, { y: 16, opacity: 0, duration: 0.5, stagger: 0.04, ease: 'power2.out' });
+        if (typeof hljs !== 'undefined') {
+          body.querySelectorAll('pre code').forEach(block => hljs.highlightElement(block));
+        }
+        Array.from(body.children).forEach(el => {
+          gsap.from(el, {
+            y: 16, opacity: 0, duration: 0.5, ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 90%' },
+          });
+        });
         requestAnimationFrame(() => {
           if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
           window.__lenis?.resize();
