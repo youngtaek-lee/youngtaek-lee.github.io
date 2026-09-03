@@ -148,9 +148,9 @@ body.is-notes .notes-btn {
   border-color: var(--subpage-border-strong);
 }
 
-.notes-home__count {
-  opacity: 0.4;
-  font-size: 0.85em;
+.notes-home__tab--empty {
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 /* ── Notes Detail back link ── */
@@ -166,6 +166,17 @@ body.is-notes .notes-btn {
 
 .notes-list__back:hover {
   opacity: 0.7;
+}
+
+.notes-detail__date {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 6vw, 120px) 60px;
+  text-align: right;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--subpage-text);
+  opacity: 0.35;
 }
 
 /* ── Notes Detail — markdown body ── */
@@ -217,6 +228,27 @@ body.is-notes .notes-btn {
 .notes__body p {
   margin: 0 0 1.2em;
   opacity: 0.85;
+}
+
+.notes__body .notes__compare {
+  margin: 0 0 1.2em;
+  padding: 14px 18px;
+  background: var(--subpage-surface);
+  border-radius: 8px;
+}
+
+.notes__body .notes__compare p {
+  margin: 0;
+  opacity: 1;
+}
+
+.notes__body .notes__compare p > strong:first-child {
+  display: block;
+  margin-bottom: 0;
+}
+
+.notes__body .notes__compare p + p {
+  margin-top: 0.6em;
 }
 
 .notes__body ul,

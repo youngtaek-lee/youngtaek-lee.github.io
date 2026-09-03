@@ -20,7 +20,7 @@ const PageNotesHome = {
                 ${(g.categories && g.categories.length) ? `
                   <div class="notes-home__tabs">
                     ${g.categories.map(c => `
-                      <a href="/notes/${c.slug}" class="notes-home__tab">${c.label}${c.file ? ' <span class="notes-home__count">✓</span>' : ''}</a>
+                      <a href="/notes/${c.slug}" class="notes-home__tab${c.file ? '' : ' notes-home__tab--empty'}">${c.label}</a>
                     `).join('')}
                   </div>
                 ` : ''}
@@ -29,7 +29,7 @@ const PageNotesHome = {
                     <p class="notes-home__subgroup-label">${sg.subgroup}</p>
                     <div class="notes-home__tabs">
                       ${sg.categories.map(c => `
-                        <a href="/notes/${c.slug}" class="notes-home__tab">${c.label}${c.file ? ' <span class="notes-home__count">✓</span>' : ''}</a>
+                        <a href="/notes/${c.slug}" class="notes-home__tab${c.file ? '' : ' notes-home__tab--empty'}">${c.label}</a>
                       `).join('')}
                     </div>
                   </div>

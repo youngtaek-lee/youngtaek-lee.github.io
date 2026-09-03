@@ -3,7 +3,7 @@ const notesCategoryGroups = [
     group: 'Concepts',
     categories: [
       { slug: 'ioc',              label: 'IoC란?',                    file: '/content/notes/ioc.md', date: '2026-09-03' },
-      { slug: 'lib-vs-framework', label: '프레임워크와 라이브러리의 차이점', file: null, date: null },
+      { slug: 'lib-vs-framework', label: 'Framework vs Library', file: '/content/notes/lib-vs-framework.md', date: '2026-09-04' },
     ],
   },
   {

@@ -24,12 +24,13 @@ const PageNotesDetail = {
       <div class="subpage notes-detail-page" data-id="${cat.slug}">
         <section class="subpage__hero">
           <a href="/notes" class="notes-list__back">&larr; Notes</a>
-          ${cat.date ? `<p class="wd-meta">${cat.date}</p>` : ''}
           <h1 class="subpage__title">${cat.label}</h1>
         </section>
         <section class="subpage__section notes__body" id="notes-body">
           ${cat.file ? `<p style="opacity:0.4">불러오는 중...</p>` : `<p style="opacity:0.4">아직 작성된 글이 없습니다.</p>`}
         </section>
+
+        ${cat.date ? `<p class="notes-detail__date">${cat.date}</p>` : ''}
 
         <nav class="wd-nav">
           ${prev ? `<a href="/notes/${prev.slug}" class="wd-nav__item wd-nav__item--prev">
@@ -63,8 +64,6 @@ const PageNotesDetail = {
       ).join(' ');
       gsap.set(titleEl.querySelectorAll('.reveal-word__inner'), { yPercent: 120 });
     }
-    gsap.set('#subpage-view .wd-meta', { y: 12, opacity: 0 });
-
     const bodyEl = document.getElementById('notes-body');
     if (bodyEl) gsap.set(bodyEl, { opacity: 0, y: 20 });
 
@@ -72,7 +71,6 @@ const PageNotesDetail = {
       if (titleEl) gsap.to(titleEl.querySelectorAll('.reveal-word__inner'), {
         yPercent: 0, duration: 0.85, ease: 'power3.out', stagger: 0.08, delay: 0.1,
       });
-      gsap.to('#subpage-view .wd-meta', { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', delay: 0.35 });
       if (bodyEl) gsap.to(bodyEl, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', delay: 0.75 });
     };
 
