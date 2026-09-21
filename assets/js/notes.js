@@ -7,6 +7,12 @@ const notesCategoryGroups = [
     ],
   },
   {
+    group: 'Analytics',
+    categories: [
+      { slug: 'statcounter', label: 'StatCounter', file: '/content/notes/statcounter.md', date: '2026-09-22' },
+    ],
+  },
+  {
     group: 'Framework',
     categories: [
       { slug: 'framework',     label: 'Framework',    file: null, date: null },
