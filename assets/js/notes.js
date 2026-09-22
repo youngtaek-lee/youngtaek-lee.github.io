@@ -13,6 +13,12 @@ const notesCategoryGroups = [
     ],
   },
   {
+    group: 'Tools',
+    categories: [
+      { slug: 'claude-in-chrome', label: 'Claude in Chrome', file: '/content/notes/claude-in-chrome.md', date: '2026-09-22' },
+    ],
+  },
+  {
     group: 'Framework',
     categories: [
       { slug: 'framework',     label: 'Framework',    file: null, date: null },
