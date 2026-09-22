@@ -128,6 +128,7 @@ body.is-notes .notes-btn {
 }
 
 .notes-home__tab {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -141,6 +142,24 @@ body.is-notes .notes-btn {
   text-decoration: none;
   white-space: nowrap;
   transition: background 0.2s, border-color 0.2s;
+}
+
+.notes-home__tab-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e53935;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .notes-home__tab:hover {

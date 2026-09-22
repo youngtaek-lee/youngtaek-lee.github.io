@@ -1,3 +1,9 @@
+function notesIsNew(dateStr) {
+  if (!dateStr) return false;
+  const diffDays = (Date.now() - new Date(dateStr).getTime()) / (1000 * 60 * 60 * 24);
+  return diffDays >= 0 && diffDays <= 7;
+}
+
 const PageNotesHome = {
   meta() {
     return {
@@ -20,7 +26,7 @@ const PageNotesHome = {
                 ${(g.categories && g.categories.length) ? `
                   <div class="notes-home__tabs">
                     ${g.categories.map(c => `
-                      <a href="/notes/${c.slug}" class="notes-home__tab${c.file ? '' : ' notes-home__tab--empty'}">${c.label}</a>
+                      <a href="/notes/${c.slug}" class="notes-home__tab${c.file ? '' : ' notes-home__tab--empty'}">${c.label}${notesIsNew(c.date) ? '<span class="notes-home__tab-badge">N</span>' : ''}</a>
                     `).join('')}
                   </div>
                 ` : ''}
@@ -29,7 +35,7 @@ const PageNotesHome = {
                     <p class="notes-home__subgroup-label">${sg.subgroup}</p>
                     <div class="notes-home__tabs">
                       ${sg.categories.map(c => `
-                        <a href="/notes/${c.slug}" class="notes-home__tab${c.file ? '' : ' notes-home__tab--empty'}">${c.label}</a>
+                        <a href="/notes/${c.slug}" class="notes-home__tab${c.file ? '' : ' notes-home__tab--empty'}">${c.label}${notesIsNew(c.date) ? '<span class="notes-home__tab-badge">N</span>' : ''}</a>
                       `).join('')}
                     </div>
                   </div>
