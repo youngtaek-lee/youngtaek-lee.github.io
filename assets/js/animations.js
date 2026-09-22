@@ -385,7 +385,7 @@ function initHobbyPopcorn() {
     `<img src="assets/images/vscode-icon.svg" width="${Math.round(54*S)}" height="${Math.round(54*S)}" style="display:block;">`,
     `<img src="assets/images/chimchakman-icon.svg" width="${Math.round(44*S)}" height="${Math.round(44*S)}" style="display:block;">`,
     `<img src="assets/images/slack-icon.svg" width="${Math.round(44*S)}" height="${Math.round(44*S)}" style="display:block;">`,
-    `<img src="assets/images/riot-icon.svg" width="${Math.round(42*S)}" height="${Math.round(42*S)}" style="display:block;">`,
+    `<img src="assets/images/monster-icon.png" width="${Math.round(58*S)}" height="${Math.round(57*S)}" style="display:block;">`,
     `<img src="assets/images/notion-icon.svg" width="${Math.round(46*S)}" height="${Math.round(46*S)}" style="display:block;">`,
     `<img src="assets/images/youtube-icon.svg" height="${Math.round(32*S)}" style="display:block;width:auto;">`,
     `<img src="assets/images/obsidian-icon.svg" width="${Math.round(44*S)}" height="${Math.round(44*S)}" style="display:block;">`,
