@@ -2,7 +2,7 @@ const notesCategoryGroups = [
   {
     group: 'Concepts',
     categories: [
-      { slug: 'ioc',              label: 'IoC란?',                    file: '/content/notes/ioc.md', date: '2026-09-03' },
+      { slug: 'ioc',              label: 'IoC',                       file: '/content/notes/ioc.md', date: '2026-09-03' },
       { slug: 'lib-vs-framework', label: 'Framework vs Library', file: '/content/notes/lib-vs-framework.md', date: '2026-09-04' },
     ],
   },
@@ -19,6 +19,15 @@ const notesCategoryGroups = [
     ],
   },
   {
+    group: 'JavaScript',
+    categories: [
+      { slug: 'variables-scope', label: '변수/스코프', file: null, date: null },
+      { slug: 'hoisting',        label: '호이스팅',    file: null, date: null },
+      { slug: 'closure',         label: '클로저',      file: null, date: null },
+      { slug: 'async',           label: '비동기',      file: null, date: null },
+    ],
+  },
+  {
     group: 'Framework',
     categories: [
       { slug: 'framework',     label: 'Framework',    file: null, date: null },
@@ -27,7 +36,7 @@ const notesCategoryGroups = [
       {
         subgroup: 'CSS Framework',
         categories: [
-          { slug: 'tailwind',  label: 'Tailwind',  file: null, date: null },
+          { slug: 'tailwind',  label: 'Tailwind',  file: '/content/notes/tailwind.md', date: '2026-09-22' },
           { slug: 'bootstrap', label: 'Bootstrap', file: null, date: null },
         ],
       },
@@ -43,8 +52,8 @@ const notesCategoryGroups = [
   {
     group: 'HTML',
     categories: [
-      { slug: 'semantic',      label: '시맨틱 마크업', file: null, date: null },
-      { slug: 'a11y',          label: '웹 접근성',     file: null, date: null },
+      { slug: 'semantic',      label: '시맨틱 마크업', file: '/content/notes/semantic.md', date: '2026-09-22' },
+      { slug: 'a11y',          label: '웹 접근성',     file: '/content/notes/a11y.md', date: '2026-09-22' },
       { slug: 'forms',         label: '폼',            file: null, date: null },
       { slug: 'seo',           label: 'SEO/메타 태그', file: null, date: null },
     ],
