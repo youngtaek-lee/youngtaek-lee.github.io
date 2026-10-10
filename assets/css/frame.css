@@ -235,6 +235,54 @@
 }
 
 /* =============================
+   Custom Scrollbar (theme-switch 스타일)
+============================= */
+.scrollbar {
+  position: fixed;
+  top: 166px;
+  right: 30px;
+  bottom: max(374px, var(--sb-main-gap, 0px));
+  z-index: 1050;
+  width: 14px;
+  padding: 2px;
+  border: 1px solid var(--header-text);
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  mix-blend-mode: difference;
+  transition: border-color 0.4s ease, opacity 0.3s ease;
+}
+
+.scrollbar:not(.is-ready) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scrollbar.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scrollbar__thumb {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  border-radius: 100px;
+  background: var(--color-accent);
+  cursor: grab;
+  touch-action: none;
+  transition: background-color 0.4s ease;
+}
+
+.scrollbar.is-dragging .scrollbar__thumb {
+  cursor: grabbing;
+}
+
+@media (max-width: 1024px) {
+  .scrollbar { display: none; }
+}
+
+/* =============================
    Menu Overlay
 ============================= */
 .menu-overlay {

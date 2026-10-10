@@ -54,6 +54,7 @@ function revealHeader() {
       { y: 0, opacity: 1, duration: 1, ease: 'power2.out' }
     );
   }
+  if (window.revealScrollbar) window.revealScrollbar();
 }
 
 // =============================
