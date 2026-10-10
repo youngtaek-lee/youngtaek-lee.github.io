@@ -249,6 +249,7 @@
   border-radius: 100px;
   background: transparent;
   cursor: pointer;
+  user-select: none;
   mix-blend-mode: difference;
   transition: border-color 0.4s ease, opacity 0.3s ease;
 }
@@ -574,30 +575,77 @@ main {
   filter: grayscale(0.4);
 }
 
+/* 아케이드 푸시 버튼 (레드 돔 + 그레이 베이스) */
 .hobby-btn {
   position: absolute;
   z-index: 2;
-  background: var(--color-text);
-  border: 2px solid var(--color-bg);
-  border-radius: 40px;
-  color: var(--color-bg);
-  padding: 16px 40px;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  width: 112px;
+  height: 96px;
+  padding: 0;
+  border: 0;
+  background: none;
+  display: none; /* 임시 숨김 */
   cursor: pointer;
   outline: none;
-  box-shadow: 0 4px 0 0 var(--color-bg);
-  transition: all 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.hobby-btn:hover {
+.hobby-btn__shadow,
+.hobby-btn__base,
+.hobby-btn__stem,
+.hobby-btn__cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border: 2px solid var(--color-bg);
+  border-radius: 50%;
+}
+
+/* 바닥 그림자 */
+.hobby-btn__shadow {
+  bottom: 0;
+  width: 112px;
+  height: 56px;
+  background: color-mix(in srgb, var(--color-text) 55%, #000);
+}
+
+/* 그레이 베이스 */
+.hobby-btn__base {
+  bottom: 8px;
+  width: 112px;
+  height: 56px;
   background: var(--color-text);
 }
 
-.hobby-btn:active {
-  box-shadow: 0 1px 0 0 var(--color-bg);
+/* 버튼 옆면 (어두운 레드) */
+.hobby-btn__stem {
+  bottom: 26px;
+  width: 80px;
+  height: 40px;
+  background: color-mix(in srgb, var(--color-accent) 45%, #000);
+}
+
+/* 버튼 윗면 (레드) — 누르면 가라앉음 */
+.hobby-btn__cap {
+  bottom: 36px;
+  width: 80px;
+  height: 40px;
+  background: var(--color-accent);
+  transition: transform 0.08s ease;
+}
+
+.hobby-btn:hover .hobby-btn__cap {
+  background: color-mix(in srgb, var(--color-accent) 88%, #fff);
+}
+
+.hobby-btn:active .hobby-btn__cap {
+  transform: translateY(8px);
+}
+
+.hobby-btn:focus-visible .hobby-btn__base {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 .footer__big {

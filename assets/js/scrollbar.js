@@ -53,7 +53,6 @@
     startScroll = window.scrollY;
     thumb.setPointerCapture(e.pointerId);
     bar.classList.add('is-dragging');
-    e.preventDefault();
   });
   thumb.addEventListener('pointermove', (e) => {
     if (!dragging) return;
