@@ -84,6 +84,12 @@ body.is-notes .notes-btn {
   filter: brightness(0.92);
 }
 
+@media (max-width: 768px) {
+  .notes-btn {
+    display: none;
+  }
+}
+
 /* ── Notes Home ── */
 .notes-home-page .subpage__section {
   max-width: 1024px;
