@@ -50,6 +50,12 @@ const notesCategoryGroups = [
     ],
   },
   {
+    group: 'Platform',
+    categories: [
+      { slug: 'shopify',       label: 'Shopify',      file: null, date: null },
+    ],
+  },
+  {
     group: 'HTML',
     categories: [
       { slug: 'semantic',      label: '시맨틱 마크업', file: '/content/notes/semantic.md', date: '2026-09-22' },
