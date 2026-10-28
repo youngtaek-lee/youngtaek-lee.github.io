@@ -60,7 +60,13 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Antonio:wght@100..700&display=swap" rel="stylesheet" />
+  <script type="importmap">
+  { "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  } }
+  </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
 
@@ -127,6 +133,22 @@
       <button class="header__menu-btn" id="menuBtn" aria-label="메뉴 열기">Menu</button>
     </div>
   </header>
+  <!-- 로고·테마 토글을 스파클과 같은 색으로 보여주는 레이어 (frame.css 의 .header--accent 참고) -->
+  <div class="header header--accent" aria-hidden="true">
+    <span class="header__logo">
+      <span>Lee</span>
+      <span>Young</span>
+      <span>Taek.</span>
+    </span>
+    <div class="header__right">
+      <div class="header__links">
+        <span class="header__link">GitHub</span>
+        <span class="header__link">Instagram</span>
+      </div>
+      <span class="theme-switch"><span class="theme-switch__thumb"></span></span>
+      <span class="header__menu-btn">Menu</span>
+    </div>
+  </div>
   <div class="header__sparkle-fixed" aria-hidden="true">
     <svg viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg">
       <path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/>
@@ -347,6 +369,7 @@
   <script src="assets/js/transition.js" defer></script>
   <script src="assets/js/router.js" defer></script>
   <script src="assets/js/intro.js" defer></script>
+  <script src="assets/js/hero-glass.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 
   <!-- Default Statcounter code for Portfolio https://youngtaek-lee.github.io -->

@@ -42,6 +42,21 @@
   right: 0;
 }
 
+/* 글라스 스파클 + 굵기 모션 텍스트 (hero-glass.js). 성공하면 DOM 텍스트는 SEO·접근성용으로만 남김 */
+.hero__glass {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.hero--glass .hero__tagline {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* =============================
    Responsive
 ============================= */

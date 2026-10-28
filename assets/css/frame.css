@@ -234,6 +234,46 @@
   transform: translateX(24px);
 }
 
+/* 스파클과 같은 색을 내는 헤더 레이어.
+   .header 는 mix-blend-mode: difference 라 안쪽 요소 색이 배경에 따라 변함 → 로고·테마 토글은 블렌드 밖에 이 레이어로 따로 그림.
+   .header 안의 실제 로고/토글은 투명하게 두고 클릭만 받음 (레이아웃은 동일 구조라 자동으로 같은 위치) */
+.header--accent {
+  mix-blend-mode: normal;
+  z-index: 1001;
+}
+
+.header--accent,
+.header--accent > * {
+  pointer-events: none;
+}
+
+.header--accent .header__logo {
+  color: var(--color-sparkle);
+}
+
+.header--accent .header__links,
+.header--accent .header__menu-btn {
+  visibility: hidden;
+}
+
+.header--accent .theme-switch {
+  display: block;
+  border-color: transparent;               /* 테두리는 기존 .header 의 블렌드 그대로, 안쪽 버튼만 이 레이어에서 */
+}
+
+.header--accent .theme-switch__thumb {
+  background: var(--color-sparkle);
+}
+
+.header:not(.header--accent) .header__logo,
+.header:not(.header--accent) .theme-switch__thumb {
+  opacity: 0;
+}
+
+.header:has(.header__logo:hover) ~ .header--accent .header__logo {
+  transform: scale(0.93);
+}
+
 /* =============================
    Custom Scrollbar (theme-switch 스타일)
 ============================= */
@@ -269,7 +309,7 @@
   width: 100%;
   min-height: 28px;
   border-radius: 100px;
-  background: var(--color-accent);
+  background: var(--color-sparkle);
   cursor: grab;
   touch-action: none;
   transition: background-color 0.4s ease;
@@ -279,9 +319,29 @@
   cursor: grabbing;
 }
 
+/* 테두리는 기존대로 difference 블렌드, 안쪽 버튼(thumb)만 스파클 색으로 보이게 별도 레이어(ghost)에 그림.
+   실제 .scrollbar 의 thumb 은 드래그 입력용으로 투명하게 두고, ghost 는 scrollbar.js 가 클래스·스타일을 그대로 복사함 */
+.scrollbar:not(.scrollbar--ghost) .scrollbar__thumb {
+  background: transparent;
+}
+
+.scrollbar--ghost {
+  mix-blend-mode: normal;
+  border-color: transparent;
+  pointer-events: none;
+  z-index: 1051;
+}
+
+.scrollbar--ghost .scrollbar__thumb {
+  background: var(--color-sparkle);
+}
+
 @media (max-width: 1024px) {
   .scrollbar { display: none; }
 }
+
+/* 임시로 숨김 — 다시 보이려면 아래 규칙 삭제 */
+.scrollbar { display: none !important; }
 
 /* =============================
    Menu Overlay

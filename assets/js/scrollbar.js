@@ -9,6 +9,21 @@
   document.body.appendChild(bar);
   const thumb = bar.firstElementChild;
 
+  // 안쪽 버튼만 블렌드 밖에서 스파클 색으로 보이게 하는 복사 레이어 (frame.css 의 .scrollbar--ghost 참고)
+  const ghost = document.createElement('div');
+  ghost.setAttribute('aria-hidden', 'true');
+  ghost.innerHTML = '<span class="scrollbar__thumb"></span>';
+  document.body.appendChild(ghost);
+  const ghostThumb = ghost.firstElementChild;
+  const syncGhost = () => {
+    ghost.className = bar.className + ' scrollbar--ghost';
+    ghost.style.cssText = bar.style.cssText;
+    ghostThumb.style.cssText = thumb.style.cssText;
+  };
+  new MutationObserver(syncGhost).observe(bar, { attributes: true, attributeFilter: ['class', 'style'] });
+  new MutationObserver(syncGhost).observe(thumb, { attributes: true, attributeFilter: ['style'] });
+  syncGhost();
+
   const doc = document.documentElement;
   const PAD = 2;
   const MIN_THUMB = 28;

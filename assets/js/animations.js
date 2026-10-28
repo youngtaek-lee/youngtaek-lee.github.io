@@ -43,7 +43,7 @@ function revealHeader() {
   const sparkleFxd = document.querySelector('.header__sparkle-fixed');
 
   if (header) {
-    gsap.fromTo(header,
+    gsap.fromTo([header, ...document.querySelectorAll('.header--accent')],
       { y: 24, opacity: 0 },
       { y: 0, opacity: 1, duration: 1, ease: 'power2.out' }
     );
@@ -142,13 +142,10 @@ let _colorRevealTls = [];
 
 function getThemeColors() {
   const cs = getComputedStyle(document.documentElement);
-  const isSummer = document.documentElement.getAttribute('data-theme') === 'summer';
   return {
     bg: cs.getPropertyValue('--color-bg').trim(),
     text: cs.getPropertyValue('--color-text').trim(),
-    taglineStart: isSummer
-      ? cs.getPropertyValue('--color-accent').trim()
-      : cs.getPropertyValue('--color-text').trim(),
+    taglineStart: cs.getPropertyValue('--color-accent').trim(),   // 히어로 이름은 모든 테마에서 포인트 컬러
   };
 }
 

@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHobbyPopcorn();
   initIntro();
   initHeroTaglineScroll();
+  initHeroGlass();
   initFooterBig();
   initFooterScale();
 
