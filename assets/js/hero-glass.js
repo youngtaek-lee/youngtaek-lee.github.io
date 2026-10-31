@@ -324,6 +324,8 @@ async function initHeroGlass() {
     // 3단계는 frame()의 30fps 제한
   }
 
+  if (isSmall()) { tier = 3; optUniform.value.y = 0; }   // 모바일은 처음부터 최저 단계(30fps, 색수차 끔, 해상도 1배)
+
   const s = { px: 0, py: 0, vx: 0, vy: 0 };
   let visible = false, last = performance.now(), t = 0;
   new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(hero);

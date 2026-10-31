@@ -3,7 +3,7 @@
 ============================= */
 .works {
   /* padding: 100px 0px; */
-  padding-bottom: 0;
+  padding-bottom: clamp(80px, 12vw, 160px);
   overflow-x: clip;
 }
 
@@ -51,11 +51,7 @@
 
 
 .works__item {
-  border-bottom: 1px solid var(--color-line);
-}
-
-[data-theme="summer"] #works .works__item {
-  border-bottom-color: var(--color-bg);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-text) 25%, transparent);
 }
 
 .works__item__link {
@@ -113,14 +109,6 @@
 
 .works__item:hover .works__item__title__ko {
   transform: translateY(0);
-}
-
-/* 메인 Works만 — hero 스크롤로 main bg가 반전된 뒤라 텍스트도 반전 색 필요 */
-#home-view .works__label,
-#home-view .works__item__title__en,
-#home-view .works__item__title__ko,
-#home-view .works__item__meta {
-  color: var(--color-bg);
 }
 
 .works__item__meta {

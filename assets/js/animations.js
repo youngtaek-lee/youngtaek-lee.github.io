@@ -136,49 +136,6 @@ function initWorksReveal() {
 }
 
 // =============================
-// Hero/About/Works 스크롤 색상 리빌 — 테마 색상 반영
-// =============================
-let _colorRevealTls = [];
-
-function getThemeColors() {
-  const cs = getComputedStyle(document.documentElement);
-  return {
-    bg: cs.getPropertyValue('--color-bg').trim(),
-    text: cs.getPropertyValue('--color-text').trim(),
-    taglineStart: cs.getPropertyValue('--color-accent').trim(),   // 히어로 이름은 모든 테마에서 포인트 컬러
-  };
-}
-
-function initScrollColorReveals() {
-  const { bg, text, taglineStart } = getThemeColors();
-
-  _colorRevealTls.push(
-    gsap.timeline({
-      scrollTrigger: { id: 'color-reveal-hero', trigger: '.hero-wrap', start: 'bottom bottom', end: 'bottom top', scrub: 1 },
-    }).fromTo('main', { backgroundColor: bg }, { backgroundColor: text, ease: 'none' })
-      .fromTo('.hero__tagline', { color: taglineStart }, { color: bg, ease: 'none' }, 0)
-  );
-
-  _colorRevealTls.push(
-    gsap.timeline({
-      scrollTrigger: { id: 'color-reveal-about', trigger: '.about-text', start: 'top bottom', end: 'top center', scrub: 1 },
-    }).fromTo('.about-text__label, .about__word', { color: text }, { color: bg, ease: 'none' })
-  );
-}
-
-function refreshScrollColorReveals() {
-  ['color-reveal-hero', 'color-reveal-about'].forEach(id => ScrollTrigger.getById(id)?.kill());
-  _colorRevealTls.forEach(tl => tl.kill());
-  _colorRevealTls = [];
-  gsap.set(
-    ['main', '.hero__tagline', '.about-text__label', '.about__word'],
-    { clearProps: 'backgroundColor,color' }
-  );
-  initScrollColorReveals();
-  ScrollTrigger.refresh();
-}
-
-// =============================
 // Footer Big 텍스트 — 높이 기준 fit
 // =============================
 function initFooterBig() {
@@ -216,6 +173,65 @@ function initFooterBig() {
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(fit);
   });
+}
+
+// =============================
+// Footer Big 텍스트 — 마우스 거리별 굵기 모션 (hero-glass.js와 같은 원리, DOM 글자 단위)
+// =============================
+function initFooterWeight() {
+  const big = document.querySelector('.footer__big');
+  if (!big) return;
+  if (matchMedia('(hover: none)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const WMIN = 120, WMAX = 700;
+
+  // 글자 단위로 분리 — 마지막 글자 span(스파클 포함)은 구조를 유지한 채 텍스트 노드만 감싼다
+  const wrap = node => {
+    const frag = document.createDocumentFragment();
+    [...node.textContent].forEach(ch => {
+      const s = document.createElement('span');
+      s.className = 'footer__ch';
+      s.textContent = ch;
+      frag.appendChild(s);
+    });
+    node.replaceWith(frag);
+  };
+  [...big.childNodes].forEach(n => {
+    if (n.nodeType === 3) wrap(n);
+    else if (n.classList && n.classList.contains('footer__last-letter')) {
+      [...n.childNodes].forEach(c => { if (c.nodeType === 3) wrap(c); });
+    }
+  });
+
+  const letters = [...big.querySelectorAll('.footer__ch')].map(el => ({ el, cur: WMAX }));
+  const mouse = { x: -9999, y: -9999 };
+  let raf = 0, last = 0;
+
+  function tick(now) {
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    const sigma = 0.17 * big.getBoundingClientRect().width;
+    let moving = false;
+    letters.forEach(L => {
+      const b = L.el.getBoundingClientRect();
+      const d2 = (mouse.x - (b.left + b.width / 2)) ** 2 + (mouse.y - (b.top + b.height / 2)) ** 2;
+      const tgt = WMAX - (WMAX - WMIN) * Math.exp(-d2 / (2 * sigma * sigma));   // 마우스에 가까울수록 가늘게
+      const dv = tgt - L.cur;
+      if (Math.abs(dv) > 0.4) moving = true;
+      L.cur += dv * Math.min(1, dt * 9);
+      L.el.style.fontVariationSettings = `"wght" ${Math.round(L.cur)}`;
+    });
+    raf = moving ? requestAnimationFrame(tick) : 0;
+  }
+
+  document.addEventListener('pointermove', e => {
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    // 푸터가 화면에 드러났을 때만 동작
+    const st = document.querySelector('.statement');
+    if (st && st.getBoundingClientRect().top > innerHeight) return;
+    if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+  });
+  document.addEventListener('pointerleave', () => { mouse.x = mouse.y = -9999; if (!raf) { last = performance.now(); raf = requestAnimationFrame(tick); } });
 }
 
 // =============================
@@ -351,20 +367,6 @@ function initHobbyPopcorn() {
   const container = document.getElementById('hobbyPopcorn');
   if (!btn || !container || typeof Matter === 'undefined') return;
 
-  // 아이콘 shape 따라 베이지 아웃라인 SVG 필터
-  if (!document.getElementById('icon-outline-filter')) {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('id', 'icon-outline-filter');
-    svg.style.cssText = 'position:absolute;width:0;height:0;';
-    svg.innerHTML = `<defs><filter id="icon-outline" color-interpolation-filters="sRGB" x="-10%" y="-10%" width="120%" height="120%">
-      <feMorphology operator="dilate" radius="3" in="SourceAlpha" result="expanded"/>
-      <feFlood flood-color="#ffffff" flood-opacity="0.8" result="color"/>
-      <feComposite in="color" in2="expanded" operator="in" result="outline"/>
-      <feMerge><feMergeNode in="outline"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter></defs>`;
-    document.body.appendChild(svg);
-  }
-
   const { Engine, Runner, Bodies, Body, World, Events } = Matter;
 
   const engine = Engine.create({ enableSleeping: true });
@@ -471,7 +473,7 @@ function initHobbyPopcorn() {
 
         const el = document.createElement('div');
         el.innerHTML = ICONS[Math.floor(Math.random() * ICONS.length)];
-        el.style.cssText = `position:absolute;pointer-events:none;user-select:none;will-change:transform,opacity;left:${bx}px;top:${by}px;transform:translate(-50%,-50%) scale(0.3);opacity:0;filter:url(#icon-outline);transition:opacity 0.25s ease-out;`;
+        el.style.cssText = `position:absolute;pointer-events:none;user-select:none;will-change:transform,opacity;left:${bx}px;top:${by}px;transform:translate(-50%,-50%) scale(0.3);opacity:0;transition:opacity 0.25s ease-out;`;
         container.appendChild(el);
         requestAnimationFrame(() => { el.style.opacity = '1'; });
         active.push({ body, el, born: performance.now() });
@@ -479,12 +481,40 @@ function initHobbyPopcorn() {
     }
   }
 
-  // 버튼 초기 중앙 위치 설정
+  // 처음부터 바닥에 살짝 쌓여 있는 상태 — 물리를 미리 돌려 안정시킨 뒤 보여준다
+  let seeded = false;
+  function seedPile() {
+    if (seeded || !container.offsetWidth) return;
+    seeded = true;
+    initStatics();
+    const W = container.offsetWidth;
+    const H = container.offsetHeight;
+    const r = Math.round(27 * S);
+    const count = Math.min(FLOOR_BURST_LIMIT - 1, Math.round(W / (r * 2) * 1.4));
+
+    for (let i = 0; i < count; i++) {
+      const x = (i + 0.5) / count * W + (Math.random() - 0.5) * r;
+      const y = H - 30 - r - (i % 3) * r * 2.2 - Math.random() * r;
+      const body = Bodies.circle(x, y, r, { restitution: 0.2, friction: 0.6, frictionAir: 0.01, density: 0.004 });
+      Body.setAngle(body, Math.random() * Math.PI * 2);
+      World.add(engine.world, body);
+
+      const el = document.createElement('div');
+      el.innerHTML = ICONS[Math.floor(Math.random() * ICONS.length)];
+      el.style.cssText = `position:absolute;pointer-events:none;user-select:none;will-change:transform;left:${x}px;top:${y}px;`;
+      container.appendChild(el);
+      active.push({ body, el, born: 0 });
+    }
+    for (let i = 0; i < 300; i++) Engine.update(engine, 1000 / 60);
+  }
+
+  // 버튼은 숨김 상태 — 위치만 유지
   function centerBtn() {
     const cW = container.offsetWidth;
     const cH = container.offsetHeight;
     btn.style.left = (cW / 2 - btn.offsetWidth / 2) + 'px';
     btn.style.top  = (cH / 2 - btn.offsetHeight / 2) + 'px';
+    seedPile();
   }
   centerBtn();
   window.addEventListener('resize', centerBtn);

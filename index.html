@@ -296,6 +296,15 @@
         Hobby Popcorn
       ========================= -->
       <section class="hobby-section">
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+          <filter id="lift-dark" color-interpolation-filters="sRGB">
+            <feColorMatrix in="SourceGraphic" type="matrix" result="mask" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -1.7 -5.7 -0.6 0 1.5"/>
+            <feComposite in="mask" in2="SourceAlpha" operator="in" result="darkOnly"/>
+            <feFlood flood-color="#9a9a9a" result="gray"/>
+            <feComposite in="gray" in2="darkOnly" operator="in" result="grayDark"/>
+            <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="grayDark"/></feMerge>
+          </filter>
+        </svg>
         <div class="hobby-popcorn" id="hobbyPopcorn">
           <button class="hobby-btn" id="hobbyBtn" aria-label="취미 보기"><span class="hobby-btn__shadow"></span><span class="hobby-btn__base"></span><span class="hobby-btn__stem"></span><span class="hobby-btn__cap"></span></button>
         </div>
@@ -313,9 +322,6 @@
   <footer class="footer">
     <div class="footer__top">
       <a href="mailto:brant7100@gmail.com" class="footer__big">Get in touc<span class="footer__last-letter">h<svg class="footer__sparkle" viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/></svg></span></a>
-    </div>
-    <hr class="footer__divider" />
-    <div class="footer__mid">
       <div class="footer__links">
         <div class="footer__col">
           <p class="footer__col-title">SNS</p>
@@ -343,6 +349,8 @@
         </a>
       </div>
     </div>
+    <hr class="footer__divider" />
+    <div class="footer__mid"></div>
     <div class="footer__bottom">
       <p class="footer__copy">© 2026 Designed &amp; Published by Lee Youngtaek</p>
     </div>
@@ -370,6 +378,7 @@
   <script src="assets/js/router.js" defer></script>
   <script src="assets/js/intro.js" defer></script>
   <script src="assets/js/hero-glass.js" defer></script>
+  <script src="assets/js/footer-sparkle.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 
   <!-- Default Statcounter code for Portfolio https://youngtaek-lee.github.io -->

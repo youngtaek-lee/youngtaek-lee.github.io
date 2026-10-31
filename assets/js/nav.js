@@ -83,6 +83,7 @@ function initMobileMenu() {
   btn.addEventListener('click', openMenu);
   closeBtn?.addEventListener('click', closeMenu);
   backdrop?.addEventListener('click', closeMenu);
+  links.forEach(link => link.addEventListener('click', closeMenu));
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeMenu();
@@ -101,7 +102,6 @@ function initTheme() {
     const next = current === 'basic' ? 'summer' : 'basic';
     document.documentElement.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
-    refreshScrollColorReveals();
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.content = next === 'basic' ? '#1C1A17' : '#0056B3';
     debugTheme();

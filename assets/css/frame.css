@@ -403,7 +403,7 @@
 }
 
 .menu-overlay__top .theme-switch {
-  border-color: var(--color-line);
+  border-color: var(--color-text);
 }
 
 .menu-overlay__close {
@@ -581,18 +581,35 @@ main {
   z-index: 2;
   background: var(--color-bg);
   border-radius: 0 0 30px 30px;
+  overflow: clip; /* hidden은 hero sticky를 깨뜨림 */
+  box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.35);
 }
 
 .hobby-section {
   position: relative;
   height: 50vh;
   overflow: visible;
+  display: none; /* 임시 블라인드 */
 }
 
 /* summer 푸터: 쿨 그레이 배경 + 로얄 텍스트 */
 [data-theme="summer"] .footer,
 [data-theme="summer"] .statement {
   --color-text: var(--summer-royal);
+}
+
+/* basic 푸터: 오렌지 배경 + 다크 텍스트 */
+[data-theme="basic"] .footer,
+[data-theme="basic"] .statement {
+  --color-bg:             var(--basic-orange);
+  --color-text:           var(--basic-dark);
+  --color-accent:         var(--basic-dark);
+  --color-sparkle:        var(--basic-beige);
+  --color-text-mid:       rgba(28, 26, 23, 0.7);
+  --color-text-dim:       rgba(28, 26, 23, 0.6);
+  --color-text-subtle:    rgba(28, 26, 23, 0.5);
+  --color-border-subtle:  rgba(28, 26, 23, 0.2);
+  --color-border-medium:  rgba(28, 26, 23, 0.3);
 }
 
 .footer {
@@ -603,10 +620,10 @@ main {
   z-index: 0;
   background: var(--color-bg);
   color: var(--color-text);
-  padding: 40px 30px 30px;
+  padding: 60px 30px 16px; /* 위 30px는 main 라운드 모서리 뒤를 채우는 여분 */
   display: flex;
   flex-direction: column;
-  min-height: var(--footer-height);
+  min-height: calc(var(--footer-height) + 30px);
   overflow: visible;
 }
 
@@ -615,8 +632,18 @@ main {
   position: relative;
   overflow: visible;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
+}
+
+/* 푸터 3D 글라스 스파클 — footer__top 우측 */
+.footer__glass {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: clamp(240px, 34vw, 560px);
+  height: 100%;
+  pointer-events: none;
 }
 
 /* =============================
@@ -633,6 +660,25 @@ main {
 
 .hobby-popcorn img {
   filter: grayscale(0.4);
+  opacity: .5;
+}
+
+/* 노션 아이콘은 검정 단색이라 어두운 basic 배경에서만 흰색으로 반전 */
+/* 펩시는 컬러 로고라 반전 대신 검은 부분만 회색으로 (index.html #lift-dark) */
+[data-theme="basic"] .hobby-popcorn img[src*="pepsi-icon"] {
+  filter: url(#lift-dark);
+}
+
+[data-theme="basic"] .hobby-popcorn img[src*="chimchakman-icon"] {
+  filter: invert(.3);
+}
+
+[data-theme="basic"] .hobby-popcorn img[src*="github-icon"] {
+  filter: invert(.6);
+}
+
+[data-theme="basic"] .hobby-popcorn img[src*="notion-icon"] {
+  filter: invert(.5);
 }
 
 /* 아케이드 푸시 버튼 (레드 돔 + 그레이 베이스) */
@@ -710,20 +756,17 @@ main {
 
 .footer__big {
   display: block;
-  font-family: var(--font-display);
+  font-family: 'Antonio', 'Anton', 'Arial Narrow', sans-serif;   /* 가변 폰트 — 굵기 모션용 (hero와 동일) */
   font-size: clamp(2rem, min(14vw, calc(50vh - 16rem)), 13rem);
-  font-weight: 400;
+  font-weight: 700;
+  font-variation-settings: "wght" 700;
   letter-spacing: 0;
-  line-height: 1;
+  line-height: 0.85;
   text-transform: uppercase;
   text-align: left;
   color: var(--color-text);
   text-decoration: none;
   transition: color 0.3s ease;
-}
-
-.footer__big:hover {
-  color: var(--color-text-mid);
 }
 
 .footer__last-letter {
@@ -741,23 +784,26 @@ main {
   display: block;
   pointer-events: none;
   opacity: 0;
+  display: none; /* 임시 제거 */
   filter: drop-shadow(0 0 12px var(--color-sparkle));
 }
 
 .footer__divider {
+  display: none; /* 임시 숨김 */
   border: none;
   border-top: 1px solid var(--color-border-medium);
   margin: 24px 0;
 }
 
 .footer__mid {
-  display: flex;
+  display: none; /* 임시 숨김 */
   align-items: center;
   gap: 80px;
 }
 
 .footer__links {
-  display: grid;
+  margin-left: auto;
+  display: none; /* 임시 숨김 (원래 grid) */
   grid-template-columns: 1fr 1fr;
   gap: 0 80px;
 }
@@ -773,6 +819,10 @@ main {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-text-subtle);
+}
+
+.footer__contact .footer__col-title {
+  color: var(--color-text);
 }
 
 .footer__email {
@@ -796,6 +846,7 @@ main {
 
 .footer__contact {
   margin-left: auto;
+  align-self: center;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -884,15 +935,15 @@ main {
 }
 
 .footer__bottom {
-  margin-top: 24px;
-  padding-top: 16px;
-  padding-bottom: 26px;
-  border-top: 1px solid var(--color-border-subtle);
+  margin-top: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--color-text) 70%, transparent);
 }
 
 .footer__copy {
   font-size: 0.75rem;
-  color: var(--color-text-subtle);
+  color: var(--color-text);
   letter-spacing: 0.04em;
 }
 
@@ -900,8 +951,21 @@ main {
    Statement (footer 높이 spacer)
 ============================= */
 .statement {
+  position: relative;
   min-height: var(--footer-height);
   background: var(--color-bg);
+}
+
+/* main 라운드 모서리 뒤를 가로 전체로 채움 — 푸터가 0.92→1로 스케일되는 동안 양옆이 비는 것 방지 */
+.statement::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -100px;
+  height: 100px;
+  background: var(--color-bg);
+  z-index: 1;
 }
 
 /* =============================
@@ -950,7 +1014,7 @@ main {
 
   /* ─── Footer ──────────────────────────────────── */
   .footer {
-    padding: 32px 20px 88px;
+    padding: 62px 20px 88px;
   }
 
   .footer__big {
@@ -963,7 +1027,15 @@ main {
     align-items: flex-start;
   }
 
+  .footer__top {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+  }
+
   .footer__links {
+    margin-left: 0;
     gap: 0 32px;
   }
 

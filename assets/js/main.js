@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initWorksSparkle();
   initCursor();
   initAboutScroll();
-  initScrollColorReveals();
 
   initWorksReveal();
   initAboutTextScroll();
@@ -45,6 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroTaglineScroll();
   initHeroGlass();
   initFooterBig();
+  initFooterWeight();
+  // initFooterSparkle();   // 임시 제거 (assets/js/footer-sparkle.js)
   initFooterScale();
 
 });
