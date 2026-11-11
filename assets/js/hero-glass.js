@@ -10,11 +10,11 @@ async function initHeroGlass() {
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const WMIN = 120, WMAX = 700;                       // 가변 폰트(Antonio, Anton 계열) 굵기 범위
-  const FONT = (w, px) => `${Math.round(w)} ${px.toFixed(1)}px Antonio, Anton, "Arial Narrow", sans-serif`;
+  const FONT = (w, px) => `${Math.round(w / 10) * 10} ${px.toFixed(1)}px Antonio, Anton, "Arial Narrow", sans-serif`;
   let CAP = 0.73;                                     // 대문자 높이 비율 (폰트 로드 후 실측)
   const WEIGHT_MOTION = !matchMedia('(hover: none)').matches;   // 마우스 굵기 모션 (터치 기기에서는 끔)
   const PARALLAX_SPARKLE = 0.3, PARALLAX_TEXT = 0.12;   // 스크롤 한 화면당 이동량(화면 높이 대비). 클수록 속도 차이가 커짐
-  const LOW_SCALE = 0.8, DRAW_GAP = 33;              // 글자 텍스처 해상도·최대 30fps. 선명도↑ 부하↑ (0.6 가벼움 / 1.0 무거움)
+  const LOW_SCALE = 0.8, DRAW_GAP = 42;              // 글자 텍스처 해상도·최대 ~24fps. 선명도↑ 부하↑ (0.6 가벼움 / 1.0 무거움)
 
   let THREE, RoomEnvironment;
   try {
@@ -131,7 +131,7 @@ async function initHeroGlass() {
   NAME.forEach((line, li) => [...line].forEach(ch => letters.push({ ch, li, cur: WMAX, tgt: WMAX, x: 0, w: 0, cy: 0 })));
 
   let lowT, TW = 0, TH = 0, fs = 100, bases = [], pad = 30;
-  let colors = { bg: '', fg: '', accent: '' }, dirty = true, lastDraw = 0;
+  let colors = { bg: '', fg: '', accent: '' }, dirty = true, lastDraw = 0, lastColorRead = 0;
   const bgEls = [document.querySelector('main'), document.body, document.documentElement];
 
   // 스크롤 색상 리빌(GSAP)이 main 배경과 tagline 글자색을 바꾸므로 매 프레임 읽어서 따라감
@@ -186,15 +186,15 @@ async function initHeroGlass() {
   function updateLetters(dt) {
     if (!WEIGHT_MOTION) return;
     const sigma = sigmaK * TW;
-    let moving = false;
+    let changed = false;
     letters.forEach(L => {
       const d2 = (mouse.x - (L.x + L.w / 2)) ** 2 + (mouse.y - L.cy) ** 2;
       L.tgt = WMAX - (WMAX - WMIN) * Math.exp(-d2 / (2 * sigma * sigma));   // 마우스에 가까울수록 가늘게
-      const dv = L.tgt - L.cur;
-      if (Math.abs(dv) > 0.4) moving = true;
-      L.cur += dv * Math.min(1, dt * 9);
+      L.cur += (L.tgt - L.cur) * Math.min(1, dt * 9);
+      const q = Math.round(L.cur / 10);                  // 10단위로 양자화 — 실제 굵기가 바뀔 때만 다시 그림
+      if (q !== L.q) { L.q = q; changed = true; }
     });
-    if (moving) dirty = true;
+    if (changed) dirty = true;
   }
 
   function drawText(T) {
@@ -321,7 +321,7 @@ async function initHeroGlass() {
     tier = n;
     if (n >= 1) { renderer.setPixelRatio(pixelRatio()); renderer.setSize(TW, TH, false); renderer.getDrawingBufferSize(resUniform.value); }   // 해상도 1배
     if (n >= 2) optUniform.value.y = 0;                                                        // 색수차 끔
-    // 3단계는 frame()의 30fps 제한
+    // 3단계는 frame()의 20fps 제한
   }
 
   if (isSmall()) { tier = 3; optUniform.value.y = 0; }   // 모바일은 처음부터 최저 단계(30fps, 색수차 끔, 해상도 1배)
@@ -334,9 +334,9 @@ async function initHeroGlass() {
     requestAnimationFrame(frame);
     if (!visible || document.hidden || !lowT) { last = now; return; }
     const raw = (now - last) / 1000;
-    if (tier >= 3 && raw < 0.028) return;               // 최저 단계: 30fps로 제한
+    if (tier >= 3 && raw < 0.046) return;               // 최저 단계: 20fps로 제한
     last = now;
-    const dt = Math.min(0.033, raw);
+    const dt = Math.min(tier >= 3 ? 0.06 : 0.033, raw);
     if (!reduce) t += dt;
 
     // 적응형 품질: 평균 프레임이 20ms(50fps)보다 느리면 한 단계씩 낮춤 (모니터 주사율이 높으면 영향 없음)
@@ -346,11 +346,14 @@ async function initHeroGlass() {
       if (perf.avg > 0.02) { setTier(tier + 1); perf.avg = 0.016; perf.checkAt = now + 2500; }
     }
 
-    const c = readColors();
-    if (c.bg !== colors.bg || c.fg !== colors.fg || c.accent !== colors.accent) {
-      colors = c;
-      scene.background.set(c.bg);
-      colBg.value.set(c.bg); colFg.value.set(c.fg); colGlow.value.set(c.accent);   // 색은 uniform으로만 바꿈(글자 재그리기 불필요)
+    if (now - lastColorRead > 80) {                       // getComputedStyle은 80ms마다만 (매 프레임 읽기 방지)
+      lastColorRead = now;
+      const c = readColors();
+      if (c.bg !== colors.bg || c.fg !== colors.fg || c.accent !== colors.accent) {
+        colors = c;
+        scene.background.set(c.bg);
+        colBg.value.set(c.bg); colFg.value.set(c.fg); colGlow.value.set(c.accent);   // 색은 uniform으로만 바꿈(글자 재그리기 불필요)
+      }
     }
     timeUniform.value = t;
     mouseUniform.value.x += ((m.x + 1) / 2 - mouseUniform.value.x) * Math.min(1, dt * 4);   // 빛이 마우스를 부드럽게 따라옴

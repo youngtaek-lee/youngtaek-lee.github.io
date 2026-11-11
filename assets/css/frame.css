@@ -234,6 +234,20 @@
   transform: translateX(24px);
 }
 
+.theme-switch,
+.header__menu-btn,
+.menu-overlay__close,
+.menu-overlay__link {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-switch:focus:not(:focus-visible),
+.header__menu-btn:focus:not(:focus-visible),
+.menu-overlay__close:focus:not(:focus-visible),
+.menu-overlay__link:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* 스파클과 같은 색을 내는 헤더 레이어.
    .header 는 mix-blend-mode: difference 라 안쪽 요소 색이 배경에 따라 변함 → 로고·테마 토글은 블렌드 밖에 이 레이어로 따로 그림.
    .header 안의 실제 로고/토글은 투명하게 두고 클릭만 받음 (레이아웃은 동일 구조라 자동으로 같은 위치) */
@@ -620,7 +634,7 @@ main {
   z-index: 0;
   background: var(--color-bg);
   color: var(--color-text);
-  padding: 60px 30px 16px; /* 위 30px는 main 라운드 모서리 뒤를 채우는 여분 */
+  padding: 36px 30px 16px; /* 위 30px는 main 라운드 모서리 뒤를 채우는 여분 */
   display: flex;
   flex-direction: column;
   min-height: calc(var(--footer-height) + 30px);
@@ -632,8 +646,9 @@ main {
   position: relative;
   overflow: visible;
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: flex-start;
+  padding-bottom: 44px;
 }
 
 /* 푸터 3D 글라스 스파클 — footer__top 우측 */
@@ -761,7 +776,7 @@ main {
   font-weight: 700;
   font-variation-settings: "wght" 700;
   letter-spacing: 0;
-  line-height: 0.85;
+  line-height: 1.05;
   text-transform: uppercase;
   text-align: left;
   color: var(--color-text);
@@ -845,8 +860,9 @@ main {
 }
 
 .footer__contact {
-  margin-left: auto;
-  align-self: center;
+  margin-left: 64px;
+  align-self: end;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -936,7 +952,7 @@ main {
 
 .footer__bottom {
   margin-top: 12px;
-  padding-top: 12px;
+  padding-top: 20px;
   padding-bottom: 12px;
   border-top: 1px solid color-mix(in srgb, var(--color-text) 70%, transparent);
 }
