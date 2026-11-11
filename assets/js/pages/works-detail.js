@@ -102,8 +102,23 @@ const PageWorksDetail = {
       gsap.set(titleEl.querySelectorAll('.reveal-word__inner'), { yPercent: 120 });
     }
     gsap.set('.wd-meta', { y: 12, opacity: 0 });
+    gsap.set('.wd-main-img', { y: 60, opacity: 0 });
+    gsap.set('.wd-overview', { y: 20, opacity: 0 });
+    gsap.set('.wd-nav', { y: 30, opacity: 0 });
+
+    const revealOnScroll = (target, trigger, start, vars, seqDelay) => {
+      const inView = document.querySelector(trigger).getBoundingClientRect().top < window.innerHeight * start;
+      gsap.to(target, {
+        y: 0, opacity: 1, ...vars,
+        delay: inView ? seqDelay : 0.1,
+        scrollTrigger: { trigger, start: `top ${start * 100}%` },
+      });
+    };
 
     const doHeroReveal = () => {
+      revealOnScroll('.wd-overview', '.wd-info', 0.85, { duration: 0.6, ease: 'power2.out' }, 0.9);
+      revealOnScroll('.wd-nav', '.wd-nav', 0.9, { duration: 0.7, ease: 'power2.out' }, 1.1);
+      gsap.to('.wd-main-img', { y: 0, opacity: 1, duration: 1.0, delay: 0.45, ease: 'power3.out' });
       if (titleEl) gsap.to(titleEl.querySelectorAll('.reveal-word__inner'), {
         yPercent: 0, duration: 0.85, ease: 'power3.out', stagger: 0.08, delay: 0.1,
       });
@@ -115,15 +130,6 @@ const PageWorksDetail = {
     } else {
       doHeroReveal();
     }
-    gsap.from('.wd-main-img', { y: 60, opacity: 0, duration: 1.0, delay: 0.25, ease: 'power3.out' });
-    gsap.from('.wd-overview', {
-      y: 20, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power2.out',
-      scrollTrigger: { trigger: '.wd-info', start: 'top 85%' },
-    });
-    gsap.from('.wd-nav', {
-      y: 30, opacity: 0, duration: 0.7, ease: 'power2.out',
-      scrollTrigger: { trigger: '.wd-nav', start: 'top 90%' },
-    });
 
     // 이미지 로드 후 next 카드 짧은 칼럼으로 이동 + 높이 재계산
     const imgs = document.querySelectorAll('.works-detail-page img');

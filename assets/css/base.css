@@ -156,6 +156,7 @@ html[data-theme="summer"] {
 ============================= */
 body::before {
   content: '';
+  display: none;
   position: fixed;
   inset: 0;
   background: url('/assets/images/noise.png');

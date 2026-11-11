@@ -168,14 +168,19 @@
   left: 0;
   width: 300px;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
-  object-position: center;
+  object-fit: fill;
   pointer-events: none;
   z-index: 500;
   opacity: 0;
-  transform: translate(-50%, -55%);
   transition: opacity 0.25s ease;
   border-radius: 2px;
+}
+
+.works__thumb--gl {
+  width: 560px;
+  height: auto;
+  aspect-ratio: 560 / 380;
+  border-radius: 0;
 }
 
 .works__thumb.is-visible {

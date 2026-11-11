@@ -50,7 +50,7 @@ body.is-notes .notes-btn {
   bottom: 24px;
   left: 24px;
   z-index: 1000;
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
