@@ -368,12 +368,12 @@ body.is-subpage {
 
 @media (max-width: 540px) {
   .skill-cards {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 5px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
   }
 
   .skill-card {
-    padding: 12px 8px;
+    padding: 14px 12px;
     box-shadow: 3px 3px 0 0 var(--subpage-text);
     border-radius: 8px;
   }
@@ -384,11 +384,16 @@ body.is-subpage {
   }
 
   .skill-card__icon {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
+  }
+
+  .skill-card__img-icon {
+    width: 1.8rem;
+    height: 1.8rem;
   }
 
   .skill-card__name {
-    font-size: 0.65rem;
+    font-size: 0.78rem;
   }
 
   .skill-card__desc {

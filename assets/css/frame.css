@@ -987,6 +987,20 @@ main {
 /* =============================
    Responsive
 ============================= */
+@media (max-width: 1024px) {
+  .footer__top {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 24px;
+  }
+
+  .footer__contact {
+    margin-left: 0;
+    align-self: flex-start;
+  }
+}
+
 @media (max-width: 768px) {
   :root {
     --section-padding: 80px 20px;
@@ -1028,6 +1042,15 @@ main {
     padding: 32px;
   }
 
+  .menu-overlay__footer {
+    gap: 14px;
+  }
+
+  .menu-overlay__footer-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+  }
+
   /* ─── Footer ──────────────────────────────────── */
   .footer {
     padding: 62px 20px 88px;
@@ -1048,6 +1071,7 @@ main {
     align-items: flex-start;
     justify-content: center;
     gap: 24px;
+    padding-bottom: 16px;
   }
 
   .footer__links {
@@ -1063,6 +1087,7 @@ main {
   .footer__email-btn {
     min-width: 0;
     width: 100%;
+    max-width: 280px;
   }
 
   /* 팝콘 아이콘 좌우 overflow → 가로 스크롤 원인 차단 */
