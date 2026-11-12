@@ -187,6 +187,12 @@
   opacity: 1;
 }
 
+#home-view .works__thumb {
+  object-fit: cover;
+  object-position: center;
+  transform: translate(-50%, -55%);
+}
+
 /* =============================
    WORKS — 모바일 반응형
 ============================= */

@@ -8,48 +8,68 @@ const PageWorksList = {
 
   render() {
     const items = typeof works !== 'undefined' ? works.filter(w => w.id !== 'more') : [];
-    const extras = typeof worksExtra !== 'undefined' ? worksExtra : [];
+    const SHOW_EXTRA_WORKS = true;
+    const allExtras = SHOW_EXTRA_WORKS && typeof worksExtra !== 'undefined' ? worksExtra : [];
+    const undated = allExtras.filter(e => !e.year);
+    const yearNotes = {
+      2026: { title: 'New Start', text: '새로운 시작을 위해 다시 쌓아가는 작업' },
+      2025: { title: 'Recharge', text: '다음 작업을 위한 재충전의 시간' },
+      2024: { title: 'Freelance', text: '프리랜서로 기존 프로젝트 유지보수를 이어간 해' },
+      2023: { title: 'Transition', text: '재직을 마치고 프리랜서로 전환한 해' },
+      2022: { title: 'In-house', text: '퍼블리싱팀에서 다양한 기업·기관 사이트를 제작' },
+      2021: { title: 'Growing', text: '퍼블리싱팀에 합류해 다양한 업종의 사이트를 맡기 시작한 해' },
+    };
+    const years = [...new Set([...items.map(w => w.year), ...allExtras.map(e => e.year).filter(Boolean), ...Object.keys(yearNotes).map(Number)])].sort((a, b) => b - a);
+    const sparkle = '<svg class="works__sparkle" viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/></svg>';
+    const hostOf = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
+    const workRow = (w, i) => `
+      <li class="works__item">
+        <a href="/works/${w.id}" class="works__item__link">
+          <span class="works__item__num">${String(i + 1).padStart(2, '0')}</span>
+          <span class="works__item__title">
+            <span class="works__item__title__en">${w.title}</span>
+            <span class="works__item__title__ko">${w.name}</span>
+          </span>
+          <span class="works__item__meta">
+            <span class="works__item__category">${w.category}</span>
+          </span>
+          ${sparkle}
+        </a>
+      </li>`;
+    const extraRow = e => `
+      <li class="works__item${e.url ? ' works__item--ext' : ' works__item--static'}">
+        ${e.url ? `<a href="${e.url}" target="_blank" rel="noopener" class="works__item__link">` : '<span class="works__item__link">'}
+          <span class="works__item__title">
+            <span class="works__item__title__en">${e.name}</span>
+            <span class="works__item__title__ko">${e.name}${e.url ? ' ↗' : ''}</span>
+          </span>
+          <span class="works__item__meta"><span class="works__item__category">${e.url ? hostOf(e.url) : ''}</span></span>
+          ${e.url ? sparkle : ''}
+        ${e.url ? '</a>' : '</span>'}
+      </li>`;
     return `
       <div class="subpage works-list-page">
 
         <section class="subpage__section">
           <h1 class="subpage__title">Recent<br>Works</h1>
-          <ul class="works__list">
-            ${items.map((w, i) => `
-              <li class="works__item">
-                <a href="/works/${w.id}" class="works__item__link">
-                  <span class="works__item__num">${String(i + 1).padStart(2, '0')}</span>
-                  <span class="works__item__title">
-                    <span class="works__item__title__en">${w.title}</span>
-                    <span class="works__item__title__ko">${w.name}</span>
-                  </span>
-                  <span class="works__item__meta">
-                    <span class="works__item__category">${w.category}</span>
-                    <span class="works__item__sep">·</span>
-                    <span class="works__item__year">${w.year}</span>
-                  </span>
-                  <svg class="works__sparkle" viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/></svg>
-                </a>
-              </li>
-            `).join('')}
-          </ul>
+          ${years.map(y => {
+            const note = yearNotes[y];
+            const rows = [
+              ...items.filter(w => w.year === y).map(workRow),
+              ...allExtras.filter(e => e.year === y).map(extraRow),
+            ];
+            return `
+            <h2 class="works-year__label">${y}</h2>
+            ${note ? `<div class="works-break">
+              <span class="works-break__title">${note.title}</span>
+              <span class="works-break__text">${note.text}</span>
+            </div>` : ''}
+            ${rows.length ? `<ul class="works__list">${rows.join('')}</ul>` : ''}`;
+          }).join('')}
+          ${undated.length ? `
+            <h2 class="works-year__label">Others</h2>
+            <ul class="works__list">${undated.map(extraRow).join('')}</ul>` : ''}
         </section>
-
-        ${extras.length ? `
-        <section class="subpage__section">
-          <p class="subpage__section-title">More Works</p>
-          <ul class="more-works">
-            ${extras.map(e => `
-              <li class="more-works__item">
-                ${e.url
-                  ? `<a href="${e.url}" target="_blank" rel="noopener" class="more-works__link">${e.name} ↗</a>`
-                  : `<span class="more-works__link more-works__link--filled">${e.name}</span>`
-                }
-              </li>
-            `).join('')}
-          </ul>
-        </section>
-        ` : ''}
 
       </div>
       <img class="works__thumb" id="works-thumb" alt="" aria-hidden="true">
@@ -68,11 +88,24 @@ const PageWorksList = {
       chars = titleEl.querySelectorAll('.reveal-char__inner');
       gsap.set(chars, { yPercent: 110 });
     }
-    gsap.set('#subpage-view .works__item', { x: 150, opacity: 0 });
+    const rowSel = '#subpage-view .works__item, #subpage-view .works-year__label, #subpage-view .works-break';
+    gsap.set(rowSel, { x: 150, opacity: 0 });
+
+    let ready = false;
+    const waiting = new Set();
+    const showRows = els => gsap.to(els, { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.08 });
+    ScrollTrigger.batch(rowSel, {
+      start: 'top 92%',
+      once: true,
+      onEnter: batch => { if (ready) showRows(batch); else batch.forEach(el => waiting.add(el)); },
+    });
 
     const doHeroReveal = () => {
       if (chars) gsap.to(chars, { yPercent: 0, duration: 0.7, ease: 'power3.out', stagger: 0.06, delay: 0.1 });
-      gsap.to('#subpage-view .works__item', { x: 0, opacity: 1, duration: 0.6, ease: 'power2.out', stagger: 0.08, delay: 0.2 });
+      ready = true;
+      const pending = [...waiting];
+      waiting.clear();
+      if (pending.length) gsap.delayedCall(0.2, () => showRows(pending));
     };
 
     if (document.getElementById('intro') || gsap.isTweening(document.querySelector('.page-transition'))) {
@@ -80,12 +113,6 @@ const PageWorksList = {
     } else {
       doHeroReveal();
     }
-
-    gsap.from('.more-works__item', {
-      y: 20, opacity: 0, duration: 0.5, ease: 'power2.out',
-      stagger: 0.04,
-      scrollTrigger: { trigger: '.more-works', start: 'top 85%' },
-    });
 
     document.querySelectorAll('#subpage-view .subpage__section-title').forEach(el => {
       el.innerHTML = el.textContent.split('').map(ch =>

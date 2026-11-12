@@ -373,8 +373,61 @@ body.is-subpage {
 
 
 /* ── Works List ── */
-.works-list-page .works__list {
+.works-year__label {
+  margin: 72px 0 20px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--subpage-accent);
+}
+
+.subpage__title + .works-year__label {
   margin-top: 60px;
+}
+
+.works-break + .works__list {
+  border-top: 0;
+}
+
+.works__item--ext .works__item__link {
+  opacity: 0.72;
+  transition: opacity 0.25s ease;
+}
+
+.works__item--ext:hover .works__item__link {
+  opacity: 1;
+}
+
+.works__item--static {
+  opacity: 0.4;
+}
+
+.works__item--static .works__item__link {
+  cursor: default;
+}
+
+.works-break {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding: 28px 0;
+  border-top: 1px solid var(--subpage-line);
+  border-bottom: 1px solid var(--subpage-line);
+  color: var(--subpage-text-dim);
+}
+
+.works-break__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.works-break__text {
+  font-size: 0.95rem;
+  word-break: keep-all;
 }
 
 .works-list-page .works__item__link {
