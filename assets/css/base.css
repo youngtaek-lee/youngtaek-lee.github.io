@@ -97,6 +97,24 @@
   --subpage-border-strong:  rgba(22, 20, 21, 0.65);
 }
 
+[data-theme="basic"] body.is-subpage:not(.is-notes) {
+  --subpage-bg:             var(--color-bg);
+  --subpage-text:           var(--color-text);
+  --subpage-accent:         var(--color-accent);
+  --subpage-line:           var(--color-border-medium);
+  --subpage-sub:            var(--color-sub);
+  --subpage-surface:        var(--color-surface);
+  --subpage-surface-raised: var(--color-surface-raised);
+  --subpage-text-soft:      var(--color-text-soft);
+  --subpage-text-mid:       var(--color-text-mid);
+  --subpage-text-dim:       var(--color-text-dim);
+  --subpage-text-subtle:    var(--color-text-subtle);
+  --subpage-border-subtle:  var(--color-border-subtle);
+  --subpage-border-medium:  var(--color-border-medium);
+  --subpage-border-light:   var(--color-border-light);
+  --subpage-border-strong:  var(--color-border-strong);
+}
+
 /* =============================
    Theme: summer
 ============================= */

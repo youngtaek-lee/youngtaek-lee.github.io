@@ -253,41 +253,30 @@ body.is-subpage {
 }
 
 .skill-card {
-  background: var(--subpage-bg);
-  border: 2px solid var(--subpage-text);
+  background: var(--color-panel);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-medium);
   border-radius: 12px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   aspect-ratio: 4 / 5;
-  box-shadow: 6px 6px 0 0 var(--subpage-text);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
 .skill-card:hover {
-  background: var(--subpage-text);
-  border-color: var(--subpage-bg);
-  box-shadow: 0px 0px 0 0 var(--subpage-bg);
-  transform: translate(6px, 6px);
+  border-color: var(--color-border-strong);
 }
 
 .skill-card__icon {
   font-size: 2.4rem;
   line-height: 1;
-  color: var(--subpage-text);
+  color: var(--color-text-mid);
   transition: color 0.2s ease;
 }
 
 .skill-card:hover .skill-card__icon {
-  color: var(--icon-color, var(--subpage-bg));
-}
-
-.skill-card:hover .skill-card__name {
-  color: var(--subpage-bg);
-}
-
-.skill-card:hover .skill-card__desc {
-  color: var(--subpage-bg);
+  color: var(--icon-color, var(--color-accent));
 }
 
 .skill-card__abbr {
@@ -310,14 +299,13 @@ body.is-subpage {
   padding-top: 12px;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--subpage-text);
+  color: var(--color-text);
 }
 
 .skill-card__desc {
   margin-top: 4px;
   font-size: 0.7rem;
-  color: var(--subpage-text);
-  opacity: 0.55;
+  color: var(--color-text-dim);
   line-height: 1.35;
 }
 
@@ -329,12 +317,6 @@ body.is-subpage {
 
   .skill-card {
     padding: 20px 18px;
-    box-shadow: 5px 5px 0 0 var(--subpage-text);
-  }
-
-  .skill-card:hover {
-    box-shadow: 0 0 0 0 var(--subpage-bg);
-    transform: translate(5px, 5px);
   }
 }
 
@@ -345,12 +327,6 @@ body.is-subpage {
 
   .skill-card {
     padding: 16px 14px;
-    box-shadow: 4px 4px 0 0 var(--subpage-text);
-  }
-
-  .skill-card:hover {
-    box-shadow: 0 0 0 0 var(--subpage-bg);
-    transform: translate(4px, 4px);
   }
 
   .skill-card__icon {
@@ -374,13 +350,7 @@ body.is-subpage {
 
   .skill-card {
     padding: 14px 12px;
-    box-shadow: 3px 3px 0 0 var(--subpage-text);
     border-radius: 8px;
-  }
-
-  .skill-card:hover {
-    box-shadow: 0 0 0 0 var(--subpage-bg);
-    transform: translate(3px, 3px);
   }
 
   .skill-card__icon {

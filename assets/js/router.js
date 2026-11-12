@@ -71,8 +71,7 @@ const Router = {
 
     document.body.classList.toggle('is-subpage', !isHome);
     const isNotes = path.startsWith('/notes');
-    document.body.classList.toggle('is-notes', isNotes);
-    const bottomLinks = document.querySelector('.bottom-nav__links');
+    document.body.classList.toggle('is-notes', isNotes);    const bottomLinks = document.querySelector('.bottom-nav__links');
     if (isNotes && bottomLinks) {
       if (this._originalBottomLinks == null) this._originalBottomLinks = bottomLinks.innerHTML;
       bottomLinks.innerHTML = `<a href="/notes" class="bottom-nav__link">Index</a><a href="https://github.com/youngtaek-lee" target="_blank" rel="noopener" class="bottom-nav__link">GitHub</a>`;
