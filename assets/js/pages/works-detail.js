@@ -25,8 +25,18 @@ const PageWorksDetail = {
       <div class="subpage works-detail-page" data-id="${work.id}">
 
         <section class="subpage__hero wd-hero">
-          <h1 class="subpage__title">${work.title}</h1>
-          <p class="wd-meta">${work.category} — ${work.year}</p>
+          <div class="wd-hero__main">
+            <h1 class="subpage__title">${work.title}</h1>
+            <p class="wd-meta">${work.category} — ${work.year}</p>
+          </div>
+          <ul class="wd-contrib" aria-label="기여도">
+            ${Object.entries(work.contribution || { Publishing: 100 }).map(([label, v]) => `
+            <li class="wd-contrib__item">
+              <span class="wd-contrib__label">${label}</span>
+              <span class="wd-contrib__bar"><i style="--w:${v}%"></i></span>
+              <span class="wd-contrib__val">${v}%</span>
+            </li>`).join('')}
+          </ul>
         </section>
 
         <section class="wd-main-img">

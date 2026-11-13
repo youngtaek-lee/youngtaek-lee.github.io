@@ -3,7 +3,8 @@
 // =============================
 const works = [
   {
-    id: 'portfolio', title: 'Portfolio', name: '이영택 포트폴리오', category: 'Portfolio Site', year: 2026,
+    id: 'portfolio', title: '2026 Portfolio', name: '이영택 포트폴리오', category: 'Portfolio Site', year: 2026,
+    contribution: { Design: 100, Publishing: 100 },
     main: 'assets/images/works/ghi.jpg',
     url: 'https://youngtaek-lee.github.io/',
     subtitle: '(더미) 직접 기획하고 구현한 웹 퍼블리셔 포트폴리오 사이트',
@@ -96,7 +97,7 @@ const worksExtra = [
   { name: '영음예술기획', year: 2022,            url: 'http://www.iyoungeum.com/html/index/' },
   { name: '하남시환경교육센터', year: 2021,       url: 'http://www.heec.co.kr/html/index/' },
   { name: '인터메타', year: 2022,                url: 'https://www.intermeta.co.kr/html/index/' },
-  { name: '오산대학교', year: 2024,              url: 'https://www.osan.ac.kr/?menuno=127' },
+  { name: '오산대학교', year: 2021,              url: 'https://www.osan.ac.kr/?menuno=127' },
   { name: '전문대학평생직업교육발전협의', year: 2021, url: 'https://www.colive.kr/html/index/' },
   { name: '세경대학교', year: 2021,              url: 'https://www.saekyung.ac.kr/intro/intro.php' },
   { name: '성공회대 첨단융합디자인센터', year: 2021, url: 'https://skhuacdc2.gabia.io/html/index/index.php' },
@@ -106,7 +107,7 @@ const worksExtra = [
   { name: '총신대학교 교수학습지원센터', year: 2023, url: 'https://cctl.csu.ac.kr/html/index/' },
   { name: '비영리조직평가원 KINE', year: 2023,    url: 'https://www.kine1004.org/html/index/index.php' },
   { name: '충남공공디자인센터', year: 2022,       url: 'https://www.cpdc.re.kr/html/index/' },
-  { name: '한국학점은행평생교육협의회', url: 'http://cacb.kr/html/index/' },
+  { name: '한국학점은행평생교육협의회', year: 2022, url: 'http://cacb.kr/html/index/' },
   { name: '트리니티 디아이비', year: 2021,        url: 'http://triniti.kr/html/index/' },
   { name: '삼성이앤씨', year: 2021,              url: 'http://www.samseongenc.com/html/index/' },
   { name: '슈가엔 쇼핑몰', year: 2021,           url: 'http://www.sugaren.co.kr/html/index.php' },
@@ -119,7 +120,7 @@ const worksExtra = [
   { name: '재단법인 지역활성화네트워크', year: 2021, url: 'http://www.kistock.co.kr/html/index/' },
   { name: '쌍용직업전문학교', year: 2021,         url: 'http://syhrd.kr/new/html/index/' },
   { name: '하남시민에너지협동조합', year: 2022,   url: 'http://ghi.co.kr/html/index/' },
-  { name: '에스앤씨건설' },
+  { name: '에스앤씨건설', year: 2022 },
   { name: '2021 장애학생 페스티벌', year: 2021 },
   { name: '제이와이이노센트', year: 2021 },
   { name: '축산박람회', year: 2021 },
@@ -133,7 +134,7 @@ const worksExtra = [
 // =============================
 function initWorksSparkle() {
   const SPARKLE_SVG = `<svg class="works__sparkle" viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/></svg>`;
-  document.querySelectorAll('.works__item__link').forEach(link => {
+  document.querySelectorAll('.works__item:not(.works__item--chip) .works__item__link').forEach(link => {
     link.insertAdjacentHTML('beforeend', SPARKLE_SVG);
   });
 }

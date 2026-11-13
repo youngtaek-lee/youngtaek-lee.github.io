@@ -12,40 +12,41 @@ const PageWorksList = {
     const allExtras = SHOW_EXTRA_WORKS && typeof worksExtra !== 'undefined' ? worksExtra : [];
     const undated = allExtras.filter(e => !e.year);
     const yearNotes = {
-      2026: { title: 'New Start', text: '새로운 시작을 위해 다시 쌓아가는 작업' },
-      2025: { title: 'Recharge', text: '다음 작업을 위한 재충전의 시간' },
-      2024: { title: 'Freelance', text: '프리랜서로 기존 프로젝트 유지보수를 이어간 해' },
-      2023: { title: 'Transition', text: '재직을 마치고 프리랜서로 전환한 해' },
-      2022: { title: 'In-house', text: '퍼블리싱팀에서 다양한 기업·기관 사이트를 제작' },
-      2021: { title: 'Growing', text: '퍼블리싱팀에 합류해 다양한 업종의 사이트를 맡기 시작한 해' },
+      2026: { title: 'New Start', text: 'AI와 함께 새롭게 시작한 해', claude: true },
+      2025: { title: 'Recharge', text: '다음 작업을 위한 재충전의 시간', charge: true },
+      2024: { title: 'Freelance', text: '프리랜서로 기존 프로젝트 유지보수를 이어간 해', gear: true },
+      2023: { title: 'Transition', text: '재직을 마치고 프리랜서로 전환한 해', branch: true, more: true },
+      2022: { title: 'Production', text: '다양한 기업·기관 사이트를 제작', code: true, more: true },
+      2020: { title: 'First Job', text: '웹 디자이너로 첫 직장 생활을 시작한 해', sprout: true },
+      2021: { title: 'Growing', text: '퍼블리싱팀에 합류', bars: true, more: true },
     };
+    const claudeIcon = '<svg class="works-claude" viewBox="0 0 22 14" shape-rendering="crispEdges" aria-hidden="true">' +
+      '<g fill="currentColor"><rect x="3" y="0" width="16" height="10"/><rect x="0" y="4" width="3" height="3"/><rect x="19" y="4" width="3" height="3"/>' +
+      '<rect x="5" y="10" width="2" height="4"/><rect x="8" y="10" width="2" height="4"/><rect x="12" y="10" width="2" height="4"/><rect x="15" y="10" width="2" height="4"/></g>' +
+      '<g class="works-claude__eyes" fill="var(--subpage-bg)"><rect x="6" y="3" width="2" height="3"/><rect x="14" y="3" width="2" height="3"/></g></svg>';
+    const sproutIcon = '<svg class="works-sprout" viewBox="0 0 11 12" shape-rendering="crispEdges" aria-hidden="true">' +
+      '<g fill="#6FBF4A"><rect x="1" y="2" width="3" height="2"/><rect x="3" y="4" width="2" height="1"/><rect x="7" y="0" width="3" height="2"/><rect x="6" y="2" width="2" height="1"/><rect x="5" y="3" width="1" height="7"/></g>' +
+      '<rect x="2" y="10" width="7" height="2" fill="#8B6B4A"/></svg>';
+    const codeIcon = '<svg class="works-code" viewBox="0 0 30 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<path class="works-code__l" d="M9 4L2 10L9 16"/><path class="works-code__r" d="M21 4L28 10L21 16"/><path class="works-code__s" d="M17.5 2L12.5 18"/></svg>';
+    const branchIcon = '<svg class="works-branch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">' +
+      '<path d="M6 6.5V17.5"/><path class="works-branch__curve" pathLength="1" d="M6 17C6 13.5 18 15 18 10.5"/>' +
+      '<circle cx="6" cy="4" r="2.5"/><circle cx="6" cy="20" r="2.5"/><circle class="works-branch__node" cx="18" cy="8" r="2.5"/></svg>';
+    const gearIcon = '<svg class="works-gear" viewBox="-12 -12 24 24" aria-hidden="true"><g fill="currentColor">' +
+      Array.from({ length: 8 }, (_, i) => `<rect x="-1.6" y="-11" width="3.2" height="4.2" rx="0.6" transform="rotate(${i * 45})"/>`).join('') +
+      '</g><circle r="6.2" fill="none" stroke="currentColor" stroke-width="3"/><circle r="1.6" fill="currentColor"/></svg>';
+    const barsIcon ='<span class="works-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>';
     const years = [...new Set([...items.map(w => w.year), ...allExtras.map(e => e.year).filter(Boolean), ...Object.keys(yearNotes).map(Number)])].sort((a, b) => b - a);
     const sparkle = '<svg class="works__sparkle" viewBox="-1.1 -1.1 2.2 2.2" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M0,-1 L0.092,-0.092 L1,0 L0.092,0.092 L0,1 L-0.092,0.092 L-1,0 L-0.092,-0.092 Z" fill="currentColor"/></svg>';
     const hostOf = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch { return ''; } };
     const workRow = (w, i) => `
-      <li class="works__item">
-        <a href="/works/${w.id}" class="works__item__link">
-          <span class="works__item__num">${String(i + 1).padStart(2, '0')}</span>
-          <span class="works__item__title">
-            <span class="works__item__title__en">${w.title}</span>
-            <span class="works__item__title__ko">${w.name}</span>
-          </span>
-          <span class="works__item__meta">
-            <span class="works__item__category">${w.category}</span>
-          </span>
-          ${sparkle}
-        </a>
+      <li class="works__item works__item--chip works__item--main">
+        <a href="/works/${w.id}" class="works__item__link">${w.title}</a>
       </li>`;
+    const extIcon = '<svg class="works__chip-icon" viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.5L8.5 3.5M4.5 3.5h4v4"/></svg>';
     const extraRow = e => `
-      <li class="works__item${e.url ? ' works__item--ext' : ' works__item--static'}">
-        ${e.url ? `<a href="${e.url}" target="_blank" rel="noopener" class="works__item__link">` : '<span class="works__item__link">'}
-          <span class="works__item__title">
-            <span class="works__item__title__en">${e.name}</span>
-            <span class="works__item__title__ko">${e.name}${e.url ? ' ↗' : ''}</span>
-          </span>
-          <span class="works__item__meta"><span class="works__item__category">${e.url ? hostOf(e.url) : ''}</span></span>
-          ${e.url ? sparkle : ''}
-        ${e.url ? '</a>' : '</span>'}
+      <li class="works__item works__item--chip${e.url ? ' works__item--ext' : ' works__item--static'}">
+        ${e.url ? `<a href="${e.url}" target="_blank" rel="noopener" class="works__item__link">${e.name}${extIcon}</a>` : `<span class="works__item__link">${e.name}</span>`}
       </li>`;
     return `
       <div class="subpage works-list-page">
@@ -57,10 +58,18 @@ const PageWorksList = {
             const rows = [
               ...items.filter(w => w.year === y).map(workRow),
               ...allExtras.filter(e => e.year === y).map(extraRow),
+              ...(note?.more ? ['<li class="works__item works__item--chip works__item--more" aria-label="그 외 프로젝트 다수"><span class="works__item__link" aria-hidden="true">···</span></li>'] : []),
             ];
             return `
             <h2 class="works-year__label">${y}</h2>
             ${note ? `<div class="works-break">
+              ${note.claude ? claudeIcon : ''}
+              ${note.sprout ? sproutIcon : ''}
+              ${note.bars ? barsIcon : ''}
+              ${note.code ? codeIcon : ''}
+              ${note.branch ? branchIcon : ''}
+              ${note.gear ? gearIcon : ''}
+              ${note.charge ?'<span class="works-charge" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' : ''}
               <span class="works-break__title">${note.title}</span>
               <span class="works-break__text">${note.text}</span>
             </div>` : ''}
@@ -129,7 +138,8 @@ const PageWorksList = {
 
     // 썸네일 hover
     const thumb = document.querySelector('#subpage-view .works__thumb');
-    if (thumb) {
+    const SHOW_THUMB = false;
+    if (thumb && SHOW_THUMB) {
       let el = thumb;
       let gl = null;
       document.querySelectorAll('#subpage-view .works__item').forEach(li => {
@@ -139,7 +149,7 @@ const PageWorksList = {
         li.addEventListener('mouseenter', () => { thumb.src = work.main; gl?.setImage(work.main); el.classList.add('is-visible'); });
         li.addEventListener('mouseleave', () => { el.classList.remove('is-visible'); });
       });
-      gsap.set(thumb, { xPercent: -50, yPercent: -55 });
+      gsap.set(thumb, { xPercent: 0, yPercent: 0, x: 24, y: 20 });
       const clamp = (v, max) => Math.max(-max, Math.min(max, v));
       const m = { x: 0, y: 0, set: false };
       const p = { x: 0, y: 0, vx: 0, vy: 0 };
@@ -238,7 +248,7 @@ const PageWorksList = {
           if (thumb.getAttribute('src')) { current = thumb.getAttribute('src'); setImage(current); }
           thumb.replaceWith(canvas);
           el = canvas;
-          gsap.set(el, { xPercent: -50, yPercent: -50 });
+          gsap.set(el, { xPercent: 0, yPercent: 0, x: 24 - (W - IW) / 2, y: 20 - (H - IH) / 2 });
         } catch (err) {
           gl = null;
         }
