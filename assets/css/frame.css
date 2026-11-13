@@ -609,8 +609,9 @@ main {
 /* summer 푸터: 쿨 그레이 배경 + 로얄 텍스트 */
 [data-theme="summer"] .footer,
 [data-theme="summer"] .statement {
-  --color-text: var(--summer-royal);
-}
+  --color-bg: var(--summer-royal);
+  --color-text: var(--summer-yellow);
+  --color-accent: var(--summer-yellow);}
 
 /* basic 푸터: 오렌지 배경 + 다크 텍스트 */
 [data-theme="basic"] .footer,
