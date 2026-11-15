@@ -2,17 +2,18 @@
    HERO
 ============================= */
 .hero-wrap {
-  height: 100vh;
-  height: 100dvh;
-  height: var(--real-vh, 100dvh);
+  --footer-peek: 61px;
+  height: calc(100vh - var(--footer-peek));
+  height: calc(100dvh - var(--footer-peek));
+  height: calc(var(--real-vh, 100dvh) - var(--footer-peek));
 }
 
 .hero {
   position: sticky;
   top: 0;
-  height: 100vh;
-  height: 100dvh;
-  height: var(--real-vh, 100dvh);
+  height: calc(100vh - var(--footer-peek));
+  height: calc(100dvh - var(--footer-peek));
+  height: calc(var(--real-vh, 100dvh) - var(--footer-peek));
   padding-top: 86px;
   display: flex;
   flex-direction: column;
