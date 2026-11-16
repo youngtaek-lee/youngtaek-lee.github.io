@@ -1,14 +1,11 @@
 async function buildGithubCalendar(el, calAnim) {
   const CELL = 14, GAP = 3, STEP = 17, LABEL_H = 22;
-  const rootStyle = getComputedStyle(document.documentElement);
-  const themeText = rootStyle.getPropertyValue('--color-text').trim();
-  const themeAccent = rootStyle.getPropertyValue('--color-accent').trim();
   const COLORS = [
-    `color-mix(in srgb, ${themeText} 33%, transparent)`,
-    `color-mix(in srgb, ${themeAccent} 50%, transparent)`,
-    `color-mix(in srgb, ${themeAccent} 67%, transparent)`,
-    `color-mix(in srgb, ${themeAccent} 83%, transparent)`,
-    themeAccent,
+    'color-mix(in srgb, var(--color-text) 33%, transparent)',
+    'color-mix(in srgb, var(--color-accent) 50%, transparent)',
+    'color-mix(in srgb, var(--color-accent) 67%, transparent)',
+    'color-mix(in srgb, var(--color-accent) 83%, transparent)',
+    'var(--color-accent)',
   ];
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
@@ -65,7 +62,7 @@ async function buildGithubCalendar(el, calAnim) {
 
   const rects = weeks.flatMap((w, wi) =>
     w.map((day, di) =>
-      day ? `<rect x="${wi*STEP}" y="${LABEL_H+di*STEP}" width="${CELL}" height="${CELL}" fill="${COLORS[day.level]}" rx="2"/>` : ''
+      day ? `<rect x="${wi*STEP}" y="${LABEL_H+di*STEP}" width="${CELL}" height="${CELL}" style="fill:${COLORS[day.level]}" rx="2"/>` : ''
     )
   ).join('');
 

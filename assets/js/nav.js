@@ -93,19 +93,52 @@ function initMobileMenu() {
 // =============================
 // Theme Toggle
 // =============================
-function initTheme() {
-  const btns = document.querySelectorAll('.theme-switch');
-  if (!btns.length) return;
+let __themeSwitching = false;
 
-  btns.forEach((btn) => btn.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'basic' ? 'summer' : 'basic';
-    document.documentElement.setAttribute('data-theme', next);
+function switchTheme(e) {
+  if (__themeSwitching) return;
+  const root = document.documentElement;
+  const next = root.getAttribute('data-theme') === 'basic' ? 'summer' : 'basic';
+
+  const apply = () => {
+    root.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.content = next === 'basic' ? '#1C1A17' : '#0056B3';
     debugTheme();
-  }));
+  };
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!document.startViewTransition || reduce) { apply(); return; }
+
+  __themeSwitching = true;
+  const DUR = 1000;
+  const EASE = 'cubic-bezier(0.65, 0, 0.35, 1)';
+  const rect = (e?.currentTarget || document.querySelector('.theme-switch')).getBoundingClientRect();
+  const x = Math.round(rect.left + rect.width / 2);
+  const y = Math.round(rect.top + rect.height / 2);
+
+  const radius = Math.ceil(Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y)));
+
+  root.classList.add('is-theme-wiping');
+
+  const vt = document.startViewTransition(apply);
+  vt.ready.then(() => {
+    root.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+      { duration: DUR, easing: EASE, pseudoElement: '::view-transition-new(root)' }
+    );
+  });
+  vt.finished.finally(() => {
+    root.classList.remove('is-theme-wiping');
+    __themeSwitching = false;
+  });
+}
+
+function initTheme() {
+  const btns = document.querySelectorAll('.theme-switch');
+  if (!btns.length) return;
+  btns.forEach((btn) => btn.addEventListener('click', switchTheme));
 }
 
 // 콘솔에서 window.debugWorksAnim() 호출 — /works 진입 직후에 바로 실행

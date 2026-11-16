@@ -1105,3 +1105,18 @@ main {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* =============================
+   Theme Wipe (View Transitions)
+============================= */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.is-theme-wiping *,
+html.is-theme-wiping *::before,
+html.is-theme-wiping *::after {
+  transition: none !important;
+}
