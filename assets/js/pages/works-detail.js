@@ -14,9 +14,10 @@ const PageWorksDetail = {
     const id    = path.replace('/works/', '');
     const list  = typeof works !== 'undefined' ? works : [];
     const idx   = list.findIndex(w => w.id === id);
-    const work  = idx !== -1 ? list[idx] : null;
+    const base  = idx !== -1 ? list[idx] : null;
 
-    if (!work) return `<div class="subpage"><p style="padding:120px 40px">프로젝트를 찾을 수 없습니다.</p></div>`;
+    if (!base) return `<div class="subpage"><p style="padding:120px 40px">프로젝트를 찾을 수 없습니다.</p></div>`;
+    const work  = workImages(base);
 
     const prev = list[(idx - 1 + list.length) % list.length];
     const next = list[(idx + 1) % list.length];
@@ -94,6 +95,20 @@ const PageWorksDetail = {
   init(path) {
     const id   = path.replace('/works/', '');
     const work = typeof works !== 'undefined' ? works.find(w => w.id === id) : null;
+
+    PageWorksDetail._themeObs?.disconnect();
+    if (work?.onSummer) {
+      const swap = () => {
+        const w = workImages(work);
+        const mainImg = document.querySelector('.wd-main-img img');
+        if (mainImg) mainImg.src = w.main;
+        const g = w.gallery || [];
+        const order = [...g.filter((_, i) => i % 2 === 0), ...g.filter((_, i) => i % 2 === 1)];
+        document.querySelectorAll('.wd-gallery__col img').forEach((im, i) => { if (order[i]) im.src = order[i]; });
+      };
+      PageWorksDetail._themeObs = new MutationObserver(swap);
+      PageWorksDetail._themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
 
     // bottom-nav 교체
     const links = document.querySelector('.bottom-nav__links');

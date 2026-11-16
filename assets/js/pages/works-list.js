@@ -146,7 +146,7 @@ const PageWorksList = {
         const id = (li.querySelector('a')?.getAttribute('href') || '').split('/').pop();
         const work = works.find(w => w.id === id);
         if (!work) return;
-        li.addEventListener('mouseenter', () => { thumb.src = work.main; gl?.setImage(work.main); el.classList.add('is-visible'); });
+        li.addEventListener('mouseenter', () => { const src = workImages(work).main; thumb.src = src; gl?.setImage(src); el.classList.add('is-visible'); });
         li.addEventListener('mouseleave', () => { el.classList.remove('is-visible'); });
       });
       gsap.set(thumb, { xPercent: 0, yPercent: 0, x: 24, y: 20 });

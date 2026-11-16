@@ -520,6 +520,10 @@
   transform: translateX(-50%) translateY(0);
 }
 
+body:not(.is-subpage) .bottom-nav {
+  display: none;
+}
+
 .bottom-nav__top {
   display: flex;
   align-items: center;

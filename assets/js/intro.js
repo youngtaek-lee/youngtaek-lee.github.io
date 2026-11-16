@@ -24,6 +24,12 @@ function initIntro() {
   const heroSection = document.querySelector('.hero');
   if (heroSection) gsap.set(heroSection, { y: 160, opacity: 0 });
 
+  // main을 하단 띠 높이만큼 내려 띠를 가려뒀다가, Hero와 같이 올리며 띠(.statement/footer)를 드러냄
+  const mainEl = document.querySelector('main');
+  const MAIN_PROPS = 'transform,borderBottomLeftRadius,borderBottomRightRadius';
+  const footerPeek = mainEl ? Math.max(0, window.innerHeight - mainEl.getBoundingClientRect().bottom) : 0;
+  if (mainEl) gsap.set(mainEl, { y: footerPeek, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 });
+
   // 탭 비활성 중 인트로가 멈춘 채 복귀하면 즉시 스킵
   const skipIntro = () => {
     document.removeEventListener('visibilitychange', onVisible);
@@ -32,6 +38,7 @@ function initIntro() {
     trail.isConnected && trail.remove();
     document.body.style.overflow = '';
     if (heroSection) gsap.set(heroSection, { clearProps: 'transform,opacity' });
+    if (mainEl) gsap.set(mainEl, { clearProps: MAIN_PROPS });
     window.__onCurtainMid?.();
     window.__onCurtainMid = null;
     initHeroEntrance();
@@ -51,6 +58,11 @@ function initIntro() {
     .call(() => revealHeader(), null, 3.85);
 
   if (heroSection) tl.to(heroSection, { y: 0, opacity: 1, duration: 1.2, ease: 'power3.inOut' }, 2.9);
+  if (mainEl) tl.to(mainEl, { y: 0, borderBottomLeftRadius: 30, borderBottomRightRadius: 30, duration: 1.2, ease: 'power3.inOut',
+      onComplete: () => {
+        gsap.set(mainEl, { clearProps: MAIN_PROPS });
+        if (window.ScrollTrigger) ScrollTrigger.refresh();
+      } }, 2.9);
 
   tl.call(() => {
     document.removeEventListener('visibilitychange', onVisible);

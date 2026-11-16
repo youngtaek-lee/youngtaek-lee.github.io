@@ -5,11 +5,23 @@ const works = [
   {
     id: 'portfolio', title: '2026 Portfolio', name: '이영택 포트폴리오', category: 'Portfolio Site', year: 2026,
     contribution: { Design: 100, Publishing: 100 },
-    main: 'assets/images/works/ghi.jpg',
+    main: 'assets/images/works/portfolio-summer.jpg',
     url: 'https://youngtaek-lee.github.io/',
-    subtitle: '(더미) 직접 기획하고 구현한 웹 퍼블리셔 포트폴리오 사이트',
-    overview: '(더미) 웹 퍼블리셔 이영택의 포트폴리오 사이트입니다. 기획부터 디자인, 퍼블리싱, 인터랙션 구현까지 직접 진행했습니다.',
-    gallery: [],
+    subtitle: '직접 기획하고 구현한 웹 퍼블리셔 포트폴리오 사이트',
+    overview: '웹 퍼블리셔 이영택의 포트폴리오 사이트입니다. 기획부터 디자인, 퍼블리싱, 인터랙션 구현까지 직접 진행했습니다.',
+    gallery: [
+      'assets/images/works/portfolio-summer.gif',
+      'assets/images/works/portfolio-summer-about.png',
+      'assets/images/works/portfolio-summer-works.png',
+    ],
+    onSummer: {
+      main: 'assets/images/works/portfolio.jpg',
+      gallery: [
+        'assets/images/works/portfolio.gif',
+        'assets/images/works/portfolio-about.png',
+        'assets/images/works/portfolio-works.png',
+      ],
+    },
   },
   {
     id: 'sase', title: 'Sase', name: '사세', category: 'Food & Beverage', year: 2021,
@@ -90,6 +102,11 @@ const works = [
     ],
   },
 ];
+
+function workImages(w) {
+  const summer = document.documentElement.getAttribute('data-theme') === 'summer';
+  return summer && w.onSummer ? { ...w, ...w.onSummer } : w;
+}
 
 // 자투리 프로젝트 — 이름 + 외부링크만
 const worksExtra = [
